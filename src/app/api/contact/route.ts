@@ -2,9 +2,10 @@ import { Resend } from "resend";
 import { notificationEmailHtml } from "@/lib/emails/notification";
 import { confirmationEmailHtml } from "@/lib/emails/confirmation";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const body = await request.json();
     const { name, email, date, venue } = body;
