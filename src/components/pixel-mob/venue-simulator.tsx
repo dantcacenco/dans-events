@@ -610,7 +610,7 @@ function LiveMonitor({
         </div>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 10 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 10 }}>
         {/* 2D venue map */}
         <div style={{ ...panel, padding: 0, overflow: "hidden", position: "relative" }}>
           <canvas
@@ -908,9 +908,9 @@ function AdminDashboard({ adminKey }: { adminKey: string }) {
     <div style={{ background: "#050510", color: "#ddd", minHeight: "100vh", fontFamily: "'Segoe UI',system-ui,sans-serif", padding: 12 }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         {/* Header */}
-        <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 10 }}>
-          <h1 style={{ fontSize: 18, fontWeight: 700, color: "#fff", margin: 0 }}>Crowd Pixel — Admin</h1>
-          <span style={{ fontSize: 11, color: "#444" }}>{total} sim pixels · {deviceCount} phones connected</span>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
+          <h1 style={{ fontSize: 16, fontWeight: 700, color: "#fff", margin: 0 }}>Crowd Pixel — Admin</h1>
+          <span style={{ fontSize: 11, color: "#444" }}>{total} sim · {deviceCount} live</span>
         </div>
 
         {/* Mode tabs */}
@@ -930,7 +930,7 @@ function AdminDashboard({ adminKey }: { adminKey: string }) {
         {mode === "simulation" && (
           <>
             {/* Live control bar */}
-            <div style={{ ...panel, marginBottom: 10, display: "flex", alignItems: "center", gap: 12, padding: "10px 16px" }}>
+            <div style={{ ...panel, marginBottom: 10, display: "flex", alignItems: "center", gap: 12, padding: "10px 16px", flexWrap: "wrap" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: deviceCount > 0 ? "#0f0" : "#555", boxShadow: deviceCount > 0 ? "0 0 6px #0f0" : "none" }} />
                 <span style={{ fontSize: 11, color: "#aaa" }}>{deviceCount} device{deviceCount !== 1 ? "s" : ""}</span>
@@ -964,7 +964,7 @@ function AdminDashboard({ adminKey }: { adminKey: string }) {
             </div>
 
             {/* Control panels */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 10 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 10 }}>
               {/* col 1: animations */}
               <div style={panel}>
                 <span style={lbl}>Animation</span>

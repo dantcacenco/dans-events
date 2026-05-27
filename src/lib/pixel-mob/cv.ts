@@ -15,17 +15,21 @@ export type DecodedDevice = {
   nx: number;
   nz: number;
   side: number;
+  confidence: number;
 };
 
-const BRIGHTNESS_THRESHOLD = 160;
-const MIN_AREA = 4;
-const MATCH_RADIUS = 40;
+const BRIGHTNESS_THRESHOLD = 200;
+const MIN_AREA = 30;
+const MAX_AREA = 50000;
+const MATCH_RADIUS = 60;
 const BINARY_BITS = 9;
+const MIN_BITS_REQUIRED = 7;
 
 export function extractBrightSpots(
   imageData: ImageData,
   threshold = BRIGHTNESS_THRESHOLD,
-  minArea = MIN_AREA
+  minArea = MIN_AREA,
+  maxArea = MAX_AREA
 ): DetectedSpot[] {
   const { width, height, data } = imageData;
   const visited = new Uint8Array(width * height);
@@ -39,7 +43,6 @@ export function extractBrightSpots(
       const gray = (data[px] + data[px + 1] + data[px + 2]) / 3;
       if (gray < threshold) continue;
 
-      // flood fill to find connected bright region
       const stack = [idx];
       visited[idx] = 1;
       let sumX = 0,
@@ -53,6 +56,13 @@ export function extractBrightSpots(
         sumX += cx;
         sumY += cy;
         count++;
+
+        if (count > maxArea) {
+          while (stack.length > 0) {
+            visited[stack.pop()!] = 1;
+          }
+          break;
+        }
 
         for (const [dx, dy] of [
           [-1, 0],
@@ -73,7 +83,7 @@ export function extractBrightSpots(
         }
       }
 
-      if (count >= minArea) {
+      if (count >= minArea && count <= maxArea) {
         spots.push({ x: sumX / count, y: sumY / count, area: count });
       }
     }
@@ -114,6 +124,15 @@ function matchSpots(
   return matches;
 }
 
+function filterSimilarSizedSpots(spots: DetectedSpot[]): DetectedSpot[] {
+  if (spots.length < 3) return spots;
+  const areas = spots.map((s) => s.area).sort((a, b) => a - b);
+  const median = areas[Math.floor(areas.length / 2)];
+  return spots.filter(
+    (s) => s.area >= median * 0.2 && s.area <= median * 5
+  );
+}
+
 // frames[0], frames[1] = calibration (all white)
 // frames[2..10] = 9 binary bit frames
 // frames[11] = end marker (all white)
@@ -123,27 +142,35 @@ export function processBlinkFrames(
 ): DecodedDevice[] {
   if (frames.length < 12) return [];
 
-  // detect spots in calibration frames and merge
-  const cal0 = extractBrightSpots(frames[0], threshold);
-  const cal1 = extractBrightSpots(frames[1], threshold);
+  const th = threshold ?? BRIGHTNESS_THRESHOLD;
 
-  // use the calibration frame with more spots as the reference
-  const refSpots = cal0.length >= cal1.length ? cal0 : cal1;
+  // detect in both calibration frames, keep only spots present in both
+  const cal0 = filterSimilarSizedSpots(extractBrightSpots(frames[0], th));
+  const cal1 = filterSimilarSizedSpots(extractBrightSpots(frames[1], th));
+
+  // cross-match calibration frames — only keep spots visible in both
+  const matchCal = matchSpots(cal0, cal1);
+  const refSpots: DetectedSpot[] = [];
+  for (const [i0, i1] of matchCal.entries()) {
+    refSpots.push({
+      x: (cal0[i0].x + cal1[i1].x) / 2,
+      y: (cal0[i0].y + cal1[i1].y) / 2,
+      area: (cal0[i0].area + cal1[i1].area) / 2,
+    });
+  }
 
   if (refSpots.length === 0) return [];
 
-  // initialize tracks from reference spots
   const tracks: TrackedSpot[] = refSpots.map((s, i) => ({
     id: i,
     positions: [{ x: s.x, y: s.y }],
     brightness: [],
   }));
 
-  // for each binary frame, detect spots and match to tracks
   for (let f = 2; f <= 10; f++) {
     if (f >= frames.length) break;
 
-    const spots = extractBrightSpots(frames[f], threshold);
+    const spots = extractBrightSpots(frames[f], th);
     const lastPositions: DetectedSpot[] = tracks.map((t) => {
       const last = t.positions[t.positions.length - 1];
       return { x: last.x, y: last.y, area: 0 };
@@ -160,41 +187,47 @@ export function processBlinkFrames(
         });
         tracks[ti].brightness.push(true);
       } else {
-        // spot not found = dark = bit 0
         tracks[ti].brightness.push(false);
       }
     }
   }
 
-  // decode binary IDs
   const decoded: DecodedDevice[] = [];
   const imgW = frames[0].width;
   const imgH = frames[0].height;
+  const seenIndices = new Set<number>();
 
   for (const track of tracks) {
-    if (track.brightness.length < BINARY_BITS - 1) continue;
+    if (track.brightness.length < MIN_BITS_REQUIRED) continue;
 
     let index = 0;
+    let bitsObserved = 0;
     for (let bit = 0; bit < BINARY_BITS; bit++) {
-      if (bit < track.brightness.length && track.brightness[bit]) {
-        index |= 1 << (BINARY_BITS - 1 - bit);
+      if (bit < track.brightness.length) {
+        bitsObserved++;
+        if (track.brightness[bit]) {
+          index |= 1 << (BINARY_BITS - 1 - bit);
+        }
       }
     }
 
-    // average position across all observations
+    // reject if not enough bits or duplicate index
+    const confidence = bitsObserved / BINARY_BITS;
+    if (confidence < 0.78) continue;
+    if (seenIndices.has(index)) continue;
+    seenIndices.add(index);
+
     const avgX =
       track.positions.reduce((s, p) => s + p.x, 0) / track.positions.length;
     const avgY =
       track.positions.reduce((s, p) => s + p.y, 0) / track.positions.length;
 
-    const nx = avgX / imgW;
-    const nz = avgY / imgH;
-
     decoded.push({
       deviceIndex: index,
-      nx,
-      nz,
-      side: nx < 0.5 ? 0 : 1,
+      nx: avgX / imgW,
+      nz: avgY / imgH,
+      side: avgX / imgW < 0.5 ? 0 : 1,
+      confidence,
     });
   }
 
