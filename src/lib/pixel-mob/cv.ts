@@ -2,12 +2,7 @@ export type DetectedSpot = {
   x: number;
   y: number;
   area: number;
-};
-
-export type TrackedSpot = {
-  id: number;
-  positions: { x: number; y: number }[];
-  brightness: boolean[];
+  avgBrightness: number;
 };
 
 export type DecodedDevice = {
@@ -18,16 +13,107 @@ export type DecodedDevice = {
   confidence: number;
 };
 
-const BRIGHTNESS_THRESHOLD = 230;
-const MIN_AREA = 40;
+export type CVDiagnostics = {
+  thresholdUsed: number;
+  darkFrameUsed: boolean;
+  spotsInCal0: number;
+  spotsInCal1: number;
+  crossMatched: number;
+  endMarkerValidated: number;
+  decodedCount: number;
+  rejectedLowSeparation: number;
+  rejectedDuplicate: number;
+  rejectedOutOfRange: number;
+};
+
+const MIN_AREA = 4;
 const MAX_AREA = 50000;
 const MATCH_RADIUS = 60;
 const BINARY_BITS = 9;
-const MIN_BITS_REQUIRED = 9;
+const SAMPLE_RADIUS = 6;
+const MIN_SEPARATION = 0.25;
+
+// ── Background subtraction ───────────────────────────────────────────
+
+function subtractBackground(frame: ImageData, bg: ImageData): ImageData {
+  const out = new ImageData(frame.width, frame.height);
+  for (let i = 0; i < frame.data.length; i += 4) {
+    out.data[i] = Math.max(0, frame.data[i] - bg.data[i]);
+    out.data[i + 1] = Math.max(0, frame.data[i + 1] - bg.data[i + 1]);
+    out.data[i + 2] = Math.max(0, frame.data[i + 2] - bg.data[i + 2]);
+    out.data[i + 3] = 255;
+  }
+  return out;
+}
+
+// ── Otsu's auto-threshold ────────────────────────────────────────────
+
+function otsuThreshold(imageData: ImageData): number {
+  const { data, width, height } = imageData;
+  const total = width * height;
+  const hist = new Uint32Array(256);
+
+  for (let i = 0; i < data.length; i += 4) {
+    const gray = Math.round((data[i] + data[i + 1] + data[i + 2]) / 3);
+    hist[gray]++;
+  }
+
+  let sumTotal = 0;
+  for (let i = 0; i < 256; i++) sumTotal += i * hist[i];
+
+  let sumBg = 0;
+  let wBg = 0;
+  let maxVariance = 0;
+  let bestThreshold = 128;
+
+  for (let t = 0; t < 256; t++) {
+    wBg += hist[t];
+    if (wBg === 0) continue;
+    const wFg = total - wBg;
+    if (wFg === 0) break;
+    sumBg += t * hist[t];
+    const meanBg = sumBg / wBg;
+    const meanFg = (sumTotal - sumBg) / wFg;
+    const variance = wBg * wFg * (meanBg - meanFg) ** 2;
+    if (variance > maxVariance) {
+      maxVariance = variance;
+      bestThreshold = t;
+    }
+  }
+
+  return bestThreshold;
+}
+
+// ── Contrast normalization ───────────────────────────────────────────
+
+function normalizeContrast(imageData: ImageData): ImageData {
+  const { data, width, height } = imageData;
+  let min = 255, max = 0;
+
+  for (let i = 0; i < data.length; i += 4) {
+    const gray = (data[i] + data[i + 1] + data[i + 2]) / 3;
+    if (gray < min) min = gray;
+    if (gray > max) max = gray;
+  }
+
+  if (max - min < 10) return imageData;
+
+  const out = new ImageData(width, height);
+  const range = max - min;
+  for (let i = 0; i < data.length; i += 4) {
+    out.data[i] = Math.round(((data[i] - min) / range) * 255);
+    out.data[i + 1] = Math.round(((data[i + 1] - min) / range) * 255);
+    out.data[i + 2] = Math.round(((data[i + 2] - min) / range) * 255);
+    out.data[i + 3] = 255;
+  }
+  return out;
+}
+
+// ── Spot detection (flood-fill connected components) ─────────────────
 
 export function extractBrightSpots(
   imageData: ImageData,
-  threshold = BRIGHTNESS_THRESHOLD,
+  threshold: number,
   minArea = MIN_AREA,
   maxArea = MAX_AREA
 ): DetectedSpot[] {
@@ -45,31 +131,24 @@ export function extractBrightSpots(
 
       const stack = [idx];
       visited[idx] = 1;
-      let sumX = 0,
-        sumY = 0,
-        count = 0;
+      let sumX = 0, sumY = 0, sumBright = 0, count = 0;
 
       while (stack.length > 0) {
         const ci = stack.pop()!;
         const cx = ci % width;
         const cy = (ci - cx) / width;
+        const cpx = ci * 4;
         sumX += cx;
         sumY += cy;
+        sumBright += (data[cpx] + data[cpx + 1] + data[cpx + 2]) / 3;
         count++;
 
         if (count > maxArea) {
-          while (stack.length > 0) {
-            visited[stack.pop()!] = 1;
-          }
+          while (stack.length > 0) visited[stack.pop()!] = 1;
           break;
         }
 
-        for (const [dx, dy] of [
-          [-1, 0],
-          [1, 0],
-          [0, -1],
-          [0, 1],
-        ]) {
+        for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
           const nx = cx + dx;
           const ny = cy + dy;
           if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
@@ -84,13 +163,20 @@ export function extractBrightSpots(
       }
 
       if (count >= minArea && count <= maxArea) {
-        spots.push({ x: sumX / count, y: sumY / count, area: count });
+        spots.push({
+          x: sumX / count,
+          y: sumY / count,
+          area: count,
+          avgBrightness: sumBright / count,
+        });
       }
     }
   }
 
   return spots;
 }
+
+// ── Spot matching between frames ─────────────────────────────────────
 
 function matchSpots(
   prev: DetectedSpot[],
@@ -124,122 +210,280 @@ function matchSpots(
   return matches;
 }
 
+// ── Filter spots by similar size ─────────────────────────────────────
+
 function filterSimilarSizedSpots(spots: DetectedSpot[]): DetectedSpot[] {
   if (spots.length < 3) return spots;
   const areas = spots.map((s) => s.area).sort((a, b) => a - b);
-  const median = areas[Math.floor(areas.length / 2)];
-  return spots.filter(
-    (s) => s.area >= median * 0.3 && s.area <= median * 3
-  );
+  const q1 = areas[Math.floor(areas.length * 0.25)];
+  const q3 = areas[Math.floor(areas.length * 0.75)];
+  const iqr = q3 - q1;
+  const lower = q1 - 1.5 * iqr;
+  const upper = q3 + 1.5 * iqr;
+  return spots.filter((s) => s.area >= Math.max(lower, MIN_AREA) && s.area <= upper);
 }
 
-// frames[0], frames[1] = calibration (all white)
-// frames[2..10] = 9 binary bit frames
-// frames[11] = end marker (all white)
+// ── Direct brightness sampling at a point ────────────────────────────
+
+function sampleBrightness(
+  imageData: ImageData,
+  cx: number,
+  cy: number,
+  radius: number
+): number {
+  const { data, width, height } = imageData;
+  let sum = 0, count = 0;
+  const r = Math.ceil(radius);
+
+  for (let dy = -r; dy <= r; dy++) {
+    for (let dx = -r; dx <= r; dx++) {
+      if (dx * dx + dy * dy > r * r) continue;
+      const x = Math.round(cx) + dx;
+      const y = Math.round(cy) + dy;
+      if (x < 0 || x >= width || y < 0 || y >= height) continue;
+      const idx = (y * width + x) * 4;
+      sum += (data[idx] + data[idx + 1] + data[idx + 2]) / 3;
+      count++;
+    }
+  }
+
+  return count > 0 ? sum / count : 0;
+}
+
+// ── Main processing pipeline ─────────────────────────────────────────
+
 export function processBlinkFrames(
   frames: ImageData[],
-  threshold?: number
-): DecodedDevice[] {
-  if (frames.length < 12) return [];
+  darkFrame?: ImageData | null,
+  maxDeviceIndex?: number
+): { decoded: DecodedDevice[]; diagnostics: CVDiagnostics } {
+  const diagnostics: CVDiagnostics = {
+    thresholdUsed: 0,
+    darkFrameUsed: !!darkFrame,
+    spotsInCal0: 0,
+    spotsInCal1: 0,
+    crossMatched: 0,
+    endMarkerValidated: 0,
+    decodedCount: 0,
+    rejectedLowSeparation: 0,
+    rejectedDuplicate: 0,
+    rejectedOutOfRange: 0,
+  };
 
-  const th = threshold ?? BRIGHTNESS_THRESHOLD;
+  if (frames.length < 12) {
+    console.log(`[CV] Not enough frames: ${frames.length} (need 12)`);
+    return { decoded: [], diagnostics };
+  }
 
-  // detect in both calibration frames, keep only spots present in both
-  const cal0 = filterSimilarSizedSpots(extractBrightSpots(frames[0], th));
-  const cal1 = filterSimilarSizedSpots(extractBrightSpots(frames[1], th));
+  // Step 1: Background subtraction
+  let processed: ImageData[];
+  if (darkFrame) {
+    console.log("[CV] Applying background subtraction");
+    processed = frames.map((f) => subtractBackground(f, darkFrame));
+  } else {
+    processed = frames;
+  }
 
-  // cross-match calibration frames — only keep spots visible in both
-  const matchCal = matchSpots(cal0, cal1);
+  // Step 2: Normalize contrast on calibration frames for threshold detection
+  const cal0Norm = normalizeContrast(processed[0]);
+  const cal1Norm = normalizeContrast(processed[1]);
+
+  // Step 3: Auto-threshold using Otsu's on the bg-subtracted calibration frames
+  const thresh0 = otsuThreshold(cal0Norm);
+  const thresh1 = otsuThreshold(cal1Norm);
+  let threshold = Math.min(thresh0, thresh1);
+
+  // Ensure threshold isn't absurdly low (would pick up noise)
+  threshold = Math.max(threshold, 30);
+  diagnostics.thresholdUsed = threshold;
+  console.log(`[CV] Auto-threshold: Otsu0=${thresh0}, Otsu1=${thresh1}, using=${threshold}`);
+
+  // Step 4: Detect spots in both calibration frames
+  const cal0Spots = filterSimilarSizedSpots(
+    extractBrightSpots(cal0Norm, threshold)
+  );
+  const cal1Spots = filterSimilarSizedSpots(
+    extractBrightSpots(cal1Norm, threshold)
+  );
+  diagnostics.spotsInCal0 = cal0Spots.length;
+  diagnostics.spotsInCal1 = cal1Spots.length;
+  console.log(`[CV] Cal0: ${cal0Spots.length} spots, Cal1: ${cal1Spots.length} spots`);
+
+  if (cal0Spots.length === 0 || cal1Spots.length === 0) {
+    console.log("[CV] No spots found in calibration frames — aborting");
+    return { decoded: [], diagnostics };
+  }
+
+  // Step 5: Cross-match calibration frames — only keep spots visible in both
+  const calMatch = matchSpots(cal0Spots, cal1Spots);
   const refSpots: DetectedSpot[] = [];
-  for (const [i0, i1] of matchCal.entries()) {
+  for (const [i0, i1] of calMatch.entries()) {
     refSpots.push({
-      x: (cal0[i0].x + cal1[i1].x) / 2,
-      y: (cal0[i0].y + cal1[i1].y) / 2,
-      area: (cal0[i0].area + cal1[i1].area) / 2,
+      x: (cal0Spots[i0].x + cal1Spots[i1].x) / 2,
+      y: (cal0Spots[i0].y + cal1Spots[i1].y) / 2,
+      area: (cal0Spots[i0].area + cal1Spots[i1].area) / 2,
+      avgBrightness: (cal0Spots[i0].avgBrightness + cal1Spots[i1].avgBrightness) / 2,
     });
   }
+  diagnostics.crossMatched = refSpots.length;
+  console.log(`[CV] Cross-matched: ${refSpots.length} spots present in both calibration frames`);
 
-  console.log(`[CV] Cal0: ${cal0.length} spots, Cal1: ${cal1.length} spots, Cross-matched: ${refSpots.length}`);
+  if (refSpots.length === 0) {
+    console.log("[CV] No cross-matched spots — aborting");
+    return { decoded: [], diagnostics };
+  }
 
-  if (refSpots.length === 0) return [];
+  // Step 6: End-marker validation (frame 11 should also be all-white)
+  const endNorm = normalizeContrast(processed[11]);
+  const endSpots = extractBrightSpots(endNorm, threshold, MIN_AREA);
+  const endMatch = matchSpots(refSpots, endSpots);
 
-  const tracks: TrackedSpot[] = refSpots.map((s, i) => ({
-    id: i,
-    positions: [{ x: s.x, y: s.y }],
-    brightness: [],
-  }));
+  const validatedSpots: DetectedSpot[] = [];
+  for (const [ri] of endMatch.entries()) {
+    validatedSpots.push(refSpots[ri]);
+  }
+  diagnostics.endMarkerValidated = validatedSpots.length;
+  console.log(`[CV] End-marker validated: ${validatedSpots.length}/${refSpots.length} spots`);
 
-  for (let f = 2; f <= 10; f++) {
-    if (f >= frames.length) break;
+  // If end-marker validation removes too many, fall back to all cross-matched spots
+  const spotsToUse =
+    validatedSpots.length >= refSpots.length * 0.5
+      ? validatedSpots
+      : refSpots;
 
-    const spots = extractBrightSpots(frames[f], th);
-    const lastPositions: DetectedSpot[] = tracks.map((t) => {
-      const last = t.positions[t.positions.length - 1];
-      return { x: last.x, y: last.y, area: 0 };
-    });
+  if (spotsToUse === refSpots && validatedSpots.length < refSpots.length * 0.5) {
+    console.log(`[CV] End-marker too strict (${validatedSpots.length}/${refSpots.length}), using all cross-matched spots`);
+  }
 
-    const matches = matchSpots(lastPositions, spots);
-    let matched = 0;
+  // Step 7: Direct brightness sampling across ALL 12 frames
+  // Use the bg-subtracted (but NOT normalized) frames for consistent brightness
+  const sampleRadius = Math.max(
+    SAMPLE_RADIUS,
+    Math.ceil(Math.sqrt(spotsToUse[0]?.area ?? 16) / 2) + 2
+  );
+  console.log(`[CV] Sampling brightness with radius=${sampleRadius}`);
 
-    for (let ti = 0; ti < tracks.length; ti++) {
-      const ci = matches.get(ti);
-      if (ci !== undefined) {
-        tracks[ti].positions.push({
-          x: spots[ci].x,
-          y: spots[ci].y,
-        });
-        tracks[ti].brightness.push(true);
-        matched++;
-      } else {
-        tracks[ti].brightness.push(false);
-      }
+  type SpotTrack = {
+    spot: DetectedSpot;
+    frameBrightness: number[];
+  };
+
+  const tracks: SpotTrack[] = spotsToUse.map((spot) => {
+    const frameBrightness: number[] = [];
+    for (let f = 0; f < 12; f++) {
+      frameBrightness.push(
+        sampleBrightness(processed[f], spot.x, spot.y, sampleRadius)
+      );
     }
-    console.log(`[CV] Frame ${f}: ${spots.length} bright spots, ${matched}/${tracks.length} matched to tracks`);
-  }
+    return { spot, frameBrightness };
+  });
 
+  // Step 8: Per-spot adaptive binary decode
   const decoded: DecodedDevice[] = [];
+  const seenIndices = new Set<number>();
   const imgW = frames[0].width;
   const imgH = frames[0].height;
-  const seenIndices = new Set<number>();
+  let rejectedLowSep = 0;
+  let rejectedDup = 0;
+  let rejectedRange = 0;
 
   for (const track of tracks) {
-    if (track.brightness.length < MIN_BITS_REQUIRED) continue;
+    const binaryBrightness = track.frameBrightness.slice(2, 11); // frames 2-10 = 9 bits
 
+    // Per-spot threshold: midpoint between its own min and max
+    const maxB = Math.max(...binaryBrightness);
+    const minB = Math.min(...binaryBrightness);
+
+    if (maxB - minB < 5) {
+      // No variation — this isn't a blinking phone (static reflection)
+      rejectedLowSep++;
+      continue;
+    }
+
+    const spotThreshold = (maxB + minB) / 2;
+
+    // Decode 9-bit index
     let index = 0;
-    let bitsObserved = 0;
+    const bits: number[] = [];
     for (let bit = 0; bit < BINARY_BITS; bit++) {
-      if (bit < track.brightness.length) {
-        bitsObserved++;
-        if (track.brightness[bit]) {
-          index |= 1 << (BINARY_BITS - 1 - bit);
-        }
+      const isOn = binaryBrightness[bit] > spotThreshold;
+      bits.push(isOn ? 1 : 0);
+      if (isOn) {
+        index |= 1 << (BINARY_BITS - 1 - bit);
       }
     }
 
-    const confidence = bitsObserved / BINARY_BITS;
-    console.log(`[CV] Track ${track.id}: bits=[${track.brightness.map(b => b ? '1' : '0').join('')}] → index=${index} confidence=${confidence.toFixed(2)}`);
+    // Must have both on and off states (not all-same)
+    const onCount = bits.filter((b) => b === 1).length;
+    const offCount = bits.filter((b) => b === 0).length;
+    if (onCount === 0 || offCount === 0) {
+      rejectedLowSep++;
+      continue;
+    }
 
-    if (confidence < 1.0) continue;
-    if (seenIndices.has(index)) continue;
+    // Confidence: how well separated are the on/off states
+    const onValues = binaryBrightness.filter((_, i) => bits[i] === 1);
+    const offValues = binaryBrightness.filter((_, i) => bits[i] === 0);
+    const avgOn = onValues.reduce((s, v) => s + v, 0) / onValues.length;
+    const avgOff = offValues.reduce((s, v) => s + v, 0) / offValues.length;
+    const separation = maxB > 0 ? (avgOn - avgOff) / maxB : 0;
+
+    if (separation < MIN_SEPARATION) {
+      rejectedLowSep++;
+      continue;
+    }
+
+    // Check calibration brightness (frames 0,1 should be bright for this spot)
+    const calBrightness = (track.frameBrightness[0] + track.frameBrightness[1]) / 2;
+    if (calBrightness < spotThreshold) {
+      rejectedLowSep++;
+      continue;
+    }
+
+    // Filter by max device index
+    if (maxDeviceIndex !== undefined && index >= maxDeviceIndex) {
+      rejectedRange++;
+      continue;
+    }
+
+    // Deduplicate
+    if (seenIndices.has(index)) {
+      rejectedDup++;
+      continue;
+    }
     seenIndices.add(index);
 
-    const avgX =
-      track.positions.reduce((s, p) => s + p.x, 0) / track.positions.length;
-    const avgY =
-      track.positions.reduce((s, p) => s + p.y, 0) / track.positions.length;
+    const confidence = separation;
+
+    console.log(
+      `[CV] Track: bits=[${bits.join("")}] → index=${index} separation=${separation.toFixed(2)} cal=${calBrightness.toFixed(0)} range=[${minB.toFixed(0)},${maxB.toFixed(0)}]`
+    );
 
     decoded.push({
       deviceIndex: index,
-      nx: avgX / imgW,
-      nz: avgY / imgH,
-      side: avgX / imgW < 0.5 ? 0 : 1,
+      nx: track.spot.x / imgW,
+      nz: track.spot.y / imgH,
+      side: track.spot.x / imgW < 0.5 ? 0 : 1,
       confidence,
     });
   }
 
-  console.log(`[CV] Decoded ${decoded.length} devices. Indices: [${decoded.map(d => d.deviceIndex).join(', ')}]`);
-  return decoded;
+  diagnostics.decodedCount = decoded.length;
+  diagnostics.rejectedLowSeparation = rejectedLowSep;
+  diagnostics.rejectedDuplicate = rejectedDup;
+  diagnostics.rejectedOutOfRange = rejectedRange;
+
+  console.log(
+    `[CV] Final: ${decoded.length} decoded, rejected: ${rejectedLowSep} low-sep, ${rejectedDup} dup, ${rejectedRange} out-of-range`
+  );
+  console.log(
+    `[CV] Decoded indices: [${decoded.map((d) => d.deviceIndex).sort((a, b) => a - b).join(", ")}]`
+  );
+
+  return { decoded, diagnostics };
 }
+
+// ── Utility: extract frame from video element ────────────────────────
 
 export function extractFrameFromVideo(
   video: HTMLVideoElement,

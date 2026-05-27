@@ -1,9 +1,22 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { processBlinkFrames, extractFrameFromVideo, type DecodedDevice } from "@/lib/pixel-mob/cv";
+import {
+  processBlinkFrames,
+  extractFrameFromVideo,
+  type DecodedDevice,
+  type CVDiagnostics,
+} from "@/lib/pixel-mob/cv";
 
-type Phase = "idle" | "camera" | "syncing" | "waiting" | "recording" | "processing" | "results";
+type Phase =
+  | "idle"
+  | "camera"
+  | "dark_capture"
+  | "syncing"
+  | "waiting"
+  | "recording"
+  | "processing"
+  | "results";
 
 type TimestampedFrame = {
   imageData: ImageData;
@@ -13,8 +26,9 @@ type TimestampedFrame = {
 const ACCENT = "#ff006e";
 const BLINK_FRAME_MS = 500;
 const TOTAL_FRAMES = 12;
-const CAPTURE_FPS = 8;
-const FIXED_CAPTURE_DURATION = 14000; // 3s delay + 6s blink + 5s buffer
+const CAPTURE_FPS = 10;
+const FIXED_CAPTURE_DURATION = 14000;
+const DARK_FRAME_COUNT = 5;
 
 async function syncAdminClock(): Promise<number> {
   const samples: { offset: number; rtt: number }[] = [];
@@ -30,7 +44,9 @@ async function syncAdminClock(): Promise<number> {
   samples.sort((a, b) => a.rtt - b.rtt);
   const trimmed = samples.slice(2, 8);
   const offset = trimmed.reduce((s, x) => s + x.offset, 0) / trimmed.length;
-  console.log(`[SpatialReg] Clock sync: offset=${offset.toFixed(1)}ms (${samples.length} samples, best RTT=${samples[0].rtt.toFixed(0)}ms)`);
+  console.log(
+    `[SpatialReg] Clock sync: offset=${offset.toFixed(1)}ms (best RTT=${samples[0].rtt.toFixed(0)}ms)`
+  );
   return offset;
 }
 
@@ -40,7 +56,7 @@ function alignFramesToBlink(
 ): ImageData[] {
   const aligned: ImageData[] = [];
   for (let f = 0; f < TOTAL_FRAMES; f++) {
-    const targetTime = blinkStartAt + (f * BLINK_FRAME_MS) + (BLINK_FRAME_MS / 2);
+    const targetTime = blinkStartAt + f * BLINK_FRAME_MS + BLINK_FRAME_MS / 2;
     let best = frames[0];
     let bestDelta = Infinity;
     for (const frame of frames) {
@@ -51,9 +67,34 @@ function alignFramesToBlink(
       }
     }
     aligned.push(best.imageData);
-    console.log(`[SpatialReg] Align frame ${f}: target=${targetTime}, delta=${bestDelta.toFixed(0)}ms`);
+    console.log(
+      `[SpatialReg] Align frame ${f}: target=${targetTime}, delta=${bestDelta.toFixed(0)}ms`
+    );
   }
   return aligned;
+}
+
+function averageDarkFrames(frames: ImageData[]): ImageData {
+  if (frames.length === 1) return frames[0];
+  const w = frames[0].width;
+  const h = frames[0].height;
+  const out = new ImageData(w, h);
+  const n = frames.length;
+
+  for (let i = 0; i < out.data.length; i += 4) {
+    let r = 0, g = 0, b = 0;
+    for (const frame of frames) {
+      r += frame.data[i];
+      g += frame.data[i + 1];
+      b += frame.data[i + 2];
+    }
+    out.data[i] = Math.round(r / n);
+    out.data[i + 1] = Math.round(g / n);
+    out.data[i + 2] = Math.round(b / n);
+    out.data[i + 3] = 255;
+  }
+
+  return out;
 }
 
 export default function SpatialRegistration({
@@ -68,6 +109,7 @@ export default function SpatialRegistration({
   const [phase, setPhase] = useState<Phase>("idle");
   const [error, setError] = useState("");
   const [decoded, setDecoded] = useState<DecodedDevice[]>([]);
+  const [diagnostics, setDiagnostics] = useState<CVDiagnostics | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadResult, setUploadResult] = useState<string | null>(null);
   const [statusText, setStatusText] = useState("");
@@ -78,10 +120,15 @@ export default function SpatialRegistration({
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const framesRef = useRef<TimestampedFrame[]>([]);
+  const darkFrameRef = useRef<ImageData | null>(null);
   const clockOffsetRef = useRef(0);
   const deviceCountRef = useRef(512);
-  const captureIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const countdownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const captureIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
+    null
+  );
+  const countdownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
+    null
+  );
 
   const cleanup = useCallback(() => {
     if (streamRef.current) {
@@ -105,7 +152,11 @@ export default function SpatialRegistration({
     setPhase("camera");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } },
+        video: {
+          facingMode: "environment",
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
         audio: false,
       });
       streamRef.current = stream;
@@ -123,42 +174,7 @@ export default function SpatialRegistration({
   const startRecording = async () => {
     setError("");
     framesRef.current = [];
-
-    // Step 1: Sync admin clock
-    setPhase("syncing");
-    setStatusText("Syncing clock...");
-    console.log("[SpatialReg] Starting clock sync");
-    const offset = await syncAdminClock();
-    clockOffsetRef.current = offset;
-
-    // Step 2: Get device count (to filter impossible indices)
-    let deviceCount = 512;
-    try {
-      const stateRes = await fetch("/api/pixel-mob/state");
-      const stateData = await stateRes.json();
-      deviceCount = stateData.deviceCount || 512;
-      deviceCountRef.current = deviceCount;
-      console.log(`[SpatialReg] Device count: ${deviceCount}`);
-    } catch { /* use default */ }
-
-    // Step 3: Trigger blink cue on server
-    setStatusText("Triggering blink...");
-    console.log("[SpatialReg] Triggering blink cue");
-    let blinkStartAt: number;
-    try {
-      const res = await fetch("/api/pixel-mob/cue", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
-        body: JSON.stringify({ type: "blink_register" }),
-      });
-      const data = await res.json();
-      blinkStartAt = data.cue.startAt;
-      console.log(`[SpatialReg] Cue created: startAt=${blinkStartAt} (in ${blinkStartAt - Date.now() - offset}ms local)`);
-    } catch {
-      setError("Failed to trigger blink cue");
-      setPhase("camera");
-      return;
-    }
+    darkFrameRef.current = null;
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -167,16 +183,74 @@ export default function SpatialRegistration({
     canvas.width = video.videoWidth || 640;
     canvas.height = video.videoHeight || 480;
 
-    // Step 3: Wait for blink to start, showing countdown
-    setPhase("waiting");
-    const blinkEndAt = blinkStartAt + (TOTAL_FRAMES * BLINK_FRAME_MS);
+    // Step 1: Capture dark reference frames (phones are showing black "ready" screen)
+    setPhase("dark_capture");
+    setStatusText("Capturing background...");
+    console.log(
+      `[SpatialReg] Capturing ${DARK_FRAME_COUNT} dark reference frames`
+    );
 
-    const captureStartForCountdown = Date.now();
+    const darkFrames: ImageData[] = [];
+    for (let i = 0; i < DARK_FRAME_COUNT; i++) {
+      darkFrames.push(extractFrameFromVideo(video, canvas));
+      await new Promise((r) => setTimeout(r, 150));
+    }
+    darkFrameRef.current = averageDarkFrames(darkFrames);
+    console.log("[SpatialReg] Dark frame captured and averaged");
+
+    // Step 2: Sync admin clock
+    setPhase("syncing");
+    setStatusText("Syncing clock...");
+    const offset = await syncAdminClock();
+    clockOffsetRef.current = offset;
+
+    // Step 3: Get device count
+    let deviceCount = 512;
+    try {
+      const stateRes = await fetch("/api/pixel-mob/state");
+      const stateData = await stateRes.json();
+      deviceCount = stateData.deviceCount || 512;
+      deviceCountRef.current = deviceCount;
+      console.log(`[SpatialReg] Device count: ${deviceCount}`);
+    } catch {
+      /* use default */
+    }
+
+    // Step 4: Trigger blink cue
+    setStatusText("Triggering blink...");
+    console.log("[SpatialReg] Triggering blink cue");
+    let blinkStartAt: number;
+    try {
+      const res = await fetch("/api/pixel-mob/cue", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-key": adminKey,
+        },
+        body: JSON.stringify({ type: "blink_register" }),
+      });
+      const data = await res.json();
+      blinkStartAt = data.cue.startAt;
+      console.log(
+        `[SpatialReg] Cue created: startAt=${blinkStartAt} (in ${blinkStartAt - Date.now() - offset}ms local)`
+      );
+    } catch {
+      setError("Failed to trigger blink cue");
+      setPhase("camera");
+      return;
+    }
+
+    // Step 5: Capture frames with countdown UI
+    setPhase("waiting");
+
+    const captureStartLocal = Date.now();
     const updateCountdown = () => {
       const serverNow = Date.now() + clockOffsetRef.current;
       const secondsUntilBlink = Math.ceil((blinkStartAt - serverNow) / 1000);
-      const localElapsed = Date.now() - captureStartForCountdown;
-      const secondsLeft = Math.ceil((FIXED_CAPTURE_DURATION - localElapsed) / 1000);
+      const localElapsed = Date.now() - captureStartLocal;
+      const secondsLeft = Math.ceil(
+        (FIXED_CAPTURE_DURATION - localElapsed) / 1000
+      );
 
       if (secondsUntilBlink > 0) {
         setCountdown(secondsUntilBlink);
@@ -185,7 +259,9 @@ export default function SpatialRegistration({
         const blinkElapsed = serverNow - blinkStartAt;
         const blinkFrame = Math.floor(blinkElapsed / BLINK_FRAME_MS);
         if (blinkFrame < TOTAL_FRAMES) {
-          setStatusText(`Recording blink ${blinkFrame + 1}/${TOTAL_FRAMES} (${secondsLeft}s left)`);
+          setStatusText(
+            `Recording blink ${blinkFrame + 1}/${TOTAL_FRAMES} (${secondsLeft}s left)`
+          );
         } else if (secondsLeft > 0) {
           setStatusText(`Finishing capture... ${secondsLeft}s`);
         } else {
@@ -197,15 +273,12 @@ export default function SpatialRegistration({
     countdownIntervalRef.current = setInterval(updateCountdown, 200);
     updateCountdown();
 
-    // Step 4: Capture frames for a FIXED local duration
-    // Don't rely on server time to end capture — clock sync drift between
-    // admin phone and guest phones causes the camera to stop too early.
-    // Fixed duration: 3s delay + 6s blink + 5s buffer = 14s from cue creation.
     const capturedFrames: TimestampedFrame[] = [];
     const captureInterval = 1000 / CAPTURE_FPS;
-    const captureStartLocal = Date.now();
 
-    console.log(`[SpatialReg] Starting capture at ${CAPTURE_FPS} FPS for ${FIXED_CAPTURE_DURATION / 1000}s`);
+    console.log(
+      `[SpatialReg] Starting capture at ${CAPTURE_FPS} FPS for ${FIXED_CAPTURE_DURATION / 1000}s`
+    );
     setPhase("recording");
 
     captureIntervalRef.current = setInterval(() => {
@@ -215,7 +288,9 @@ export default function SpatialRegistration({
 
       const localElapsed = Date.now() - captureStartLocal;
       if (localElapsed >= FIXED_CAPTURE_DURATION) {
-        console.log(`[SpatialReg] Capture complete: ${capturedFrames.length} frames over ${(localElapsed / 1000).toFixed(1)}s (local clock)`);
+        console.log(
+          `[SpatialReg] Capture complete: ${capturedFrames.length} frames over ${(localElapsed / 1000).toFixed(1)}s`
+        );
         if (captureIntervalRef.current) {
           clearInterval(captureIntervalRef.current);
           captureIntervalRef.current = null;
@@ -230,30 +305,53 @@ export default function SpatialRegistration({
     }, captureInterval);
   };
 
-  const processFrames = (frames: TimestampedFrame[], blinkStartAt: number) => {
+  const processFrames = (
+    frames: TimestampedFrame[],
+    blinkStartAt: number
+  ) => {
     setPhase("processing");
     setStatusText(`Aligning ${frames.length} frames to blink timing...`);
 
-    console.log(`[SpatialReg] Processing: ${frames.length} frames, blinkStartAt=${blinkStartAt}`);
-    console.log(`[SpatialReg] Frame time range: ${frames[0].timestamp} to ${frames[frames.length - 1].timestamp}`);
-    console.log(`[SpatialReg] Blink window: ${blinkStartAt} to ${blinkStartAt + TOTAL_FRAMES * BLINK_FRAME_MS}`);
+    console.log(
+      `[SpatialReg] Processing: ${frames.length} frames, blinkStartAt=${blinkStartAt}`
+    );
+    console.log(
+      `[SpatialReg] Frame time range: ${frames[0].timestamp} to ${frames[frames.length - 1].timestamp}`
+    );
 
     const keyFrames = alignFramesToBlink(frames, blinkStartAt);
-    console.log(`[SpatialReg] Aligned ${keyFrames.length} key frames, running CV...`);
+    console.log(`[SpatialReg] Aligned ${keyFrames.length} key frames`);
+
+    setStatusText("Running detection...");
 
     const maxIdx = deviceCountRef.current;
-    const allResults = processBlinkFrames(keyFrames);
-    const results = allResults.filter(d => d.deviceIndex < maxIdx);
-    console.log(`[SpatialReg] CV result: ${allResults.length} raw, ${results.length} after filtering (maxIndex=${maxIdx})`);
+    const darkFrame = darkFrameRef.current;
 
-    setDecoded(results);
+    console.log(
+      `[SpatialReg] CV input: darkFrame=${!!darkFrame}, maxDeviceIndex=${maxIdx}`
+    );
+
+    const { decoded: allResults, diagnostics: diag } = processBlinkFrames(
+      keyFrames,
+      darkFrame,
+      maxIdx
+    );
+
+    console.log(
+      `[SpatialReg] CV result: ${allResults.length} decoded`
+    );
+
+    setDecoded(allResults);
+    setDiagnostics(diag);
     setPhase("results");
-    setStatusText(`${results.length} phones decoded`);
+    setStatusText(`${allResults.length} phones decoded`);
 
-    // draw preview with detected spots on a calibration frame
-    const calFrameIdx = frames.findIndex(f => f.timestamp >= blinkStartAt);
-    const refFrame = calFrameIdx >= 0 ? frames[calFrameIdx].imageData : frames[0].imageData;
-    drawPreview(refFrame, results);
+    const calFrameIdx = frames.findIndex((f) => f.timestamp >= blinkStartAt);
+    const refFrame =
+      calFrameIdx >= 0
+        ? frames[calFrameIdx].imageData
+        : frames[0].imageData;
+    drawPreview(refFrame, allResults);
   };
 
   const drawPreview = (refFrame: ImageData, spots: DecodedDevice[]) => {
@@ -291,7 +389,10 @@ export default function SpatialRegistration({
     try {
       const res = await fetch("/api/pixel-mob/map", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-key": adminKey,
+        },
         body: JSON.stringify({
           mappings: decoded.map((d) => ({
             deviceIndex: d.deviceIndex,
@@ -314,10 +415,12 @@ export default function SpatialRegistration({
     cleanup();
     setPhase("idle");
     setDecoded([]);
+    setDiagnostics(null);
     setError("");
     setUploadResult(null);
     setStatusText("");
     framesRef.current = [];
+    darkFrameRef.current = null;
   };
 
   const panel: React.CSSProperties = {
@@ -342,71 +445,163 @@ export default function SpatialRegistration({
 
   return (
     <div style={panel}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-        <h2 style={{ fontSize: 16, fontWeight: 700, margin: 0, color: "#fff" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 16,
+        }}
+      >
+        <h2
+          style={{ fontSize: 16, fontWeight: 700, margin: 0, color: "#fff" }}
+        >
           Spatial Registration
         </h2>
-        <button onClick={onClose} style={{ ...btn, background: "rgba(255,255,255,0.05)", color: "#666", padding: "4px 10px" }}>
+        <button
+          onClick={onClose}
+          style={{
+            ...btn,
+            background: "rgba(255,255,255,0.05)",
+            color: "#666",
+            padding: "4px 10px",
+          }}
+        >
           Close
         </button>
       </div>
 
       {error && (
-        <div style={{ background: "rgba(255,50,50,0.1)", border: "1px solid rgba(255,50,50,0.2)", borderRadius: 6, padding: "8px 12px", marginBottom: 12, fontSize: 11, color: "#f55" }}>
+        <div
+          style={{
+            background: "rgba(255,50,50,0.1)",
+            border: "1px solid rgba(255,50,50,0.2)",
+            borderRadius: 6,
+            padding: "8px 12px",
+            marginBottom: 12,
+            fontSize: 11,
+            color: "#f55",
+          }}
+        >
           {error}
         </div>
       )}
 
-      {/* Hidden processing canvas */}
       <canvas ref={canvasRef} style={{ display: "none" }} />
 
       {phase === "idle" && (
         <div style={{ textAlign: "center", padding: "20px 0" }}>
-          <p style={{ fontSize: 13, color: "#888", marginBottom: 16, lineHeight: 1.6 }}>
-            Point your camera at the audience. This will trigger all phones to blink their binary IDs,
-            then decode the camera feed to map each phone&apos;s physical position.
+          <p
+            style={{
+              fontSize: 13,
+              color: "#888",
+              marginBottom: 16,
+              lineHeight: 1.6,
+            }}
+          >
+            Point your camera at the audience. This will capture a background
+            reference, then trigger all phones to blink their binary IDs and
+            decode each phone&apos;s position.
           </p>
-          <button onClick={startCamera} style={{ ...btn, background: ACCENT, color: "#fff", padding: "10px 24px", fontSize: 13 }}>
+          <button
+            onClick={startCamera}
+            style={{
+              ...btn,
+              background: ACCENT,
+              color: "#fff",
+              padding: "10px 24px",
+              fontSize: 13,
+            }}
+          >
             Open Camera
           </button>
         </div>
       )}
 
-      {(phase === "camera" || phase === "syncing" || phase === "waiting" || phase === "recording") && (
+      {(phase === "camera" ||
+        phase === "dark_capture" ||
+        phase === "syncing" ||
+        phase === "waiting" ||
+        phase === "recording") && (
         <div>
-          <div style={{ position: "relative", borderRadius: 8, overflow: "hidden", marginBottom: 12, background: "#000" }}>
+          <div
+            style={{
+              position: "relative",
+              borderRadius: 8,
+              overflow: "hidden",
+              marginBottom: 12,
+              background: "#000",
+            }}
+          >
             <video
               ref={videoRef}
               playsInline
               muted
               style={{ width: "100%", display: "block" }}
             />
-            {/* Status overlay */}
             {phase !== "camera" && (
-              <div style={{
-                position: "absolute", inset: 0,
-                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                background: phase === "waiting" ? "rgba(0,0,0,0.5)" : "transparent",
-                pointerEvents: "none",
-              }}>
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background:
+                    phase === "waiting" || phase === "dark_capture"
+                      ? "rgba(0,0,0,0.5)"
+                      : "transparent",
+                  pointerEvents: "none",
+                }}
+              >
                 {phase === "waiting" && countdown > 0 && (
-                  <div style={{
-                    fontSize: 72, fontWeight: 900, color: ACCENT,
-                    textShadow: "0 0 30px rgba(255,0,110,0.5)",
-                  }}>
+                  <div
+                    style={{
+                      fontSize: 72,
+                      fontWeight: 900,
+                      color: ACCENT,
+                      textShadow: "0 0 30px rgba(255,0,110,0.5)",
+                    }}
+                  >
                     {countdown}
                   </div>
                 )}
-                <div style={{
-                  background: "rgba(0,0,0,0.7)", borderRadius: 6, padding: "6px 12px",
-                  fontSize: 12, color: "#fff", marginTop: 8,
-                  display: "flex", alignItems: "center", gap: 6,
-                }}>
+                <div
+                  style={{
+                    background: "rgba(0,0,0,0.7)",
+                    borderRadius: 6,
+                    padding: "6px 12px",
+                    fontSize: 12,
+                    color: "#fff",
+                    marginTop: 8,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                >
                   {phase === "recording" && (
-                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#f55", animation: "pulse 1s ease infinite" }} />
+                    <div
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: "50%",
+                        background: "#f55",
+                        animation: "pulse 1s ease infinite",
+                      }}
+                    />
                   )}
-                  {phase === "syncing" && (
-                    <div style={{ width: 12, height: 12, border: "2px solid rgba(255,255,255,0.2)", borderTopColor: ACCENT, borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                  {(phase === "syncing" || phase === "dark_capture") && (
+                    <div
+                      style={{
+                        width: 12,
+                        height: 12,
+                        border: "2px solid rgba(255,255,255,0.2)",
+                        borderTopColor: ACCENT,
+                        borderRadius: "50%",
+                        animation: "spin 0.8s linear infinite",
+                      }}
+                    />
                   )}
                   <span>{statusText}</span>
                 </div>
@@ -415,11 +610,26 @@ export default function SpatialRegistration({
           </div>
           <div style={{ display: "flex", gap: 8 }}>
             {phase === "camera" && (
-              <button onClick={startRecording} style={{ ...btn, background: ACCENT, color: "#fff", flex: 1 }}>
+              <button
+                onClick={startRecording}
+                style={{
+                  ...btn,
+                  background: ACCENT,
+                  color: "#fff",
+                  flex: 1,
+                }}
+              >
                 Start Registration
               </button>
             )}
-            <button onClick={reset} style={{ ...btn, background: "rgba(255,255,255,0.05)", color: "#888" }}>
+            <button
+              onClick={reset}
+              style={{
+                ...btn,
+                background: "rgba(255,255,255,0.05)",
+                color: "#888",
+              }}
+            >
               Cancel
             </button>
           </div>
@@ -432,11 +642,20 @@ export default function SpatialRegistration({
 
       {phase === "processing" && (
         <div style={{ textAlign: "center", padding: "30px 0" }}>
-          <div style={{
-            width: 36, height: 36, border: "3px solid rgba(255,255,255,0.1)", borderTopColor: ACCENT,
-            borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 16px",
-          }} />
-          <p style={{ fontSize: 13, color: "#888" }}>{statusText || `Processing ${framesRef.current.length} frames...`}</p>
+          <div
+            style={{
+              width: 36,
+              height: 36,
+              border: "3px solid rgba(255,255,255,0.1)",
+              borderTopColor: ACCENT,
+              borderRadius: "50%",
+              animation: "spin 0.8s linear infinite",
+              margin: "0 auto 16px",
+            }}
+          />
+          <p style={{ fontSize: 13, color: "#888" }}>
+            {statusText || `Processing ${framesRef.current.length} frames...`}
+          </p>
           <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
         </div>
       )}
@@ -444,24 +663,80 @@ export default function SpatialRegistration({
       {phase === "results" && (
         <div>
           <div style={{ marginBottom: 12 }}>
-            <canvas ref={previewCanvasRef} style={{ width: "100%", borderRadius: 8, display: "block" }} />
+            <canvas
+              ref={previewCanvasRef}
+              style={{ width: "100%", borderRadius: 8, display: "block" }}
+            />
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-            <span style={{ fontSize: 14, fontWeight: 700, color: decoded.length > 0 ? "#0f0" : "#f55" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              marginBottom: 12,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 14,
+                fontWeight: 700,
+                color: decoded.length > 0 ? "#0f0" : "#f55",
+              }}
+            >
               {decoded.length} phones decoded
             </span>
             {decoded.length > 0 && (
               <span style={{ fontSize: 11, color: "#888" }}>
-                Confidence: {(decoded.reduce((s, d) => s + d.confidence, 0) / decoded.length * 100).toFixed(0)}% avg
+                Avg confidence:{" "}
+                {(
+                  (decoded.reduce((s, d) => s + d.confidence, 0) /
+                    decoded.length) *
+                  100
+                ).toFixed(0)}
+                %
               </span>
             )}
             {decoded.length === 0 && (
               <span style={{ fontSize: 11, color: "#888" }}>
-                Try again with better lighting or camera angle
+                Try again — ensure phones are visible and blinking
               </span>
             )}
           </div>
+
+          {/* Diagnostics panel */}
+          {diagnostics && (
+            <div
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: 6,
+                padding: "8px 10px",
+                marginBottom: 12,
+                fontSize: 10,
+                color: "#666",
+                fontFamily: "monospace",
+                lineHeight: 1.8,
+              }}
+            >
+              <div>
+                Threshold: {diagnostics.thresholdUsed} (auto) | Background
+                subtracted: {diagnostics.darkFrameUsed ? "yes" : "no"}
+              </div>
+              <div>
+                Calibration spots: {diagnostics.spotsInCal0} /{" "}
+                {diagnostics.spotsInCal1} | Cross-matched:{" "}
+                {diagnostics.crossMatched} | End-validated:{" "}
+                {diagnostics.endMarkerValidated}
+              </div>
+              <div>
+                Decoded: {diagnostics.decodedCount} | Rejected: low-sep{" "}
+                {diagnostics.rejectedLowSeparation}, dup{" "}
+                {diagnostics.rejectedDuplicate}, range{" "}
+                {diagnostics.rejectedOutOfRange}
+              </div>
+            </div>
+          )}
 
           <div style={{ display: "flex", gap: 8 }}>
             {decoded.length > 0 && (
@@ -469,24 +744,37 @@ export default function SpatialRegistration({
                 onClick={uploadMapping}
                 disabled={uploading}
                 style={{
-                  ...btn, background: "rgba(34,197,94,0.2)", color: "#22c55e",
-                  border: "1px solid rgba(34,197,94,0.3)", flex: 1,
+                  ...btn,
+                  background: "rgba(34,197,94,0.2)",
+                  color: "#22c55e",
+                  border: "1px solid rgba(34,197,94,0.3)",
+                  flex: 1,
                   opacity: uploading ? 0.5 : 1,
                 }}
               >
                 {uploading ? "Uploading..." : "Apply Mapping"}
               </button>
             )}
-            <button onClick={reset} style={{ ...btn, background: "rgba(255,255,255,0.05)", color: "#888" }}>
+            <button
+              onClick={reset}
+              style={{
+                ...btn,
+                background: "rgba(255,255,255,0.05)",
+                color: "#888",
+              }}
+            >
               Retry
             </button>
           </div>
 
           {uploadResult && (
-            <div style={{
-              marginTop: 10, fontSize: 11,
-              color: uploadResult.startsWith("Failed") ? "#f55" : "#0f0",
-            }}>
+            <div
+              style={{
+                marginTop: 10,
+                fontSize: 11,
+                color: uploadResult.startsWith("Failed") ? "#f55" : "#0f0",
+              }}
+            >
               {uploadResult}
             </div>
           )}
