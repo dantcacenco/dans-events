@@ -14,6 +14,7 @@ const ACCENT = "#ff006e";
 const BLINK_FRAME_MS = 500;
 const TOTAL_FRAMES = 12;
 const CAPTURE_FPS = 8;
+const FIXED_CAPTURE_DURATION = 14000; // 3s delay + 6s blink + 5s buffer
 
 async function syncAdminClock(): Promise<number> {
   const samples: { offset: number; rtt: number }[] = [];
@@ -170,9 +171,13 @@ export default function SpatialRegistration({
     setPhase("waiting");
     const blinkEndAt = blinkStartAt + (TOTAL_FRAMES * BLINK_FRAME_MS);
 
+    const captureStartForCountdown = Date.now();
     const updateCountdown = () => {
       const serverNow = Date.now() + clockOffsetRef.current;
       const secondsUntilBlink = Math.ceil((blinkStartAt - serverNow) / 1000);
+      const localElapsed = Date.now() - captureStartForCountdown;
+      const secondsLeft = Math.ceil((FIXED_CAPTURE_DURATION - localElapsed) / 1000);
+
       if (secondsUntilBlink > 0) {
         setCountdown(secondsUntilBlink);
         setStatusText(`Phones blink in ${secondsUntilBlink}s...`);
@@ -180,7 +185,9 @@ export default function SpatialRegistration({
         const blinkElapsed = serverNow - blinkStartAt;
         const blinkFrame = Math.floor(blinkElapsed / BLINK_FRAME_MS);
         if (blinkFrame < TOTAL_FRAMES) {
-          setStatusText(`Blink frame ${blinkFrame + 1}/${TOTAL_FRAMES}`);
+          setStatusText(`Recording blink ${blinkFrame + 1}/${TOTAL_FRAMES} (${secondsLeft}s left)`);
+        } else if (secondsLeft > 0) {
+          setStatusText(`Finishing capture... ${secondsLeft}s`);
         } else {
           setStatusText("Processing...");
         }
@@ -190,12 +197,15 @@ export default function SpatialRegistration({
     countdownIntervalRef.current = setInterval(updateCountdown, 200);
     updateCountdown();
 
-    // Step 4: Start capturing frames immediately (to get pre-blink baseline too)
-    // but the important part is we capture through the ENTIRE blink sequence
+    // Step 4: Capture frames for a FIXED local duration
+    // Don't rely on server time to end capture — clock sync drift between
+    // admin phone and guest phones causes the camera to stop too early.
+    // Fixed duration: 3s delay + 6s blink + 5s buffer = 14s from cue creation.
     const capturedFrames: TimestampedFrame[] = [];
     const captureInterval = 1000 / CAPTURE_FPS;
+    const captureStartLocal = Date.now();
 
-    console.log(`[SpatialReg] Starting capture at ${CAPTURE_FPS} FPS`);
+    console.log(`[SpatialReg] Starting capture at ${CAPTURE_FPS} FPS for ${FIXED_CAPTURE_DURATION / 1000}s`);
     setPhase("recording");
 
     captureIntervalRef.current = setInterval(() => {
@@ -203,9 +213,9 @@ export default function SpatialRegistration({
       const frame = extractFrameFromVideo(video, canvas);
       capturedFrames.push({ imageData: frame, timestamp: serverNow });
 
-      // Stop capturing 3 seconds after blink ends (buffer for clock sync drift)
-      if (serverNow > blinkEndAt + 3000) {
-        console.log(`[SpatialReg] Capture complete: ${capturedFrames.length} frames over ${((serverNow - capturedFrames[0].timestamp) / 1000).toFixed(1)}s`);
+      const localElapsed = Date.now() - captureStartLocal;
+      if (localElapsed >= FIXED_CAPTURE_DURATION) {
+        console.log(`[SpatialReg] Capture complete: ${capturedFrames.length} frames over ${(localElapsed / 1000).toFixed(1)}s (local clock)`);
         if (captureIntervalRef.current) {
           clearInterval(captureIntervalRef.current);
           captureIntervalRef.current = null;
