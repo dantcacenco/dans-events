@@ -280,10 +280,17 @@ export default function PhoneGrid() {
         console.log(`[TestGrid] Blink frame ${frame}/${BLINK_TOTAL_FRAMES}`);
       }
 
+      const detected = cue.detectedIndices ?? [];
       for (let i = 0; i < PHONE_COUNT; i++) {
         const phone = ps[i];
         if (!phone?.registered || !phone.position) {
           newColors.push("rgb(30,0,0)");
+          continue;
+        }
+
+        // Already-detected phones show green
+        if (detected.includes(phone.position.index)) {
+          newColors.push("rgb(0,255,0)");
           continue;
         }
 

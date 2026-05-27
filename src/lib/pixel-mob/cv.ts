@@ -34,9 +34,16 @@ export type CVDiagnostics = {
   spotsInCal0: number;
   spotsInCal1: number;
   crossMatched: number;
+  mergedSpots: number;
+  matchRadius: number;
+  mergeRadius: number;
   endMarkerValidated: number;
   spotsUsed: number;
+  expectedCount: number;
   decodedCount: number;
+  bestSweepSep: number;
+  bestSweepVar: number;
+  bestSweepScore: number;
   rejectedLowSeparation: number;
   rejectedDuplicate: number;
   rejectedOutOfRange: number;
@@ -49,10 +56,9 @@ export type CVDiagnostics = {
 
 const MIN_AREA = 4;
 const MAX_AREA = 50000;
-const MATCH_RADIUS = 60;
+const DEFAULT_MATCH_RADIUS = 60;
 const BINARY_BITS = 9;
 const SAMPLE_RADIUS = 6;
-const MIN_SEPARATION = 0.25;
 
 // ── Background subtraction ───────────────────────────────────────────
 
@@ -202,7 +208,7 @@ export function extractBrightSpots(
 function matchSpots(
   prev: DetectedSpot[],
   curr: DetectedSpot[],
-  radius = MATCH_RADIUS
+  radius = DEFAULT_MATCH_RADIUS
 ): Map<number, number> {
   const matches = new Map<number, number>();
   const usedCurr = new Set<number>();
@@ -316,7 +322,8 @@ function sampleBrightness(
 export function processBlinkFrames(
   frames: ImageData[],
   darkFrame?: ImageData | null,
-  maxDeviceIndex?: number
+  maxDeviceIndex?: number,
+  expectedCount?: number
 ): { decoded: DecodedDevice[]; diagnostics: CVDiagnostics } {
   const diagnostics: CVDiagnostics = {
     timestamp: Date.now(),
@@ -325,9 +332,16 @@ export function processBlinkFrames(
     spotsInCal0: 0,
     spotsInCal1: 0,
     crossMatched: 0,
+    mergedSpots: 0,
+    matchRadius: 0,
+    mergeRadius: 0,
     endMarkerValidated: 0,
     spotsUsed: 0,
+    expectedCount: expectedCount ?? 0,
     decodedCount: 0,
+    bestSweepSep: 0,
+    bestSweepVar: 0,
+    bestSweepScore: 0,
     rejectedLowSeparation: 0,
     rejectedDuplicate: 0,
     rejectedOutOfRange: 0,
@@ -383,7 +397,12 @@ export function processBlinkFrames(
   }
 
   // Step 5: Cross-match calibration frames — only keep spots visible in both
-  const calMatch = matchSpots(cal0Spots, cal1Spots);
+  // Adaptive match radius: 10x median spot radius (allows for camera movement between frames)
+  const allCalAreas = [...cal0Spots.map(s => s.area), ...cal1Spots.map(s => s.area)].sort((a, b) => a - b);
+  const medianCalArea = allCalAreas[Math.floor(allCalAreas.length / 2)] || 16;
+  const matchRadius = Math.max(15, Math.min(100, Math.ceil(Math.sqrt(medianCalArea / Math.PI) * 10)));
+  console.log(`[CV] Match radius: ${matchRadius} (median spot area=${medianCalArea.toFixed(0)})`);
+  const calMatch = matchSpots(cal0Spots, cal1Spots, matchRadius);
   const refSpots: DetectedSpot[] = [];
   for (const [i0, i1] of calMatch.entries()) {
     refSpots.push({
@@ -394,6 +413,7 @@ export function processBlinkFrames(
     });
   }
   diagnostics.crossMatched = refSpots.length;
+  diagnostics.matchRadius = matchRadius;
   console.log(`[CV] Cross-matched: ${refSpots.length} spots present in both calibration frames`);
 
   if (refSpots.length === 0) {
@@ -402,9 +422,15 @@ export function processBlinkFrames(
   }
 
   // Step 5b: Merge nearby spots — one phone can produce multiple detected spots
-  const mergedSpots = mergeNearbySpots(refSpots, MATCH_RADIUS);
-  console.log(`[CV] Merged ${refSpots.length} → ${mergedSpots.length} spots (radius=${MATCH_RADIUS})`);
+  // Use adaptive merge radius: 3x the median spot radius (avoids merging distinct phones)
+  const areas = refSpots.map(s => s.area).sort((a, b) => a - b);
+  const medianArea = areas[Math.floor(areas.length / 2)];
+  const mergeRadius = Math.max(8, Math.ceil(Math.sqrt(medianArea / Math.PI) * 3));
+  const mergedSpots = mergeNearbySpots(refSpots, mergeRadius);
+  console.log(`[CV] Merged ${refSpots.length} → ${mergedSpots.length} spots (medianArea=${medianArea.toFixed(0)}, mergeRadius=${mergeRadius})`);
 
+  diagnostics.mergedSpots = mergedSpots.length;
+  diagnostics.mergeRadius = mergeRadius;
   diagnostics.endMarkerValidated = mergedSpots.length;
   const spotsToUse = mergedSpots;
 
@@ -432,32 +458,36 @@ export function processBlinkFrames(
 
   diagnostics.spotsUsed = spotsToUse.length;
 
-  // Step 8: Per-spot adaptive binary decode with full tracing
-  const decoded: DecodedDevice[] = [];
-  const seenIndices = new Set<number>();
+  // Step 8: Compute per-spot signal data (decode ALL spots, filter later)
   const imgW = frames[0].width;
   const imgH = frames[0].height;
-  let rejectedLowSep = 0;
-  let rejectedDup = 0;
-  let rejectedRange = 0;
 
-  for (const track of tracks) {
+  type AnalyzedSpot = {
+    spot: DetectedSpot;
+    frameBrightness: number[];
+    binaryBrightness: number[];
+    calBrightness: number;
+    bits: number[];
+    index: number;
+    separation: number;
+    spotThreshold: number;
+    variation: number;
+    hasOnOff: boolean;
+  };
+
+  const analyzed: AnalyzedSpot[] = tracks.map((track) => {
     const binaryBrightness = track.frameBrightness.slice(2, 11);
     const calBrightness = (track.frameBrightness[0] + track.frameBrightness[1]) / 2;
-
     const maxB = Math.max(...binaryBrightness);
     const minB = Math.min(...binaryBrightness);
     const spotThreshold = (maxB + minB) / 2;
 
-    // Decode bits regardless of outcome (for tracing)
     let index = 0;
     const bits: number[] = [];
     for (let bit = 0; bit < BINARY_BITS; bit++) {
       const isOn = binaryBrightness[bit] > spotThreshold;
       bits.push(isOn ? 1 : 0);
-      if (isOn) {
-        index |= 1 << (BINARY_BITS - 1 - bit);
-      }
+      if (isOn) index |= 1 << (BINARY_BITS - 1 - bit);
     }
 
     const onCount = bits.filter((b) => b === 1).length;
@@ -468,71 +498,136 @@ export function processBlinkFrames(
     const avgOff = offValues.length > 0 ? offValues.reduce((s, v) => s + v, 0) / offValues.length : 0;
     const separation = maxB > 0 ? (avgOn - avgOff) / maxB : 0;
 
-    // Build trace for this spot
-    const trace: SpotTrace = {
-      x: Math.round(track.spot.x),
-      y: Math.round(track.spot.y),
-      area: Math.round(track.spot.area),
-      calBrightness: Math.round(calBrightness),
-      frameBrightness: track.frameBrightness.map((v) => Math.round(v)),
-      binaryBrightness: binaryBrightness.map((v) => Math.round(v)),
+    return {
+      spot: track.spot,
+      frameBrightness: track.frameBrightness,
+      binaryBrightness,
+      calBrightness,
       bits,
-      decodedIndex: index,
-      separation: Math.round(separation * 1000) / 1000,
-      spotThreshold: Math.round(spotThreshold),
+      index,
+      separation,
+      spotThreshold,
+      variation: maxB - minB,
+      hasOnOff: onCount > 0 && offCount > 0,
+    };
+  });
+
+  // Step 9: Adaptive parameter sweep — try multiple separation/variation thresholds
+  // When expectedCount is known, penalize distance from target to avoid over/under-filtering
+  const separationCandidates = [0.02, 0.05, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4];
+  const variationCandidates = [1, 2, 3, 5, 8, 12];
+  const maxIdx = maxDeviceIndex ?? 512;
+  const target = expectedCount ?? 0;
+
+  let bestDecoded: DecodedDevice[] = [];
+  let bestSep = 0;
+  let bestVar = 0;
+  let bestScore = -Infinity;
+
+  for (const minSep of separationCandidates) {
+    for (const minVar of variationCandidates) {
+      const seen = new Set<number>();
+      let unique = 0;
+      let dups = 0;
+
+      for (const a of analyzed) {
+        if (a.variation < minVar) continue;
+        if (!a.hasOnOff) continue;
+        if (a.separation < minSep) continue;
+        if (a.index >= maxIdx) continue;
+        if (seen.has(a.index)) { dups++; continue; }
+        seen.add(a.index);
+        unique++;
+      }
+
+      let score: number;
+      if (target > 0) {
+        // Penalize distance from expected count + duplicates
+        score = unique - Math.abs(unique - target) * 0.5 - dups * 0.3;
+      } else {
+        score = unique - dups * 0.1;
+      }
+      if (score > bestScore) {
+        bestScore = score;
+        bestSep = minSep;
+        bestVar = minVar;
+      }
+    }
+  }
+
+  console.log(`[CV] Expected count: ${target || "unknown"}`);
+  console.log(`[CV] Parameter sweep: best sep=${bestSep}, var=${bestVar}, score=${bestScore.toFixed(1)}`);
+  diagnostics.bestSweepSep = bestSep;
+  diagnostics.bestSweepVar = bestVar;
+  diagnostics.bestSweepScore = Math.round(bestScore * 10) / 10;
+
+  // Step 10: Apply best parameters and build final results with traces
+  const decoded: DecodedDevice[] = [];
+  const seenIndices = new Set<number>();
+  let rejectedLowSep = 0;
+  let rejectedDup = 0;
+  let rejectedRange = 0;
+
+  for (const a of analyzed) {
+    const trace: SpotTrace = {
+      x: Math.round(a.spot.x),
+      y: Math.round(a.spot.y),
+      area: Math.round(a.spot.area),
+      calBrightness: Math.round(a.calBrightness),
+      frameBrightness: a.frameBrightness.map((v) => Math.round(v)),
+      binaryBrightness: a.binaryBrightness.map((v) => Math.round(v)),
+      bits: a.bits,
+      decodedIndex: a.index,
+      separation: Math.round(a.separation * 1000) / 1000,
+      spotThreshold: Math.round(a.spotThreshold),
       outcome: "decoded",
     };
 
-    // Apply filters and set outcome
-    if (maxB - minB < 5) {
+    if (a.variation < bestVar) {
       trace.outcome = "no_variation";
       rejectedLowSep++;
       diagnostics.spotTraces.push(trace);
       continue;
     }
 
-    if (onCount === 0 || offCount === 0) {
+    if (!a.hasOnOff) {
       trace.outcome = "no_variation";
       rejectedLowSep++;
       diagnostics.spotTraces.push(trace);
       continue;
     }
 
-    if (separation < MIN_SEPARATION) {
+    if (a.separation < bestSep) {
       trace.outcome = "low_separation";
       rejectedLowSep++;
       diagnostics.spotTraces.push(trace);
       continue;
     }
 
-    if (maxDeviceIndex !== undefined && index >= maxDeviceIndex) {
+    if (a.index >= maxIdx) {
       trace.outcome = "out_of_range";
       rejectedRange++;
       diagnostics.spotTraces.push(trace);
       continue;
     }
 
-    if (seenIndices.has(index)) {
+    if (seenIndices.has(a.index)) {
       trace.outcome = "duplicate";
       rejectedDup++;
       diagnostics.spotTraces.push(trace);
       continue;
     }
 
-    seenIndices.add(index);
+    seenIndices.add(a.index);
     trace.outcome = "decoded";
     diagnostics.spotTraces.push(trace);
 
-    console.log(
-      `[CV] Track: bits=[${bits.join("")}] → index=${index} sep=${separation.toFixed(2)} cal=${calBrightness.toFixed(0)} range=[${minB.toFixed(0)},${maxB.toFixed(0)}]`
-    );
-
     decoded.push({
-      deviceIndex: index,
-      nx: track.spot.x / imgW,
-      nz: track.spot.y / imgH,
-      side: track.spot.x / imgW < 0.5 ? 0 : 1,
-      confidence: separation,
+      deviceIndex: a.index,
+      nx: a.spot.x / imgW,
+      nz: a.spot.y / imgH,
+      side: a.spot.x / imgW < 0.5 ? 0 : 1,
+      confidence: a.separation,
     });
   }
 
@@ -542,7 +637,7 @@ export function processBlinkFrames(
   diagnostics.rejectedOutOfRange = rejectedRange;
 
   console.log(
-    `[CV] Final: ${decoded.length} decoded, rejected: ${rejectedLowSep} low-sep, ${rejectedDup} dup, ${rejectedRange} out-of-range`
+    `[CV] Final: ${decoded.length} decoded (sep>=${bestSep}, var>=${bestVar}), rejected: ${rejectedLowSep} low-sep, ${rejectedDup} dup, ${rejectedRange} out-of-range`
   );
   console.log(
     `[CV] Decoded indices: [${decoded.map((d) => d.deviceIndex).sort((a, b) => a - b).join(", ")}]`

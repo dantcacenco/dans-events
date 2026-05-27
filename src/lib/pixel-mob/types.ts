@@ -45,4 +45,5 @@ export type Cue = {
   startAt: number;
   duration: number;
   type?: "play" | "blink_register";
+  detectedIndices?: number[];
 };

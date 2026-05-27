@@ -116,6 +116,7 @@ export default function SpatialRegistration({
   const [uploadResult, setUploadResult] = useState<string | null>(null);
   const [statusText, setStatusText] = useState("");
   const [countdown, setCountdown] = useState(0);
+  const [passNumber, setPassNumber] = useState(1);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -125,6 +126,7 @@ export default function SpatialRegistration({
   const darkFrameRef = useRef<ImageData | null>(null);
   const clockOffsetRef = useRef(0);
   const deviceCountRef = useRef(512);
+  const allDecodedRef = useRef<DecodedDevice[]>([]);
   const captureIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
     null
   );
@@ -173,10 +175,9 @@ export default function SpatialRegistration({
     }
   };
 
-  const startRecording = async () => {
+  const startRecording = async (retryDetected?: number[]) => {
     setError("");
     framesRef.current = [];
-    darkFrameRef.current = null;
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -185,9 +186,18 @@ export default function SpatialRegistration({
     canvas.width = video.videoWidth || 640;
     canvas.height = video.videoHeight || 480;
 
-    // Step 1: Capture dark reference frames (phones are showing black "ready" screen)
+    const isRetry = retryDetected && retryDetected.length > 0;
+    if (isRetry) {
+      setPassNumber((p) => p + 1);
+      console.log(`[SpatialReg] Retry pass — ${retryDetected.length} already detected`);
+    } else {
+      allDecodedRef.current = [];
+      setPassNumber(1);
+    }
+
+    // Step 1: Capture dark reference frames
     setPhase("dark_capture");
-    setStatusText("Capturing background...");
+    setStatusText(isRetry ? "Recapturing background..." : "Capturing background...");
     console.log(
       `[SpatialReg] Capturing ${DARK_FRAME_COUNT} dark reference frames`
     );
@@ -218,18 +228,20 @@ export default function SpatialRegistration({
       /* use default */
     }
 
-    // Step 4: Trigger blink cue
-    setStatusText("Triggering blink...");
-    console.log("[SpatialReg] Triggering blink cue");
+    // Step 4: Trigger blink cue (with detectedIndices on retry)
+    setStatusText(isRetry ? "Triggering retry blink..." : "Triggering blink...");
+    console.log(`[SpatialReg] Triggering blink cue${isRetry ? ` (retry, ${retryDetected.length} detected)` : ""}`);
     let blinkStartAt: number;
     try {
+      const cueBody: Record<string, unknown> = { type: "blink_register" };
+      if (isRetry) cueBody.detectedIndices = retryDetected;
       const res = await fetch("/api/pixel-mob/cue", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "x-admin-key": adminKey,
         },
-        body: JSON.stringify({ type: "blink_register" }),
+        body: JSON.stringify(cueBody),
       });
       const data = await res.json();
       blinkStartAt = data.cue.startAt;
@@ -336,6 +348,7 @@ export default function SpatialRegistration({
     const { decoded: allResults, diagnostics: diag } = processBlinkFrames(
       keyFrames,
       darkFrame,
+      maxIdx,
       maxIdx
     );
 
@@ -346,7 +359,17 @@ export default function SpatialRegistration({
     diag.alignmentDeltas = deltas;
 
     console.log(
-      `[SpatialReg] CV result: ${allResults.length} decoded`
+      `[SpatialReg] CV result: ${allResults.length} decoded (pass ${passNumber})`
+    );
+
+    // Merge with previous passes (avoid duplicates)
+    const existingIndices = new Set(allDecodedRef.current.map((d) => d.deviceIndex));
+    const newDevices = allResults.filter((d) => !existingIndices.has(d.deviceIndex));
+    const merged = [...allDecodedRef.current, ...newDevices];
+    allDecodedRef.current = merged;
+
+    console.log(
+      `[SpatialReg] Total decoded after pass ${passNumber}: ${merged.length} (${newDevices.length} new this pass)`
     );
 
     // Upload diagnostics to server
@@ -356,10 +379,10 @@ export default function SpatialRegistration({
       body: JSON.stringify(diag),
     }).catch(() => {/* best-effort */});
 
-    setDecoded(allResults);
+    setDecoded(merged);
     setDiagnostics(diag);
     setPhase("results");
-    setStatusText(`${allResults.length} phones decoded`);
+    setStatusText(`${merged.length} phones decoded (pass ${passNumber}, +${newDevices.length} new)`);
 
     const calFrameIdx = frames.findIndex((f) => f.timestamp >= blinkStartAt);
     const refFrame =
@@ -626,7 +649,7 @@ export default function SpatialRegistration({
           <div style={{ display: "flex", gap: 8 }}>
             {phase === "camera" && (
               <button
-                onClick={startRecording}
+                onClick={() => startRecording()}
                 style={{
                   ...btn,
                   background: ACCENT,
@@ -735,25 +758,38 @@ export default function SpatialRegistration({
               }}
             >
               <div>
-                Threshold: {diagnostics.thresholdUsed} (auto) | Background
-                subtracted: {diagnostics.darkFrameUsed ? "yes" : "no"}
+                Threshold: {diagnostics.thresholdUsed} (auto) | BG sub: {diagnostics.darkFrameUsed ? "yes" : "no"} | Pass {passNumber}
               </div>
               <div>
-                Calibration spots: {diagnostics.spotsInCal0} /{" "}
-                {diagnostics.spotsInCal1} | Cross-matched:{" "}
-                {diagnostics.crossMatched} | End-validated:{" "}
-                {diagnostics.endMarkerValidated}
+                Cal: {diagnostics.spotsInCal0}/{diagnostics.spotsInCal1} | Match: {diagnostics.crossMatched} (r={diagnostics.matchRadius}) | Merged: {diagnostics.mergedSpots} (r={diagnostics.mergeRadius})
               </div>
               <div>
-                Decoded: {diagnostics.decodedCount} | Rejected: low-sep{" "}
-                {diagnostics.rejectedLowSeparation}, dup{" "}
-                {diagnostics.rejectedDuplicate}, range{" "}
-                {diagnostics.rejectedOutOfRange}
+                Sweep: sep={diagnostics.bestSweepSep} var={diagnostics.bestSweepVar} score={diagnostics.bestSweepScore} | Expected: {diagnostics.expectedCount}
+              </div>
+              <div>
+                Decoded: {diagnostics.decodedCount} | Rejected: sep {diagnostics.rejectedLowSeparation}, dup {diagnostics.rejectedDuplicate}, range {diagnostics.rejectedOutOfRange}
               </div>
             </div>
           )}
 
-          <div style={{ display: "flex", gap: 8 }}>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {decoded.length > 0 && decoded.length < deviceCountRef.current && (
+              <button
+                onClick={() => {
+                  const detectedIndices = decoded.map((d) => d.deviceIndex);
+                  startRecording(detectedIndices);
+                }}
+                style={{
+                  ...btn,
+                  background: "rgba(255,165,0,0.2)",
+                  color: "#ffa500",
+                  border: "1px solid rgba(255,165,0,0.3)",
+                  flex: 1,
+                }}
+              >
+                Retry {deviceCountRef.current - decoded.length} Undetected
+              </button>
+            )}
             {decoded.length > 0 && (
               <button
                 onClick={uploadMapping}
@@ -778,7 +814,7 @@ export default function SpatialRegistration({
                 color: "#888",
               }}
             >
-              Retry
+              Start Over
             </button>
           </div>
 

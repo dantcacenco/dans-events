@@ -385,6 +385,24 @@ export default function GuestScreen() {
 
     // Compute 9-bit binary representation from position index
     const index = pos.index;
+
+    // If this phone was already detected in a previous pass, show green
+    if (cue.detectedIndices?.includes(index)) {
+      console.log(`[GuestBlink] Already detected (index=${index}), showing green`);
+      setBgColor("rgb(0,255,0)");
+      setBgOpacity(1);
+      const endCheck = setInterval(() => {
+        const serverNow = Date.now() + offsetRef.current;
+        if (serverNow - cue.startAt > cue.duration) {
+          clearInterval(endCheck);
+          setBgColor("rgb(0,0,0)");
+          setBgOpacity(0);
+          setStage("ready");
+        }
+      }, 500);
+      return () => clearInterval(endCheck);
+    }
+
     const bits: number[] = [];
     for (let i = 8; i >= 0; i--) {
       bits.push((index >> i) & 1);
