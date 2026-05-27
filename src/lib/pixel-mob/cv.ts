@@ -405,30 +405,10 @@ export function processBlinkFrames(
   const mergedSpots = mergeNearbySpots(refSpots, MATCH_RADIUS);
   console.log(`[CV] Merged ${refSpots.length} → ${mergedSpots.length} spots (radius=${MATCH_RADIUS})`);
 
-  // Step 6: End-marker validation (frame 11 should also be all-white)
-  const endNorm = normalizeContrast(processed[11]);
-  const endSpots = extractBrightSpots(endNorm, threshold, MIN_AREA);
-  const endMatch = matchSpots(mergedSpots, endSpots);
-
-  const validatedSpots: DetectedSpot[] = [];
-  for (const [ri] of endMatch.entries()) {
-    validatedSpots.push(mergedSpots[ri]);
-  }
-  diagnostics.endMarkerValidated = validatedSpots.length;
-  console.log(`[CV] End-marker validated: ${validatedSpots.length}/${mergedSpots.length} spots`);
-
-  // If end-marker validation removes too many, fall back to all merged spots
-  const spotsToUse =
-    validatedSpots.length >= mergedSpots.length * 0.5
-      ? validatedSpots
-      : mergedSpots;
-
-  if (spotsToUse === mergedSpots && validatedSpots.length < mergedSpots.length * 0.5) {
-    console.log(`[CV] End-marker too strict (${validatedSpots.length}/${mergedSpots.length}), using all merged spots`);
-  }
+  diagnostics.endMarkerValidated = mergedSpots.length;
+  const spotsToUse = mergedSpots;
 
   // Step 7: Direct brightness sampling across ALL 12 frames
-  // Use the bg-subtracted (but NOT normalized) frames for consistent brightness
   const sampleRadius = Math.max(
     SAMPLE_RADIUS,
     Math.ceil(Math.sqrt(spotsToUse[0]?.area ?? 16) / 2) + 2
@@ -520,13 +500,6 @@ export function processBlinkFrames(
 
     if (separation < MIN_SEPARATION) {
       trace.outcome = "low_separation";
-      rejectedLowSep++;
-      diagnostics.spotTraces.push(trace);
-      continue;
-    }
-
-    if (calBrightness < spotThreshold) {
-      trace.outcome = "low_cal";
       rejectedLowSep++;
       diagnostics.spotTraces.push(trace);
       continue;
