@@ -53,8 +53,9 @@ async function syncAdminClock(): Promise<number> {
 function alignFramesToBlink(
   frames: TimestampedFrame[],
   blinkStartAt: number
-): ImageData[] {
+): { aligned: ImageData[]; deltas: number[] } {
   const aligned: ImageData[] = [];
+  const deltas: number[] = [];
   for (let f = 0; f < TOTAL_FRAMES; f++) {
     const targetTime = blinkStartAt + f * BLINK_FRAME_MS + BLINK_FRAME_MS / 2;
     let best = frames[0];
@@ -67,11 +68,12 @@ function alignFramesToBlink(
       }
     }
     aligned.push(best.imageData);
+    deltas.push(Math.round(bestDelta));
     console.log(
       `[SpatialReg] Align frame ${f}: target=${targetTime}, delta=${bestDelta.toFixed(0)}ms`
     );
   }
-  return aligned;
+  return { aligned, deltas };
 }
 
 function averageDarkFrames(frames: ImageData[]): ImageData {
@@ -319,7 +321,7 @@ export default function SpatialRegistration({
       `[SpatialReg] Frame time range: ${frames[0].timestamp} to ${frames[frames.length - 1].timestamp}`
     );
 
-    const keyFrames = alignFramesToBlink(frames, blinkStartAt);
+    const { aligned: keyFrames, deltas } = alignFramesToBlink(frames, blinkStartAt);
     console.log(`[SpatialReg] Aligned ${keyFrames.length} key frames`);
 
     setStatusText("Running detection...");
@@ -337,9 +339,22 @@ export default function SpatialRegistration({
       maxIdx
     );
 
+    // Enrich diagnostics with capture metadata
+    diag.frameCount = frames.length;
+    diag.captureSeconds = Math.round((frames[frames.length - 1].timestamp - frames[0].timestamp) / 1000);
+    diag.clockOffset = Math.round(clockOffsetRef.current);
+    diag.alignmentDeltas = deltas;
+
     console.log(
       `[SpatialReg] CV result: ${allResults.length} decoded`
     );
+
+    // Upload diagnostics to server
+    fetch("/api/pixel-mob/diagnostics", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(diag),
+    }).catch(() => {/* best-effort */});
 
     setDecoded(allResults);
     setDiagnostics(diag);

@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       width: width ?? 1,
       palette: palette ?? "white",
     },
-    startAt: Date.now() + (type === "blink_register" ? 3000 : 5000),
+    startAt: Date.now() + (type === "blink_register" ? 3000 : 500),
     duration: type === "blink_register" ? 6000 : (duration ?? 30000),
     type: type ?? "play",
   };

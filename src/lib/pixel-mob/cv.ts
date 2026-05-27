@@ -13,17 +13,38 @@ export type DecodedDevice = {
   confidence: number;
 };
 
+export type SpotTrace = {
+  x: number;
+  y: number;
+  area: number;
+  calBrightness: number;
+  frameBrightness: number[];
+  binaryBrightness: number[];
+  bits: number[];
+  decodedIndex: number;
+  separation: number;
+  spotThreshold: number;
+  outcome: "decoded" | "low_separation" | "no_variation" | "low_cal" | "duplicate" | "out_of_range";
+};
+
 export type CVDiagnostics = {
+  timestamp: number;
   thresholdUsed: number;
   darkFrameUsed: boolean;
   spotsInCal0: number;
   spotsInCal1: number;
   crossMatched: number;
   endMarkerValidated: number;
+  spotsUsed: number;
   decodedCount: number;
   rejectedLowSeparation: number;
   rejectedDuplicate: number;
   rejectedOutOfRange: number;
+  frameCount: number;
+  captureSeconds: number;
+  clockOffset: number;
+  alignmentDeltas: number[];
+  spotTraces: SpotTrace[];
 };
 
 const MIN_AREA = 4;
@@ -258,16 +279,23 @@ export function processBlinkFrames(
   maxDeviceIndex?: number
 ): { decoded: DecodedDevice[]; diagnostics: CVDiagnostics } {
   const diagnostics: CVDiagnostics = {
+    timestamp: Date.now(),
     thresholdUsed: 0,
     darkFrameUsed: !!darkFrame,
     spotsInCal0: 0,
     spotsInCal1: 0,
     crossMatched: 0,
     endMarkerValidated: 0,
+    spotsUsed: 0,
     decodedCount: 0,
     rejectedLowSeparation: 0,
     rejectedDuplicate: 0,
     rejectedOutOfRange: 0,
+    frameCount: frames.length,
+    captureSeconds: 0,
+    clockOffset: 0,
+    alignmentDeltas: [],
+    spotTraces: [],
   };
 
   if (frames.length < 12) {
@@ -378,7 +406,9 @@ export function processBlinkFrames(
     return { spot, frameBrightness };
   });
 
-  // Step 8: Per-spot adaptive binary decode
+  diagnostics.spotsUsed = spotsToUse.length;
+
+  // Step 8: Per-spot adaptive binary decode with full tracing
   const decoded: DecodedDevice[] = [];
   const seenIndices = new Set<number>();
   const imgW = frames[0].width;
@@ -388,21 +418,14 @@ export function processBlinkFrames(
   let rejectedRange = 0;
 
   for (const track of tracks) {
-    const binaryBrightness = track.frameBrightness.slice(2, 11); // frames 2-10 = 9 bits
+    const binaryBrightness = track.frameBrightness.slice(2, 11);
+    const calBrightness = (track.frameBrightness[0] + track.frameBrightness[1]) / 2;
 
-    // Per-spot threshold: midpoint between its own min and max
     const maxB = Math.max(...binaryBrightness);
     const minB = Math.min(...binaryBrightness);
-
-    if (maxB - minB < 5) {
-      // No variation — this isn't a blinking phone (static reflection)
-      rejectedLowSep++;
-      continue;
-    }
-
     const spotThreshold = (maxB + minB) / 2;
 
-    // Decode 9-bit index
+    // Decode bits regardless of outcome (for tracing)
     let index = 0;
     const bits: number[] = [];
     for (let bit = 0; bit < BINARY_BITS; bit++) {
@@ -413,50 +436,78 @@ export function processBlinkFrames(
       }
     }
 
-    // Must have both on and off states (not all-same)
     const onCount = bits.filter((b) => b === 1).length;
     const offCount = bits.filter((b) => b === 0).length;
-    if (onCount === 0 || offCount === 0) {
-      rejectedLowSep++;
-      continue;
-    }
-
-    // Confidence: how well separated are the on/off states
     const onValues = binaryBrightness.filter((_, i) => bits[i] === 1);
     const offValues = binaryBrightness.filter((_, i) => bits[i] === 0);
-    const avgOn = onValues.reduce((s, v) => s + v, 0) / onValues.length;
-    const avgOff = offValues.reduce((s, v) => s + v, 0) / offValues.length;
+    const avgOn = onValues.length > 0 ? onValues.reduce((s, v) => s + v, 0) / onValues.length : 0;
+    const avgOff = offValues.length > 0 ? offValues.reduce((s, v) => s + v, 0) / offValues.length : 0;
     const separation = maxB > 0 ? (avgOn - avgOff) / maxB : 0;
 
+    // Build trace for this spot
+    const trace: SpotTrace = {
+      x: Math.round(track.spot.x),
+      y: Math.round(track.spot.y),
+      area: Math.round(track.spot.area),
+      calBrightness: Math.round(calBrightness),
+      frameBrightness: track.frameBrightness.map((v) => Math.round(v)),
+      binaryBrightness: binaryBrightness.map((v) => Math.round(v)),
+      bits,
+      decodedIndex: index,
+      separation: Math.round(separation * 1000) / 1000,
+      spotThreshold: Math.round(spotThreshold),
+      outcome: "decoded",
+    };
+
+    // Apply filters and set outcome
+    if (maxB - minB < 5) {
+      trace.outcome = "no_variation";
+      rejectedLowSep++;
+      diagnostics.spotTraces.push(trace);
+      continue;
+    }
+
+    if (onCount === 0 || offCount === 0) {
+      trace.outcome = "no_variation";
+      rejectedLowSep++;
+      diagnostics.spotTraces.push(trace);
+      continue;
+    }
+
     if (separation < MIN_SEPARATION) {
+      trace.outcome = "low_separation";
       rejectedLowSep++;
+      diagnostics.spotTraces.push(trace);
       continue;
     }
 
-    // Check calibration brightness (frames 0,1 should be bright for this spot)
-    const calBrightness = (track.frameBrightness[0] + track.frameBrightness[1]) / 2;
     if (calBrightness < spotThreshold) {
+      trace.outcome = "low_cal";
       rejectedLowSep++;
+      diagnostics.spotTraces.push(trace);
       continue;
     }
 
-    // Filter by max device index
     if (maxDeviceIndex !== undefined && index >= maxDeviceIndex) {
+      trace.outcome = "out_of_range";
       rejectedRange++;
+      diagnostics.spotTraces.push(trace);
       continue;
     }
 
-    // Deduplicate
     if (seenIndices.has(index)) {
+      trace.outcome = "duplicate";
       rejectedDup++;
+      diagnostics.spotTraces.push(trace);
       continue;
     }
-    seenIndices.add(index);
 
-    const confidence = separation;
+    seenIndices.add(index);
+    trace.outcome = "decoded";
+    diagnostics.spotTraces.push(trace);
 
     console.log(
-      `[CV] Track: bits=[${bits.join("")}] → index=${index} separation=${separation.toFixed(2)} cal=${calBrightness.toFixed(0)} range=[${minB.toFixed(0)},${maxB.toFixed(0)}]`
+      `[CV] Track: bits=[${bits.join("")}] → index=${index} sep=${separation.toFixed(2)} cal=${calBrightness.toFixed(0)} range=[${minB.toFixed(0)},${maxB.toFixed(0)}]`
     );
 
     decoded.push({
@@ -464,7 +515,7 @@ export function processBlinkFrames(
       nx: track.spot.x / imgW,
       nz: track.spot.y / imgH,
       side: track.spot.x / imgW < 0.5 ? 0 : 1,
-      confidence,
+      confidence: separation,
     });
   }
 
