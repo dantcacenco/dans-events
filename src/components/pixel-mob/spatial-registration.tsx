@@ -17,7 +17,7 @@ const CAPTURE_FPS = 8;
 
 async function syncAdminClock(): Promise<number> {
   const samples: { offset: number; rtt: number }[] = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 10; i++) {
     const t1 = performance.now();
     const res = await fetch("/api/pixel-mob/sync");
     const t2 = performance.now();
@@ -27,9 +27,9 @@ async function syncAdminClock(): Promise<number> {
     await new Promise((r) => setTimeout(r, 50));
   }
   samples.sort((a, b) => a.rtt - b.rtt);
-  const trimmed = samples.slice(1, 4);
+  const trimmed = samples.slice(2, 8);
   const offset = trimmed.reduce((s, x) => s + x.offset, 0) / trimmed.length;
-  console.log(`[SpatialReg] Clock sync: offset=${offset.toFixed(1)}ms`);
+  console.log(`[SpatialReg] Clock sync: offset=${offset.toFixed(1)}ms (${samples.length} samples, best RTT=${samples[0].rtt.toFixed(0)}ms)`);
   return offset;
 }
 
@@ -78,6 +78,7 @@ export default function SpatialRegistration({
   const streamRef = useRef<MediaStream | null>(null);
   const framesRef = useRef<TimestampedFrame[]>([]);
   const clockOffsetRef = useRef(0);
+  const deviceCountRef = useRef(512);
   const captureIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const countdownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -129,7 +130,17 @@ export default function SpatialRegistration({
     const offset = await syncAdminClock();
     clockOffsetRef.current = offset;
 
-    // Step 2: Trigger blink cue on server
+    // Step 2: Get device count (to filter impossible indices)
+    let deviceCount = 512;
+    try {
+      const stateRes = await fetch("/api/pixel-mob/state");
+      const stateData = await stateRes.json();
+      deviceCount = stateData.deviceCount || 512;
+      deviceCountRef.current = deviceCount;
+      console.log(`[SpatialReg] Device count: ${deviceCount}`);
+    } catch { /* use default */ }
+
+    // Step 3: Trigger blink cue on server
     setStatusText("Triggering blink...");
     console.log("[SpatialReg] Triggering blink cue");
     let blinkStartAt: number;
@@ -192,8 +203,8 @@ export default function SpatialRegistration({
       const frame = extractFrameFromVideo(video, canvas);
       capturedFrames.push({ imageData: frame, timestamp: serverNow });
 
-      // Stop capturing 1 second after blink ends
-      if (serverNow > blinkEndAt + 1000) {
+      // Stop capturing 3 seconds after blink ends (buffer for clock sync drift)
+      if (serverNow > blinkEndAt + 3000) {
         console.log(`[SpatialReg] Capture complete: ${capturedFrames.length} frames over ${((serverNow - capturedFrames[0].timestamp) / 1000).toFixed(1)}s`);
         if (captureIntervalRef.current) {
           clearInterval(captureIntervalRef.current);
@@ -220,8 +231,10 @@ export default function SpatialRegistration({
     const keyFrames = alignFramesToBlink(frames, blinkStartAt);
     console.log(`[SpatialReg] Aligned ${keyFrames.length} key frames, running CV...`);
 
-    const results = processBlinkFrames(keyFrames);
-    console.log(`[SpatialReg] CV result: ${results.length} devices decoded`);
+    const maxIdx = deviceCountRef.current;
+    const allResults = processBlinkFrames(keyFrames);
+    const results = allResults.filter(d => d.deviceIndex < maxIdx);
+    console.log(`[SpatialReg] CV result: ${allResults.length} raw, ${results.length} after filtering (maxIndex=${maxIdx})`);
 
     setDecoded(results);
     setPhase("results");

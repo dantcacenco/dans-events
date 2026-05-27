@@ -5,7 +5,7 @@ import { anim } from "@/lib/pixel-mob/animations";
 import type { Cue, PhonePosition } from "@/lib/pixel-mob/types";
 
 const PHONE_COUNT = 50;
-const POLL_MS = 2000;
+const POLL_MS = 500;
 const BLINK_FRAME_MS = 500;
 const BLINK_TOTAL_FRAMES = 12;
 const DOT_SIZE = 5;

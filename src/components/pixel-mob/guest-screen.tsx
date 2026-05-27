@@ -13,7 +13,7 @@ type Stage =
   | "idle";
 
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
-const POLL_INTERVAL = 2000;
+const POLL_INTERVAL = 1000;
 const BLINK_FRAME_MS = 500;
 const BLINK_TOTAL_FRAMES = 12; // 0-1 calibration, 2-10 bits, 11 end marker
 

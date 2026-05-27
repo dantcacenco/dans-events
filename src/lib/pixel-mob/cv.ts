@@ -18,12 +18,12 @@ export type DecodedDevice = {
   confidence: number;
 };
 
-const BRIGHTNESS_THRESHOLD = 200;
-const MIN_AREA = 30;
+const BRIGHTNESS_THRESHOLD = 230;
+const MIN_AREA = 40;
 const MAX_AREA = 50000;
 const MATCH_RADIUS = 60;
 const BINARY_BITS = 9;
-const MIN_BITS_REQUIRED = 7;
+const MIN_BITS_REQUIRED = 9;
 
 export function extractBrightSpots(
   imageData: ImageData,
@@ -129,7 +129,7 @@ function filterSimilarSizedSpots(spots: DetectedSpot[]): DetectedSpot[] {
   const areas = spots.map((s) => s.area).sort((a, b) => a - b);
   const median = areas[Math.floor(areas.length / 2)];
   return spots.filter(
-    (s) => s.area >= median * 0.2 && s.area <= median * 5
+    (s) => s.area >= median * 0.3 && s.area <= median * 3
   );
 }
 
@@ -219,7 +219,7 @@ export function processBlinkFrames(
     const confidence = bitsObserved / BINARY_BITS;
     console.log(`[CV] Track ${track.id}: bits=[${track.brightness.map(b => b ? '1' : '0').join('')}] → index=${index} confidence=${confidence.toFixed(2)}`);
 
-    if (confidence < 0.78) continue;
+    if (confidence < 1.0) continue;
     if (seenIndices.has(index)) continue;
     seenIndices.add(index);
 
