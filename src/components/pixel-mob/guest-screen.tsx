@@ -391,6 +391,8 @@ export default function GuestScreen() {
     }
 
     const startTime = cue.startAt;
+    let lastLoggedFrame = -1;
+    console.log(`[GuestBlink] Starting blink: index=${index}, bits=[${bits.join('')}], startAt=${startTime}`);
 
     const tick = () => {
       const serverNow = Date.now() + offsetRef.current;
@@ -398,7 +400,7 @@ export default function GuestScreen() {
       const frame = Math.floor(elapsed / BLINK_FRAME_MS);
 
       if (frame >= BLINK_TOTAL_FRAMES) {
-        // Sequence complete
+        console.log("[GuestBlink] Blink sequence complete");
         setBgColor("rgb(0,0,0)");
         setBgOpacity(0);
         cacheCue(null);
@@ -425,6 +427,11 @@ export default function GuestScreen() {
       } else {
         // Frame 11: ALL WHITE end marker
         white = true;
+      }
+
+      if (frame !== lastLoggedFrame) {
+        lastLoggedFrame = frame;
+        console.log(`[GuestBlink] Frame ${frame}: white=${white}`);
       }
 
       if (white) {

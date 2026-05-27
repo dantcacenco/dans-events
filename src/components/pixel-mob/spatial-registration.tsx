@@ -3,13 +3,57 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { processBlinkFrames, extractFrameFromVideo, type DecodedDevice } from "@/lib/pixel-mob/cv";
 
-type Phase = "idle" | "camera" | "recording" | "processing" | "results";
+type Phase = "idle" | "camera" | "syncing" | "waiting" | "recording" | "processing" | "results";
+
+type TimestampedFrame = {
+  imageData: ImageData;
+  timestamp: number;
+};
 
 const ACCENT = "#ff006e";
 const BLINK_FRAME_MS = 500;
 const TOTAL_FRAMES = 12;
-const CAPTURE_DURATION = (TOTAL_FRAMES * BLINK_FRAME_MS) + 2000; // 8s total
-const CAPTURE_FPS = 4;
+const CAPTURE_FPS = 8;
+
+async function syncAdminClock(): Promise<number> {
+  const samples: { offset: number; rtt: number }[] = [];
+  for (let i = 0; i < 5; i++) {
+    const t1 = performance.now();
+    const res = await fetch("/api/pixel-mob/sync");
+    const t2 = performance.now();
+    const data = await res.json();
+    const rtt = t2 - t1;
+    samples.push({ offset: data.now - (Date.now() - rtt / 2), rtt });
+    await new Promise((r) => setTimeout(r, 50));
+  }
+  samples.sort((a, b) => a.rtt - b.rtt);
+  const trimmed = samples.slice(1, 4);
+  const offset = trimmed.reduce((s, x) => s + x.offset, 0) / trimmed.length;
+  console.log(`[SpatialReg] Clock sync: offset=${offset.toFixed(1)}ms`);
+  return offset;
+}
+
+function alignFramesToBlink(
+  frames: TimestampedFrame[],
+  blinkStartAt: number
+): ImageData[] {
+  const aligned: ImageData[] = [];
+  for (let f = 0; f < TOTAL_FRAMES; f++) {
+    const targetTime = blinkStartAt + (f * BLINK_FRAME_MS) + (BLINK_FRAME_MS / 2);
+    let best = frames[0];
+    let bestDelta = Infinity;
+    for (const frame of frames) {
+      const delta = Math.abs(frame.timestamp - targetTime);
+      if (delta < bestDelta) {
+        bestDelta = delta;
+        best = frame;
+      }
+    }
+    aligned.push(best.imageData);
+    console.log(`[SpatialReg] Align frame ${f}: target=${targetTime}, delta=${bestDelta.toFixed(0)}ms`);
+  }
+  return aligned;
+}
 
 export default function SpatialRegistration({
   adminKey,
@@ -25,17 +69,30 @@ export default function SpatialRegistration({
   const [decoded, setDecoded] = useState<DecodedDevice[]>([]);
   const [uploading, setUploading] = useState(false);
   const [uploadResult, setUploadResult] = useState<string | null>(null);
+  const [statusText, setStatusText] = useState("");
+  const [countdown, setCountdown] = useState(0);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  const framesRef = useRef<ImageData[]>([]);
+  const framesRef = useRef<TimestampedFrame[]>([]);
+  const clockOffsetRef = useRef(0);
+  const captureIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const countdownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const cleanup = useCallback(() => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((t) => t.stop());
       streamRef.current = null;
+    }
+    if (captureIntervalRef.current) {
+      clearInterval(captureIntervalRef.current);
+      captureIntervalRef.current = null;
+    }
+    if (countdownIntervalRef.current) {
+      clearInterval(countdownIntervalRef.current);
+      countdownIntervalRef.current = null;
     }
   }, []);
 
@@ -54,6 +111,7 @@ export default function SpatialRegistration({
         videoRef.current.srcObject = stream;
         await videoRef.current.play();
       }
+      console.log("[SpatialReg] Camera opened");
     } catch {
       setError("Could not access camera. Check permissions.");
       setPhase("idle");
@@ -61,17 +119,29 @@ export default function SpatialRegistration({
   };
 
   const startRecording = async () => {
-    setPhase("recording");
     setError("");
     framesRef.current = [];
 
-    // trigger blink registration cue on the server
+    // Step 1: Sync admin clock
+    setPhase("syncing");
+    setStatusText("Syncing clock...");
+    console.log("[SpatialReg] Starting clock sync");
+    const offset = await syncAdminClock();
+    clockOffsetRef.current = offset;
+
+    // Step 2: Trigger blink cue on server
+    setStatusText("Triggering blink...");
+    console.log("[SpatialReg] Triggering blink cue");
+    let blinkStartAt: number;
     try {
-      await fetch("/api/pixel-mob/cue", {
+      const res = await fetch("/api/pixel-mob/cue", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
         body: JSON.stringify({ type: "blink_register" }),
       });
+      const data = await res.json();
+      blinkStartAt = data.cue.startAt;
+      console.log(`[SpatialReg] Cue created: startAt=${blinkStartAt} (in ${blinkStartAt - Date.now() - offset}ms local)`);
     } catch {
       setError("Failed to trigger blink cue");
       setPhase("camera");
@@ -85,55 +155,82 @@ export default function SpatialRegistration({
     canvas.width = video.videoWidth || 640;
     canvas.height = video.videoHeight || 480;
 
-    const interval = 1000 / CAPTURE_FPS;
-    const capturedFrames: ImageData[] = [];
-    const startTime = performance.now();
+    // Step 3: Wait for blink to start, showing countdown
+    setPhase("waiting");
+    const blinkEndAt = blinkStartAt + (TOTAL_FRAMES * BLINK_FRAME_MS);
 
-    const captureLoop = setInterval(() => {
-      const elapsed = performance.now() - startTime;
-      if (elapsed >= CAPTURE_DURATION) {
-        clearInterval(captureLoop);
-        framesRef.current = capturedFrames;
-        processFrames(capturedFrames);
-        return;
+    const updateCountdown = () => {
+      const serverNow = Date.now() + clockOffsetRef.current;
+      const secondsUntilBlink = Math.ceil((blinkStartAt - serverNow) / 1000);
+      if (secondsUntilBlink > 0) {
+        setCountdown(secondsUntilBlink);
+        setStatusText(`Phones blink in ${secondsUntilBlink}s...`);
+      } else {
+        const blinkElapsed = serverNow - blinkStartAt;
+        const blinkFrame = Math.floor(blinkElapsed / BLINK_FRAME_MS);
+        if (blinkFrame < TOTAL_FRAMES) {
+          setStatusText(`Blink frame ${blinkFrame + 1}/${TOTAL_FRAMES}`);
+        } else {
+          setStatusText("Processing...");
+        }
       }
-      capturedFrames.push(extractFrameFromVideo(video, canvas));
-    }, interval);
+    };
+
+    countdownIntervalRef.current = setInterval(updateCountdown, 200);
+    updateCountdown();
+
+    // Step 4: Start capturing frames immediately (to get pre-blink baseline too)
+    // but the important part is we capture through the ENTIRE blink sequence
+    const capturedFrames: TimestampedFrame[] = [];
+    const captureInterval = 1000 / CAPTURE_FPS;
+
+    console.log(`[SpatialReg] Starting capture at ${CAPTURE_FPS} FPS`);
+    setPhase("recording");
+
+    captureIntervalRef.current = setInterval(() => {
+      const serverNow = Date.now() + clockOffsetRef.current;
+      const frame = extractFrameFromVideo(video, canvas);
+      capturedFrames.push({ imageData: frame, timestamp: serverNow });
+
+      // Stop capturing 1 second after blink ends
+      if (serverNow > blinkEndAt + 1000) {
+        console.log(`[SpatialReg] Capture complete: ${capturedFrames.length} frames over ${((serverNow - capturedFrames[0].timestamp) / 1000).toFixed(1)}s`);
+        if (captureIntervalRef.current) {
+          clearInterval(captureIntervalRef.current);
+          captureIntervalRef.current = null;
+        }
+        if (countdownIntervalRef.current) {
+          clearInterval(countdownIntervalRef.current);
+          countdownIntervalRef.current = null;
+        }
+        framesRef.current = capturedFrames;
+        processFrames(capturedFrames, blinkStartAt);
+      }
+    }, captureInterval);
   };
 
-  const processFrames = (frames: ImageData[]) => {
+  const processFrames = (frames: TimestampedFrame[], blinkStartAt: number) => {
     setPhase("processing");
+    setStatusText(`Aligning ${frames.length} frames to blink timing...`);
 
-    // select ~12 frames aligned to blink timing (2 per blink step)
-    // use every other frame starting from ~1s in (to skip the 5s server delay + sync)
-    // with 4fps capture over 8s = ~32 frames
-    // blink starts at server time + 5s, each frame is 500ms
-    // we captured continuously, so we pick 12 frames spread across the capture
+    console.log(`[SpatialReg] Processing: ${frames.length} frames, blinkStartAt=${blinkStartAt}`);
+    console.log(`[SpatialReg] Frame time range: ${frames[0].timestamp} to ${frames[frames.length - 1].timestamp}`);
+    console.log(`[SpatialReg] Blink window: ${blinkStartAt} to ${blinkStartAt + TOTAL_FRAMES * BLINK_FRAME_MS}`);
 
-    // simple approach: if we have enough frames, downsample to ~12 key frames
-    const keyFrames: ImageData[] = [];
-    if (frames.length >= 24) {
-      // skip first ~20% (server delay buffer), then pick every 2nd frame for 12 total
-      const start = Math.floor(frames.length * 0.25);
-      const step = Math.max(1, Math.floor((frames.length - start) / 12));
-      for (let i = 0; i < 12 && start + i * step < frames.length; i++) {
-        keyFrames.push(frames[start + i * step]);
-      }
-    } else if (frames.length >= 12) {
-      const step = Math.max(1, Math.floor(frames.length / 12));
-      for (let i = 0; i < 12 && i * step < frames.length; i++) {
-        keyFrames.push(frames[i * step]);
-      }
-    } else {
-      keyFrames.push(...frames);
-    }
+    const keyFrames = alignFramesToBlink(frames, blinkStartAt);
+    console.log(`[SpatialReg] Aligned ${keyFrames.length} key frames, running CV...`);
 
     const results = processBlinkFrames(keyFrames);
+    console.log(`[SpatialReg] CV result: ${results.length} devices decoded`);
+
     setDecoded(results);
     setPhase("results");
+    setStatusText(`${results.length} phones decoded`);
 
-    // draw preview with detected spots
-    drawPreview(frames[Math.floor(frames.length * 0.1)] || frames[0], results);
+    // draw preview with detected spots on a calibration frame
+    const calFrameIdx = frames.findIndex(f => f.timestamp >= blinkStartAt);
+    const refFrame = calFrameIdx >= 0 ? frames[calFrameIdx].imageData : frames[0].imageData;
+    drawPreview(refFrame, results);
   };
 
   const drawPreview = (refFrame: ImageData, spots: DecodedDevice[]) => {
@@ -196,6 +293,7 @@ export default function SpatialRegistration({
     setDecoded([]);
     setError("");
     setUploadResult(null);
+    setStatusText("");
     framesRef.current = [];
   };
 
@@ -243,7 +341,7 @@ export default function SpatialRegistration({
         <div style={{ textAlign: "center", padding: "20px 0" }}>
           <p style={{ fontSize: 13, color: "#888", marginBottom: 16, lineHeight: 1.6 }}>
             Point your camera at the audience. This will trigger all phones to blink their binary IDs,
-            then decode the camera feed to map each phone's physical position.
+            then decode the camera feed to map each phone&apos;s physical position.
           </p>
           <button onClick={startCamera} style={{ ...btn, background: ACCENT, color: "#fff", padding: "10px 24px", fontSize: 13 }}>
             Open Camera
@@ -251,7 +349,7 @@ export default function SpatialRegistration({
         </div>
       )}
 
-      {(phase === "camera" || phase === "recording") && (
+      {(phase === "camera" || phase === "syncing" || phase === "waiting" || phase === "recording") && (
         <div>
           <div style={{ position: "relative", borderRadius: 8, overflow: "hidden", marginBottom: 12, background: "#000" }}>
             <video
@@ -260,14 +358,35 @@ export default function SpatialRegistration({
               muted
               style={{ width: "100%", display: "block" }}
             />
-            {phase === "recording" && (
+            {/* Status overlay */}
+            {phase !== "camera" && (
               <div style={{
-                position: "absolute", top: 12, right: 12,
-                display: "flex", alignItems: "center", gap: 6,
-                background: "rgba(0,0,0,0.6)", borderRadius: 4, padding: "4px 8px",
+                position: "absolute", inset: 0,
+                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                background: phase === "waiting" ? "rgba(0,0,0,0.5)" : "transparent",
+                pointerEvents: "none",
               }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#f55", animation: "pulse 1s ease infinite" }} />
-                <span style={{ fontSize: 11, color: "#fff" }}>Recording...</span>
+                {phase === "waiting" && countdown > 0 && (
+                  <div style={{
+                    fontSize: 72, fontWeight: 900, color: ACCENT,
+                    textShadow: "0 0 30px rgba(255,0,110,0.5)",
+                  }}>
+                    {countdown}
+                  </div>
+                )}
+                <div style={{
+                  background: "rgba(0,0,0,0.7)", borderRadius: 6, padding: "6px 12px",
+                  fontSize: 12, color: "#fff", marginTop: 8,
+                  display: "flex", alignItems: "center", gap: 6,
+                }}>
+                  {phase === "recording" && (
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#f55", animation: "pulse 1s ease infinite" }} />
+                  )}
+                  {phase === "syncing" && (
+                    <div style={{ width: 12, height: 12, border: "2px solid rgba(255,255,255,0.2)", borderTopColor: ACCENT, borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                  )}
+                  <span>{statusText}</span>
+                </div>
               </div>
             )}
           </div>
@@ -281,7 +400,10 @@ export default function SpatialRegistration({
               Cancel
             </button>
           </div>
-          <style>{`@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }`}</style>
+          <style>{`
+            @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+            @keyframes spin { to { transform: rotate(360deg); } }
+          `}</style>
         </div>
       )}
 
@@ -291,7 +413,7 @@ export default function SpatialRegistration({
             width: 36, height: 36, border: "3px solid rgba(255,255,255,0.1)", borderTopColor: ACCENT,
             borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 16px",
           }} />
-          <p style={{ fontSize: 13, color: "#888" }}>Processing {framesRef.current.length} frames...</p>
+          <p style={{ fontSize: 13, color: "#888" }}>{statusText || `Processing ${framesRef.current.length} frames...`}</p>
           <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
         </div>
       )}
@@ -306,6 +428,11 @@ export default function SpatialRegistration({
             <span style={{ fontSize: 14, fontWeight: 700, color: decoded.length > 0 ? "#0f0" : "#f55" }}>
               {decoded.length} phones decoded
             </span>
+            {decoded.length > 0 && (
+              <span style={{ fontSize: 11, color: "#888" }}>
+                Confidence: {(decoded.reduce((s, d) => s + d.confidence, 0) / decoded.length * 100).toFixed(0)}% avg
+              </span>
+            )}
             {decoded.length === 0 && (
               <span style={{ fontSize: 11, color: "#888" }}>
                 Try again with better lighting or camera angle

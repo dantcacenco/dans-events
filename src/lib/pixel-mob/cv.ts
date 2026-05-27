@@ -159,6 +159,8 @@ export function processBlinkFrames(
     });
   }
 
+  console.log(`[CV] Cal0: ${cal0.length} spots, Cal1: ${cal1.length} spots, Cross-matched: ${refSpots.length}`);
+
   if (refSpots.length === 0) return [];
 
   const tracks: TrackedSpot[] = refSpots.map((s, i) => ({
@@ -177,6 +179,7 @@ export function processBlinkFrames(
     });
 
     const matches = matchSpots(lastPositions, spots);
+    let matched = 0;
 
     for (let ti = 0; ti < tracks.length; ti++) {
       const ci = matches.get(ti);
@@ -186,10 +189,12 @@ export function processBlinkFrames(
           y: spots[ci].y,
         });
         tracks[ti].brightness.push(true);
+        matched++;
       } else {
         tracks[ti].brightness.push(false);
       }
     }
+    console.log(`[CV] Frame ${f}: ${spots.length} bright spots, ${matched}/${tracks.length} matched to tracks`);
   }
 
   const decoded: DecodedDevice[] = [];
@@ -211,8 +216,9 @@ export function processBlinkFrames(
       }
     }
 
-    // reject if not enough bits or duplicate index
     const confidence = bitsObserved / BINARY_BITS;
+    console.log(`[CV] Track ${track.id}: bits=[${track.brightness.map(b => b ? '1' : '0').join('')}] → index=${index} confidence=${confidence.toFixed(2)}`);
+
     if (confidence < 0.78) continue;
     if (seenIndices.has(index)) continue;
     seenIndices.add(index);
@@ -231,6 +237,7 @@ export function processBlinkFrames(
     });
   }
 
+  console.log(`[CV] Decoded ${decoded.length} devices. Indices: [${decoded.map(d => d.deviceIndex).join(', ')}]`);
   return decoded;
 }
 

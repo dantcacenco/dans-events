@@ -22,9 +22,11 @@ export async function POST(request: Request) {
       palette: palette ?? "white",
     },
     startAt: Date.now() + 5000,
-    duration: duration ?? 30000,
+    duration: type === "blink_register" ? 6000 : (duration ?? 30000),
     type: type ?? "play",
   };
+
+  console.log(`[pixel-mob/cue] Created: id=${cue.id} type=${cue.type} startAt=${cue.startAt} duration=${cue.duration}`);
 
   await setCue(cue);
   return Response.json({ cue });
