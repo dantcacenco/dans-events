@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
+  --color-black: #3B3536;
   --color-red: #BC3021;
   --color-red-dark: #9A2419;
   --color-warm-gray: #CCCAC9;

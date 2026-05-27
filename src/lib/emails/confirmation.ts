@@ -21,7 +21,7 @@ export function confirmationEmailHtml({ name, date, venue }: Props): string {
 
         <!-- HEADER — Black bar with logo text -->
         <tr>
-          <td style="background:#000000;padding:32px 40px;">
+          <td style="background:#3B3536;padding:32px 40px;">
             <span style="font-size:22px;font-weight:800;color:#ffffff;letter-spacing:1px;">
               Dan's events
             </span>
@@ -36,7 +36,7 @@ export function confirmationEmailHtml({ name, date, venue }: Props): string {
         <!-- MAIN CONTENT -->
         <tr>
           <td style="padding:48px 40px 32px;">
-            <h1 style="margin:0 0 8px;font-size:32px;font-weight:900;text-transform:uppercase;color:#000000;letter-spacing:-1px;line-height:1.1;">
+            <h1 style="margin:0 0 8px;font-size:32px;font-weight:900;text-transform:uppercase;color:#3B3536;letter-spacing:-1px;line-height:1.1;">
               We got<br>your date.
             </h1>
             <table cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
@@ -54,7 +54,7 @@ export function confirmationEmailHtml({ name, date, venue }: Props): string {
         <!-- DETAILS CARD — Modular grid inspired -->
         <tr>
           <td style="padding:0 40px 40px;">
-            <table width="100%" cellpadding="0" cellspacing="0" style="background:#000000;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background:#3B3536;">
               <tr>
                 <td style="padding:32px;">
                   <table width="100%" cellpadding="0" cellspacing="0">
@@ -109,7 +109,7 @@ export function confirmationEmailHtml({ name, date, venue }: Props): string {
 
         <!-- FOOTER -->
         <tr>
-          <td style="background:#000000;padding:32px 40px;">
+          <td style="background:#3B3536;padding:32px 40px;">
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td>

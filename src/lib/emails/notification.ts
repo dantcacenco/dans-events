@@ -27,7 +27,7 @@ export function notificationEmailHtml({ name, email, date, venue }: Props): stri
               <tr>
                 <td style="padding:12px 0;border-bottom:1px solid #eee;">
                   <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#999;">Name</span><br>
-                  <span style="font-size:16px;font-weight:500;color:#000;">${name}</span>
+                  <span style="font-size:16px;font-weight:500;color:#3B3536;">${name}</span>
                 </td>
               </tr>
               <tr>
@@ -39,20 +39,20 @@ export function notificationEmailHtml({ name, email, date, venue }: Props): stri
               <tr>
                 <td style="padding:12px 0;border-bottom:1px solid #eee;">
                   <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#999;">Event Date</span><br>
-                  <span style="font-size:16px;font-weight:500;color:#000;">${date}</span>
+                  <span style="font-size:16px;font-weight:500;color:#3B3536;">${date}</span>
                 </td>
               </tr>
               <tr>
                 <td style="padding:12px 0;">
                   <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#999;">Venue</span><br>
-                  <span style="font-size:16px;font-weight:500;color:#000;">${venue || "Not specified"}</span>
+                  <span style="font-size:16px;font-weight:500;color:#3B3536;">${venue || "Not specified"}</span>
                 </td>
               </tr>
             </table>
           </td>
         </tr>
         <tr>
-          <td style="padding:24px 40px;background:#000;">
+          <td style="padding:24px 40px;background:#3B3536;">
             <span style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;">
               Dan's Events — Inquiry Form
             </span>
