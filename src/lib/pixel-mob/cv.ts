@@ -370,68 +370,105 @@ export function processBlinkFrames(
   const cal0Norm = normalizeContrast(processed[0]);
   const cal1Norm = normalizeContrast(processed[1]);
 
-  // Step 3: Auto-threshold using Otsu's on the bg-subtracted calibration frames
+  // Step 3: Adaptive threshold sweep
+  // Start with Otsu, then try higher thresholds to reduce noise spots
   const thresh0 = otsuThreshold(cal0Norm);
   const thresh1 = otsuThreshold(cal1Norm);
-  let threshold = Math.min(thresh0, thresh1);
+  const baseThresh = Math.max(30, Math.min(thresh0, thresh1));
+  const target = expectedCount ?? 0;
 
-  // Ensure threshold isn't absurdly low (would pick up noise)
-  threshold = Math.max(threshold, 30);
+  // Build threshold candidates: Otsu base, then step up
+  const threshCandidates = [baseThresh];
+  for (let t = baseThresh + 15; t <= Math.min(baseThresh + 120, 200); t += 15) {
+    threshCandidates.push(t);
+  }
+
+  console.log(`[CV] Otsu: ${thresh0}/${thresh1}, base=${baseThresh}, trying ${threshCandidates.length} thresholds, expected=${target || "unknown"}`);
+
+  type ThreshResult = {
+    threshold: number;
+    cal0Spots: DetectedSpot[];
+    cal1Spots: DetectedSpot[];
+    refSpots: DetectedSpot[];
+    mergedSpots: DetectedSpot[];
+    matchRadius: number;
+    mergeRadius: number;
+  };
+
+  let bestThreshResult: ThreshResult | null = null;
+  let bestThreshScore = -Infinity;
+
+  for (const thresh of threshCandidates) {
+    const c0 = filterSimilarSizedSpots(extractBrightSpots(cal0Norm, thresh));
+    const c1 = filterSimilarSizedSpots(extractBrightSpots(cal1Norm, thresh));
+    if (c0.length === 0 || c1.length === 0) continue;
+
+    const allAreas = [...c0.map(s => s.area), ...c1.map(s => s.area)].sort((a, b) => a - b);
+    const medArea = allAreas[Math.floor(allAreas.length / 2)] || 16;
+    const mRadius = Math.max(15, Math.min(100, Math.ceil(Math.sqrt(medArea / Math.PI) * 10)));
+    const cMatch = matchSpots(c0, c1, mRadius);
+    const refs: DetectedSpot[] = [];
+    for (const [i0, i1] of cMatch.entries()) {
+      refs.push({
+        x: (c0[i0].x + c1[i1].x) / 2,
+        y: (c0[i0].y + c1[i1].y) / 2,
+        area: (c0[i0].area + c1[i1].area) / 2,
+        avgBrightness: (c0[i0].avgBrightness + c1[i1].avgBrightness) / 2,
+      });
+    }
+    if (refs.length === 0) continue;
+
+    const refAreas = refs.map(s => s.area).sort((a, b) => a - b);
+    const medRefArea = refAreas[Math.floor(refAreas.length / 2)];
+    const mgRadius = Math.max(8, Math.ceil(Math.sqrt(medRefArea / Math.PI) * 3));
+    const merged = mergeNearbySpots(refs, mgRadius);
+
+    let score: number;
+    if (target > 0) {
+      // Prefer spot count close to expected, with slight bias toward more spots
+      const overshoot = merged.length - target;
+      if (overshoot >= 0) {
+        score = target - overshoot * 0.3;
+      } else {
+        score = merged.length;
+      }
+    } else {
+      score = merged.length;
+    }
+
+    console.log(`[CV] Thresh ${thresh}: cal=${c0.length}/${c1.length}, cross=${refs.length}, merged=${merged.length}, score=${score.toFixed(1)}`);
+
+    if (score > bestThreshScore) {
+      bestThreshScore = score;
+      bestThreshResult = {
+        threshold: thresh,
+        cal0Spots: c0,
+        cal1Spots: c1,
+        refSpots: refs,
+        mergedSpots: merged,
+        matchRadius: mRadius,
+        mergeRadius: mgRadius,
+      };
+    }
+  }
+
+  if (!bestThreshResult) {
+    console.log("[CV] No valid threshold found — aborting");
+    return { decoded: [], diagnostics };
+  }
+
+  const { threshold, cal0Spots, cal1Spots, refSpots, mergedSpots, matchRadius, mergeRadius } = bestThreshResult;
   diagnostics.thresholdUsed = threshold;
-  console.log(`[CV] Auto-threshold: Otsu0=${thresh0}, Otsu1=${thresh1}, using=${threshold}`);
-
-  // Step 4: Detect spots in both calibration frames
-  const cal0Spots = filterSimilarSizedSpots(
-    extractBrightSpots(cal0Norm, threshold)
-  );
-  const cal1Spots = filterSimilarSizedSpots(
-    extractBrightSpots(cal1Norm, threshold)
-  );
   diagnostics.spotsInCal0 = cal0Spots.length;
   diagnostics.spotsInCal1 = cal1Spots.length;
-  console.log(`[CV] Cal0: ${cal0Spots.length} spots, Cal1: ${cal1Spots.length} spots`);
-
-  if (cal0Spots.length === 0 || cal1Spots.length === 0) {
-    console.log("[CV] No spots found in calibration frames — aborting");
-    return { decoded: [], diagnostics };
-  }
-
-  // Step 5: Cross-match calibration frames — only keep spots visible in both
-  // Adaptive match radius: 10x median spot radius (allows for camera movement between frames)
-  const allCalAreas = [...cal0Spots.map(s => s.area), ...cal1Spots.map(s => s.area)].sort((a, b) => a - b);
-  const medianCalArea = allCalAreas[Math.floor(allCalAreas.length / 2)] || 16;
-  const matchRadius = Math.max(15, Math.min(100, Math.ceil(Math.sqrt(medianCalArea / Math.PI) * 10)));
-  console.log(`[CV] Match radius: ${matchRadius} (median spot area=${medianCalArea.toFixed(0)})`);
-  const calMatch = matchSpots(cal0Spots, cal1Spots, matchRadius);
-  const refSpots: DetectedSpot[] = [];
-  for (const [i0, i1] of calMatch.entries()) {
-    refSpots.push({
-      x: (cal0Spots[i0].x + cal1Spots[i1].x) / 2,
-      y: (cal0Spots[i0].y + cal1Spots[i1].y) / 2,
-      area: (cal0Spots[i0].area + cal1Spots[i1].area) / 2,
-      avgBrightness: (cal0Spots[i0].avgBrightness + cal1Spots[i1].avgBrightness) / 2,
-    });
-  }
   diagnostics.crossMatched = refSpots.length;
   diagnostics.matchRadius = matchRadius;
-  console.log(`[CV] Cross-matched: ${refSpots.length} spots present in both calibration frames`);
-
-  if (refSpots.length === 0) {
-    console.log("[CV] No cross-matched spots — aborting");
-    return { decoded: [], diagnostics };
-  }
-
-  // Step 5b: Merge nearby spots — one phone can produce multiple detected spots
-  // Use adaptive merge radius: 3x the median spot radius (avoids merging distinct phones)
-  const areas = refSpots.map(s => s.area).sort((a, b) => a - b);
-  const medianArea = areas[Math.floor(areas.length / 2)];
-  const mergeRadius = Math.max(8, Math.ceil(Math.sqrt(medianArea / Math.PI) * 3));
-  const mergedSpots = mergeNearbySpots(refSpots, mergeRadius);
-  console.log(`[CV] Merged ${refSpots.length} → ${mergedSpots.length} spots (medianArea=${medianArea.toFixed(0)}, mergeRadius=${mergeRadius})`);
-
   diagnostics.mergedSpots = mergedSpots.length;
   diagnostics.mergeRadius = mergeRadius;
   diagnostics.endMarkerValidated = mergedSpots.length;
+
+  console.log(`[CV] Best threshold: ${threshold} → cal=${cal0Spots.length}/${cal1Spots.length}, cross=${refSpots.length}, merged=${mergedSpots.length}`);
+
   const spotsToUse = mergedSpots;
 
   // Step 7: Direct brightness sampling across ALL 12 frames
@@ -517,7 +554,7 @@ export function processBlinkFrames(
   const separationCandidates = [0.02, 0.05, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4];
   const variationCandidates = [1, 2, 3, 5, 8, 12];
   const maxIdx = maxDeviceIndex ?? 512;
-  const target = expectedCount ?? 0;
+  const sweepTarget = expectedCount ?? 0;
 
   let bestDecoded: DecodedDevice[] = [];
   let bestSep = 0;
@@ -541,9 +578,8 @@ export function processBlinkFrames(
       }
 
       let score: number;
-      if (target > 0) {
-        // Penalize distance from expected count + duplicates
-        score = unique - Math.abs(unique - target) * 0.5 - dups * 0.3;
+      if (sweepTarget > 0) {
+        score = unique - Math.abs(unique - sweepTarget) * 0.5 - dups * 0.3;
       } else {
         score = unique - dups * 0.1;
       }
@@ -555,7 +591,7 @@ export function processBlinkFrames(
     }
   }
 
-  console.log(`[CV] Expected count: ${target || "unknown"}`);
+  console.log(`[CV] Expected count: ${sweepTarget || "unknown"}`);
   console.log(`[CV] Parameter sweep: best sep=${bestSep}, var=${bestVar}, score=${bestScore.toFixed(1)}`);
   diagnostics.bestSweepSep = bestSep;
   diagnostics.bestSweepVar = bestVar;

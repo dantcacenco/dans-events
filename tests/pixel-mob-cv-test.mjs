@@ -261,31 +261,38 @@ async function run() {
     const processed = aligned.map(f => subtractBg(f, darkFrame));
     const cal0N = normContrast(processed[0]);
     const cal1N = normContrast(processed[1]);
-    const thresh = Math.max(30, Math.min(otsu(cal0N), otsu(cal1N)));
+    const baseThresh = Math.max(30, Math.min(otsu(cal0N), otsu(cal1N)));
 
-    const cal0S = findSpots(cal0N, thresh);
-    const cal1S = findSpots(cal1N, thresh);
-    // Adaptive match radius: 10x median spot radius
-    const allCalAreas = [...cal0S.map(s=>s.area),...cal1S.map(s=>s.area)].sort((a,b)=>a-b);
-    const medCalArea = allCalAreas[Math.floor(allCalAreas.length/2)] || 16;
-    const dynMatchR = Math.max(15, Math.min(100, Math.ceil(Math.sqrt(medCalArea/Math.PI)*10)));
-    console.log(`[CV-test] Match radius: ${dynMatchR} (median area: ${medCalArea.toFixed(0)})`);
-    const calMatch = matchSpots(cal0S, cal1S, dynMatchR);
-    const refSpots = [];
-    for (const [i0,i1] of calMatch.entries()) {
-      refSpots.push({
-        x:(cal0S[i0].x+cal1S[i1].x)/2, y:(cal0S[i0].y+cal1S[i1].y)/2,
-        area:(cal0S[i0].area+cal1S[i1].area)/2,
-        avgBrightness:(cal0S[i0].avgBrightness+cal1S[i1].avgBrightness)/2
-      });
+    // Threshold sweep: try multiple thresholds, pick best for expected count
+    const expectedCount = 50;
+    const threshCands = [baseThresh];
+    for (let t = baseThresh + 15; t <= Math.min(baseThresh + 120, 200); t += 15) threshCands.push(t);
+
+    let bestThresh = baseThresh, bestMerged = [], bestMatchR = 15, bestMergeR = 8, bestTScore = -Infinity;
+    for (const thresh of threshCands) {
+      const c0 = findSpots(normContrast(processed[0]), thresh);
+      const c1 = findSpots(normContrast(processed[1]), thresh);
+      if (c0.length===0 || c1.length===0) continue;
+      const aAreas = [...c0.map(s=>s.area),...c1.map(s=>s.area)].sort((a,b)=>a-b);
+      const mA = aAreas[Math.floor(aAreas.length/2)] || 16;
+      const mR = Math.max(15, Math.min(100, Math.ceil(Math.sqrt(mA/Math.PI)*10)));
+      const cm = matchSpots(c0, c1, mR);
+      const refs = [];
+      for (const [i0,i1] of cm.entries()) {
+        refs.push({x:(c0[i0].x+c1[i1].x)/2,y:(c0[i0].y+c1[i1].y)/2,area:(c0[i0].area+c1[i1].area)/2,avgBrightness:(c0[i0].avgBrightness+c1[i1].avgBrightness)/2});
+      }
+      if (refs.length===0) continue;
+      const rAreas = refs.map(s=>s.area).sort((a,b)=>a-b);
+      const mgR = Math.max(8, Math.ceil(Math.sqrt(rAreas[Math.floor(rAreas.length/2)]/Math.PI)*3));
+      const mg = mergeSpots(refs, mgR);
+      const over = mg.length - expectedCount;
+      const score = over >= 0 ? expectedCount - over*0.3 : mg.length;
+      console.log(`[CV-test] Thresh ${thresh}: cal=${c0.length}/${c1.length}, cross=${refs.length}, merged=${mg.length}, score=${score.toFixed(1)}`);
+      if (score > bestTScore) { bestTScore=score; bestThresh=thresh; bestMerged=mg; bestMatchR=mR; bestMergeR=mgR; }
     }
 
-    // Adaptive merge radius: 3x median spot radius
-    const refAreas = refSpots.map(s => s.area).sort((a,b) => a-b);
-    const medArea = refAreas[Math.floor(refAreas.length/2)] || 16;
-    const mRadius = Math.max(8, Math.ceil(Math.sqrt(medArea / Math.PI) * 3));
-    console.log(`[CV-test] Merge radius: ${mRadius} (median area: ${medArea.toFixed(0)})`);
-    const merged = mergeSpots(refSpots, mRadius);
+    const merged = bestMerged;
+    console.log(`[CV-test] Best thresh: ${bestThresh}, merged: ${merged.length}, matchR: ${bestMatchR}, mergeR: ${bestMergeR}`);
     const sr = Math.max(6, Math.ceil(Math.sqrt(merged[0]?.area??16)/2)+2);
 
     // Sample brightness for each spot across all frames
@@ -317,7 +324,6 @@ async function run() {
     // Parameter sweep with expected count
     const sepCands = [0.02, 0.05, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4];
     const varCands = [1, 2, 3, 5, 8, 12];
-    const expectedCount = 50;
     let bestDec=[], bestSep=0, bestVar=0, bestScore=-Infinity;
 
     for (const ms of sepCands) {
@@ -345,10 +351,7 @@ async function run() {
     }
 
     return {
-      threshold: thresh,
-      cal0Spots: cal0S.length,
-      cal1Spots: cal1S.length,
-      crossMatched: refSpots.length,
+      threshold: bestThresh,
       merged: merged.length,
       totalAnalyzed: analyzed.length,
       bestSep, bestVar, bestScore,
@@ -365,8 +368,7 @@ async function run() {
   // Report
   console.log(`\n=== RESULTS ===`);
   console.log(`Threshold: ${result.threshold}`);
-  console.log(`Cal spots: ${result.cal0Spots} / ${result.cal1Spots}`);
-  console.log(`Cross-matched: ${result.crossMatched} → Merged: ${result.merged}`);
+  console.log(`Merged spots: ${result.merged}`);
   console.log(`Best params: sep=${result.bestSep}, var=${result.bestVar}`);
   console.log(`Alignment deltas: ${result.deltas}`);
   console.log(`\nDECODED: ${result.decodedCount} / ${PHONE_COUNT}`);

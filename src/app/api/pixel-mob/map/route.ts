@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
-import { updateDevicePosition, getAllDevices } from "@/lib/pixel-mob/state";
+import { updateDevicePosition, getAllDevices, getSyncVersion } from "@/lib/pixel-mob/state";
+import { kv } from "@vercel/kv";
 import { isAdmin, unauthorized } from "@/lib/pixel-mob/auth";
 
 export async function POST(request: Request) {
@@ -28,5 +29,12 @@ export async function POST(request: Request) {
     if (ok) updated++;
   }
 
-  return Response.json({ updated, total: mappings.length });
+  // Bump sync version so phones re-register and pick up new positions
+  if (updated > 0) {
+    await kv.incr("pixelmob:sync_version");
+  }
+  const syncVersion = await getSyncVersion();
+  console.log(`[pixel-mob/map] Updated ${updated}/${mappings.length} positions, syncVersion=${syncVersion}`);
+
+  return Response.json({ updated, total: mappings.length, syncVersion });
 }
