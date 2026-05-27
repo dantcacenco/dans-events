@@ -244,6 +244,46 @@ function filterSimilarSizedSpots(spots: DetectedSpot[]): DetectedSpot[] {
   return spots.filter((s) => s.area >= Math.max(lower, MIN_AREA) && s.area <= upper);
 }
 
+// ── Merge nearby spots into single spots ─────────────────────────────
+
+function mergeNearbySpots(spots: DetectedSpot[], radius: number): DetectedSpot[] {
+  if (spots.length === 0) return [];
+  const merged: DetectedSpot[] = [];
+  const used = new Set<number>();
+
+  for (let i = 0; i < spots.length; i++) {
+    if (used.has(i)) continue;
+    used.add(i);
+
+    let sumX = spots[i].x * spots[i].area;
+    let sumY = spots[i].y * spots[i].area;
+    let sumBright = spots[i].avgBrightness * spots[i].area;
+    let totalArea = spots[i].area;
+
+    for (let j = i + 1; j < spots.length; j++) {
+      if (used.has(j)) continue;
+      const dx = spots[i].x - spots[j].x;
+      const dy = spots[i].y - spots[j].y;
+      if (dx * dx + dy * dy < radius * radius) {
+        used.add(j);
+        sumX += spots[j].x * spots[j].area;
+        sumY += spots[j].y * spots[j].area;
+        sumBright += spots[j].avgBrightness * spots[j].area;
+        totalArea += spots[j].area;
+      }
+    }
+
+    merged.push({
+      x: sumX / totalArea,
+      y: sumY / totalArea,
+      area: totalArea,
+      avgBrightness: sumBright / totalArea,
+    });
+  }
+
+  return merged;
+}
+
 // ── Direct brightness sampling at a point ────────────────────────────
 
 function sampleBrightness(
@@ -361,26 +401,30 @@ export function processBlinkFrames(
     return { decoded: [], diagnostics };
   }
 
+  // Step 5b: Merge nearby spots — one phone can produce multiple detected spots
+  const mergedSpots = mergeNearbySpots(refSpots, MATCH_RADIUS);
+  console.log(`[CV] Merged ${refSpots.length} → ${mergedSpots.length} spots (radius=${MATCH_RADIUS})`);
+
   // Step 6: End-marker validation (frame 11 should also be all-white)
   const endNorm = normalizeContrast(processed[11]);
   const endSpots = extractBrightSpots(endNorm, threshold, MIN_AREA);
-  const endMatch = matchSpots(refSpots, endSpots);
+  const endMatch = matchSpots(mergedSpots, endSpots);
 
   const validatedSpots: DetectedSpot[] = [];
   for (const [ri] of endMatch.entries()) {
-    validatedSpots.push(refSpots[ri]);
+    validatedSpots.push(mergedSpots[ri]);
   }
   diagnostics.endMarkerValidated = validatedSpots.length;
-  console.log(`[CV] End-marker validated: ${validatedSpots.length}/${refSpots.length} spots`);
+  console.log(`[CV] End-marker validated: ${validatedSpots.length}/${mergedSpots.length} spots`);
 
-  // If end-marker validation removes too many, fall back to all cross-matched spots
+  // If end-marker validation removes too many, fall back to all merged spots
   const spotsToUse =
-    validatedSpots.length >= refSpots.length * 0.5
+    validatedSpots.length >= mergedSpots.length * 0.5
       ? validatedSpots
-      : refSpots;
+      : mergedSpots;
 
-  if (spotsToUse === refSpots && validatedSpots.length < refSpots.length * 0.5) {
-    console.log(`[CV] End-marker too strict (${validatedSpots.length}/${refSpots.length}), using all cross-matched spots`);
+  if (spotsToUse === mergedSpots && validatedSpots.length < mergedSpots.length * 0.5) {
+    console.log(`[CV] End-marker too strict (${validatedSpots.length}/${mergedSpots.length}), using all merged spots`);
   }
 
   // Step 7: Direct brightness sampling across ALL 12 frames

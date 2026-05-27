@@ -124,6 +124,19 @@ export default function PhoneGrid() {
     let cancelled = false;
 
     const registerAll = async () => {
+      // Reset all devices so test grid gets clean indices 0-49
+      console.log("[TestGrid] Resetting all devices...");
+      setStatus("Resetting devices...");
+      try {
+        await fetch("/api/pixel-mob/reset", {
+          method: "POST",
+          headers: { "x-admin-key": "admin" },
+        });
+        console.log("[TestGrid] Reset complete");
+      } catch (e) {
+        console.log(`[TestGrid] Reset failed: ${e}`);
+      }
+
       console.log(`[TestGrid] Registering ${PHONE_COUNT} devices...`);
       setStatus("Registering 50 devices...");
       const results: VPhone[] = [];
