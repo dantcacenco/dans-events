@@ -2,7 +2,10 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { PAL, lerp, pickPal, hslToRgb, anim, PRESETS } from "@/lib/pixel-mob/animations";
-import type { ShowState } from "@/lib/pixel-mob/types";
+import type { ShowState, DeviceRegistration, SavedScene, Cue } from "@/lib/pixel-mob/types";
+import SpatialRegistration from "./spatial-registration";
+
+/* ───────────────────────────── Types ───────────────────────────── */
 
 type Phone = {
   id: number; x: number; y: number; z: number;
@@ -12,6 +15,10 @@ type Phone = {
 };
 
 type Cam = { x: number; y: number; z: number; yaw: number; pitch: number; fov: number };
+
+type AdminMode = "simulation" | "live";
+
+/* ─────────────────────── 3D helpers (unchanged) ─────────────────────── */
 
 function buildPhones(rows: number, cols: number, aisleW: number, rd: number, cs: number, sitting: boolean): Phone[] {
   const phones: Phone[] = [];
@@ -143,6 +150,8 @@ function drawStage(ctx: CanvasRenderingContext2D, cam: Cam, W: number, H: number
   }
 }
 
+/* ─────────────────────── UI sub-components ─────────────────────── */
+
 const Slider = ({ label, value, onChange, min = 0, max = 1, step = 0.01, unit = "" }: {
   label: string; value: number; onChange: (v: number) => void; min?: number; max?: number; step?: number; unit?: string;
 }) => (
@@ -191,12 +200,494 @@ function CompassDial({ angle, onChange }: { angle: number; onChange: (a: number)
       })}
       <line x1="50" y1="50" x2={kx} y2={ky} stroke="rgba(255,0,110,0.3)" strokeWidth="1.5" />
       <circle cx={kx} cy={ky} r={7} fill="rgba(255,0,110,0.7)" stroke="rgba(255,0,110,1)" strokeWidth="1" />
-      <text x="50" y="52" textAnchor="middle" dominantBaseline="middle" fill="rgba(255,255,255,0.25)" fontSize="7" fontFamily="monospace">{Math.round(angle)}°</text>
+      <text x="50" y="52" textAnchor="middle" dominantBaseline="middle" fill="rgba(255,255,255,0.25)" fontSize="7" fontFamily="monospace">{Math.round(angle)}</text>
     </svg>
   );
 }
 
+/* ─────────────────────── Auth Gate ─────────────────────── */
+
+function AuthGate({ onAuth }: { onAuth: (key: string) => void }) {
+  const [key, setKey] = useState("");
+  const [error, setError] = useState("");
+  const [checking, setChecking] = useState(false);
+
+  // check sessionStorage on mount
+  useEffect(() => {
+    const stored = sessionStorage.getItem("pixelMobAdminKey");
+    if (stored) verify(stored);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const verify = async (k: string) => {
+    setChecking(true);
+    setError("");
+    try {
+      const res = await fetch("/api/pixel-mob/devices", {
+        headers: { "x-admin-key": k },
+      });
+      if (res.status === 401) {
+        sessionStorage.removeItem("pixelMobAdminKey");
+        setError("Wrong password");
+        setChecking(false);
+        return;
+      }
+      if (!res.ok) {
+        setError(`Server error (${res.status})`);
+        setChecking(false);
+        return;
+      }
+      sessionStorage.setItem("pixelMobAdminKey", k);
+      onAuth(k);
+    } catch {
+      setError("Could not reach server");
+    }
+    setChecking(false);
+  };
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!key.trim()) return;
+    verify(key.trim());
+  };
+
+  return (
+    <div style={{
+      background: "#050510", color: "#ddd", minHeight: "100vh",
+      fontFamily: "'Segoe UI',system-ui,sans-serif",
+      display: "flex", alignItems: "center", justifyContent: "center",
+    }}>
+      <form onSubmit={submit} style={{
+        background: "rgba(12,12,22,0.95)", border: "1px solid rgba(255,255,255,0.06)",
+        borderRadius: 12, padding: 32, width: 340, textAlign: "center",
+      }}>
+        <h2 style={{ fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 4 }}>Crowd Pixel Admin</h2>
+        <p style={{ fontSize: 11, color: "#555", marginBottom: 20 }}>Enter admin password to continue</p>
+        <input
+          type="password"
+          value={key}
+          onChange={e => setKey(e.target.value)}
+          placeholder="Admin key..."
+          autoFocus
+          style={{
+            width: "100%", boxSizing: "border-box",
+            background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: 6, padding: "10px 14px", color: "#ccc", fontSize: 13, outline: "none",
+            marginBottom: 12,
+          }}
+        />
+        <button type="submit" disabled={checking} style={{
+          width: "100%", borderRadius: 6, padding: "10px 0", cursor: "pointer",
+          fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
+          background: "rgba(255,0,110,0.2)", color: "#ff006e",
+          border: "1px solid rgba(255,0,110,0.4)",
+          opacity: checking ? 0.5 : 1,
+        }}>
+          {checking ? "Verifying..." : "Enter"}
+        </button>
+        {error && <p style={{ fontSize: 11, color: "#f55", marginTop: 10 }}>{error}</p>}
+      </form>
+    </div>
+  );
+}
+
+/* ─────────────────────── Live Monitor (2D top-down) ─────────────────────── */
+
+function LiveMonitor({
+  adminKey,
+  savedScenes,
+  onLoadScene,
+}: {
+  adminKey: string;
+  savedScenes: SavedScene[];
+  onLoadScene: (sc: SavedScene) => void;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animRef = useRef<number>(0);
+  const [devices, setDevices] = useState<DeviceRegistration[]>([]);
+  const [currentCue, setCurrentCue] = useState<Cue | null>(null);
+  const [syncVersion, setSyncVersion] = useState(0);
+  const [liveStatus, setLiveStatus] = useState<"idle" | "sent" | "error">("idle");
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const [showRegistration, setShowRegistration] = useState(false);
+
+  // poll devices every 2s
+  useEffect(() => {
+    let alive = true;
+    const poll = async () => {
+      try {
+        const res = await fetch("/api/pixel-mob/devices", {
+          headers: { "x-admin-key": adminKey },
+        });
+        if (res.ok && alive) {
+          const data = await res.json();
+          setDevices(data.devices || []);
+        }
+      } catch { /* ignore */ }
+    };
+    poll();
+    const iv = setInterval(poll, 2000);
+    return () => { alive = false; clearInterval(iv); };
+  }, [adminKey]);
+
+  // poll state every 1s
+  useEffect(() => {
+    let alive = true;
+    const poll = async () => {
+      try {
+        const res = await fetch("/api/pixel-mob/state");
+        if (res.ok && alive) {
+          const data: ShowState = await res.json();
+          setCurrentCue(data.currentCue);
+          setSyncVersion(data.syncVersion);
+        }
+      } catch { /* ignore */ }
+    };
+    poll();
+    const iv = setInterval(poll, 1000);
+    return () => { alive = false; clearInterval(iv); };
+  }, []);
+
+  // Canvas rendering at ~15fps
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    let running = true;
+
+    const draw = () => {
+      if (!running) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      const W = canvas.width;
+      const H = canvas.height;
+
+      // background
+      ctx.fillStyle = "#0a0a12";
+      ctx.fillRect(0, 0, W, H);
+
+      // grid lines
+      ctx.strokeStyle = "rgba(255,255,255,0.03)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 10; i++) {
+        const x = (i / 10) * W;
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+        const y = (i / 10) * H;
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+
+      // aisle line down center
+      ctx.strokeStyle = "rgba(255,255,255,0.08)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath();
+      ctx.moveTo(W / 2, 0);
+      ctx.lineTo(W / 2, H);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // stage area (top)
+      ctx.fillStyle = "rgba(255,255,255,0.03)";
+      ctx.fillRect(W * 0.15, 0, W * 0.7, H * 0.05);
+      ctx.fillStyle = "rgba(255,255,255,0.12)";
+      ctx.font = `${Math.max(10, W * 0.014)}px monospace`;
+      ctx.textAlign = "center";
+      ctx.fillText("STAGE", W / 2, H * 0.035);
+
+      // compute elapsed time for cue
+      const now = Date.now();
+      const hasCue = currentCue && currentCue.startAt <= now;
+      const elapsed = hasCue ? (now - currentCue!.startAt) / 1000 : 0;
+      const remaining = hasCue ? Math.max(0, currentCue!.duration / 1000 - elapsed) : 0;
+
+      // draw each device
+      const dpr = window.devicePixelRatio || 1;
+      const dotR = Math.max(4, W * 0.008) * dpr;
+
+      for (const dev of devices) {
+        const px = dev.position.nx * W;
+        const py = dev.position.nz * H;
+
+        let r = 60, g = 60, b = 80, a = 0.3;
+
+        if (hasCue && remaining > 0) {
+          const [cr, cg, cb, ca] = anim(
+            currentCue!.animation,
+            dev.position,
+            elapsed,
+            currentCue!.params,
+            0,
+          );
+          r = cr; g = cg; b = cb; a = ca;
+        }
+
+        // glow effect for active phones
+        if (a > 0.1) {
+          const glowR = dotR * (2 + a * 3);
+          const grd = ctx.createRadialGradient(px, py, dotR * 0.3, px, py, glowR);
+          grd.addColorStop(0, `rgba(${r | 0},${g | 0},${b | 0},${a * 0.35})`);
+          grd.addColorStop(0.6, `rgba(${r | 0},${g | 0},${b | 0},${a * 0.1})`);
+          grd.addColorStop(1, `rgba(${r | 0},${g | 0},${b | 0},0)`);
+          ctx.fillStyle = grd;
+          ctx.fillRect(px - glowR, py - glowR, glowR * 2, glowR * 2);
+        }
+
+        // dot
+        ctx.beginPath();
+        ctx.arc(px, py, dotR, 0, Math.PI * 2);
+        if (a > 0.05) {
+          ctx.fillStyle = `rgba(${r | 0},${g | 0},${b | 0},${Math.max(0.3, a)})`;
+        } else {
+          ctx.fillStyle = "rgba(60,60,80,0.3)";
+        }
+        ctx.fill();
+
+        // index label for hovered
+        if (hoveredIdx === dev.index) {
+          ctx.fillStyle = "#fff";
+          ctx.font = `${Math.max(9, W * 0.01)}px monospace`;
+          ctx.textAlign = "center";
+          ctx.fillText(`#${dev.index}`, px, py - dotR - 4);
+        }
+      }
+
+      animRef.current = requestAnimationFrame(() => {
+        setTimeout(draw, 1000 / 15); // ~15fps
+      });
+    };
+
+    draw();
+    return () => {
+      running = false;
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+    };
+  }, [devices, currentCue, hoveredIdx]);
+
+  // canvas sizing
+  useEffect(() => {
+    const c = canvasRef.current; if (!c) return;
+    const resize = () => {
+      const p = c.parentElement?.getBoundingClientRect(); if (!p) return;
+      const dpr = window.devicePixelRatio || 1;
+      c.width = p.width * dpr;
+      c.height = 600 * dpr;
+      c.style.width = p.width + "px";
+      c.style.height = "600px";
+    };
+    resize();
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, []);
+
+  // mouse hover to detect device index
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current; if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const mx = (e.clientX - rect.left) * dpr;
+    const my = (e.clientY - rect.top) * dpr;
+    const W = canvas.width, H = canvas.height;
+    const hitR = Math.max(6, W * 0.012);
+
+    let found: number | null = null;
+    for (const dev of devices) {
+      const px = dev.position.nx * W;
+      const py = dev.position.nz * H;
+      const dist = Math.sqrt((mx - px) ** 2 + (my - py) ** 2);
+      if (dist < hitR) { found = dev.index; break; }
+    }
+    setHoveredIdx(found);
+  }, [devices]);
+
+  // cue actions
+  const triggerCue = async (animation: string, params: { speed: number; width: number; palette: string }, duration: number) => {
+    try {
+      const res = await fetch("/api/pixel-mob/cue", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
+        body: JSON.stringify({ animation, ...params, duration }),
+      });
+      if (res.ok) setLiveStatus("sent");
+      else setLiveStatus("error");
+    } catch { setLiveStatus("error"); }
+    setTimeout(() => setLiveStatus("idle"), 3000);
+  };
+
+  const triggerBlackout = async () => {
+    await fetch("/api/pixel-mob/cue", {
+      method: "DELETE",
+      headers: { "x-admin-key": adminKey },
+    });
+    setLiveStatus("idle");
+  };
+
+  const triggerBlinkRegister = async () => {
+    try {
+      const res = await fetch("/api/pixel-mob/cue", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
+        body: JSON.stringify({ type: "blink_register" }),
+      });
+      if (res.ok) setLiveStatus("sent");
+      else setLiveStatus("error");
+    } catch { setLiveStatus("error"); }
+    setTimeout(() => setLiveStatus("idle"), 3000);
+  };
+
+  const now = Date.now();
+  const hasCue = currentCue && currentCue.startAt <= now;
+  const elapsed = hasCue ? (now - currentCue!.startAt) / 1000 : 0;
+  const remaining = hasCue ? Math.max(0, currentCue!.duration / 1000 - elapsed) : 0;
+  const curPresetLabel = hasCue ? PRESETS.find(p => p.id === currentCue!.animation)?.label || currentCue!.animation : "None";
+
+  const panel: React.CSSProperties = { background: "rgba(12,12,22,0.92)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 10, padding: 14 };
+  const btn: React.CSSProperties = { borderRadius: 6, padding: "5px 8px", cursor: "pointer", fontSize: 10, border: "1px solid rgba(255,255,255,0.06)" };
+  const lbl: React.CSSProperties = { fontSize: 9, color: "#555", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6, display: "block" };
+
+  // compute avg distance between phones
+  let avgDist = 0;
+  if (devices.length > 1) {
+    let sum = 0, count = 0;
+    for (let i = 0; i < Math.min(devices.length, 50); i++) {
+      for (let j = i + 1; j < Math.min(devices.length, 50); j++) {
+        const dx = devices[i].position.nx - devices[j].position.nx;
+        const dz = devices[i].position.nz - devices[j].position.nz;
+        sum += Math.sqrt(dx * dx + dz * dz);
+        count++;
+      }
+    }
+    avgDist = count > 0 ? sum / count : 0;
+  }
+
+  return (
+    <div>
+      {/* Stats bar */}
+      <div style={{ ...panel, marginBottom: 10, display: "flex", alignItems: "center", gap: 16, padding: "10px 16px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <div style={{ width: 8, height: 8, borderRadius: "50%", background: devices.length > 0 ? "#0f0" : "#555", boxShadow: devices.length > 0 ? "0 0 6px #0f0" : "none" }} />
+          <span style={{ fontSize: 12, color: "#aaa", fontWeight: 600 }}>{devices.length} connected</span>
+        </div>
+        <div style={{ fontSize: 10, color: "#555" }}>Avg dist: {avgDist.toFixed(3)}</div>
+        <div style={{ fontSize: 10, color: "#555" }}>Sync v{syncVersion}</div>
+        <div style={{ marginLeft: "auto", fontSize: 11, color: "#888" }}>
+          {hasCue ? (
+            <>
+              <span style={{ color: "#ff006e" }}>{curPresetLabel}</span>
+              {" "}
+              <span style={{ color: "#666" }}>{elapsed.toFixed(0)}s / {(currentCue!.duration / 1000).toFixed(0)}s</span>
+              {remaining > 0 && <span style={{ color: "#555" }}> ({remaining.toFixed(0)}s left)</span>}
+            </>
+          ) : (
+            <span style={{ color: "#444" }}>No active cue</span>
+          )}
+        </div>
+      </div>
+
+      {/* Control buttons */}
+      <div style={{ ...panel, marginBottom: 10, display: "flex", alignItems: "center", gap: 10, padding: "10px 16px", flexWrap: "wrap" }}>
+        <button onClick={triggerBlackout} style={{
+          ...btn, background: "rgba(255,50,50,0.1)", color: "#f55",
+          border: "1px solid rgba(255,50,50,0.2)", padding: "8px 16px", fontSize: 11,
+        }}>
+          BLACKOUT
+        </button>
+        <button onClick={() => setShowRegistration(!showRegistration)} style={{
+          ...btn, background: showRegistration ? "rgba(0,180,216,0.25)" : "rgba(0,180,216,0.12)", color: "#00b4d8",
+          border: "1px solid rgba(0,180,216,0.3)", padding: "8px 16px", fontSize: 11,
+        }}>
+          {showRegistration ? "Hide Registration" : "Camera Registration"}
+        </button>
+        {liveStatus === "sent" && <span style={{ fontSize: 11, color: "#0f0" }}>Cue sent</span>}
+        {liveStatus === "error" && <span style={{ fontSize: 11, color: "#f55" }}>Failed to send</span>}
+      </div>
+
+      {showRegistration && (
+        <div style={{ marginBottom: 10 }}>
+          <SpatialRegistration
+            adminKey={adminKey}
+            onComplete={() => setShowRegistration(false)}
+            onClose={() => setShowRegistration(false)}
+          />
+        </div>
+      )}
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 10 }}>
+        {/* 2D venue map */}
+        <div style={{ ...panel, padding: 0, overflow: "hidden", position: "relative" }}>
+          <canvas
+            ref={canvasRef}
+            style={{ display: "block", width: "100%", cursor: "crosshair" }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={() => setHoveredIdx(null)}
+          />
+          {hoveredIdx !== null && (
+            <div style={{
+              position: "absolute", top: 8, left: 12,
+              background: "rgba(0,0,0,0.7)", borderRadius: 4, padding: "3px 8px",
+              fontSize: 10, color: "#fff", pointerEvents: "none",
+            }}>
+              Phone #{hoveredIdx}
+            </div>
+          )}
+        </div>
+
+        {/* Saved scenes (cue list) */}
+        <div style={panel}>
+          <span style={lbl}>Cue List</span>
+          <div style={{ display: "flex", flexDirection: "column", gap: 3, maxHeight: 540, overflowY: "auto" }}>
+            {savedScenes.length === 0 && (
+              <span style={{ fontSize: 10, color: "#444", padding: 8, textAlign: "center" }}>
+                No saved scenes. Create scenes in Simulation mode.
+              </span>
+            )}
+            {savedScenes.map(sp => {
+              const pr = PRESETS.find(p => p.id === sp.preset);
+              const pc = PAL[sp.palette] || PAL.white;
+              return (
+                <div key={sp.id} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <button
+                    onClick={() => triggerCue(sp.preset, { speed: sp.speed, width: sp.width, palette: sp.palette }, 30000)}
+                    style={{
+                      ...btn, flex: 1, textAlign: "left", background: "rgba(255,255,255,0.03)", color: "#aaa",
+                      display: "flex", alignItems: "center", gap: 6,
+                    }}
+                  >
+                    <span style={{ fontSize: 11 }}>{pr?.icon || "?"}</span>
+                    <span style={{ flex: 1 }}>{sp.name}</span>
+                    <div style={{ display: "flex", gap: 1 }}>
+                      {pc.slice(0, 3).map((c, i) => (
+                        <div key={i} style={{ width: 5, height: 5, borderRadius: 1, background: `rgb(${c.join(",")})` }} />
+                      ))}
+                    </div>
+                    <span style={{ fontSize: 9, color: "#555" }}>{sp.speed}x</span>
+                    <span style={{ fontSize: 8, color: "#ff006e", padding: "1px 4px", background: "rgba(255,0,110,0.1)", borderRadius: 3 }}>GO</span>
+                  </button>
+                  <button onClick={() => onLoadScene(sp)} style={{ ...btn, background: "rgba(255,255,255,0.03)", color: "#777", padding: "5px 6px", fontSize: 9 }}>Load</button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────── Main Component ─────────────────────── */
+
 export default function VenueSimulator() {
+  const [adminKey, setAdminKey] = useState<string | null>(null);
+
+  if (!adminKey) {
+    return <AuthGate onAuth={setAdminKey} />;
+  }
+
+  return <AdminDashboard adminKey={adminKey} />;
+}
+
+function AdminDashboard({ adminKey }: { adminKey: string }) {
+  const [mode, setMode] = useState<AdminMode>("simulation");
+
+  // ── Simulation state ──
   const [rows, setRows] = useState(14);
   const [colsPerSide, setColsPerSide] = useState(8);
   const [sitting, setSitting] = useState(true);
@@ -211,10 +702,12 @@ export default function VenueSimulator() {
   const [palette, setPalette] = useState("neon");
   const [playing, setPlaying] = useState(true);
   const [stageLight, setStageLight] = useState(0.7);
-  const [savedPresets, setSavedPresets] = useState<{ name: string; preset: string; speed: number; width: number; palette: string; id: number }[]>([]);
+  const [duration, setDuration] = useState(30);
+  const [savedPresets, setSavedPresets] = useState<SavedScene[]>([]);
   const [presetName, setPresetName] = useState("");
   const [deviceCount, setDeviceCount] = useState(0);
   const [liveStatus, setLiveStatus] = useState<"idle" | "sent" | "error">("idle");
+  const [scenesLoaded, setScenesLoaded] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
@@ -223,23 +716,55 @@ export default function VenueSimulator() {
   const phones = useMemo(() => buildPhones(rows, colsPerSide, aisleW, rowDepth, colSpacing, sitting), [rows, colsPerSide, sitting]);
   const total = phones.length;
 
+  // Load scenes from API on mount
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch("/api/pixel-mob/scenes", {
+          headers: { "x-admin-key": adminKey },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.scenes)) {
+            setSavedPresets(data.scenes);
+          }
+        }
+      } catch { /* ignore */ }
+      setScenesLoaded(true);
+    })();
+  }, [adminKey]);
+
+  // Poll device count
   useEffect(() => {
     const poll = setInterval(async () => {
       try {
-        const res = await fetch("/api/pixel-mob/devices");
+        const res = await fetch("/api/pixel-mob/devices", {
+          headers: { "x-admin-key": adminKey },
+        });
         const data = await res.json();
-        setDeviceCount(data.count);
+        setDeviceCount(data.count ?? data.devices?.length ?? 0);
       } catch { /* ignore */ }
     }, 3000);
     return () => clearInterval(poll);
-  }, []);
+  }, [adminKey]);
+
+  // Persist scenes to API
+  const persistScenes = async (scenes: SavedScene[]) => {
+    try {
+      await fetch("/api/pixel-mob/scenes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
+        body: JSON.stringify({ scenes }),
+      });
+    } catch { /* ignore */ }
+  };
 
   const triggerCue = async () => {
     try {
       const res = await fetch("/api/pixel-mob/cue", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ animation: preset, speed, width, palette, duration: 30000 }),
+        headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
+        body: JSON.stringify({ animation: preset, speed, width, palette, duration: duration * 1000 }),
       });
       if (res.ok) setLiveStatus("sent");
       else setLiveStatus("error");
@@ -248,31 +773,48 @@ export default function VenueSimulator() {
   };
 
   const triggerBlackout = async () => {
-    await fetch("/api/pixel-mob/cue", { method: "DELETE" });
+    await fetch("/api/pixel-mob/cue", {
+      method: "DELETE",
+      headers: { "x-admin-key": adminKey },
+    });
     setLiveStatus("idle");
   };
 
   const savePreset = () => {
     const name = presetName.trim() || `Scene ${savedPresets.length + 1}`;
-    setSavedPresets(p => [...p, { name, preset, speed, width, palette, id: Date.now() }]);
+    const next = [...savedPresets, { name, preset, speed, width, palette, id: Date.now() }];
+    setSavedPresets(next);
+    persistScenes(next);
     setPresetName("");
   };
-  const loadPreset = (sp: typeof savedPresets[0]) => { setPreset(sp.preset); setSpeed(sp.speed); setWidth(sp.width); setPalette(sp.palette); };
-  const deletePreset = (id: number) => setSavedPresets(p => p.filter(x => x.id !== id));
 
-  const triggerSavedCue = async (sp: typeof savedPresets[0]) => {
+  const loadPreset = (sp: SavedScene) => {
+    setPreset(sp.preset);
+    setSpeed(sp.speed);
+    setWidth(sp.width);
+    setPalette(sp.palette);
+  };
+
+  const deletePreset = (id: number) => {
+    const next = savedPresets.filter(x => x.id !== id);
+    setSavedPresets(next);
+    persistScenes(next);
+  };
+
+  const triggerSavedCue = async (sp: SavedScene) => {
     loadPreset(sp);
     try {
       const res = await fetch("/api/pixel-mob/cue", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ animation: sp.preset, speed: sp.speed, width: sp.width, palette: sp.palette, duration: 30000 }),
+        headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
+        body: JSON.stringify({ animation: sp.preset, speed: sp.speed, width: sp.width, palette: sp.palette, duration: duration * 1000 }),
       });
       if (res.ok) setLiveStatus("sent");
     } catch { /* ignore */ }
     setTimeout(() => setLiveStatus("idle"), 3000);
   };
 
+  // 3D renderer
   const render = useCallback(() => {
     const canvas = canvasRef.current; if (!canvas) return;
     const ctx = canvas.getContext("2d"); if (!ctx) return;
@@ -326,155 +868,219 @@ export default function VenueSimulator() {
     if (playing) animRef.current = requestAnimationFrame(render);
   }, [phones, camAngle, camHeight, camDist, camPitch, jitter, preset, speed, width, palette, playing, rows, colsPerSide, total, sitting, stageLight]);
 
+  // Canvas resize (simulation)
   useEffect(() => {
+    if (mode !== "simulation") return;
     const c = canvasRef.current; if (!c) return;
     const resize = () => {
       const r = c.parentElement?.getBoundingClientRect(); if (!r) return;
       c.width = r.width * 2; c.height = 500 * 2; c.style.width = r.width + "px"; c.style.height = "500px";
     };
     resize(); window.addEventListener("resize", resize); return () => window.removeEventListener("resize", resize);
-  }, []);
+  }, [mode]);
+
+  // Animation loop (simulation)
   useEffect(() => {
+    if (mode !== "simulation") return;
     if (playing) animRef.current = requestAnimationFrame(render);
     return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
-  }, [render, playing]);
+  }, [render, playing, mode]);
 
   const panel: React.CSSProperties = { background: "rgba(12,12,22,0.92)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 10, padding: 14 };
   const lbl: React.CSSProperties = { fontSize: 9, color: "#555", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6, display: "block" };
   const btn: React.CSSProperties = { borderRadius: 6, padding: "5px 8px", cursor: "pointer", fontSize: 10, border: "1px solid rgba(255,255,255,0.06)" };
 
+  const tabStyle = (active: boolean): React.CSSProperties => ({
+    padding: "8px 20px",
+    fontSize: 11,
+    fontWeight: 700,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+    cursor: "pointer",
+    border: "none",
+    borderBottom: active ? "2px solid #ff006e" : "2px solid transparent",
+    background: "transparent",
+    color: active ? "#ff006e" : "#555",
+    transition: "color 0.15s, border-color 0.15s",
+  });
+
   return (
     <div style={{ background: "#050510", color: "#ddd", minHeight: "100vh", fontFamily: "'Segoe UI',system-ui,sans-serif", padding: 12 }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        {/* Header */}
         <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 10 }}>
           <h1 style={{ fontSize: 18, fontWeight: 700, color: "#fff", margin: 0 }}>Crowd Pixel — Admin</h1>
           <span style={{ fontSize: 11, color: "#444" }}>{total} sim pixels · {deviceCount} phones connected</span>
         </div>
 
-        {/* LIVE CONTROL BAR */}
-        <div style={{ ...panel, marginBottom: 10, display: "flex", alignItems: "center", gap: 12, padding: "10px 16px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: deviceCount > 0 ? "#0f0" : "#555", boxShadow: deviceCount > 0 ? "0 0 6px #0f0" : "none" }} />
-            <span style={{ fontSize: 11, color: "#aaa" }}>{deviceCount} device{deviceCount !== 1 ? "s" : ""}</span>
-          </div>
-          <button onClick={triggerCue} style={{ ...btn, background: "rgba(255,0,110,0.2)", color: "#ff006e", border: "1px solid rgba(255,0,110,0.4)", padding: "8px 20px", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-            GO
+        {/* Mode tabs */}
+        <div style={{
+          ...panel, marginBottom: 10, padding: 0, display: "flex",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+        }}>
+          <button onClick={() => setMode("simulation")} style={tabStyle(mode === "simulation")}>
+            Simulation
           </button>
-          <button onClick={triggerBlackout} style={{ ...btn, background: "rgba(255,50,50,0.1)", color: "#f55", border: "1px solid rgba(255,50,50,0.2)", padding: "8px 16px", fontSize: 11 }}>
-            BLACKOUT
+          <button onClick={() => setMode("live")} style={tabStyle(mode === "live")}>
+            Live
           </button>
-          {liveStatus === "sent" && <span style={{ fontSize: 11, color: "#0f0" }}>Cue sent — starts in 5s</span>}
-          {liveStatus === "error" && <span style={{ fontSize: 11, color: "#f55" }}>Failed to send cue</span>}
-          <span style={{ marginLeft: "auto", fontSize: 10, color: "#444" }}>
-            Current: {PRESETS.find(p => p.id === preset)?.label} · {palette} · {speed}×
-          </span>
         </div>
 
-        <div style={{ ...panel, padding: 0, overflow: "hidden", marginBottom: 10, position: "relative" }}>
-          <canvas ref={canvasRef} style={{ display: "block", width: "100%" }} />
-          <div style={{ position: "absolute", top: 10, right: 12, display: "flex", gap: 5 }}>
-            <button onClick={() => setPlaying(!playing)} style={{ ...btn, background: "rgba(0,0,0,0.5)", color: "#fff" }}>{playing ? "❚❚" : "▶"}</button>
-          </div>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 10 }}>
-          {/* col 1: animations */}
-          <div style={panel}>
-            <span style={lbl}>Animation</span>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 3, maxHeight: 440, overflowY: "auto" }}>
-              {PRESETS.map(p => (
-                <button key={p.id} onClick={() => setPreset(p.id)} style={{
-                  ...btn, textAlign: "left", display: "flex", gap: 4, alignItems: "center",
-                  background: preset === p.id ? "rgba(255,0,110,0.15)" : "rgba(255,255,255,0.02)",
-                  border: preset === p.id ? "1px solid rgba(255,0,110,0.4)" : "1px solid rgba(255,255,255,0.04)",
-                  color: preset === p.id ? "#ff006e" : "#777",
-                }}><span style={{ fontSize: 11, width: 15, textAlign: "center" }}>{p.icon}</span>{p.label}</button>
-              ))}
+        {/* ── SIMULATION MODE ── */}
+        {mode === "simulation" && (
+          <>
+            {/* Live control bar */}
+            <div style={{ ...panel, marginBottom: 10, display: "flex", alignItems: "center", gap: 12, padding: "10px 16px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: deviceCount > 0 ? "#0f0" : "#555", boxShadow: deviceCount > 0 ? "0 0 6px #0f0" : "none" }} />
+                <span style={{ fontSize: 11, color: "#aaa" }}>{deviceCount} device{deviceCount !== 1 ? "s" : ""}</span>
+              </div>
+              <button onClick={triggerCue} style={{
+                ...btn, background: "rgba(255,0,110,0.2)", color: "#ff006e",
+                border: "1px solid rgba(255,0,110,0.4)", padding: "8px 20px",
+                fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
+              }}>
+                GO
+              </button>
+              <button onClick={triggerBlackout} style={{
+                ...btn, background: "rgba(255,50,50,0.1)", color: "#f55",
+                border: "1px solid rgba(255,50,50,0.2)", padding: "8px 16px", fontSize: 11,
+              }}>
+                BLACKOUT
+              </button>
+              {liveStatus === "sent" && <span style={{ fontSize: 11, color: "#0f0" }}>Cue sent — starts in 5s</span>}
+              {liveStatus === "error" && <span style={{ fontSize: 11, color: "#f55" }}>Failed to send cue</span>}
+              <span style={{ marginLeft: "auto", fontSize: 10, color: "#444" }}>
+                Current: {PRESETS.find(p => p.id === preset)?.label} · {palette} · {speed}x · {duration}s
+              </span>
             </div>
-          </div>
-          {/* col 2: params */}
-          <div style={panel}>
-            <span style={lbl}>Effect Parameters</span>
-            <Slider label="Speed" value={speed} onChange={setSpeed} min={0.1} max={4} step={0.1} unit="×" />
-            <Slider label="Width / Spread" value={width} onChange={setWidth} min={0.1} max={3} step={0.1} />
-            <Slider label="Sync Jitter" value={jitter} onChange={setJitter} min={0} max={500} step={1} unit="ms" />
-            <div style={{ marginTop: 6 }}><span style={lbl}>Palette</span>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
-                {Object.entries(PAL).map(([k, cols]) => (
-                  <button key={k} onClick={() => setPalette(k)} style={{
-                    ...btn, display: "flex", alignItems: "center", gap: 3,
-                    background: palette === k ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.02)",
-                    border: palette === k ? "1px solid rgba(255,255,255,0.25)" : "1px solid rgba(255,255,255,0.05)",
-                  }}><div style={{ display: "flex", gap: 1 }}>{cols.slice(0, 4).map((c, i) => (
-                    <div key={i} style={{ width: 6, height: 6, borderRadius: 1, background: `rgb(${c.join(",")})` }} />
-                  ))}</div>
-                    <span style={{ fontSize: 9, color: "#777" }}>{k}</span></button>
-                ))}
+
+            {/* 3D Canvas */}
+            <div style={{ ...panel, padding: 0, overflow: "hidden", marginBottom: 10, position: "relative" }}>
+              <canvas ref={canvasRef} style={{ display: "block", width: "100%" }} />
+              <div style={{ position: "absolute", top: 10, right: 12, display: "flex", gap: 5 }}>
+                <button onClick={() => setPlaying(!playing)} style={{ ...btn, background: "rgba(0,0,0,0.5)", color: "#fff" }}>{playing ? "❚❚" : "▶"}</button>
               </div>
             </div>
-            <div style={{ marginTop: 10, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 10 }}>
-              <span style={lbl}>Stage Lighting</span>
-              <Slider label="Intensity" value={stageLight} onChange={setStageLight} min={0} max={1} step={0.05} />
-            </div>
-          </div>
-          {/* col 3: venue + camera */}
-          <div style={panel}>
-            <span style={lbl}>Venue</span>
-            <Slider label="Rows" value={rows} onChange={v => setRows(Math.round(v))} min={4} max={100} step={1} />
-            <Slider label="Seats/side" value={colsPerSide} onChange={v => setColsPerSide(Math.round(v))} min={3} max={50} step={1} />
-            <button onClick={() => setSitting(!sitting)} style={{
-              ...btn, width: "100%", marginBottom: 8,
-              background: sitting ? "rgba(0,180,216,0.12)" : "rgba(255,159,28,0.12)",
-              border: `1px solid ${sitting ? "rgba(0,180,216,0.3)" : "rgba(255,159,28,0.3)"}`,
-              color: sitting ? "#00b4d8" : "#ff9f1c",
-            }}>{sitting ? "🪑 Seated" : "🧍 Standing"}</button>
-            <span style={lbl}>Camera Orbit</span>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <CompassDial angle={camAngle} onChange={setCamAngle} />
-              <div style={{ flex: 1 }}>
-                <Slider label="Height" value={camHeight} onChange={setCamHeight} min={0.8} max={8} step={0.1} unit="m" />
-                <Slider label="Distance" value={camDist} onChange={setCamDist} min={1} max={15} step={0.5} unit="m" />
-                <Slider label="Tilt" value={camPitch} onChange={setCamPitch} min={-0.4} max={0.5} step={0.01} />
+
+            {/* Control panels */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 10 }}>
+              {/* col 1: animations */}
+              <div style={panel}>
+                <span style={lbl}>Animation</span>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 3, maxHeight: 440, overflowY: "auto" }}>
+                  {PRESETS.map(p => (
+                    <button key={p.id} onClick={() => setPreset(p.id)} style={{
+                      ...btn, textAlign: "left", display: "flex", gap: 4, alignItems: "center",
+                      background: preset === p.id ? "rgba(255,0,110,0.15)" : "rgba(255,255,255,0.02)",
+                      border: preset === p.id ? "1px solid rgba(255,0,110,0.4)" : "1px solid rgba(255,255,255,0.04)",
+                      color: preset === p.id ? "#ff006e" : "#777",
+                    }}><span style={{ fontSize: 11, width: 15, textAlign: "center" }}>{p.icon}</span>{p.label}</button>
+                  ))}
+                </div>
               </div>
-            </div>
-          </div>
-          {/* col 4: saved scenes */}
-          <div style={panel}>
-            <span style={lbl}>Saved Scenes (Cue List)</span>
-            <div style={{ display: "flex", gap: 4, marginBottom: 8 }}>
-              <input value={presetName} onChange={e => setPresetName(e.target.value)} placeholder="Scene name..."
-                style={{
-                  flex: 1, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
-                  borderRadius: 5, padding: "5px 8px", color: "#ccc", fontSize: 10, outline: "none"
-                }}
-                onKeyDown={e => { if (e.key === "Enter") savePreset(); }} />
-              <button onClick={savePreset} style={{ ...btn, background: "rgba(255,0,110,0.15)", color: "#ff006e", border: "1px solid rgba(255,0,110,0.3)" }}>Save</button>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 3, maxHeight: 370, overflowY: "auto" }}>
-              {savedPresets.length === 0 && <span style={{ fontSize: 10, color: "#444", padding: 8, textAlign: "center" }}>No saved scenes yet. Configure animation + params, then save.</span>}
-              {savedPresets.map(sp => {
-                const pr = PRESETS.find(p => p.id === sp.preset);
-                const pc = PAL[sp.palette] || PAL.white;
-                return (
-                  <div key={sp.id} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                    <button onClick={() => triggerSavedCue(sp)} style={{
-                      ...btn, flex: 1, textAlign: "left", background: "rgba(255,255,255,0.03)", color: "#aaa",
-                      display: "flex", alignItems: "center", gap: 6,
-                    }}>
-                      <span style={{ fontSize: 11 }}>{pr?.icon || "?"}</span><span style={{ flex: 1 }}>{sp.name}</span>
-                      <div style={{ display: "flex", gap: 1 }}>{pc.slice(0, 3).map((c, i) => (
-                        <div key={i} style={{ width: 5, height: 5, borderRadius: 1, background: `rgb(${c.join(",")})` }} />
+
+              {/* col 2: params */}
+              <div style={panel}>
+                <span style={lbl}>Effect Parameters</span>
+                <Slider label="Speed" value={speed} onChange={setSpeed} min={0.1} max={4} step={0.1} unit="x" />
+                <Slider label="Width / Spread" value={width} onChange={setWidth} min={0.1} max={3} step={0.1} />
+                <Slider label="Sync Jitter" value={jitter} onChange={setJitter} min={0} max={500} step={1} unit="ms" />
+                <Slider label="Duration" value={duration} onChange={v => setDuration(Math.round(v))} min={5} max={120} step={1} unit="s" />
+                <div style={{ marginTop: 6 }}><span style={lbl}>Palette</span>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+                    {Object.entries(PAL).map(([k, cols]) => (
+                      <button key={k} onClick={() => setPalette(k)} style={{
+                        ...btn, display: "flex", alignItems: "center", gap: 3,
+                        background: palette === k ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.02)",
+                        border: palette === k ? "1px solid rgba(255,255,255,0.25)" : "1px solid rgba(255,255,255,0.05)",
+                      }}><div style={{ display: "flex", gap: 1 }}>{cols.slice(0, 4).map((c, i) => (
+                        <div key={i} style={{ width: 6, height: 6, borderRadius: 1, background: `rgb(${c.join(",")})` }} />
                       ))}</div>
-                      <span style={{ fontSize: 9, color: "#555" }}>{sp.speed}×</span>
-                      <span style={{ fontSize: 8, color: "#ff006e", padding: "1px 4px", background: "rgba(255,0,110,0.1)", borderRadius: 3 }}>GO</span>
-                    </button>
-                    <button onClick={() => { loadPreset(sp); }} style={{ ...btn, background: "rgba(255,255,255,0.03)", color: "#777", padding: "5px 6px", fontSize: 9 }}>Load</button>
-                    <button onClick={() => deletePreset(sp.id)} style={{ ...btn, background: "rgba(255,50,50,0.08)", color: "#f55", border: "1px solid rgba(255,50,50,0.15)", padding: "5px 6px" }}>✕</button>
+                        <span style={{ fontSize: 9, color: "#777" }}>{k}</span></button>
+                    ))}
                   </div>
-                );
-              })}
+                </div>
+                <div style={{ marginTop: 10, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 10 }}>
+                  <span style={lbl}>Stage Lighting</span>
+                  <Slider label="Intensity" value={stageLight} onChange={setStageLight} min={0} max={1} step={0.05} />
+                </div>
+              </div>
+
+              {/* col 3: venue + camera */}
+              <div style={panel}>
+                <span style={lbl}>Venue</span>
+                <Slider label="Rows" value={rows} onChange={v => setRows(Math.round(v))} min={4} max={100} step={1} />
+                <Slider label="Seats/side" value={colsPerSide} onChange={v => setColsPerSide(Math.round(v))} min={3} max={50} step={1} />
+                <button onClick={() => setSitting(!sitting)} style={{
+                  ...btn, width: "100%", marginBottom: 8,
+                  background: sitting ? "rgba(0,180,216,0.12)" : "rgba(255,159,28,0.12)",
+                  border: `1px solid ${sitting ? "rgba(0,180,216,0.3)" : "rgba(255,159,28,0.3)"}`,
+                  color: sitting ? "#00b4d8" : "#ff9f1c",
+                }}>{sitting ? "Seated" : "Standing"}</button>
+                <span style={lbl}>Camera Orbit</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <CompassDial angle={camAngle} onChange={setCamAngle} />
+                  <div style={{ flex: 1 }}>
+                    <Slider label="Height" value={camHeight} onChange={setCamHeight} min={0.8} max={8} step={0.1} unit="m" />
+                    <Slider label="Distance" value={camDist} onChange={setCamDist} min={1} max={15} step={0.5} unit="m" />
+                    <Slider label="Tilt" value={camPitch} onChange={setCamPitch} min={-0.4} max={0.5} step={0.01} />
+                  </div>
+                </div>
+              </div>
+
+              {/* col 4: saved scenes */}
+              <div style={panel}>
+                <span style={lbl}>Saved Scenes (Cue List)</span>
+                <div style={{ display: "flex", gap: 4, marginBottom: 8 }}>
+                  <input value={presetName} onChange={e => setPresetName(e.target.value)} placeholder="Scene name..."
+                    style={{
+                      flex: 1, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
+                      borderRadius: 5, padding: "5px 8px", color: "#ccc", fontSize: 10, outline: "none"
+                    }}
+                    onKeyDown={e => { if (e.key === "Enter") savePreset(); }} />
+                  <button onClick={savePreset} style={{ ...btn, background: "rgba(255,0,110,0.15)", color: "#ff006e", border: "1px solid rgba(255,0,110,0.3)" }}>Save</button>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 3, maxHeight: 370, overflowY: "auto" }}>
+                  {savedPresets.length === 0 && <span style={{ fontSize: 10, color: "#444", padding: 8, textAlign: "center" }}>No saved scenes yet. Configure animation + params, then save.</span>}
+                  {savedPresets.map(sp => {
+                    const pr = PRESETS.find(p => p.id === sp.preset);
+                    const pc = PAL[sp.palette] || PAL.white;
+                    return (
+                      <div key={sp.id} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                        <button onClick={() => triggerSavedCue(sp)} style={{
+                          ...btn, flex: 1, textAlign: "left", background: "rgba(255,255,255,0.03)", color: "#aaa",
+                          display: "flex", alignItems: "center", gap: 6,
+                        }}>
+                          <span style={{ fontSize: 11 }}>{pr?.icon || "?"}</span><span style={{ flex: 1 }}>{sp.name}</span>
+                          <div style={{ display: "flex", gap: 1 }}>{pc.slice(0, 3).map((c, i) => (
+                            <div key={i} style={{ width: 5, height: 5, borderRadius: 1, background: `rgb(${c.join(",")})` }} />
+                          ))}</div>
+                          <span style={{ fontSize: 9, color: "#555" }}>{sp.speed}x</span>
+                          <span style={{ fontSize: 8, color: "#ff006e", padding: "1px 4px", background: "rgba(255,0,110,0.1)", borderRadius: 3 }}>GO</span>
+                        </button>
+                        <button onClick={() => { loadPreset(sp); }} style={{ ...btn, background: "rgba(255,255,255,0.03)", color: "#777", padding: "5px 6px", fontSize: 9 }}>Load</button>
+                        <button onClick={() => deletePreset(sp.id)} style={{ ...btn, background: "rgba(255,50,50,0.08)", color: "#f55", border: "1px solid rgba(255,50,50,0.15)", padding: "5px 6px" }}>x</button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
+
+        {/* ── LIVE MONITOR MODE ── */}
+        {mode === "live" && (
+          <LiveMonitor
+            adminKey={adminKey}
+            savedScenes={savedPresets}
+            onLoadScene={(sc) => {
+              loadPreset(sc);
+              setMode("simulation");
+            }}
+          />
+        )}
       </div>
     </div>
   );

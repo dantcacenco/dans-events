@@ -1,18 +1,21 @@
 export const dynamic = "force-dynamic";
 
-import { setCue, clearCue, getState } from "@/lib/pixel-mob/state";
+import { setCue, clearCue } from "@/lib/pixel-mob/state";
+import { isAdmin, unauthorized } from "@/lib/pixel-mob/auth";
 
 export async function POST(request: Request) {
-  const body = await request.json();
-  const { animation, speed, width, palette, duration } = body;
+  if (!isAdmin(request)) return unauthorized();
 
-  if (!animation) {
+  const body = await request.json();
+  const { animation, speed, width, palette, duration, type } = body;
+
+  if (!animation && type !== "blink_register") {
     return Response.json({ error: "animation required" }, { status: 400 });
   }
 
   const cue = {
     id: `cue_${Date.now()}`,
-    animation,
+    animation: animation ?? "all_on",
     params: {
       speed: speed ?? 1,
       width: width ?? 1,
@@ -20,17 +23,15 @@ export async function POST(request: Request) {
     },
     startAt: Date.now() + 5000,
     duration: duration ?? 30000,
+    type: type ?? "play",
   };
 
-  setCue(cue);
+  await setCue(cue);
   return Response.json({ cue });
 }
 
-export async function DELETE() {
-  clearCue();
-  const state = getState();
-  return Response.json({
-    stopped: true,
-    deviceCount: state.devices.size,
-  });
+export async function DELETE(request: Request) {
+  if (!isAdmin(request)) return unauthorized();
+  await clearCue();
+  return Response.json({ stopped: true });
 }

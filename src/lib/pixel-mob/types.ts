@@ -14,14 +14,6 @@ export type AnimationParams = {
   palette: string;
 };
 
-export type Cue = {
-  id: string;
-  animation: string;
-  params: AnimationParams;
-  startAt: number;
-  duration: number;
-};
-
 export type ShowState = {
   currentCue: Cue | null;
   deviceCount: number;
@@ -35,4 +27,22 @@ export type DeviceRegistration = {
   position: PhonePosition;
   registeredAt: number;
   lastSeen: number;
+};
+
+export type SavedScene = {
+  name: string;
+  preset: string;
+  speed: number;
+  width: number;
+  palette: string;
+  id: number;
+};
+
+export type Cue = {
+  id: string;
+  animation: string;
+  params: AnimationParams;
+  startAt: number;
+  duration: number;
+  type?: "play" | "blink_register";
 };

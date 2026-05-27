@@ -1,18 +1,15 @@
-export const dynamic = "force-dynamic";
+import { getCurrentCue, getDeviceCount, getShowConfig, getSyncVersion } from "@/lib/pixel-mob/state";
 
-import { getState, getDeviceCount, touchDevice } from "@/lib/pixel-mob/state";
+export async function GET() {
+  const [currentCue, deviceCount, showConfig, syncVersion] = await Promise.all([
+    getCurrentCue(),
+    getDeviceCount(),
+    getShowConfig(),
+    getSyncVersion(),
+  ]);
 
-export async function GET(request: Request) {
-  const url = new URL(request.url);
-  const deviceId = url.searchParams.get("deviceId");
-  if (deviceId) touchDevice(deviceId);
-
-  const state = getState();
-
-  return Response.json({
-    currentCue: state.currentCue,
-    deviceCount: getDeviceCount(),
-    showConfig: state.showConfig,
-    syncVersion: state.syncVersion,
-  });
+  return Response.json(
+    { currentCue, deviceCount, showConfig, syncVersion },
+    { headers: { "Cache-Control": "s-maxage=1, stale-while-revalidate=2" } }
+  );
 }
