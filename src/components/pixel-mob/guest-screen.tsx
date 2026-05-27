@@ -278,13 +278,7 @@ export default function GuestScreen() {
   // ── Join flow ───────────────────────────────────────────────────
 
   const handleJoin = () => {
-    // Check for an existing stored registration -- skip section picker
-    const stored = getStoredRegistration();
-    if (stored) {
-      startSyncing(stored.deviceId);
-    } else {
-      setStage("section_side");
-    }
+    setStage("section_side");
   };
 
   const handleSideChosen = (side: number) => {
@@ -302,25 +296,12 @@ export default function GuestScreen() {
 
     setStage("syncing");
 
-    await register(did, { side: chosenSide!, depth });
+    await register(did, { side: chosenSide!, depth }, true);
 
     const offset = await syncClock("");
     setClockOffset(offset);
 
     // Check for a cached cue that may still be playing
-    resumeFromCacheIfValid(offset);
-  };
-
-  const startSyncing = async (did: string) => {
-    await goFullscreen();
-    await requestWakeLock();
-    setStage("syncing");
-
-    await register(did);
-
-    const offset = await syncClock("");
-    setClockOffset(offset);
-
     resumeFromCacheIfValid(offset);
   };
 
