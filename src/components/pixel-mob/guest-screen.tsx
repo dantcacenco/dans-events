@@ -5,9 +5,6 @@ import { anim } from "@/lib/pixel-mob/animations";
 import type { Cue, PhonePosition } from "@/lib/pixel-mob/types";
 
 type Stage =
-  | "welcome"
-  | "section_side"
-  | "section_depth"
   | "syncing"
   | "ready"
   | "countdown"
@@ -105,51 +102,6 @@ const baseScreen: React.CSSProperties = {
   overflow: "hidden",
 };
 
-const bigButton: React.CSSProperties = {
-  background: ACCENT,
-  color: "#fff",
-  border: "none",
-  borderRadius: 12,
-  padding: "18px 48px",
-  fontSize: 16,
-  fontWeight: 700,
-  cursor: "pointer",
-  letterSpacing: "0.05em",
-  textTransform: "uppercase",
-  WebkitTapHighlightColor: "transparent",
-};
-
-const sectionButton: React.CSSProperties = {
-  flex: 1,
-  background: "rgba(255,255,255,0.06)",
-  border: "2px solid rgba(255,255,255,0.12)",
-  borderRadius: 16,
-  color: "#fff",
-  fontSize: 18,
-  fontWeight: 700,
-  cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  minHeight: 120,
-  WebkitTapHighlightColor: "transparent",
-  transition: "background 0.15s, border-color 0.15s",
-};
-
-const sectionButtonActive: React.CSSProperties = {
-  ...sectionButton,
-  background: "rgba(255,0,110,0.15)",
-  borderColor: ACCENT,
-};
-
-const subtleLabel: React.CSSProperties = {
-  fontSize: 14,
-  letterSpacing: "0.3em",
-  textTransform: "uppercase",
-  color: "rgba(255,255,255,0.3)",
-  marginBottom: 24,
-};
-
 const CSS_KEYFRAMES = `
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
@@ -179,7 +131,7 @@ function ConnectionDot({ ok }: { ok: boolean }) {
 // ── Component ────────────────────────────────────────────────────────
 
 export default function GuestScreen() {
-  const [stage, setStage] = useState<Stage>("welcome");
+  const [stage, setStage] = useState<Stage>("syncing");
   const [deviceId, setDeviceId] = useState<string>("");
   const [position, setPosition] = useState<PhonePosition | null>(null);
   const [clockOffset, setClockOffset] = useState(0);
@@ -191,17 +143,13 @@ export default function GuestScreen() {
   const [bgOpacity, setBgOpacity] = useState(0);
   const [connectionOk, setConnectionOk] = useState(true);
 
-  // Section picker state
-  const [chosenSide, setChosenSide] = useState<number | null>(null);
-  const [chosenDepth, setChosenDepth] = useState<number | null>(null);
-
   const animRef = useRef<number>(0);
   const cueRef = useRef<Cue | null>(null);
   const posRef = useRef<PhonePosition | null>(null);
   const offsetRef = useRef(0);
   const wakeLockRef = useRef<WakeLockSentinel | null>(null);
   const lastCueIdRef = useRef<string>("");
-  const stageRef = useRef<Stage>("welcome");
+  const stageRef = useRef<Stage>("syncing");
 
   useEffect(() => {
     cueRef.current = currentCue;
@@ -275,35 +223,27 @@ export default function GuestScreen() {
     []
   );
 
-  // ── Join flow ───────────────────────────────────────────────────
+  // ── Auto-start: register + sync on mount ─────────────────────
 
-  const handleJoin = () => {
-    setStage("section_side");
-  };
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const did = generateDeviceId();
+      await goFullscreen();
+      await requestWakeLock();
 
-  const handleSideChosen = (side: number) => {
-    setChosenSide(side);
-    setStage("section_depth");
-  };
+      const reg = await register(did, undefined, true);
+      if (cancelled) return;
 
-  const handleDepthChosen = async (depth: number) => {
-    setChosenDepth(depth);
+      const offset = await syncClock("");
+      if (cancelled) return;
+      setClockOffset(offset);
 
-    // Now go fullscreen + wake lock, then register + sync
-    const did = generateDeviceId();
-    await goFullscreen();
-    await requestWakeLock();
-
-    setStage("syncing");
-
-    await register(did, { side: chosenSide!, depth }, true);
-
-    const offset = await syncClock("");
-    setClockOffset(offset);
-
-    // Check for a cached cue that may still be playing
-    resumeFromCacheIfValid(offset);
-  };
+      resumeFromCacheIfValid(offset);
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const resumeFromCacheIfValid = (offset: number) => {
     const cached = getCachedCue();
@@ -501,203 +441,6 @@ export default function GuestScreen() {
     animRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animRef.current);
   }, [stage]);
-
-  // ── Render: Welcome ─────────────────────────────────────────────
-
-  if (stage === "welcome") {
-    return (
-      <div style={baseScreen}>
-        <style>{CSS_KEYFRAMES}</style>
-        <div style={subtleLabel}>Crowd Pixel</div>
-        <h1
-          style={{
-            fontSize: 28,
-            fontWeight: 800,
-            margin: "0 0 12px",
-            lineHeight: 1.2,
-          }}
-        >
-          Join the Light Show
-        </h1>
-        <p
-          style={{
-            fontSize: 14,
-            color: "rgba(255,255,255,0.5)",
-            maxWidth: 280,
-            lineHeight: 1.6,
-            margin: "0 0 40px",
-          }}
-        >
-          Your phone screen becomes part of a coordinated crowd light display.
-          Tap below to join.
-        </p>
-        <button onClick={handleJoin} style={bigButton}>
-          Join
-        </button>
-        <p
-          style={{
-            fontSize: 11,
-            color: "rgba(255,255,255,0.2)",
-            marginTop: 20,
-          }}
-        >
-          Tip: Turn your screen brightness to maximum
-        </p>
-      </div>
-    );
-  }
-
-  // ── Render: Section picker - Side ───────────────────────────────
-
-  if (stage === "section_side") {
-    return (
-      <div style={baseScreen}>
-        <style>{CSS_KEYFRAMES}</style>
-        <div style={subtleLabel}>Step 1 of 2</div>
-        <h1
-          style={{
-            fontSize: 24,
-            fontWeight: 800,
-            margin: "0 0 8px",
-            lineHeight: 1.2,
-          }}
-        >
-          Which side of the aisle?
-        </h1>
-        <p
-          style={{
-            fontSize: 13,
-            color: "rgba(255,255,255,0.4)",
-            margin: "0 0 32px",
-          }}
-        >
-          Facing the front, which side are you on?
-        </p>
-        <div
-          style={{
-            display: "flex",
-            gap: 16,
-            width: "100%",
-            maxWidth: 340,
-          }}
-        >
-          <button
-            onClick={() => handleSideChosen(0)}
-            style={sectionButton}
-            onPointerDown={(e) => {
-              const el = e.currentTarget;
-              Object.assign(el.style, {
-                background: "rgba(255,0,110,0.15)",
-                borderColor: ACCENT,
-              });
-            }}
-            onPointerUp={(e) => {
-              const el = e.currentTarget;
-              Object.assign(el.style, {
-                background: "rgba(255,255,255,0.06)",
-                borderColor: "rgba(255,255,255,0.12)",
-              });
-            }}
-          >
-            Left
-          </button>
-          <button
-            onClick={() => handleSideChosen(1)}
-            style={sectionButton}
-            onPointerDown={(e) => {
-              const el = e.currentTarget;
-              Object.assign(el.style, {
-                background: "rgba(255,0,110,0.15)",
-                borderColor: ACCENT,
-              });
-            }}
-            onPointerUp={(e) => {
-              const el = e.currentTarget;
-              Object.assign(el.style, {
-                background: "rgba(255,255,255,0.06)",
-                borderColor: "rgba(255,255,255,0.12)",
-              });
-            }}
-          >
-            Right
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // ── Render: Section picker - Depth ──────────────────────────────
-
-  if (stage === "section_depth") {
-    return (
-      <div style={baseScreen}>
-        <style>{CSS_KEYFRAMES}</style>
-        <div style={subtleLabel}>Step 2 of 2</div>
-        <h1
-          style={{
-            fontSize: 24,
-            fontWeight: 800,
-            margin: "0 0 8px",
-            lineHeight: 1.2,
-          }}
-        >
-          Where are you sitting?
-        </h1>
-        <p
-          style={{
-            fontSize: 13,
-            color: "rgba(255,255,255,0.4)",
-            margin: "0 0 32px",
-          }}
-        >
-          How far from the front are you?
-        </p>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 12,
-            width: "100%",
-            maxWidth: 340,
-          }}
-        >
-          {(
-            [
-              { label: "Front", depth: 0 },
-              { label: "Middle", depth: 1 },
-              { label: "Back", depth: 2 },
-            ] as const
-          ).map(({ label, depth }) => (
-            <button
-              key={depth}
-              onClick={() => handleDepthChosen(depth)}
-              style={{
-                ...sectionButton,
-                minHeight: 72,
-                flex: "unset",
-              }}
-              onPointerDown={(e) => {
-                const el = e.currentTarget;
-                Object.assign(el.style, {
-                  background: "rgba(255,0,110,0.15)",
-                  borderColor: ACCENT,
-                });
-              }}
-              onPointerUp={(e) => {
-                const el = e.currentTarget;
-                Object.assign(el.style, {
-                  background: "rgba(255,255,255,0.06)",
-                  borderColor: "rgba(255,255,255,0.12)",
-                });
-              }}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  }
 
   // ── Render: Syncing ─────────────────────────────────────────────
 
