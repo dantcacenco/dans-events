@@ -179,13 +179,6 @@ export default function SpatialRegistration({
     setError("");
     framesRef.current = [];
 
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    if (!video || !canvas) return;
-
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
-
     const isRetry = retryDetected && retryDetected.length > 0;
     if (isRetry) {
       setPassNumber((p) => p + 1);
@@ -194,6 +187,46 @@ export default function SpatialRegistration({
       allDecodedRef.current = [];
       setPassNumber(1);
     }
+
+    // Re-open camera if stream is gone (e.g. coming from results phase)
+    if (!streamRef.current || !videoRef.current) {
+      console.log("[SpatialReg] Re-opening camera for retry...");
+      setPhase("camera");
+      // Wait a tick for the video element to mount in the DOM
+      await new Promise((r) => setTimeout(r, 50));
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "environment",
+            width: { ideal: 1280 },
+            height: { ideal: 720 },
+          },
+          audio: false,
+        });
+        streamRef.current = stream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          await videoRef.current.play();
+        }
+        // Let the camera stabilize before capturing
+        await new Promise((r) => setTimeout(r, 500));
+      } catch {
+        setError("Could not access camera. Check permissions.");
+        setPhase("idle");
+        return;
+      }
+    }
+
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) {
+      setError("Camera not available. Try 'Start Over'.");
+      setPhase("idle");
+      return;
+    }
+
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
 
     // Step 1: Capture dark reference frames
     setPhase("dark_capture");
