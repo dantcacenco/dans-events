@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       {/* NAV */}
-      <nav className="fixed top-0 left-0 w-full z-[1000] bg-black border-b border-white/[0.08] px-6 h-16 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 w-full z-[1000] bg-red px-6 h-16 flex items-center justify-between">
         <a href="#" className="block">
           <Image
             src="/logos/logo-white-transparent.png"
@@ -28,7 +28,7 @@ export default function Home() {
             <li key={href}>
               <a
                 href={href}
-                className="text-[11px] font-medium uppercase tracking-[2px] text-white/50 hover:text-white transition-colors"
+                className="text-[11px] font-medium uppercase tracking-[2px] text-white hover:text-white/80 transition-colors"
               >
                 {label}
               </a>

@@ -29,10 +29,8 @@ export async function POST(request: Request) {
     if (ok) updated++;
   }
 
-  // Bump sync version so phones re-register and pick up new positions
-  if (updated > 0) {
-    await kv.incr("pixelmob:sync_version");
-  }
+  // Always bump sync version so phones re-register and pick up new positions
+  await kv.incr("pixelmob:sync_version");
   const syncVersion = await getSyncVersion();
   console.log(`[pixel-mob/map] Updated ${updated}/${mappings.length} positions, syncVersion=${syncVersion}`);
 

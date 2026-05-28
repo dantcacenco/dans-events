@@ -10,6 +10,10 @@ const BLINK_FRAME_MS = 500;
 const BLINK_TOTAL_FRAMES = 12;
 const DOT_SIZE = 5;
 
+// Layout constants for rendering dots on screen
+const MARGIN = 30;
+const STATUS_BAR_HEIGHT = 50;
+
 // Deterministic seeded random for reproducible layouts
 function seededRandom(seed: number) {
   let s = seed;
@@ -19,16 +23,14 @@ function seededRandom(seed: number) {
   };
 }
 
-// Pre-compute irregular positions that mimic a real audience:
-// some clusters, some loners, uneven spacing
-function generateAudiencePositions(count: number, w: number, h: number) {
+// Generate audience positions in NORMALIZED 0-1 space.
+// These normalized coords are used for BOTH visual placement AND animation
+// timing, so what you see on screen matches how animations sweep.
+function generateNormalizedPositions(count: number): { nx: number; nz: number }[] {
   const rand = seededRandom(42);
-  const positions: { x: number; y: number }[] = [];
-  const margin = 30;
-  const usableW = w - margin * 2;
-  const usableH = h - margin - 50; // 50px top for status bar area
+  const positions: { nx: number; nz: number }[] = [];
 
-  // Create 6 cluster centers (like table groups / pew sections)
+  // 6 cluster centers mimicking table groups / pew sections
   const clusters = [
     { cx: 0.15, cy: 0.25, spread: 0.08 },
     { cx: 0.40, cy: 0.20, spread: 0.10 },
@@ -39,28 +41,41 @@ function generateAudiencePositions(count: number, w: number, h: number) {
   ];
 
   for (let i = 0; i < count; i++) {
+    let nx: number, nz: number;
     if (i < count * 0.7) {
-      // 70% of phones belong to a cluster
+      // 70% belong to a cluster
       const cluster = clusters[i % clusters.length];
       const angle = rand() * Math.PI * 2;
       const dist = rand() * cluster.spread + rand() * cluster.spread * 0.5;
-      const x = margin + (cluster.cx + Math.cos(angle) * dist) * usableW;
-      const y = 50 + (cluster.cy + Math.sin(angle) * dist) * usableH;
-      positions.push({
-        x: Math.max(margin, Math.min(w - margin, x)),
-        y: Math.max(50, Math.min(h - margin, y)),
-      });
+      nx = cluster.cx + Math.cos(angle) * dist;
+      nz = cluster.cy + Math.sin(angle) * dist;
     } else {
-      // 30% are scattered randomly (loners, stragglers)
-      positions.push({
-        x: margin + rand() * usableW,
-        y: 50 + rand() * usableH,
-      });
+      // 30% scattered randomly
+      nx = rand();
+      nz = rand();
     }
+    // Clamp to 0-1
+    positions.push({
+      nx: Math.max(0, Math.min(1, nx)),
+      nz: Math.max(0, Math.min(1, nz)),
+    });
   }
 
   return positions;
 }
+
+// Convert normalized position to screen pixel coordinates
+function toScreenPos(nx: number, nz: number, w: number, h: number) {
+  const usableW = w - MARGIN * 2;
+  const usableH = h - MARGIN - STATUS_BAR_HEIGHT;
+  return {
+    x: MARGIN + nx * usableW,
+    y: STATUS_BAR_HEIGHT + nz * usableH,
+  };
+}
+
+// Pre-compute all normalized positions once (deterministic, seed=42)
+const AUDIENCE_POSITIONS = generateNormalizedPositions(PHONE_COUNT);
 
 type VPhone = {
   id: string;
@@ -111,7 +126,7 @@ export default function PhoneGrid() {
     offsetRef.current = clockOffset;
   }, [clockOffset]);
 
-  // Track window size for dot positioning
+  // Track window size for dot rendering
   useEffect(() => {
     const update = () => setDims({ w: window.innerWidth, h: window.innerHeight });
     update();
@@ -119,7 +134,7 @@ export default function PhoneGrid() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  // Step 1: Register all phones
+  // Register all phones, then apply spatial positions to simulate calibration
   useEffect(() => {
     let cancelled = false;
 
@@ -138,7 +153,7 @@ export default function PhoneGrid() {
       }
 
       console.log(`[TestGrid] Registering ${PHONE_COUNT} devices...`);
-      setStatus("Registering 50 devices...");
+      setStatus("Registering devices...");
       const results: VPhone[] = [];
 
       for (let i = 0; i < PHONE_COUNT; i++) {
@@ -150,16 +165,25 @@ export default function PhoneGrid() {
             body: JSON.stringify({ deviceId }),
           });
           const data = await res.json();
-          console.log(`[TestGrid] Device ${i}: index=${data.index}`);
+
+          // Override the grid position with the audience layout position.
+          // This simulates what camera calibration does for real phones.
+          const audiencePos = AUDIENCE_POSITIONS[i];
+          const position: PhonePosition = {
+            ...data.position,
+            nx: audiencePos.nx,
+            nz: audiencePos.nz,
+            side: audiencePos.nx < 0.5 ? 0 : 1,
+          };
+
           results.push({
             id: deviceId,
             index: data.index,
-            position: data.position,
+            position,
             registered: true,
             error: null,
           });
         } catch (e) {
-          console.log(`[TestGrid] Device ${i}: FAILED - ${e}`);
           results.push({
             id: deviceId,
             index: -1,
@@ -174,36 +198,34 @@ export default function PhoneGrid() {
       phonesRef.current = results;
       setPhones(results);
       setRegisteredCount(results.filter((p) => p.registered).length);
+      if (cancelled) return;
 
-      // Retry failed ones
-      const failed = results.filter((p) => !p.registered);
-      if (failed.length > 0) {
-        console.log(`[TestGrid] Retrying ${failed.length} failed registrations`);
-        setStatus(`Retrying ${failed.length} failed registrations...`);
-        for (const phone of failed) {
-          try {
-            const res = await fetch("/api/pixel-mob/register", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ deviceId: phone.id }),
-            });
-            const data = await res.json();
-            phone.index = data.index;
-            phone.position = data.position;
-            phone.registered = true;
-            phone.error = null;
-            console.log(`[TestGrid] Retry success: index=${data.index}`);
-          } catch {
-            // still failed
-          }
-          if (cancelled) return;
-        }
-        phonesRef.current = [...results];
-        setPhones([...results]);
-        setRegisteredCount(results.filter((p) => p.registered).length);
+      // Post calibrated positions to server (simulates camera registration)
+      const mappings = results
+        .filter((p) => p.registered && p.position)
+        .map((p) => ({
+          deviceIndex: p.position!.index,
+          nx: p.position!.nx,
+          nz: p.position!.nz,
+          side: p.position!.side,
+        }));
+
+      try {
+        setStatus("Applying spatial mapping...");
+        await fetch("/api/pixel-mob/map", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-key": "admin",
+          },
+          body: JSON.stringify({ mappings }),
+        });
+        console.log(`[TestGrid] Spatial mapping applied for ${mappings.length} devices`);
+      } catch (e) {
+        console.log(`[TestGrid] Mapping failed (non-critical): ${e}`);
       }
 
-      // Step 2: Sync clock
+      // Sync clock
       setStatus("Syncing clock...");
       const offset = await syncClock();
       if (cancelled) return;
@@ -220,7 +242,7 @@ export default function PhoneGrid() {
     };
   }, []);
 
-  // Step 3: Poll for cues
+  // Poll for cues
   useEffect(() => {
     if (!synced) return;
 
@@ -230,7 +252,7 @@ export default function PhoneGrid() {
         if (!res.ok) return;
         const data = await res.json();
         if (data.currentCue?.id !== cueRef.current?.id) {
-          console.log(`[TestGrid] Cue received: id=${data.currentCue?.id} type=${data.currentCue?.type} startAt=${data.currentCue?.startAt}`);
+          console.log(`[TestGrid] Cue received: id=${data.currentCue?.id} type=${data.currentCue?.type}`);
           setCurrentCue(data.currentCue || null);
         }
       } catch {
@@ -241,7 +263,7 @@ export default function PhoneGrid() {
     return () => clearInterval(poll);
   }, [synced]);
 
-  // Step 4: Animation / blink rendering loop
+  // Animation / blink rendering loop
   const renderLoop = useCallback(() => {
     const cue = cueRef.current;
     const ps = phonesRef.current;
@@ -277,7 +299,6 @@ export default function PhoneGrid() {
 
       if (frame !== lastBlinkFrame.current) {
         lastBlinkFrame.current = frame;
-        console.log(`[TestGrid] Blink frame ${frame}/${BLINK_TOTAL_FRAMES}`);
       }
 
       const detected = cue.detectedIndices ?? [];
@@ -288,7 +309,6 @@ export default function PhoneGrid() {
           continue;
         }
 
-        // Already-detected phones show green
         if (detected.includes(phone.position.index)) {
           newColors.push("rgb(0,255,0)");
           continue;
@@ -347,8 +367,6 @@ export default function PhoneGrid() {
     return () => cancelAnimationFrame(animRef.current);
   }, [synced, renderLoop]);
 
-  const dotPositions = generateAudiencePositions(PHONE_COUNT, dims.w, dims.h);
-
   return (
     <div
       style={{
@@ -379,9 +397,10 @@ export default function PhoneGrid() {
         </span>
       </div>
 
-      {/* Phone dots — irregular audience layout */}
+      {/* Phone dots — positions match animation coordinates */}
       {Array.from({ length: PHONE_COUNT }).map((_, i) => {
-        const pos = dotPositions[i];
+        const ap = AUDIENCE_POSITIONS[i];
+        const screenPos = toScreenPos(ap.nx, ap.nz, dims.w, dims.h);
         const color = colors[i] || "rgb(0,0,0)";
 
         return (
@@ -389,8 +408,8 @@ export default function PhoneGrid() {
             key={i}
             style={{
               position: "absolute",
-              left: pos.x - DOT_SIZE / 2,
-              top: pos.y - DOT_SIZE / 2,
+              left: screenPos.x - DOT_SIZE / 2,
+              top: screenPos.y - DOT_SIZE / 2,
               width: DOT_SIZE,
               height: DOT_SIZE,
               borderRadius: 1,

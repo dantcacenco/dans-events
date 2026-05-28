@@ -18,7 +18,7 @@ export default function MobileNav() {
       </button>
 
       {open && (
-        <div className="fixed top-16 left-0 w-full bg-black z-[999] px-6 py-10 border-b-[3px] border-red">
+        <div className="fixed top-16 left-0 w-full bg-red z-[999] px-6 py-10 border-b-[3px] border-red-dark">
           {[
             ["#craft", "The Craft"],
             ["#services", "Services"],
@@ -29,7 +29,7 @@ export default function MobileNav() {
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className="block text-sm font-semibold uppercase tracking-[3px] py-4 text-white/60 border-b border-white/[0.06] hover:text-red transition-colors"
+              className="block text-sm font-semibold uppercase tracking-[3px] py-4 text-white border-b border-white/[0.15] hover:text-white/80 transition-colors"
             >
               {label}
             </a>
