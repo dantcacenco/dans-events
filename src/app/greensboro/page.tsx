@@ -14,6 +14,24 @@ export const metadata: Metadata = {
     "Grandover Resort wedding DJ",
     "Revolution Mill wedding DJ",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/greensboro",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Greensboro, NC — Dan's Events",
+    description:
+      "Greensboro's premier wedding DJ and MC traveling from Asheville. 40+ five-star reviews. Serving Revolution Mill, Grandover Resort, Starmount Forest Country Club, and all Piedmont Triad venues.",
+    url: "https://dans-events.com/greensboro",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Greensboro, NC — Dan's Events",
+    description:
+      "Greensboro's premier wedding DJ and MC traveling from Asheville. 40+ five-star reviews. Serving Revolution Mill, Grandover Resort, Starmount Forest Country Club, and all Piedmont Triad venues.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

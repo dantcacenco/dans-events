@@ -13,6 +13,24 @@ export const metadata: Metadata = {
     "Charlotte NC wedding DJ",
     "wedding DJ near Charlotte",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/charlotte",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Charlotte, NC — Dan's Events",
+    description:
+      "Charlotte's premier wedding DJ and MC from Asheville. Serving the Duke Mansion, The Ballantyne Hotel, Pleasant Grove Farm, The Fillmore, and venues across the Queen City.",
+    url: "https://dans-events.com/charlotte",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Charlotte, NC — Dan's Events",
+    description:
+      "Charlotte's premier wedding DJ and MC from Asheville. Serving the Duke Mansion, The Ballantyne Hotel, Pleasant Grove Farm, The Fillmore, and venues across the Queen City.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

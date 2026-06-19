@@ -13,6 +13,24 @@ export const metadata: Metadata = {
     "Greenville wedding DJ",
     "South Carolina wedding DJ",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/greenville-sc",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Greenville, SC — Dan's Events",
+    description:
+      "Premier wedding DJ and MC serving Greenville, SC and the Upstate. 40+ five-star reviews. Based ~65 miles from Asheville, serving all Greenville-area venues.",
+    url: "https://dans-events.com/greenville-sc",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Greenville, SC — Dan's Events",
+    description:
+      "Premier wedding DJ and MC serving Greenville, SC and the Upstate. 40+ five-star reviews. Based ~65 miles from Asheville, serving all Greenville-area venues.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

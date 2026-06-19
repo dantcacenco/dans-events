@@ -17,6 +17,24 @@ export const metadata: Metadata = {
     "Johnson City wedding MC",
     "Tennessee wedding entertainment",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/johnson-city",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Johnson City & the Tri-Cities, TN — Dan's Events",
+    description:
+      "Dan's Events brings Asheville's premier wedding DJ and MC experience to Johnson City, Kingsport, Bristol, and the entire Tri-Cities region of Northeast Tennessee. 40+ five-star reviews.",
+    url: "https://dans-events.com/johnson-city",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Johnson City & the Tri-Cities, TN — Dan's Events",
+    description:
+      "Dan's Events brings Asheville's premier wedding DJ and MC experience to Johnson City, Kingsport, Bristol, and the entire Tri-Cities region of Northeast Tennessee. 40+ five-star reviews.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

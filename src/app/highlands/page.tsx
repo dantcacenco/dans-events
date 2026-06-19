@@ -19,6 +19,24 @@ export const metadata: Metadata = {
     "upscale mountain wedding DJ NC",
     "Lake Glenville wedding DJ",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/highlands",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Highlands & Cashiers, NC — Dan's Events",
+    description:
+      "Highlands and Cashiers NC's premier wedding DJ and MC. Serving Old Edwards Inn, High Hampton, Chimney Pond Farm, and all of the Plateau's upscale mountain venues. Unforgettable destination weddings ~55 miles from Asheville.",
+    url: "https://dans-events.com/highlands",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Highlands & Cashiers, NC — Dan's Events",
+    description:
+      "Highlands and Cashiers NC's premier wedding DJ and MC. Serving Old Edwards Inn, High Hampton, Chimney Pond Farm, and all of the Plateau's upscale mountain venues. Unforgettable destination weddings ~55 miles from Asheville.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

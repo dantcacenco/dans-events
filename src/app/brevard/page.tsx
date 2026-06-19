@@ -15,6 +15,24 @@ export const metadata: Metadata = {
     "Greystone Inn wedding DJ",
     "WNC wedding DJ",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/brevard",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Brevard, NC — Dan's Events",
+    description:
+      "Brevard's top-rated wedding DJ and MC. Serving the Land of Waterfalls — Deerwoode Reserve, Greystone Inn, Circle Square Farm, and all Transylvania County venues. ~33 miles from Asheville.",
+    url: "https://dans-events.com/brevard",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Brevard, NC — Dan's Events",
+    description:
+      "Brevard's top-rated wedding DJ and MC. Serving the Land of Waterfalls — Deerwoode Reserve, Greystone Inn, Circle Square Farm, and all Transylvania County venues. ~33 miles from Asheville.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

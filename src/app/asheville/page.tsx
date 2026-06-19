@@ -13,6 +13,24 @@ export const metadata: Metadata = {
     "WNC wedding DJ",
     "Biltmore wedding DJ",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/asheville",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Asheville, NC — Dan's Events",
+    description:
+      "Asheville's premier wedding DJ and MC. 40+ five-star reviews. Serving the Blue Ridge Mountains, Biltmore Estate, Omni Grove Park Inn, and all WNC venues.",
+    url: "https://dans-events.com/asheville",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Asheville, NC — Dan's Events",
+    description:
+      "Asheville's premier wedding DJ and MC. 40+ five-star reviews. Serving the Blue Ridge Mountains, Biltmore Estate, Omni Grove Park Inn, and all WNC venues.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

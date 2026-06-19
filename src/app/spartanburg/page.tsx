@@ -14,6 +14,24 @@ export const metadata: Metadata = {
     "South Carolina wedding DJ",
     "wedding DJ near Spartanburg",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/spartanburg",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Spartanburg, SC — Dan's Events",
+    description:
+      "Premier wedding DJ and MC serving Spartanburg, SC and the greater Upstate. 40+ five-star reviews. Based ~70 miles from Asheville, serving all Spartanburg-area venues.",
+    url: "https://dans-events.com/spartanburg",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Spartanburg, SC — Dan's Events",
+    description:
+      "Premier wedding DJ and MC serving Spartanburg, SC and the greater Upstate. 40+ five-star reviews. Based ~70 miles from Asheville, serving all Spartanburg-area venues.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

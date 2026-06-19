@@ -17,6 +17,24 @@ export const metadata: Metadata = {
     "Pigeon Forge wedding MC",
     "wedding DJ near Gatlinburg",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/gatlinburg",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Gatlinburg & the Smoky Mountains — Dan's Events",
+    description:
+      "Asheville-based wedding DJ and MC serving Gatlinburg, Pigeon Forge, and Sevierville. Smoky Mountain destination weddings done right — only ~90 miles from home base.",
+    url: "https://dans-events.com/gatlinburg",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Gatlinburg & the Smoky Mountains — Dan's Events",
+    description:
+      "Asheville-based wedding DJ and MC serving Gatlinburg, Pigeon Forge, and Sevierville. Smoky Mountain destination weddings done right — only ~90 miles from home base.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

@@ -17,6 +17,24 @@ export const metadata: Metadata = {
     "Clyde NC wedding DJ",
     "Sylva NC wedding DJ",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/waynesville",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Waynesville, NC — Dan's Events",
+    description:
+      "Waynesville's premier wedding DJ and MC. Serving Maggie Valley, Canton, Clyde, Sylva, and all of Haywood County. Unforgettable Smoky Mountain weddings ~31 miles from Asheville.",
+    url: "https://dans-events.com/waynesville",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Waynesville, NC — Dan's Events",
+    description:
+      "Waynesville's premier wedding DJ and MC. Serving Maggie Valley, Canton, Clyde, Sylva, and all of Haywood County. Unforgettable Smoky Mountain weddings ~31 miles from Asheville.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

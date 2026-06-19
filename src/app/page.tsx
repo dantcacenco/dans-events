@@ -38,18 +38,26 @@ export default function Home() {
         <MobileNav />
       </nav>
 
-      {/* HERO */}
-      <section className="min-h-svh bg-red flex flex-col justify-center items-center text-center px-6 pt-20 pb-15 relative overflow-hidden">
-        <h1 className="hero-headline text-[clamp(44px,13vw,150px)] font-black leading-[0.9] text-white uppercase tracking-[-2px] mb-12">
+      {/* HERO — drop hero.jpg into public/photos/ to activate photo background */}
+      <section className="min-h-svh flex flex-col justify-center items-center text-center px-6 pt-20 pb-15 relative overflow-hidden bg-[#3B3536]">
+        <Image
+          src="/photos/hero.jpg"
+          alt="Dan's Events — Wedding DJ & MC performing"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/55" />
+        <h1 className="hero-headline relative z-10 text-[clamp(44px,13vw,150px)] font-black leading-[0.9] text-white uppercase tracking-[-2px] mb-12">
           <span className="block">Your</span>
           <span className="block">Party</span>
           <span className="block">Your</span>
           <span className="block">Rules</span>
         </h1>
-        <div className="hero-location text-xs font-normal tracking-[6px] uppercase text-white/60">
+        <div className="hero-location relative z-10 text-xs font-normal tracking-[6px] uppercase text-white/60">
           Wedding DJ &amp; MC — Asheville, NC
         </div>
-        <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 w-px h-[60px] bg-white/30" />
+        <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 w-px h-[60px] bg-white/30 z-10" />
       </section>
 
       {/* SPLIT — The Craft */}
@@ -65,8 +73,14 @@ export default function Home() {
             Every toast, every first dance, every moment the crowd erupts — that&apos;s not luck. That&apos;s craft. It&apos;s reading the room before the room knows what it wants. It&apos;s knowing exactly when to raise the energy and when to let a moment breathe.
           </p>
         </ScrollReveal>
-        <ScrollReveal direction="right" className="relative overflow-hidden min-h-[50vh] md:min-h-[400px] order-[-1] md:order-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#8a7e76] via-[#c4b6ad] to-[#7d7068] grayscale hover:scale-105 transition-transform duration-800" />
+        {/* drop craft.jpg into public/photos/ to activate photo — grayscale treatment preserved */}
+        <ScrollReveal direction="right" className="relative overflow-hidden min-h-[50vh] md:min-h-[400px] order-[-1] md:order-none bg-[#8a7e76]">
+          <Image
+            src="/photos/craft.jpg"
+            alt="Dan performing at a wedding"
+            fill
+            className="object-cover grayscale hover:scale-105 transition-transform duration-700"
+          />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_40%_50%,rgba(255,255,255,0.15)_0%,transparent_70%)]" />
           <div className="absolute bottom-10 -left-5 w-[200px] h-1.5 bg-red z-[2]" />
         </ScrollReveal>
@@ -170,12 +184,19 @@ export default function Home() {
         ))}
       </section>
 
-      {/* STATS */}
-      <section className="bg-red min-h-[70vh] flex items-center justify-center text-center px-6 py-20 relative" id="proof">
-        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[clamp(100px,25vw,350px)] font-black uppercase tracking-[20px] text-white/[0.04] pointer-events-none whitespace-nowrap">
+      {/* STATS — action.jpg background with red tint overlay */}
+      <section className="min-h-[70vh] flex items-center justify-center text-center px-6 py-20 relative overflow-hidden bg-red" id="proof">
+        <Image
+          src="/photos/action.jpg"
+          alt="Wedding reception energy"
+          fill
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-red/75" />
+        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[clamp(100px,25vw,350px)] font-black uppercase tracking-[20px] text-white/[0.04] pointer-events-none whitespace-nowrap z-10">
           DAN&apos;S
         </span>
-        <ScrollReveal animation="scale">
+        <ScrollReveal animation="scale" className="relative z-10">
           <div className="text-[clamp(120px,30vw,400px)] font-black leading-[0.85] text-white tracking-[-10px]">40+</div>
           <div className="text-[clamp(14px,2vw,20px)] font-normal uppercase tracking-[8px] text-white/70 mt-5">Five-Star Google Reviews</div>
           <div className="text-[clamp(12px,1.2vw,14px)] font-light text-white/45 mt-3 tracking-[2px]">From couples who trusted me with their most important night</div>
@@ -245,11 +266,18 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
-      {/* TESTIMONIAL */}
-      <section className="bg-black py-[clamp(80px,12vw,180px)] px-6 text-center relative">
-        <span className="absolute top-[60px] left-1/2 -translate-x-1/2 w-[60px] h-0.5 bg-red" />
-        <span className="absolute bottom-[60px] left-1/2 -translate-x-1/2 w-[60px] h-0.5 bg-red" />
-        <ScrollReveal>
+      {/* TESTIMONIAL — romantic.jpg background with dark overlay */}
+      <section className="py-[clamp(80px,12vw,180px)] px-6 text-center relative overflow-hidden bg-black">
+        <Image
+          src="/photos/romantic.jpg"
+          alt="Wedding couple"
+          fill
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-black/80" />
+        <span className="absolute top-[60px] left-1/2 -translate-x-1/2 w-[60px] h-0.5 bg-red z-10" />
+        <span className="absolute bottom-[60px] left-1/2 -translate-x-1/2 w-[60px] h-0.5 bg-red z-10" />
+        <ScrollReveal className="relative z-10">
           <span className="text-[clamp(80px,12vw,160px)] font-black text-red leading-[0.5] mb-10 block">&ldquo;</span>
           <p className="text-[clamp(20px,3vw,40px)] font-light leading-[1.5] text-white max-w-[900px] mx-auto mb-10 italic">
             Our guests are STILL talking about the reception. Dan didn&apos;t just play music — he made every single person in the room feel like they were part of something special. My parents said it was the best wedding they&apos;ve ever been to.

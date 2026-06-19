@@ -15,6 +15,24 @@ export const metadata: Metadata = {
     "Millennium Center wedding DJ",
     "Kimpton Cardinal wedding DJ",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/winston-salem",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Winston-Salem, NC — Dan's Events",
+    description:
+      "Winston-Salem's premier wedding DJ and MC, based in Asheville. Serving the Piedmont Triad — Graylyn Estate, Millennium Center, Kimpton Cardinal, Tanglewood Park, and venues across Forsyth County.",
+    url: "https://dans-events.com/winston-salem",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Winston-Salem, NC — Dan's Events",
+    description:
+      "Winston-Salem's premier wedding DJ and MC, based in Asheville. Serving the Piedmont Triad — Graylyn Estate, Millennium Center, Kimpton Cardinal, Tanglewood Park, and venues across Forsyth County.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

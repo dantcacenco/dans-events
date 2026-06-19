@@ -16,6 +16,24 @@ export const metadata: Metadata = {
     "Dirty Dancing wedding venue DJ",
     "NC mountain lake wedding DJ",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/lake-lure",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Lake Lure & Chimney Rock, NC — Dan's Events",
+    description:
+      "Lake Lure and Chimney Rock's premier wedding DJ and MC. Serving Rumbling Bald, Lake Lure Inn, The Farm at Lake Lure, and all Hickory Nut Gorge venues. ~30 miles from Asheville.",
+    url: "https://dans-events.com/lake-lure",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Lake Lure & Chimney Rock, NC — Dan's Events",
+    description:
+      "Lake Lure and Chimney Rock's premier wedding DJ and MC. Serving Rumbling Bald, Lake Lure Inn, The Farm at Lake Lure, and all Hickory Nut Gorge venues. ~30 miles from Asheville.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

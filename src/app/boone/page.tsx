@@ -16,6 +16,24 @@ export const metadata: Metadata = {
     "Grandfather Mountain wedding",
     "Boone NC wedding MC",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/boone",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Boone & the NC High Country — Dan's Events",
+    description:
+      "Boone's premier wedding DJ and MC. Serving Blowing Rock, Banner Elk, Valle Crucis, and all of NC's High Country. Unforgettable mountain weddings ~95 miles from Asheville.",
+    url: "https://dans-events.com/boone",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Boone & the NC High Country — Dan's Events",
+    description:
+      "Boone's premier wedding DJ and MC. Serving Blowing Rock, Banner Elk, Valle Crucis, and all of NC's High Country. Unforgettable mountain weddings ~95 miles from Asheville.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {

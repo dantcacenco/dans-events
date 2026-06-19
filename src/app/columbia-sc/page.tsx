@@ -14,6 +14,24 @@ export const metadata: Metadata = {
     "South Carolina wedding DJ",
     "wedding DJ Columbia South Carolina",
   ],
+  alternates: {
+    canonical: "https://dans-events.com/columbia-sc",
+  },
+  openGraph: {
+    title: "Wedding DJ & MC in Columbia, SC — Dan's Events",
+    description:
+      "Premier wedding DJ and MC serving Columbia, SC and the Midlands. 40+ five-star reviews. Based ~140 miles from Asheville, serving all Columbia-area venues.",
+    url: "https://dans-events.com/columbia-sc",
+    siteName: "Dan's Events",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wedding DJ & MC in Columbia, SC — Dan's Events",
+    description:
+      "Premier wedding DJ and MC serving Columbia, SC and the Midlands. 40+ five-star reviews. Based ~140 miles from Asheville, serving all Columbia-area venues.",
+    images: ["/opengraph-image"],
+  },
 };
 
 const data: LocationData = {
