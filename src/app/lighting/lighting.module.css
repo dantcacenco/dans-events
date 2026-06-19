@@ -136,7 +136,7 @@
   transform: translateX(-50%);
   width: min(140vw, 1500px);
   height: 120vh;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
   background: radial-gradient(closest-side, rgba(188,48,33,0.18), rgba(188,48,33,0.06) 45%, transparent 72%);
   filter: blur(8px);
@@ -147,7 +147,7 @@
   bottom: 0;
   width: 200px;
   height: 90vh;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
   filter: blur(26px);
 }
@@ -164,7 +164,7 @@
 
 .heroContent {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   max-width: 880px;
 }
 
@@ -197,6 +197,35 @@
   gap: 14px 30px;
   align-items: center;
   flex-wrap: wrap;
+}
+
+/* Hero background — desktop: photo, mobile: video */
+.heroBgDesktop {
+  position: absolute;
+  inset: 0;
+  display: none; /* hidden on mobile */
+}
+
+.heroBgVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block; /* visible on mobile */
+}
+
+.heroBgOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.58);
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .heroBgDesktop { display: block; } /* photo on desktop */
+  .heroBgVideo   { display: none; }  /* hide video on desktop */
 }
 
 .scrollCue {
@@ -549,6 +578,34 @@
 }
 
 @media (max-width: 780px) { .process { grid-template-columns: 1fr; gap: 44px; } }
+
+/* ── Section photo backgrounds ───────────────────────────────────────── */
+.sectionWithBg {
+  overflow: hidden;
+}
+
+.sectionBgImg {
+  position: absolute;
+  inset: 0;
+}
+
+.sectionBgImgDesktop {
+  display: none;
+  position: absolute;
+  inset: 0;
+}
+
+@media (min-width: 768px) {
+  .sectionBgImg        { display: none; }
+  .sectionBgImgDesktop { display: block; }
+}
+
+.sectionBgOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  z-index: 1;
+}
 
 /* ── Proof ───────────────────────────────────────────────────────────── */
 .quote {

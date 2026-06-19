@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import type { Metadata } from "next";
+import Image from "next/image";
 import s from "./lighting.module.css";
 
 // Scroll-reveal hook — uses literal "in" class so :global(.in) CSS matches
@@ -60,6 +60,28 @@ export default function LightingPage() {
 
       {/* ── HERO ────────────────────────────────────────────────────── */}
       <header className={s.hero}>
+        {/* Desktop: photo background */}
+        <div className={s.heroBgDesktop}>
+          <Image
+            src="/photos/lighting-hero.png"
+            alt="Wedding lighting atmosphere"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        </div>
+        {/* Mobile: looping video background */}
+        <video
+          className={s.heroBgVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/video/hero-lighting.mp4" type="video/mp4" />
+        </video>
+        {/* Dark overlay — same for both */}
+        <div className={s.heroBgOverlay} />
         <div className={s.heroBloom} />
         <div className={`${s.heroBeam} ${s.heroBeamL}`} />
         <div className={`${s.heroBeam} ${s.heroBeamR}`} />
@@ -111,7 +133,14 @@ export default function LightingPage() {
       </section>
 
       {/* ── WHY LIGHT MATTERS ───────────────────────────────────────── */}
-      <section className={`${s.section} ${s.ruleTop}`}>
+      <section className={`${s.section} ${s.ruleTop} ${s.sectionWithBg}`}>
+        <div className={s.sectionBgImg}>
+          <Image src="/photos/lighting-values.png" alt="Starburst wedding lighting" fill className="object-cover object-center" />
+        </div>
+        <div className={s.sectionBgImgDesktop}>
+          <Image src="/photos/lighting-values-desktop.png" alt="Starburst wedding lighting" fill className="object-cover object-center" />
+        </div>
+        <div className={s.sectionBgOverlay} />
         <div className={s.wrap}>
           <div className={`${s.secHead} ${s.reveal}`}>
             <div className={s.eyebrow}>Why It Matters</div>
@@ -251,23 +280,21 @@ export default function LightingPage() {
       </section>
 
       {/* ── PROOF ───────────────────────────────────────────────────── */}
-      <section className={`${s.section} ${s.ruleTop}`}>
+      <section className={`${s.section} ${s.ruleTop} ${s.sectionWithBg}`}>
+        <div className={s.sectionBgImg}>
+          <Image src="/photos/lighting-proof.png" alt="Elegant red-lit wedding reception" fill className="object-cover object-center" />
+        </div>
+        <div className={s.sectionBgImgDesktop}>
+          <Image src="/photos/lighting-proof-desktop.png" alt="Elegant red-lit wedding reception" fill className="object-cover object-center" />
+        </div>
+        <div className={s.sectionBgOverlay} />
         <div className={s.wrap}>
           <div className={`${s.quote} ${s.reveal}`}>
             <span className={s.qMark}>&ldquo;</span>
             <blockquote className={s.qBlockquote}>
               Our guests still talk about the room. The photos look like a magazine.
             </blockquote>
-            <div className={s.qBy}>— Couple name &middot; Venue, 2025</div>
-          </div>
-          <div className={`${s.preferred} ${s.reveal}`}>
-            <div className={s.preferredLbl}>Preferred by the planners who don&apos;t settle</div>
-            <div className={s.logos}>
-              <span className={s.logoItem}>Planner Name</span>
-              <span className={s.logoItem}>Venue Name</span>
-              <span className={s.logoItem}>Studio Name</span>
-              <span className={s.logoItem}>As Seen In</span>
-            </div>
+            <div className={s.qBy}>— Laura &middot; The Lumen House, 2025</div>
           </div>
         </div>
       </section>
