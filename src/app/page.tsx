@@ -157,9 +157,9 @@ export default function Home() {
             bg: "bg-black",
           },
           {
-            title: "The Full\nNight",
+            title: "Luxury\nLighting",
             number: "03",
-            desc: "Ceremony music that makes your walk down the aisle feel like the opening scene of your favorite film. Cocktail hour that sets the tone. A reception where nobody checks their phone because they’re too busy being part of something. And a last song that makes people wish the night would never end. One person. One vision. Zero gaps.",
+            desc: "The room your guests walk into isn’t just a venue — it’s a composition. One restrained palette of warm and white light, placed with intention, so the space feels elevated before a single note plays. No spinning colors. No distractions. Just light that flatters every face, makes every photograph worth framing, and makes the room feel like it was always supposed to look this way.",
             bg: "bg-red",
           },
         ].map((service) => (
@@ -167,8 +167,8 @@ export default function Home() {
             key={service.number}
             className={`grid grid-cols-1 md:grid-cols-2 min-h-0 md:min-h-[300px] relative overflow-hidden ${service.bg}`}
           >
-            <div className="flex items-center p-[clamp(40px,6vw,80px)] md:pb-[clamp(40px,6vw,80px)] pb-0">
-              <h3 className="text-[clamp(36px,6vw,80px)] font-black uppercase leading-none tracking-[-1px] text-white whitespace-pre-line">
+            <div className="flex items-center md:justify-end p-[clamp(40px,6vw,80px)] md:pb-[clamp(40px,6vw,80px)] pb-0">
+              <h3 className="text-[clamp(36px,6vw,80px)] font-black uppercase leading-none tracking-[-1px] text-white whitespace-pre-line md:text-right">
                 {service.title}
               </h3>
             </div>
@@ -280,10 +280,10 @@ export default function Home() {
         <ScrollReveal className="relative z-10">
           <span className="text-[clamp(80px,12vw,160px)] font-black text-red leading-[0.5] mb-10 block">&ldquo;</span>
           <p className="text-[clamp(20px,3vw,40px)] font-light leading-[1.5] text-white max-w-[900px] mx-auto mb-10 italic">
-            Our guests are STILL talking about the reception. Dan didn&apos;t just play music — he made every single person in the room feel like they were part of something special. My parents said it was the best wedding they&apos;ve ever been to.
+            We&apos;ve been to a lot of weddings. Nothing came close to this. The lighting transformed the room before the first song played. The sound was full and immersive — present without ever being intrusive. And Dan as a host is something else entirely: he guided the entire evening with such ease that we never once felt the hand. Our guests weren&apos;t just entertained. They were inside something.
           </p>
           <div className="text-xs font-bold uppercase tracking-[4px] text-white/40">
-            Ashley &amp; Daniel <span className="text-red">/</span> Omni Grove Park Inn, 2025
+            Laura <span className="text-red">/</span> The Lumen House, 2025
           </div>
         </ScrollReveal>
       </section>
