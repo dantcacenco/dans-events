@@ -109,7 +109,7 @@ export default function Home() {
           <ScrollReveal direction="right" className="p-[clamp(32px,5vw,60px)] bg-red">
             <span className="text-[10px] font-bold uppercase tracking-[4px] text-white/70 block mb-8">Dan&apos;s Events</span>
             <p className="text-[clamp(16px,2vw,22px)] leading-[1.65] italic font-normal text-white">
-              &ldquo;Ladies and gentlemen, as your host tonight I&apos;m going to need your help. We are about to create a moment that Alex and Ashley will remember for the rest of their lives. I want us to bring the kind of energy that gives you goosebumps. Can you do that with me? Let&apos;s welcome the power couple, the unforgettable duo — Mr. and Mrs. Alex and Ashley!&rdquo;
+              &ldquo;Ladies and gentlemen, as your host tonight I&apos;m going to need your help. We are about to create a moment that Alex and Ashley will remember for the rest of their lives!! I want us to bring the kind of energy that will give every person goosebumps in this room!! Can you do that with me?? Let&apos;s welcome the power couple — the unforgettable duo — and the stars of the night — MISTER and MISSISSSS SHEVCHENKOOO!!!!&rdquo;
             </p>
             <p className="mt-8 text-xs font-medium uppercase tracking-[2px] text-white/80">
               <span className="inline-block w-2 h-2 bg-white mr-2 align-middle" />
@@ -187,7 +187,7 @@ export default function Home() {
       {/* STATS — action.jpg background with red tint overlay */}
       <section className="min-h-[70vh] flex items-center justify-center text-center px-6 py-20 relative overflow-hidden bg-red" id="proof">
         <Image
-          src="/photos/action.jpg"
+          src="/photos/lighting-values.png"
           alt="Wedding reception energy"
           fill
           className="object-cover object-center"
