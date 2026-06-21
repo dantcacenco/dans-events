@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import ContactForm from "@/components/contact-form";
 import ScrollReveal from "@/components/scroll-reveal";
 import MobileNav from "@/components/mobile-nav";
@@ -22,16 +23,17 @@ export default function Home() {
           {[
             ["#craft", "The Craft"],
             ["#services", "Services"],
+            ["/lighting", "Lighting"],
             ["#proof", "Proof"],
             ["#check-date", "Check Your Date"],
           ].map(([href, label]) => (
             <li key={href}>
-              <a
+              <Link
                 href={href}
                 className="text-[11px] font-medium uppercase tracking-[2px] text-white hover:text-white/80 transition-colors"
               >
                 {label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -55,7 +57,7 @@ export default function Home() {
           <span className="block">Rules</span>
         </h1>
         <div className="hero-location relative z-10 text-xs font-normal tracking-[6px] uppercase text-white/60">
-          Wedding DJ &amp; MC — Asheville, NC
+          Wedding DJ &amp; MC — <Link href="/asheville" className="hover:text-white/90 transition-colors">Asheville, NC</Link>
         </div>
         <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 w-px h-[60px] bg-white/30 z-10" />
       </section>
@@ -149,18 +151,21 @@ export default function Home() {
             number: "01",
             desc: "You know that moment when a song hits and the entire room moves at once? That’s not a playlist. That’s someone who spent weeks learning your crowd — the family that loves Sinatra, the college friends who need 2000s hip hop, the moment grandma surprises everyone on the floor. Every transition is a decision. Every decision is intentional.",
             bg: "bg-red",
+            href: null,
           },
           {
             title: "MC &\nHost",
             number: "02",
             desc: "In my culture, the wedding host is called a tamada — the emotional anchor of the celebration. Not someone who reads announcements off a card. Someone who turns the father-of-the-bride into the hero of his own speech. Who makes the shy uncle feel like the most important person in the room. Who gives 150 strangers a shared identity before the first dance even starts.",
             bg: "bg-black",
+            href: null,
           },
           {
             title: "Luxury\nLighting",
             number: "03",
             desc: "The room your guests walk into isn’t just a venue — it’s a composition. One restrained palette of warm and white light, placed with intention, so the space feels elevated before a single note plays. No spinning colors. No distractions. Just light that flatters every face, makes every photograph worth framing, and makes the room feel like it was always supposed to look this way.",
             bg: "bg-red",
+            href: "/lighting",
           },
         ].map((service) => (
           <ScrollReveal
@@ -168,9 +173,17 @@ export default function Home() {
             className={`grid grid-cols-1 md:grid-cols-2 min-h-0 md:min-h-[300px] relative overflow-hidden ${service.bg}`}
           >
             <div className="flex items-center md:justify-end p-[clamp(40px,6vw,80px)] md:pb-[clamp(40px,6vw,80px)] pb-0">
-              <h3 className="text-[clamp(36px,6vw,80px)] font-black uppercase leading-none tracking-[-1px] text-white whitespace-pre-line md:text-right">
-                {service.title}
-              </h3>
+              {service.href ? (
+                <Link href={service.href} className="hover:opacity-80 transition-opacity">
+                  <h3 className="text-[clamp(36px,6vw,80px)] font-black uppercase leading-none tracking-[-1px] text-white whitespace-pre-line md:text-right">
+                    {service.title}
+                  </h3>
+                </Link>
+              ) : (
+                <h3 className="text-[clamp(36px,6vw,80px)] font-black uppercase leading-none tracking-[-1px] text-white whitespace-pre-line md:text-right">
+                  {service.title}
+                </h3>
+              )}
             </div>
             <div className="flex items-center p-[clamp(40px,6vw,80px)] md:pt-[clamp(40px,6vw,80px)] pt-6 md:border-l border-t md:border-t-0 border-white/15">
               <div>
@@ -178,6 +191,11 @@ export default function Home() {
                 <p className="text-[clamp(14px,1.4vw,18px)] font-light leading-[1.8] text-white/75 max-w-[420px]">
                   {service.desc}
                 </p>
+                {service.href && (
+                  <Link href={service.href} className="mt-6 text-[11px] font-semibold uppercase tracking-[3px] text-white/60 hover:text-white transition-colors inline-flex items-center gap-2">
+                    See Lighting Packages <span aria-hidden>→</span>
+                  </Link>
+                )}
               </div>
             </div>
           </ScrollReveal>
@@ -329,13 +347,14 @@ export default function Home() {
             {[
               ["#craft", "The Craft"],
               ["#services", "Services"],
+              ["/lighting", "Lighting"],
               ["#proof", "Reviews"],
               ["#check-date", "Book"],
             ].map(([href, label]) => (
               <li key={href}>
-                <a href={href} className="text-[11px] font-medium uppercase tracking-[2px] text-white/35 hover:text-red transition-colors">
+                <Link href={href} className="text-[11px] font-medium uppercase tracking-[2px] text-white/35 hover:text-red transition-colors">
                   {label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

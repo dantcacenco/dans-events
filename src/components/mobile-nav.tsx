@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -22,17 +23,18 @@ export default function MobileNav() {
           {[
             ["#craft", "The Craft"],
             ["#services", "Services"],
+            ["/lighting", "Lighting"],
             ["#proof", "Proof"],
             ["#check-date", "Check Your Date"],
           ].map(([href, label]) => (
-            <a
+            <Link
               key={href}
               href={href}
               onClick={() => setOpen(false)}
               className="block text-sm font-semibold uppercase tracking-[3px] py-4 text-white border-b border-white/[0.15] hover:text-white/80 transition-colors"
             >
               {label}
-            </a>
+            </Link>
           ))}
         </div>
       )}

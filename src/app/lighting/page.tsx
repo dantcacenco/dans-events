@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import s from "./lighting.module.css";
@@ -38,6 +38,13 @@ function useReveal() {
 
 export default function LightingPage() {
   useReveal();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // iOS Safari ignores autoplay on dynamically-rendered video elements;
+    // calling play() after mount is the reliable workaround.
+    videoRef.current?.play().catch(() => {});
+  }, []);
 
   return (
     <div className={s.page}>
@@ -72,11 +79,13 @@ export default function LightingPage() {
         </div>
         {/* Mobile: looping video background */}
         <video
+          ref={videoRef}
           className={s.heroBgVideo}
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
         >
           <source src="/video/hero-lighting.mp4" type="video/mp4" />
         </video>
