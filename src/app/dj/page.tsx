@@ -84,7 +84,7 @@ export default function DJPage() {
       {/* HERO */}
       <section className="min-h-svh flex flex-col justify-center items-center text-center px-6 pt-20 pb-16 relative overflow-hidden bg-black">
         <Image
-          src="/photos/hero.jpg"
+          src="/photos/dj-hero.png"
           alt="Dan performing as wedding DJ"
           fill
           className="object-cover object-center"
@@ -124,7 +124,7 @@ export default function DJPage() {
         </ScrollReveal>
         <ScrollReveal direction="right" className="relative overflow-hidden min-h-[50vh] md:min-h-[400px] order-[-1] md:order-none bg-warm-taupe">
           <Image
-            src="/photos/craft.jpg"
+            src="/photos/dj-performance.png"
             alt="Dan at the DJ setup"
             fill
             className="object-cover grayscale hover:scale-105 transition-transform duration-700"

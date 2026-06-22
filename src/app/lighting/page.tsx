@@ -58,7 +58,6 @@ export default function LightingPage() {
           </Link>
           <div className={s.navLinks}>
             <a href="#difference" className={s.navLink}>The Difference</a>
-            <a href="#collections" className={s.navLink}>Collections</a>
             <a href="#process" className={s.navLink}>Process</a>
             <a href="#inquire" className={`${s.navLink} ${s.navCta}`}>Inquire</a>
           </div>
@@ -110,9 +109,6 @@ export default function LightingPage() {
             </p>
             <div className={`${s.heroActions} ${s.reveal}`}>
               <a href="#inquire" className={s.btn}>Begin the conversation</a>
-              <a href="#collections" className={`${s.btn} ${s.btnGhost}`}>
-                View the collections <span className={s.btnGhostArr}>&rarr;</span>
-              </a>
             </div>
           </div>
         </div>
@@ -137,6 +133,11 @@ export default function LightingPage() {
               feels composed rather than decorated. The effect is something your guests feel before
               they can name it — and something you&apos;ll see in every frame for the rest of your life.
             </p>
+            <div className={s.partnerBadge}>
+              <span className={s.partnerLabel}>In collaboration with</span>
+              <span className={s.partnerName}>1919 Lighting</span>
+              <span className={s.partnerTagline}>The Bentley of wedding illumination.</span>
+            </div>
           </div>
         </div>
       </section>
@@ -190,73 +191,6 @@ export default function LightingPage() {
         </div>
       </section>
 
-      {/* ── COLLECTIONS ─────────────────────────────────────────────── */}
-      <section className={`${s.section} ${s.ruleTop}`} id="collections">
-        <div className={s.secGlow} />
-        <div className={s.wrap}>
-          <div className={`${s.secHead} ${s.reveal}`}>
-            <div className={s.eyebrow}>The Collections</div>
-            <h2 className={s.secHeadH2}>Three ways to light a night.</h2>
-            <p className={s.lede} style={{ marginTop: "18px" }}>
-              Every wedding is quoted to its own room and vision. These are where the conversation begins.
-            </p>
-          </div>
-
-          <div className={s.collections}>
-            {/* The Bespoke */}
-            <div className={`${s.col} ${s.colFeature} ${s.reveal}`}>
-              <div className={s.colName}>The Bespoke</div>
-              <div className={s.colInvest}>Investment begins at</div>
-              <div className={s.colPrice}>$5,000</div>
-              <p className={s.colDesc}>
-                A lighting design composed for every moment — ceremony to last dance, and the days
-                around it. The full instrument, programmed to your night. Nothing templated.
-                We design it together.
-              </p>
-              <div className={s.colIncl}>
-                <span className={s.colInclB}>The full rig</span> — moving light, layered washes,
-                architectural bars, statement fixtures, low-lying cloud for your first dance, and
-                cold sparks for the send-off. Multi-day available.
-              </div>
-              <a href="#inquire" className={s.btn}>Request a design consultation</a>
-            </div>
-
-            {/* The Signature */}
-            <div className={`${s.col} ${s.reveal}`}>
-              <div className={s.badge}>Most requested</div>
-              <div className={s.colName}>The Signature</div>
-              <div className={s.colInvest}>Investment begins at</div>
-              <div className={s.colPrice}>$2,800</div>
-              <p className={s.colDesc}>
-                Full-room transformation with a custom-designed first-dance moment — the package
-                most couples land on, and the one that makes the night feel intentional.
-              </p>
-              <div className={s.colIncl}>
-                <span className={s.colInclB}>Elevated</span> — moving light, layered washes,
-                architectural accents, statement fixtures, and a sparkler send-off, programmed
-                to your timeline.
-              </div>
-              <a href="#inquire" className={s.btn}>Check your date</a>
-            </div>
-
-            {/* The Ambient */}
-            <div className={`${s.col} ${s.reveal}`}>
-              <div className={s.colName}>The Ambient</div>
-              <div className={s.colInvest}>Investment begins at</div>
-              <div className={s.colPrice}>$1,200</div>
-              <p className={s.colDesc}>
-                A quiet, beautiful wash of warm light that elevates the room and flatters every
-                photograph of the two of you. Understated — and never templated.
-              </p>
-              <div className={s.colIncl}>
-                <span className={s.colInclB}>Refined</span> — a curated wash of warm and white
-                light, placed and balanced for your space. The essentials, done with care.
-              </div>
-              <a href="#inquire" className={s.btn}>Check your date</a>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── PROCESS ─────────────────────────────────────────────────── */}
       <section className={`${s.section} ${s.ruleTop}`} id="process">
