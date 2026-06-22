@@ -12,13 +12,18 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://dans-events.com"),
   title: "Dan's Events — Wedding DJ & MC | Asheville, NC",
   description:
-    "Asheville's premier wedding DJ and MC. 40+ five-star reviews. Hosting your always & forever — from ceremony to last dance.",
+    "Wedding DJ, MC & luxury lighting serving Asheville NC, Greenville SC, Spartanburg SC, Charlotte NC and beyond. 40+ five-star reviews. Custom-mixed music, concert-grade lighting.",
   keywords: [
-    "wedding DJ Asheville",
-    "wedding MC Asheville NC",
-    "Asheville wedding entertainment",
+    "wedding DJ Asheville NC",
+    "wedding DJ Greenville SC",
+    "wedding DJ Spartanburg SC",
+    "wedding DJ Charlotte NC",
+    "wedding MC Asheville",
+    "wedding host tamada",
+    "wedding lighting Asheville",
     "wedding DJ near me",
     "Dan's Events",
+    "luxury wedding entertainment",
   ],
   alternates: {
     canonical: "https://dans-events.com",
@@ -26,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Dan's Events — Wedding DJ & MC | Asheville, NC",
     description:
-      "Asheville's premier wedding DJ and MC. 40+ five-star reviews. Hosting your always & forever.",
+      "Wedding DJ, MC & luxury lighting. 40+ five-star reviews. Serving Asheville NC, Greenville SC, Charlotte NC and beyond.",
     type: "website",
     locale: "en_US",
     url: "https://dans-events.com",
@@ -37,18 +42,18 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Dan's Events — Wedding DJ & MC | Asheville, NC",
     description:
-      "Asheville's premier wedding DJ and MC. 40+ five-star reviews. Hosting your always & forever.",
+      "Wedding DJ, MC & luxury lighting. 40+ five-star reviews. Serving Asheville NC, Greenville SC, Charlotte NC and beyond.",
     images: ["/opengraph-image"],
   },
 };
 
-// LocalBusiness + Performer structured data for Google
+// LocalBusiness + EntertainmentBusiness structured data for Google
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": ["LocalBusiness", "Performer"],
+  "@type": ["LocalBusiness", "EntertainmentBusiness"],
   name: "Dan's Events",
   description:
-    "Wedding DJ and MC serving Asheville, NC and the surrounding Western North Carolina region. 40+ five-star Google reviews.",
+    "Wedding DJ, MC & luxury lighting serving Asheville NC, Greenville SC, Spartanburg SC, Charlotte NC and beyond. 40+ five-star Google reviews. Custom-mixed music and concert-grade lighting.",
   url: "https://dans-events.com",
   image: "https://dans-events.com/opengraph-image",
   address: {
@@ -63,20 +68,55 @@ const jsonLd = {
     longitude: "-82.5515",
   },
   areaServed: [
-    "Asheville, NC",
-    "Western North Carolina",
-    "Hendersonville, NC",
-    "Brevard, NC",
-    "Waynesville, NC",
-    "Lake Lure, NC",
-    "Highlands, NC",
-    "Boone, NC",
-    "Charlotte, NC",
-    "Knoxville, TN",
-    "Gatlinburg, TN",
-    "Greenville, SC",
-    "Columbia, SC",
+    { "@type": "City", name: "Asheville", containedInPlace: { "@type": "State", name: "North Carolina" } },
+    { "@type": "City", name: "Greenville", containedInPlace: { "@type": "State", name: "South Carolina" } },
+    { "@type": "City", name: "Spartanburg", containedInPlace: { "@type": "State", name: "South Carolina" } },
+    { "@type": "City", name: "Columbia", containedInPlace: { "@type": "State", name: "South Carolina" } },
+    { "@type": "City", name: "Charlotte", containedInPlace: { "@type": "State", name: "North Carolina" } },
+    { "@type": "City", name: "Hendersonville", containedInPlace: { "@type": "State", name: "North Carolina" } },
+    { "@type": "City", name: "Brevard", containedInPlace: { "@type": "State", name: "North Carolina" } },
+    { "@type": "City", name: "Boone", containedInPlace: { "@type": "State", name: "North Carolina" } },
+    { "@type": "City", name: "Waynesville", containedInPlace: { "@type": "State", name: "North Carolina" } },
+    { "@type": "City", name: "Highlands", containedInPlace: { "@type": "State", name: "North Carolina" } },
+    { "@type": "City", name: "Lake Lure", containedInPlace: { "@type": "State", name: "North Carolina" } },
+    { "@type": "City", name: "Winston-Salem", containedInPlace: { "@type": "State", name: "North Carolina" } },
+    { "@type": "City", name: "Knoxville", containedInPlace: { "@type": "State", name: "Tennessee" } },
+    { "@type": "City", name: "Gatlinburg", containedInPlace: { "@type": "State", name: "Tennessee" } },
+    { "@type": "City", name: "Johnson City", containedInPlace: { "@type": "State", name: "Tennessee" } },
   ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Wedding Entertainment Services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Wedding DJ",
+          description: "Custom-mixed wedding DJ services. Musician since age 4, professional music producer. Every set is built for your crowd.",
+          url: "https://dans-events.com/the-dj",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Wedding MC & Host",
+          description: "Tamada-style wedding hosting. Not announcements — emotional anchoring. The art of making 150 strangers feel like family.",
+          url: "https://dans-events.com/the-host",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Luxury Wedding Lighting",
+          description: "Concert-grade wedding lighting. $20K+ rig, warm white palette, architectural uplighting, cold sparks. In collaboration with 1919 Lighting.",
+          url: "https://dans-events.com/lighting",
+        },
+      },
+    ],
+  },
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: "5",
