@@ -192,6 +192,58 @@ export default function LightingPage() {
       </section>
 
 
+      {/* ── GEAR ────────────────────────────────────────────────────── */}
+      <section className={`${s.section} ${s.ruleTop}`}>
+        <div className={s.wrap}>
+          <div className={`${s.secHead} ${s.reveal}`}>
+            <div className={s.eyebrow}>The Gear</div>
+            <h2 className={s.secHeadH2}>
+              Concert-grade rigs.<br />Not a DJ&apos;s afterthought.
+            </h2>
+            <p className={s.lede} style={{ marginTop: "18px" }}>
+              Most DJs show up with a $200 par light kit and a $70 laser. That&apos;s the
+              industry standard. It&apos;s not ours.
+            </p>
+          </div>
+          <div className={`${s.gearGrid} ${s.reveal}`}>
+            <div className={`${s.gearCol} ${s.gearColDark}`}>
+              <span className={s.gearTag}>The Typical DJ Lighting Setup</span>
+              <ul className={s.gearList}>
+                {[
+                  "$200 par light kit — same 16 colors cycling all night",
+                  "$70 Amazon laser pointed at the ceiling",
+                  "Static fixtures bolted in and forgotten",
+                  "Oversaturated colors that compete with everything",
+                  "No design intention — just plugged in and left running",
+                ].map((item) => (
+                  <li key={item} className={s.gearItem}>
+                    <span className={s.gearDash}>—</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className={`${s.gearCol} ${s.gearColRed}`}>
+              <span className={`${s.gearTag} ${s.gearTagBright}`}>Dan&apos;s Events — $20K+ Concert-Grade Rig</span>
+              <ul className={s.gearList}>
+                {[
+                  "Moving heads that choreograph to your program moments",
+                  "Professional LED wash fixtures — even, calibrated, beautiful",
+                  "Architectural uplighting placed specifically for your venue",
+                  "Cold sparks and low-fog systems for statement moments",
+                  "Every fixture positioned as a deliberate compositional choice",
+                ].map((item) => (
+                  <li key={item} className={`${s.gearItem} ${s.gearItemBright}`}>
+                    <span className={s.gearCheck}>✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── PROCESS ─────────────────────────────────────────────────── */}
       <section className={`${s.section} ${s.ruleTop}`} id="process">
         <div className={s.wrap}>

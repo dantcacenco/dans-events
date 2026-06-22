@@ -825,3 +825,73 @@
 .stagger > *:nth-child(2) { transition-delay: 140ms; }
 .stagger > *:nth-child(3) { transition-delay: 280ms; }
 .stagger > *:nth-child(4) { transition-delay: 420ms; }
+
+/* ── Gear comparison ──────────────────────────────────────────────────── */
+.gearGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 60px;
+}
+
+@media (min-width: 768px) {
+  .gearGrid { grid-template-columns: 1fr 1fr; }
+}
+
+.gearCol {
+  padding: clamp(36px, 5vw, 60px);
+}
+
+.gearColDark {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.gearColRed {
+  background: #BC3021;
+}
+
+.gearTag {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+  margin-bottom: 24px;
+}
+
+.gearTagBright {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.gearList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gearItem {
+  display: flex;
+  gap: 14px;
+  font-size: clamp(13px, 1.3vw, 15px);
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.gearItemBright {
+  color: rgba(255, 255, 255, 1);
+}
+
+.gearDash {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.12);
+}
+
+.gearCheck {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.55);
+}
