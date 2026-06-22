@@ -22,9 +22,9 @@ export default function Home() {
         <ul className="hidden md:flex gap-8 list-none">
           {[
             ["#craft", "The Craft"],
-            ["#services", "Services"],
+            ["/dj", "DJ"],
+            ["/mc", "MC & Host"],
             ["/lighting", "Lighting"],
-            ["#proof", "Proof"],
             ["#check-date", "Check Your Date"],
           ].map(([href, label]) => (
             <li key={href}>
@@ -151,14 +151,14 @@ export default function Home() {
             number: "01",
             desc: "You know that moment when a song hits and the entire room moves at once? That’s not a playlist. That’s someone who spent weeks learning your crowd — the family that loves Sinatra, the college friends who need 2000s hip hop, the moment grandma surprises everyone on the floor. Every transition is a decision. Every decision is intentional.",
             bg: "bg-red",
-            href: null,
+            href: "/dj",
           },
           {
             title: "MC &\nHost",
             number: "02",
             desc: "In my culture, the wedding host is called a tamada — the emotional anchor of the celebration. Not someone who reads announcements off a card. Someone who turns the father-of-the-bride into the hero of his own speech. Who makes the shy uncle feel like the most important person in the room. Who gives 150 strangers a shared identity before the first dance even starts.",
             bg: "bg-black",
-            href: null,
+            href: "/mc",
           },
           {
             title: "Luxury\nLighting",
@@ -193,7 +193,7 @@ export default function Home() {
                 </p>
                 {service.href && (
                   <Link href={service.href} className="mt-6 text-[11px] font-semibold uppercase tracking-[3px] text-white/60 hover:text-white transition-colors inline-flex items-center gap-2">
-                    See Lighting Packages <span aria-hidden>→</span>
+                    {service.href === "/lighting" ? "See Lighting Packages" : "Learn More"} <span aria-hidden>→</span>
                   </Link>
                 )}
               </div>
@@ -345,11 +345,11 @@ export default function Home() {
         <ScrollReveal>
           <ul className="flex justify-center gap-10 list-none mb-12 flex-wrap">
             {[
-              ["#craft", "The Craft"],
-              ["#services", "Services"],
+              ["/dj", "DJ"],
+              ["/mc", "MC & Host"],
               ["/lighting", "Lighting"],
-              ["#proof", "Reviews"],
-              ["#check-date", "Book"],
+              ["/#proof", "Reviews"],
+              ["/#check-date", "Book"],
             ].map(([href, label]) => (
               <li key={href}>
                 <Link href={href} className="text-[11px] font-medium uppercase tracking-[2px] text-white/35 hover:text-red transition-colors">

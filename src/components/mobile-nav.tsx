@@ -22,7 +22,8 @@ export default function MobileNav() {
         <div className="fixed top-16 left-0 w-full bg-red z-[999] px-6 py-10 border-b-[3px] border-red-dark">
           {[
             ["#craft", "The Craft"],
-            ["#services", "Services"],
+            ["/dj", "DJ"],
+            ["/mc", "MC & Host"],
             ["/lighting", "Lighting"],
             ["#proof", "Proof"],
             ["#check-date", "Check Your Date"],
