@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# teo local dev storage (KV + R2 fallbacks)
+/.data/
+/public/uploads/
