@@ -1,4 +1,4 @@
-import { kvGet, kvSet } from "./kv";
+import { kvGet, kvGetOrThrow, kvSet } from "./kv";
 import { DEFAULT_GIVE, type Drop, type GiveConfig, type Subscriber } from "./types";
 
 const P = "teo";
@@ -20,7 +20,8 @@ export async function getPublishedDrops(): Promise<Drop[]> {
 }
 
 export async function saveDrop(drop: Drop): Promise<Drop> {
-  const drops = (await kvGet<Drop[]>(k.drops)) ?? [];
+  // Strict read: a degraded read here would wipe every existing drop.
+  const drops = (await kvGetOrThrow<Drop[]>(k.drops)) ?? [];
   const index = drops.findIndex((d) => d.id === drop.id);
   if (index >= 0) drops[index] = drop;
   else drops.push(drop);
@@ -29,7 +30,7 @@ export async function saveDrop(drop: Drop): Promise<Drop> {
 }
 
 export async function deleteDrop(id: string): Promise<void> {
-  const drops = (await kvGet<Drop[]>(k.drops)) ?? [];
+  const drops = (await kvGetOrThrow<Drop[]>(k.drops)) ?? [];
   await kvSet(
     k.drops,
     drops.filter((d) => d.id !== id)
@@ -59,7 +60,8 @@ export async function addSubscriber(
   source: string
 ): Promise<boolean> {
   const normalized = email.trim().toLowerCase();
-  const subscribers = await getSubscribers();
+  // Strict read: a degraded read here would wipe the whole email list.
+  const subscribers = (await kvGetOrThrow<Subscriber[]>(k.subscribers)) ?? [];
   if (subscribers.some((s) => s.email === normalized)) return false;
 
   subscribers.push({ email: normalized, createdAt: Date.now(), source });

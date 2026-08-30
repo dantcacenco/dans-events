@@ -1,4 +1,5 @@
 import { isAdmin, unauthorized } from "@/lib/teo/auth";
+import { storeError } from "@/lib/teo/api";
 import { getGive, saveGive } from "@/lib/teo/store";
 import { DEFAULT_GIVE, type GiveConfig } from "@/lib/teo/types";
 
@@ -19,6 +20,10 @@ export async function POST(request: Request) {
     blurb: (body.blurb ?? "").trim() || DEFAULT_GIVE.blurb,
   };
 
-  await saveGive(give);
+  try {
+    await saveGive(give);
+  } catch (error) {
+    return storeError(error);
+  }
   return Response.json({ give });
 }

@@ -1,4 +1,5 @@
 import { isAdmin, unauthorized } from "@/lib/teo/auth";
+import { storeError } from "@/lib/teo/api";
 import { addSubscriber, getSubscribers } from "@/lib/teo/store";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +14,15 @@ export async function POST(request: Request) {
     return Response.json({ error: "Enter a valid email" }, { status: 400 });
   }
 
-  const added = await addSubscriber(email, body.source ?? "card");
+  // Never report success on a failed write — the reader would think they were
+  // on the list when the address was actually dropped.
+  let added: boolean;
+  try {
+    added = await addSubscriber(email, body.source ?? "card");
+  } catch (error) {
+    return storeError(error);
+  }
+
   // Re-submitting an existing email is a success from the reader's side.
   return Response.json({ ok: true, added });
 }

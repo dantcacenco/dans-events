@@ -1,4 +1,5 @@
 import { isAdmin, unauthorized } from "@/lib/teo/auth";
+import { storeError } from "@/lib/teo/api";
 import { deleteDrop, getDrops, getPublishedDrops, saveDrop } from "@/lib/teo/store";
 import type { Drop } from "@/lib/teo/types";
 
@@ -32,7 +33,11 @@ export async function POST(request: Request) {
     updatedAt: now,
   };
 
-  await saveDrop(drop);
+  try {
+    await saveDrop(drop);
+  } catch (error) {
+    return storeError(error);
+  }
   return Response.json({ drop });
 }
 
@@ -42,6 +47,10 @@ export async function DELETE(request: Request) {
   const id = new URL(request.url).searchParams.get("id");
   if (!id) return Response.json({ error: "id required" }, { status: 400 });
 
-  await deleteDrop(id);
+  try {
+    await deleteDrop(id);
+  } catch (error) {
+    return storeError(error);
+  }
   return Response.json({ ok: true });
 }
