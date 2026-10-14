@@ -1,18 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { normalizePhone } from "@/lib/phone";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [phoneError, setPhoneError] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const phone = (form.elements.namedItem("phone") as HTMLInputElement).value;
+    if (!normalizePhone(phone)) {
+      setPhoneError("Please enter a valid phone number, like (828) 555-1234");
+      return;
+    }
+    setPhoneError("");
     setStatus("sending");
 
-    const form = e.currentTarget;
     const data = {
       name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      phone,
       date: (form.elements.namedItem("date") as HTMLInputElement).value,
       venue: (form.elements.namedItem("venue") as HTMLInputElement).value,
     };
@@ -38,7 +46,7 @@ export default function ContactForm() {
         <div className="text-[40px] mb-4">&#10003;</div>
         <h3 className="text-black text-xl font-bold uppercase tracking-[2px] mb-3">You&apos;re on my radar</h3>
         <p className="text-black/60 text-sm leading-relaxed">
-          Check your email for a confirmation. I&apos;ll respond personally within 24 hours.
+          I&apos;ll call or text you personally within 24 hours.
         </p>
       </div>
     );
@@ -63,17 +71,27 @@ export default function ContactForm() {
         />
       </div>
       <div className="border-t border-black/[0.08]">
-        <label htmlFor="cd-email" className="block text-[10px] font-bold uppercase tracking-[3px] text-black/35 pt-5">
-          Email
+        <label htmlFor="cd-phone" className="block text-[10px] font-bold uppercase tracking-[3px] text-black/35 pt-5">
+          Phone
         </label>
         <input
-          type="email"
-          id="cd-email"
-          name="email"
-          placeholder="you@email.com"
+          type="tel"
+          id="cd-phone"
+          name="phone"
+          inputMode="tel"
+          autoComplete="tel"
+          placeholder="(828) 555-1234"
           required
+          aria-invalid={phoneError ? true : undefined}
+          aria-describedby={phoneError ? "cd-phone-error" : undefined}
+          onInput={() => phoneError && setPhoneError("")}
           className="w-full border-none outline-none text-base font-medium text-black py-2 pb-5 bg-transparent placeholder:text-black/20"
         />
+        {phoneError && (
+          <p id="cd-phone-error" role="alert" className="text-red text-xs font-medium -mt-3 pb-4">
+            {phoneError}
+          </p>
+        )}
       </div>
       <div className="border-t border-black/[0.08]">
         <label htmlFor="cd-date" className="block text-[10px] font-bold uppercase tracking-[3px] text-black/35 pt-5">
