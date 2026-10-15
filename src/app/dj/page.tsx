@@ -85,10 +85,11 @@ export default function DJPage() {
       {/* HERO */}
       <section className="min-h-svh flex flex-col justify-center items-center text-center px-6 pt-20 pb-16 relative overflow-hidden bg-black">
         <Image
-          src="/photos/dj-hero.png"
-          alt="Dan performing as wedding DJ"
+          src="/photos/dj-dance-floor.jpg"
+          alt="Wedding guests dancing under warm stage lights on a packed dance floor"
           fill
-          className="object-cover object-center"
+          sizes="100vw"
+          className="object-cover object-[center_45%]"
           priority
         />
         <div className="absolute inset-0 bg-black/65" />
