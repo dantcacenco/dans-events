@@ -61,6 +61,7 @@ export default function DJPage() {
             ["/", "Home"],
             ["/mc", "MC & Host"],
             ["/lighting", "Lighting"],
+            ["/pricing", "Pricing"],
             ["/#check-date", "Check Your Date"],
           ].map(([href, label]) => (
             <li key={href}>
@@ -243,6 +244,12 @@ export default function DJPage() {
             >
               Explore the MC & Host experience <span className="text-red">→</span>
             </Link>
+            <Link
+              href="/2027"
+              className="mt-4 flex w-fit items-center gap-3 text-[11px] font-bold uppercase tracking-[3px] text-black hover:text-red transition-colors"
+            >
+              See the 2027 Full Experience <span className="text-red">→</span>
+            </Link>
           </ScrollReveal>
           <ScrollReveal direction="right" className="bg-black p-[clamp(40px,6vw,80px)] flex flex-col justify-center">
             <p className="text-[clamp(18px,2.5vw,30px)] font-black uppercase text-white leading-[1.2] mb-6">
@@ -295,6 +302,7 @@ export default function DJPage() {
             ["/", "Home"],
             ["/mc", "MC & Host"],
             ["/lighting", "Lighting"],
+            ["/pricing", "Pricing"],
             ["/#proof", "Reviews"],
             ["/#check-date", "Book"],
           ].map(([href, label]) => (

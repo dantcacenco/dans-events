@@ -25,6 +25,7 @@ export default function Home() {
             ["/dj", "DJ"],
             ["/mc", "MC & Host"],
             ["/lighting", "Lighting"],
+            ["/pricing", "Pricing"],
             ["#check-date", "Check Your Date"],
           ].map(([href, label]) => (
             <li key={href}>
@@ -207,6 +208,33 @@ export default function Home() {
         ))}
       </section>
 
+      {/* 2027 FULL EXPERIENCE */}
+      <section className="bg-white py-[clamp(64px,9vw,120px)] px-6" id="full-experience">
+        <ScrollReveal className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-[clamp(32px,6vw,96px)] items-center">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[3px] sm:tracking-[4px] text-black/45 mb-6">For 2027 weddings — first 10 couples</p>
+            <h2 className="text-[clamp(28px,4.5vw,52px)] font-black uppercase text-black leading-[1.1] mb-6">
+              The 2027 Full <em className="not-italic text-red">Experience</em>
+            </h2>
+            <p className="text-[clamp(15px,1.6vw,19px)] font-light text-black/70 leading-[1.8] max-w-[560px]">
+              Hosting, DJ with ceremony sound, stage lighting, spotlights and low fog, all from one team for one price.
+            </p>
+          </div>
+          <div className="md:text-right">
+            <div className="text-[clamp(48px,6vw,80px)] font-black text-black leading-none tracking-[-1px] mb-6">$3,500</div>
+            <Link
+              href="/2027"
+              className="inline-block text-[12px] font-bold uppercase tracking-[3px] text-white bg-red px-8 py-5 hover:bg-black transition-colors"
+            >
+              See the package
+            </Link>
+            <p className="mt-5 text-[13px] font-light text-black/60">
+              Or see <Link href="/pricing" className="underline underline-offset-[3px] decoration-red hover:text-red transition-colors">each service&apos;s price</Link>
+            </p>
+          </div>
+        </ScrollReveal>
+      </section>
+
       {/* STATS — action.jpg background with red tint overlay */}
       <section className="min-h-[70vh] flex items-center justify-center text-center px-6 py-20 relative overflow-hidden bg-red" id="proof">
         <Image
@@ -353,6 +381,8 @@ export default function Home() {
               ["/dj", "DJ"],
               ["/mc", "MC & Host"],
               ["/lighting", "Lighting"],
+              ["/pricing", "Pricing"],
+              ["/2027", "2027 Package"],
               ["/#proof", "Reviews"],
               ["/#check-date", "Book"],
             ].map(([href, label]) => (

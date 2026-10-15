@@ -25,6 +25,8 @@ export default function MobileNav() {
             ["/dj", "DJ"],
             ["/mc", "MC & Host"],
             ["/lighting", "Lighting"],
+            ["/pricing", "Pricing"],
+            ["/2027", "2027 Package"],
             ["#proof", "Proof"],
             ["#check-date", "Check Your Date"],
           ].map(([href, label]) => (

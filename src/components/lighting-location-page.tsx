@@ -194,8 +194,8 @@ export default function LightingLocationPage({ data }: { data: LightingLocationD
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.06)" }}>
             {[
-              { name: "The Ambient", price: "from $1,200", desc: "A curated wash of warm and white light. Understated — and never templated." },
-              { name: "The Signature", price: "from $2,800", desc: "Full-room transformation with a custom first-dance moment. The collection most couples land on.", featured: true },
+              { name: "The Ambient", price: "from $1,500", desc: "A curated wash of warm and white light. Understated — and never templated." },
+              { name: "The Signature", price: "from $3,000", desc: "Full-room transformation with a custom first-dance moment. The collection most couples land on.", featured: true },
               { name: "The Bespoke", price: "from $5,000", desc: "A lighting design composed for every moment — ceremony to last dance. Nothing templated. We design it together." },
             ].map((col) => (
               <div key={col.name} className="p-10 flex flex-col" style={{ background: "#0C0B0D", borderTop: col.featured ? "2px solid #BC3021" : undefined }}>

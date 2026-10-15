@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { normalizePhone } from "@/lib/phone";
 
-export default function ContactForm() {
+export default function ContactForm({ interest }: { interest?: string } = {}) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [phoneError, setPhoneError] = useState("");
 
@@ -23,6 +23,7 @@ export default function ContactForm() {
       phone,
       date: (form.elements.namedItem("date") as HTMLInputElement).value,
       venue: (form.elements.namedItem("venue") as HTMLInputElement).value,
+      ...(interest ? { interest } : {}),
     };
 
     try {

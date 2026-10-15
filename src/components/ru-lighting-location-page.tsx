@@ -182,8 +182,8 @@ export default function RuLightingLocationPage({ data }: { data: LightingLocatio
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.06)" }}>
             {[
-              { name: "The Ambient", price: "от $1,200", desc: "Выверенная волна тёплого и белого света. Сдержанная — и никогда не шаблонная." },
-              { name: "The Signature", price: "от $2,800", desc: "Полное преображение зала с особым моментом первого танца. Коллекция, которую выбирает большинство пар.", featured: true },
+              { name: "The Ambient", price: "от $1,500", desc: "Выверенная волна тёплого и белого света. Сдержанная — и никогда не шаблонная." },
+              { name: "The Signature", price: "от $3,000", desc: "Полное преображение зала с особым моментом первого танца. Коллекция, которую выбирает большинство пар.", featured: true },
               { name: "The Bespoke", price: "от $5,000", desc: "Световой дизайн, созданный для каждого момента — от церемонии до последнего танца. Ничего шаблонного. Мы создаём его вместе." },
             ].map((col) => (
               <div key={col.name} className="p-10 flex flex-col" style={{ background: "#0C0B0D", borderTop: col.featured ? "2px solid #BC3021" : undefined }}>

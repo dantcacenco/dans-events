@@ -5,13 +5,14 @@ type Props = {
   phone: string;
   date: string;
   venue: string;
+  interest?: string;
 };
 
 function esc(s: string): string {
   return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 }
 
-export function notificationEmailText({ name, phone, date, venue }: Props): string {
+export function notificationEmailText({ name, phone, date, venue, interest }: Props): string {
   return [
     `New inquiry from dans-events.com`,
     ``,
@@ -19,12 +20,13 @@ export function notificationEmailText({ name, phone, date, venue }: Props): stri
     `Phone: ${phone}`,
     `Event date: ${date}`,
     `Venue: ${venue || "Not specified"}`,
+    ...(interest ? [`Interested in: ${interest}`] : []),
     ``,
     `Call or text them back at ${phone}.`,
   ].join("\n");
 }
 
-export function notificationEmailHtml({ name, phone, date, venue }: Props): string {
+export function notificationEmailHtml({ name, phone, date, venue, interest }: Props): string {
   const tel = phoneHref(phone);
   return `
 <!DOCTYPE html>
@@ -67,11 +69,17 @@ export function notificationEmailHtml({ name, phone, date, venue }: Props): stri
                 </td>
               </tr>
               <tr>
-                <td style="padding:12px 0;">
+                <td style="padding:12px 0;${interest ? "border-bottom:1px solid #eee;" : ""}">
                   <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#999;">Venue</span><br>
                   <span style="font-size:16px;font-weight:500;color:#3B3536;">${esc(venue || "Not specified")}</span>
                 </td>
-              </tr>
+              </tr>${interest ? `
+              <tr>
+                <td style="padding:12px 0;">
+                  <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#999;">Interested In</span><br>
+                  <span style="font-size:16px;font-weight:500;color:#BC3021;">${esc(interest)}</span>
+                </td>
+              </tr>` : ""}
             </table>
           </td>
         </tr>

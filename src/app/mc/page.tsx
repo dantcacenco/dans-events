@@ -82,6 +82,7 @@ export default function MCPage() {
             ["/", "Home"],
             ["/dj", "DJ"],
             ["/lighting", "Lighting"],
+            ["/pricing", "Pricing"],
             ["/#check-date", "Check Your Date"],
           ].map(([href, label]) => (
             <li key={href}>
@@ -274,6 +275,12 @@ export default function MCPage() {
             >
               Explore the DJ experience <span className="text-red">→</span>
             </Link>
+            <Link
+              href="/2027"
+              className="mt-4 flex w-fit items-center gap-3 text-[11px] font-bold uppercase tracking-[3px] text-black hover:text-red transition-colors"
+            >
+              See the 2027 Full Experience <span className="text-red">→</span>
+            </Link>
           </ScrollReveal>
         </div>
       </section>
@@ -318,6 +325,7 @@ export default function MCPage() {
             ["/", "Home"],
             ["/dj", "DJ"],
             ["/lighting", "Lighting"],
+            ["/pricing", "Pricing"],
             ["/#proof", "Reviews"],
             ["/#check-date", "Book"],
           ].map(([href, label]) => (
