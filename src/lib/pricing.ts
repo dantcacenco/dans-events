@@ -13,7 +13,7 @@ export type ServicePrice = {
 export const SERVICE_PRICES: ServicePrice[] = [
   {
     name: "Hosting & MC",
-    price: 1800,
+    price: 2000,
     href: "/mc",
     linkLabel: "More about hosting",
     desc: "Your host for the whole night, in English and Russian. I run the introductions, toasts, games and the flow of the evening, from the grand entrance to the send-off.",
@@ -38,9 +38,9 @@ export const SERVICE_PRICES: ServicePrice[] = [
 
 export const BUNDLE = {
   name: "The 2027 Full Experience",
-  price: 3500,
+  price: 3900,
   // What the same scope costs booked one by one: hosting + DJ & ceremony sound + lighting package.
-  separately: 1800 + 1500 + 1500,
+  separately: 2000 + 1500 + 1500,
   spots: 10,
   path: "/2027",
 };

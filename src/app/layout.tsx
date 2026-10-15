@@ -107,7 +107,7 @@ const jsonLd = {
           description: "Tamada-style wedding hosting. Not announcements — emotional anchoring. The art of making 150 strangers feel like family.",
           url: "https://dans-events.com/the-host",
         },
-        price: "1800",
+        price: "2000",
         priceCurrency: "USD",
       },
       {
@@ -124,7 +124,7 @@ const jsonLd = {
         "@type": "Offer",
         name: "The 2027 Full Experience",
         url: "https://dans-events.com/2027",
-        price: "3500",
+        price: "3900",
         priceCurrency: "USD",
         availability: "https://schema.org/LimitedAvailability",
         itemOffered: {

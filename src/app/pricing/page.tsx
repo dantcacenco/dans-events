@@ -7,7 +7,7 @@ import { BUNDLE, SERVICE_PRICES, usd } from "@/lib/pricing";
 
 const PAGE_URL = "https://dans-events.com/pricing";
 const DESCRIPTION =
-  "Wedding hosting and MC (English and Russian) $1,800. DJ with ceremony sound $1,500. Lighting from $1,500. Clear prices from Dan's Events in Asheville, NC.";
+  "Wedding hosting and MC (English and Russian) $2,000. DJ with ceremony sound $1,500. Lighting from $1,500. Clear prices from Dan's Events in Asheville, NC.";
 
 export const metadata: Metadata = {
   title: "Pricing: Wedding MC, DJ & Lighting | Dan's Events, Asheville NC",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Pricing — Dan's Events",
-    description: "Hosting & MC $1,800. DJ & ceremony sound $1,500. Lighting from $1,500.",
+    description: "Hosting & MC $2,000. DJ & ceremony sound $1,500. Lighting from $1,500.",
     url: PAGE_URL,
     siteName: "Dan's Events",
     type: "website",
@@ -116,12 +116,13 @@ export default function PricingPage() {
             <div className="bg-black p-[clamp(32px,4vw,52px)]">
               <div className="flex items-baseline justify-between gap-4 pb-5 border-b border-white/15">
                 <span className="text-[14px] font-medium text-white/70">Booked separately</span>
-                <span className="text-[17px] font-semibold text-white/70 tabular-nums">{usd(BUNDLE.separately)}</span>
+                <s className="text-[17px] font-semibold text-white/60 tabular-nums decoration-red decoration-2">{usd(BUNDLE.separately)}</s>
               </div>
-              <div className="flex items-baseline justify-between gap-4 pt-5 mb-8">
+              <div className="flex items-baseline justify-between gap-4 pt-5 mb-3">
                 <span className="text-[15px] font-black uppercase tracking-[1px] text-white">2027 Full Experience</span>
                 <span className="text-[clamp(32px,4vw,44px)] font-black text-white tabular-nums leading-none">{usd(BUNDLE.price)}</span>
               </div>
+              <p className="text-[14px] font-light text-white/70 mb-8 text-right">You save {usd(BUNDLE.separately - BUNDLE.price)}.</p>
               <Link
                 href={BUNDLE.path}
                 className="block text-center text-[12px] font-bold uppercase tracking-[3px] text-white bg-red px-8 py-5 hover:bg-white hover:text-red transition-colors"

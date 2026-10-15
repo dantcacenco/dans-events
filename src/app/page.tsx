@@ -3,6 +3,7 @@ import Link from "next/link";
 import ContactForm from "@/components/contact-form";
 import ScrollReveal from "@/components/scroll-reveal";
 import MobileNav from "@/components/mobile-nav";
+import { BUNDLE, usd } from "@/lib/pricing";
 
 export default function Home() {
   return (
@@ -221,7 +222,13 @@ export default function Home() {
             </p>
           </div>
           <div className="md:text-right">
-            <div className="text-[clamp(48px,6vw,80px)] font-black text-black leading-none tracking-[-1px] mb-6">$3,500</div>
+            <div className="flex items-baseline gap-4 md:justify-end mb-2 tabular-nums">
+              <s className="text-[clamp(20px,2.2vw,28px)] font-semibold text-black/45 decoration-red decoration-2">
+                <span className="sr-only">Booked separately: </span>{usd(BUNDLE.separately)}
+              </s>
+              <span className="text-[clamp(48px,6vw,80px)] font-black text-black leading-none tracking-[-1px]">{usd(BUNDLE.price)}</span>
+            </div>
+            <p className="text-[14px] font-light text-black/60 mb-6">You save {usd(BUNDLE.separately - BUNDLE.price)}.</p>
             <Link
               href="/2027"
               className="inline-block text-[12px] font-bold uppercase tracking-[3px] text-white bg-red px-8 py-5 hover:bg-black transition-colors"

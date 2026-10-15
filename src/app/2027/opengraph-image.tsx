@@ -1,8 +1,9 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { BUNDLE, usd } from "@/lib/pricing";
 
-export const alt = "The 2027 Full Experience — hosting, DJ and lighting from Dan's Events for $3,500";
+export const alt = `The 2027 Full Experience — hosting, DJ and lighting from Dan's Events for ${usd(BUNDLE.price)} (${usd(BUNDLE.separately)} booked separately)`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -27,7 +28,8 @@ export default async function Image() {
             Experience
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            <span style={{ fontSize: 56, fontWeight: 900, color: "white" }}>$3,500</span>
+            <span style={{ fontSize: 34, fontWeight: 600, color: "rgba(255,255,255,0.55)", textDecoration: "line-through", textDecorationColor: "#BC3021" }}>{usd(BUNDLE.separately)}</span>
+            <span style={{ fontSize: 56, fontWeight: 900, color: "white" }}>{usd(BUNDLE.price)}</span>
             <span style={{ fontSize: 22, fontWeight: 400, color: "rgba(255,255,255,0.75)", letterSpacing: "2px" }}>
               Hosting · DJ &amp; ceremony sound · Lights &amp; fog
             </span>
