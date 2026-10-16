@@ -1,5 +1,5 @@
 import { SONGS, stylesFor, songsInStyle } from "./catalog";
-import type { Answer, FlowId, FlowState, Mark, Person, Store } from "./types";
+import type { Answer, FlowId, FlowState, Lang, Mark, Person, Store } from "./types";
 
 // Guests get a shorter walk: up to this many cards, and a Finish button once they have answered a few.
 export const GUEST_MAX_SONGS = 30;
@@ -13,24 +13,24 @@ export const emptyPerson = (): Person => ({ step: "styles", styles: [], cleanOnl
 const newId = () => Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) => (b % 36).toString(36)).join("");
 
 // A guest walks the reception flow alone (as the "solo" person) and starts on a welcome screen.
-export const initialStore = (guest = false): Store => ({
+export const initialStore = (guest = false, lang: Lang = "en"): Store => ({
   v: 2,
-  lang: "en",
+  lang,
   view: guest ? { screen: "welcome", flow: "reception" } : { screen: "home" },
   flows: { reception: emptyFlow(), ceremony: emptyFlow() },
   ...(guest ? { guest: { sessionId: newId(), name: "", extras: [], sent: false } } : {}),
 });
 
-export function loadStore(token: string, guest = false): Store {
+export function loadStore(token: string, guest = false, lang: Lang = "en"): Store {
   try {
     const raw = window.localStorage.getItem(KEY(token, guest));
-    if (!raw) return initialStore(guest);
+    if (!raw) return initialStore(guest, lang);
     const s = JSON.parse(raw) as Store;
-    if (s?.v !== 2) return initialStore(guest);
+    if (s?.v !== 2) return initialStore(guest, lang);
     for (const f of [s.flows.reception, s.flows.ceremony]) f.hidden ??= []; // saved before guest links existed
     return s;
   } catch {
-    return initialStore(guest);
+    return initialStore(guest, lang);
   }
 }
 

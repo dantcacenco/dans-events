@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { TOKEN_RE } from "@/lib/setlist/couples";
-import { coupleForGuestLink, RateLimited, saveGuestVote } from "@/lib/setlist/guest-store";
+import { coupleForGuestLink } from "@/lib/setlist/couple-store";
+import { RateLimited, saveGuestVote } from "@/lib/setlist/guest-store";
 
 const SESSION_RE = /^[a-z0-9]{8,40}$/;
 const strings = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x): x is string => typeof x === "string" && x.length < 60).slice(0, 200) : []);
@@ -21,7 +22,7 @@ export async function POST(req: Request) {
     const couple = await coupleForGuestLink(body.guestToken);
     if (!couple) return NextResponse.json({ ok: false }, { status: 404 });
     const ip = (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || "unknown";
-    await saveGuestVote(couple, `${ip}|${req.headers.get("user-agent") ?? ""}`, {
+    await saveGuestVote(couple.token, `${ip}|${req.headers.get("user-agent") ?? ""}`, {
       sessionId: body.sessionId,
       name: String(body.name ?? ""),
       likes: strings(body.likes),

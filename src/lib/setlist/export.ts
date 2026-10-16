@@ -35,7 +35,7 @@ export function exportRows(flow: FlowId, f: FlowState, names: Record<string, str
 }
 
 // Cells that start with = + - @ would run as formulas in Excel; guests type some of these cells, so defuse them.
-const csvCell = (v: string) => {
+export const csvCell = (v: string) => {
   const safe = /^[=+\-@\t\r]/.test(v) ? `'${v}` : v;
   return /[",\n]/.test(safe) ? `"${safe.replace(/"/g, '""')}"` : safe;
 };
@@ -113,4 +113,14 @@ export function masterToText(m: Built, guests: number, notes: string): string {
   block(SECTION.extras, m.extras);
   if (notes.trim()) out.push("NOTES", notes.trim(), "");
   return out.join("\n");
+}
+
+// M3U-style playlist text: one "#EXTINF" line per song, then "Artist - Title.mp3", so DJ software can match the files.
+export function masterToM3u(m: Built, title = "Master list"): string {
+  const out = ["#EXTM3U", `#PLAYLIST:${title}`];
+  for (const it of [...m.songs, ...m.extras]) {
+    const name = `${it.artist ? `${it.artist} - ` : ""}${it.title}`;
+    out.push(`#EXTINF:-1,${name}`, `${name.replace(/[\\/:*?"<>|]/g, "_")}.mp3`);
+  }
+  return out.join("\n") + "\n";
 }

@@ -5,8 +5,9 @@ const nextConfig: NextConfig = {
     return [
       // The couple music picker is private: keep it out of search results even if the link leaks.
       { source: "/songs/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
-      // Preview clips never change; the browser can keep them.
-      { source: "/setlist/clips/:file*", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
+      { source: "/admin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }, { key: "Cache-Control", value: "no-store" }] },
+      // Preview clips: cache for a week (a clip may be swapped for Dan's own MP3 under the same name).
+      { source: "/setlist/clips/:file*", headers: [{ key: "Cache-Control", value: "public, max-age=604800" }] },
     ];
   },
 };

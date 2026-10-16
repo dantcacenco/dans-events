@@ -109,3 +109,33 @@ export async function kvDel(key: string): Promise<void> {
   delete data[key];
   await writeFile(data);
 }
+
+/** Every key that starts with `prefix` (used to delete everything a record owns). */
+export async function kvKeys(prefix: string): Promise<string[]> {
+  if (usingKv) {
+    try {
+      const c = await client();
+      const out: string[] = [];
+      for await (const key of c.scanIterator({ match: `${prefix}*`, count: 500 })) out.push(key);
+      return out;
+    } catch (error) {
+      throw new StoreUnavailableError(error);
+    }
+  }
+  return Object.keys(await readFile()).filter((key) => key.startsWith(prefix));
+}
+
+/** Fetch many keys in one round trip (missing keys come back as null). */
+export async function kvMany<T>(keys: string[]): Promise<(T | null)[]> {
+  if (!keys.length) return [];
+  if (usingKv) {
+    try {
+      return await (await client()).mget<(T | null)[]>(...keys);
+    } catch (error) {
+      console.error(`[teo/kv] mget failed:`, error);
+      return keys.map(() => null);
+    }
+  }
+  const data = await readFile();
+  return keys.map((key) => (data[key] as T) ?? null);
+}

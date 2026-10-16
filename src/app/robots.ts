@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/pixel-mob-admin", "/pixel-mob-test", "/pixel-mob-user", "/songs", "/api/"],
+        disallow: ["/pixel-mob-admin", "/pixel-mob-test", "/pixel-mob-user", "/songs", "/admin", "/api/"],
       },
     ],
     sitemap: "https://dans-events.com/sitemap.xml",

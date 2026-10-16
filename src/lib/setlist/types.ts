@@ -42,6 +42,7 @@ export type Person = {
   deck: string[];
   index: number;
   answers: Record<string, Answer>;
+  at?: number; // last change (ms), so two phones can merge: the newer copy of each person wins
 };
 
 export type FlowState = {
@@ -50,6 +51,7 @@ export type FlowState = {
   notes: string;
   sent: boolean;
   hidden: string[]; // guest-suggested songs (by key) the couple removed from the master list
+  metaAt?: number; // last change of marks / notes / hidden / sent
 };
 
 export type View = {
@@ -84,4 +86,22 @@ export type MasterData = {
 export type CouplePicks = { partners: Record<string, string[]>; must: string[]; never: string[] };
 export type GuestVote = { sessionId: string; name: string; likes: string[]; skips: string[]; extras: Extra[] };
 
-export type Couple = { names: [string, string] };
+export type Couple = { names: [string, string]; lang?: Lang };
+
+// Server-side record of a couple, created from the admin page. The token is the couple's private link.
+export type CoupleInfo = {
+  token: string;
+  guestToken: string;
+  names: [string, string];
+  date: string; // YYYY-MM-DD or ""
+  lang: Lang;
+  active: boolean;
+  reviewed: boolean;
+  adminNotes: string;
+  createdAt: number;
+  submitted: Partial<Record<FlowId, number>>; // last "send to Dan" per flow
+};
+
+// The couple's progress as the server keeps it (merged from every phone they use).
+export type CoupleState = { flows: Record<FlowId, FlowState>; at: number };
+export type StoredGuestVote = GuestVote & { at: number };

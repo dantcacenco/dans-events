@@ -1,4 +1,4 @@
-import type { CouplePicks, Extra, MasterData } from "./types";
+import type { Extra, FlowId, FlowState, MasterData } from "./types";
 
 // Browser side of the guest-link API. Every call fails soft: the page keeps working from what is saved on the phone.
 const json = (body: unknown) => ({ headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
@@ -12,8 +12,24 @@ export async function createGuestLink(token: string): Promise<string | null> {
   }
 }
 
-export async function syncCouplePicks(token: string, picks: CouplePicks): Promise<void> {
-  await fetch("/api/songs/couple-picks", { method: "PUT", ...json({ token, ...picks }) }).catch(() => {});
+type Flows = Record<FlowId, FlowState>;
+
+export async function pullCoupleState(token: string): Promise<Flows | null> {
+  try {
+    const r = await fetch(`/api/songs/state?${new URLSearchParams({ token })}`, { cache: "no-store" });
+    return r.ok ? ((await r.json()) as { state: { flows: Flows } | null }).state?.flows ?? null : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function pushCoupleState(token: string, flows: Flows): Promise<Flows | null> {
+  try {
+    const r = await fetch("/api/songs/state", { method: "PUT", ...json({ token, flows }) });
+    return r.ok ? ((await r.json()) as { state: { flows: Flows } }).state.flows : null;
+  } catch {
+    return null;
+  }
 }
 
 export async function sendGuestVote(guestToken: string, v: { sessionId: string; name: string; likes: string[]; skips: string[]; extras: Extra[] }): Promise<boolean> {
