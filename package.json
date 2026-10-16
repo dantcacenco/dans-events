@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "audio:check": "python3 scripts/setlist/loudnorm.py check public/setlist/clips"
+    "audio:check": "python3 scripts/setlist/loudnorm.py check public/setlist/clips",
+    "test": "vitest run"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1121.0",
@@ -26,6 +27,7 @@
     "eslint-config-next": "16.2.6",
     "playwright": "^1.60.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   }
 }

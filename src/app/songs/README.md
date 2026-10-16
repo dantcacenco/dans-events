@@ -1,14 +1,22 @@
-# Couple music picker (prototype)
+# Couple music picker
 
-Private per-couple page: `/songs/<token>` (token = 12–40 chars of a-z0-9). `/songs/new` mints a fresh token.
-Not linked from the site, `noindex` meta + `X-Robots-Tag` header + `Disallow: /songs` in robots.
+Private per-couple page: `/songs/<token>` (token = 20 random a-z0-9 characters). Couples are created on Dan's admin page `/admin/songs`, which
+makes both links at once: the couple link and the guest link `/songs/g/<guestToken>`. Unknown or switched-off links are a 404.
+Not linked from the site, `noindex` meta + `X-Robots-Tag` header + `Disallow: /songs` and `/admin` in robots.
 
 - Two flows under one link: Ceremony and Reception. Each has: who is picking -> style cards -> one song at a time -> results.
-- Partners pick separately (or "just one of us"); results show the songs both loved.
-- EN/RU toggle, clean-only switch (reception), flag = always play, X = never play, notes box, copy / CSV / text export.
-- The couple's progress lives in `localStorage` (`setlist:<token>`); guest links store votes on the server (below).
-- `POST /api/songs/submit` is a stub that only logs. TODO: save the submission and text Dan (Quo/OpenPhone, needs his OK).
-- `getCouple()` in `src/lib/setlist/couples.ts` returns sample names. TODO: look the couple up by token.
+- Partners pick separately (or "just one of us"), on one phone or two; results show the songs both loved.
+- EN/RU toggle (the couple's language is set when Dan creates them), clean-only switch (reception), flag = always play, X = never play, notes, copy / CSV / text export.
+- The couple's progress is saved on the phone (`localStorage`) AND on the server (`/api/songs/state`): each phone pulls on open and pushes every change.
+  Merging is per person (newer walk wins) plus the shared marks/notes (newer copy wins), see `src/lib/setlist/sync.ts`.
+- "Send to Dan" (`POST /api/songs/submit`) marks the flow as submitted; it shows as "Needs review" on the admin page. Nothing is texted or emailed yet.
+
+## Admin page (`/admin/songs`)
+Password = Vercel env var `SETLIST_ADMIN_PASSWORD` (production). Signed HttpOnly cookie (14 days), 8 wrong tries per device per 15 min.
+Rotate with `scripts/setlist/rotate-admin-password.sh` (new random password, saved in Vercel, redeploys, signs everyone out).
+Couples list (status, partners finished, guest answers, last activity, search, filters), couple detail (links with copy, each partner's picks,
+must/never, notes, guests' answers, ranked master list, reviewed, private notes, edit, switch off, delete, CSV/text/M3U export), export all,
+and a Library tab (browse, play, hide a song everywhere, flag it). Hidden songs are left out of every deck.
 
 ## Guest link and master list
 The couple taps **Invite your guests** (reception results) and gets a second, separate link: `/songs/g/<guestToken>`, plus a ready message in
@@ -26,20 +34,19 @@ EN or RU (share sheet on phones, copy message / copy link). The guest token only
   suggestions, a device (IP + user agent hash) can open 10 sessions and send 60 updates per day, 400 sessions per couple, request size cap. CSV cells that start with
   `= + - @` are defused.
 
-### Data model (prototype storage = `src/lib/teo/kv.ts`: Vercel KV when KV_* env vars exist, else `.data/teo.json`; code in `src/lib/setlist/guest-store.ts`)
-| key | value | real table |
-| --- | --- | --- |
-| `setlist:couple:<ct>:guest-link` / `setlist:guest-link:<gt>` | guest token / couple token | `guest_links(guest_token pk, couple_token)` |
-| `setlist:couple:<ct>:picks` | `{partners:{a:[ids],b:[ids]}, must, never}` pushed by the couple's phone | `couple_picks`, `couple_marks` |
-| `setlist:couple:<ct>:sessions` | list of session ids | `guest_sessions(couple_token, session_id pk, name, created_at, ip_hash)` |
-| `setlist:couple:<ct>:vote:<sid>` | `{name, likes[], skips[], extras[{title,artist}]}` | `guest_votes(session_id, song_id, vote)`, `guest_extras(session_id, title, artist, key)` |
-| `setlist:couple:<ct>:limit:<ip>` | `{day, sessions[], posts}` | `rate_limits(ip_hash, day, count)` |
+### Data model (Vercel KV / Upstash Redis in production; `.data/teo.json` locally; code in `src/lib/setlist/couple-store.ts`)
+| key | value |
+| --- | --- |
+| `setlist:couples` | list of couple tokens (admin index) |
+| `setlist:couple:<ct>:info` | names, wedding date, language, active, reviewed, private notes, submitted times, guest token |
+| `setlist:couple:<ct>:state` | both flows (each person's walk, marks, notes), merged from every phone |
+| `setlist:couple:<ct>:guest-link` / `setlist:guest-link:<gt>` | guest token / couple token |
+| `setlist:couple:<ct>:sessions`, `setlist:couple:<ct>:vote:<sid>` | guest session ids; one guest's `{name, likes, skips, extras}` |
+| `setlist:couple:<ct>:limit:<iphash>` | guest rate limit per device per day |
+| `setlist:library` | `{hidden, flagged}` song ids from the admin Library tab |
+| `setlist:admin:login:<iphash>` | failed admin logins |
 
-API (`src/app/api/songs/`): `POST guest-link` (couple token -> guest token, idempotent), `PUT couple-picks`, `POST guest` (a guest's answers), `GET master?token=|guestToken=`
-(counts only: guests answered, per-song partner and guest like counts, merged extras; never-play already removed). A real backend needs: couples table (names, tokens),
-the tables above in a database (KV read-modify-write can lose a simultaneous write; a database should use rows and a unique index on session id), a real rate limiter
-(per IP and per link), a way for Dan to open any couple's master list (no admin view yet), and a decision about retention.
-On a Vercel preview the guest flow needs the same KV env vars as /teo.
+Writes are serialized per server instance; two writes landing on two different instances at the same moment can still race (low risk at this scale).
 
 ## Design (Cinema)
 Dark, album-cover cards: swipe sideways through genre covers, the song card glows in the genre's colour.
@@ -55,7 +62,10 @@ iOS silent-mode override (`navigator.audioSession.type = "playback"`), upcoming 
 `src/data/setlist-songs.json` is the manifest (title, artist, style, explicit, source URL, hook start, method, confidence).
 `scripts/setlist/` rebuilds them: `fetch.sh` (yt-dlp), `analyze.py` (librosa: repeated high-energy section + YouTube replay
 heatmap), `assemble.py` (cut + manifest). The full MP3s are NOT in git.
-For the real library (~100+ songs) put clips in Cloudflare R2 (already used for /teo) and point `clip` at the R2 URL.
+The clips are served from `public/` (about 100 MB, fine for Vercel and GitHub; no paid storage). Library clips (`lib-*`) are YouTube-sourced
+proof-of-concept clips (`source: "youtube-proof-of-concept"` on each song): replace them with Dan-owned MP3s over time (same id, run `loudnorm.py cut`).
+`scripts/setlist/import-library.py <library dir>` copies finished clips in and rewrites the `lib-*` songs. Explicit flags come from Apple only
+(iTunes Search API `trackExplicitness`: explicit or cleaned = explicit; `explicitSource` says which, or `apple:no-match`).
 
 ### Loudness rule (always, for every upload)
 Every clip must play at the same level. All clips go through `scripts/setlist/loudnorm.py`: two-pass EBU R128
@@ -68,4 +78,4 @@ untouched; only the level changes. `assemble.py` already calls it, so rebuilt cl
 
 Never commit or upload a clip that has not been through `cut` or `fix`.
 
-Tests: `npx next dev -p 3055` then `node tests/setlist-e2e.mjs [chromium|webkit]` (couple flows, layout on four phone sizes, back gesture, AA contrast, EN + RU screenshots in `$SHOTS`) and `node tests/setlist-guests.mjs [chromium|webkit]` (a couple + three guests, master list, abuse limits, screenshots).
+Tests: `npm test` (unit), then `SETLIST_ADMIN_PASSWORD=local-test-password-123 npx next dev -p 3055` and (same env var set) `node tests/setlist-e2e.mjs [chromium|webkit]` (couple flows, layout on four phone sizes, back gesture, AA contrast, EN + RU screenshots in `$SHOTS`) and `node tests/setlist-guests.mjs [chromium|webkit]` (a couple + three guests, second phone, admin view, master list, abuse limits, screenshots) and `node tests/setlist-admin.mjs [chromium|webkit]` (admin page).

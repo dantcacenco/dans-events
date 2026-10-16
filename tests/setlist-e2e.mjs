@@ -4,11 +4,13 @@
 import { chromium, webkit, devices } from "playwright";
 import fs from "fs";
 import { audit } from "./setlist-audit.mjs";
+import { makeCouple, removeCouple, songsIn, stylesOf } from "./setlist-helpers.mjs";
 
 const BASE = process.env.BASE || "http://localhost:3055";
 const SHOTS = process.env.SHOTS || "/tmp/setlist-shots";
 const engine = process.argv[2] === "webkit" ? webkit : chromium;
-const TOKEN = "demo" + Math.random().toString(36).slice(2, 12).padEnd(10, "x");
+const made = [await makeCouple(["Anna", "Mike"])];
+const TOKEN = made[0].token;
 fs.mkdirSync(SHOTS, { recursive: true });
 
 let failures = 0;
@@ -52,7 +54,8 @@ await auditOk("who");
 ok((await page.locator(".sl-who button").count()) === 3, "who-is-picking shows Anna, Mike and 'just one of us'");
 await page.locator(".sl-who button", { hasText: "Anna" }).click();
 await page.waitForSelector(".sl-grid");
-ok((await page.locator(".sl-style").count()) === 10, "10 reception style cards");
+const nRec = stylesOf("reception").length;
+ok((await page.locator(".sl-style").count()) === nRec, `${nRec} reception style cards`);
 ok(await page.locator(".sl-cta").isDisabled(), "Continue disabled until a style is chosen");
 await shot("03-styles-top");
 await auditOk("genres");
@@ -76,7 +79,8 @@ await page.locator(".sl-cta").click();
 await page.waitForSelector(".sl-card");
 await page.waitForTimeout(800);
 const p1 = await progress();
-ok(/^1 \/ 11$/.test(p1), `clean-only deck = 6 pop + 2 latin (explicit Gasolina hidden) + 3 folk = 11 (${p1})`);
+const N = ["pop", "latin", "ru-folk"].reduce((n, st) => n + songsIn(st, true).length, 0);
+ok(p1 === `1 / ${N}`, `clean-only deck = the clean pop + latin + Russian folk songs = ${N} (${p1})`);
 a = await audio();
 ok(a && !a.paused && a.loop, `first song auto-plays after Continue tap, looping (${a?.src}, t=${a?.t?.toFixed(1)})`);
 await shot("05-swipe-card");
@@ -100,19 +104,19 @@ ok(!(await audio()).paused, "tapping it again plays");
 // like → next song plays by itself
 await page.locator(".sl-act--like").click();
 await page.waitForTimeout(500);
-ok(/^2 \/ 11$/.test(await progress()), "Like moves to song 2");
+ok(((await progress()) === `2 / ${N}`), "Like moves to song 2");
 a = await audio();
 ok(a && !a.paused, `next clip started playing on its own (${a?.src})`);
 // skip
 await page.locator(".sl-act--skip").click();
-ok(/^3 \/ 11$/.test(await progress()), "Skip moves to song 3");
+ok(((await progress()) === `3 / ${N}`), "Skip moves to song 3");
 // must play
 const titleMust = await page.locator(".sl-title").innerText();
 await page.locator(".sl-act--love").click();
-ok(/^4 \/ 11$/.test(await progress()), "Must play moves to song 4");
+ok(((await progress()) === `4 / ${N}`), "Must play moves to song 4");
 // undo twice
 await page.locator(".sl-undo").click();
-ok(/^3 \/ 11$/.test(await progress()) && (await page.locator(".sl-title").innerText()) === titleMust, "Undo returns to the must-play card");
+ok(((await progress()) === `3 / ${N}`) && (await page.locator(".sl-title").innerText()) === titleMust, "Undo returns to the must-play card");
 await page.locator(".sl-act--love").click();
 // swipe right with mouse drag (touch-like)
 const art = page.locator(".sl-card-art");
@@ -123,7 +127,7 @@ await page.mouse.move(box.x + box.width / 2 + 160, box.y + 130, { steps: 8 });
 await shot("07-swipe-dragging");
 await page.mouse.up();
 await page.waitForTimeout(300);
-ok(/^5 \/ 11$/.test(await progress()), "dragging the card right = Like");
+ok(((await progress()) === `5 / ${N}`), "dragging the card right = Like");
 // drag left = skip
 const b2 = await page.locator(".sl-card-art").boundingBox();
 await page.mouse.move(b2.x + b2.width / 2, b2.y + 120);
@@ -131,16 +135,16 @@ await page.mouse.down();
 await page.mouse.move(b2.x + b2.width / 2 - 170, b2.y + 125, { steps: 8 });
 await page.mouse.up();
 await page.waitForTimeout(300);
-ok(/^6 \/ 11$/.test(await progress()), "dragging the card left = Skip");
+ok(((await progress()) === `6 / ${N}`), "dragging the card left = Skip");
 
 // reload mid-swipe resumes at the same card
 await page.reload();
 await page.waitForSelector(".sl-card");
-ok(/^6 \/ 11$/.test(await progress()), "refresh resumes at song 6 (progress saved)");
+ok(((await progress()) === `6 / ${N}`), "refresh resumes at song 6 (progress saved)");
 ok(await page.locator(".sl-playhint", { hasText: "Tap to play" }).count() === 1, "after refresh the card asks for one tap to play (iOS rule)");
 
 // finish the deck liking everything
-for (let i = 6; i <= 11; i++) { await page.locator(".sl-act--like").click(); }
+for (let i = 6; i <= N; i++) { await page.locator(".sl-act--like").click(); }
 await page.waitForSelector(".sl-results");
 await shot("08-results-anna");
 await auditOk("results");
@@ -182,8 +186,8 @@ await page.getByRole("button", { name: /Copy list/ }).click();
 await page.getByRole("button", { name: /Copied/ }).waitFor({ timeout: 3000 }).catch(() => {});
 ok(await page.getByRole("button", { name: /Copied/ }).count() === 1, "copy-to-clipboard shows Copied");
 await page.getByRole("button", { name: /Send to Dan/ }).click();
-await page.waitForTimeout(300);
-ok(await page.getByText("Prototype: nothing was actually sent yet.").count() === 1, "Send-to-Dan is a stub (nothing sent)");
+await page.getByText("Sent. Thank you!").waitFor({ timeout: 8000 }).catch(() => {});
+ok(await page.getByRole("button", { name: /Sent. Thank you!/ }).count() === 1, "Send-to-Dan saves the submission");
 
 // ---- Mike picks separately, then the match view ----
 await page.getByRole("button", { name: "Who's picking?" }).click();
@@ -194,7 +198,8 @@ await page.locator(".sl-clean").click(); // clean off for Mike
 await page.locator(".sl-cta").click();
 await page.waitForSelector(".sl-card");
 const mikeTotal = Number((await progress()).match(/\/ (\d+)/)[1]);
-ok(mikeTotal === 9, `Mike with clean-only OFF gets 6 pop + 3 hip-hop = 9 (${mikeTotal})`);
+const wantMike = songsIn("pop", false).length + songsIn("hiphop", false).length;
+ok(mikeTotal === wantMike, `Mike with clean-only OFF gets every pop + hip-hop song = ${wantMike} (${mikeTotal})`);
 for (let i = 0; i < mikeTotal; i++) { await page.locator(i % 3 === 2 ? ".sl-act--skip" : ".sl-act--like").click(); }
 await page.waitForSelector(".sl-tabs");
 await shot("11-results-both");
@@ -229,7 +234,8 @@ await page.locator(".sl-back").click(); // who → home
 await page.locator(".sl-big--ceremony").click();
 await page.locator(".sl-who button", { hasText: "Mike" }).click();
 await page.waitForSelector(".sl-grid");
-ok((await page.locator(".sl-style").count()) === 5, "5 ceremony style cards");
+const nCer = stylesOf("ceremony").length;
+ok((await page.locator(".sl-style").count()) === nCer, `${nCer} ceremony style cards`);
 ok(await page.locator(".sl-clean").count() === 0, "no clean-only switch on the ceremony side");
 await shot("16-ceremony-styles");
 await auditOk("ceremony genres");
@@ -269,9 +275,11 @@ ok(await page.locator(".sl-results").count() === 1, "reload lands back on the re
   const pg = await c3.newPage();
   const rshot = async (n) => { await pg.waitForTimeout(350); await pg.screenshot({ path: `${SHOTS}/${n}.png`, style: "nextjs-portal{display:none!important}" }); };
   const raudit = async (label) => { const r = await audit(pg, label); ok(r.fails.length === 0, `contrast AA + min size, ${label} (${r.n} text boxes)${r.fails.length ? "\n      " + r.fails.join("\n      ") : ""}`); };
-  await pg.goto(`${BASE}/songs/${TOKEN}ru`);
+  const ru = await makeCouple(["Аня", "Миша"], "ru");
+  made.push(ru);
+  await pg.goto(`${BASE}/songs/${ru.token}`);
   await pg.waitForSelector(".sl-big");
-  await pg.getByRole("button", { name: "RU", exact: true }).click();
+  ok((await pg.locator("html, .sl").first().evaluate(() => document.querySelector(".sl")?.getAttribute("lang"))) === "ru", "a couple created in Russian opens in Russian");
   await rshot("ru-1-home");
   await pg.locator(".sl-big--reception").click();
   await pg.waitForSelector(".sl-who");
@@ -305,10 +313,10 @@ ok(await page.locator(".sl-results").count() === 1, "reload lands back on the re
 for (const [w, h] of [[390, 844], [390, 664], [375, 553], [430, 932]]) {
   const c2 = await browser.newContext({ ...devices["iPhone 14"], viewport: { width: w, height: h } });
   const pg = await c2.newPage();
-  await pg.goto(`${BASE}/songs/${TOKEN}`);
+  const fresh = await makeCouple(["Anna", "Mike"]);
+  made.push(fresh);
+  await pg.goto(`${BASE}/songs/${fresh.token}`);
   await pg.waitForSelector(".sl-big");
-  await pg.evaluate(() => localStorage.clear());
-  await pg.reload();
   await pg.locator(".sl-big--reception").click();
   await pg.locator(".sl-who button").first().click();
   await pg.waitForSelector(".sl-grid");
@@ -328,6 +336,9 @@ for (const [w, h] of [[390, 844], [390, 664], [375, 553], [430, 932]]) {
   ok(await noSide(), `${w}x${h}: song screen has no sideways overflow`);
   await c2.close();
 }
+
+for (const c of made) await removeCouple(c.token);
+ok((await fetch(`${BASE}/songs/${TOKEN}`)).status === 404, "a deleted couple's link is a 404");
 
 console.log(errors.length ? `console errors:\n${errors.join("\n")}` : "no console errors");
 console.log(failures ? `\n${failures} FAILED` : "\nALL PASSED");

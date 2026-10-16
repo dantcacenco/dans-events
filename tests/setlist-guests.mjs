@@ -4,12 +4,14 @@
 import { chromium, webkit, devices } from "playwright";
 import fs from "fs";
 import { audit } from "./setlist-audit.mjs";
+import { coupleDetail, makeCouple, removeCouple, stylesOf } from "./setlist-helpers.mjs";
 
 const BASE = process.env.BASE || "http://localhost:3055";
 const SHOTS = process.env.SHOTS || "/tmp/setlist-guest-shots";
 const engine = process.argv[2] === "webkit" ? webkit : chromium;
 const rnd = () => Math.random().toString(36).slice(2, 12).padEnd(10, "x");
-const TOKEN = "couple" + rnd();
+const made = [await makeCouple(["Anna", "Mike"])];
+const TOKEN = made[0].token;
 fs.mkdirSync(SHOTS, { recursive: true });
 
 let failures = 0;
@@ -84,7 +86,7 @@ const g1 = await open(guestUrl);
   await page.locator(".sl-welcome .sl-input").fill("Olga");
   await page.locator(".sl-sticky .sl-cta").click();
   await page.waitForSelector(".sl-grid");
-  ok((await page.locator(".sl-style").count()) === 10, "guest sees the same 10 reception genre cards");
+  ok((await page.locator(".sl-style").count()) === stylesOf("reception").length, "guest sees the same reception genre cards as the couple");
   ok((await page.locator(".sl-clean").getAttribute("aria-pressed")) === "true", "guest: clean-only is ON by default");
   for (const n of ["Pop hits", "80s & 90s", "Classic rock & Motown"]) await card(page, n).click();
   await shot("g04-guest-genres");
@@ -220,6 +222,24 @@ await couple.page.waitForTimeout(500);
   ok((await page.locator(".sl-sec--extras ~ .sl-row").count()) === 2, "and bring it back");
 }
 
+// ---------- the server has it all: a second phone and Dan's admin page see the same picks ----------
+{
+  const st = await (await fetch(`${BASE}/api/songs/state?token=${TOKEN}`)).json();
+  const a = st.state?.flows?.reception?.people?.a;
+  ok(a && Object.keys(a.answers).length > 0, `Anna's picks are saved on the server (${a ? Object.keys(a.answers).length : 0} answers)`);
+  const phone2 = await open(`${BASE}/songs/${TOKEN}`);
+  await phone2.page.locator(".sl-big--reception").click();
+  await phone2.page.waitForSelector(".sl-who");
+  await phone2.page.waitForTimeout(800);
+  const st2 = await phone2.page.evaluate((t) => JSON.parse(localStorage.getItem(`setlist:${t}`) || "{}"), TOKEN);
+  ok(Object.keys(st2.flows?.reception?.people?.a?.answers ?? {}).length === Object.keys(a?.answers ?? {}).length, "a second phone on the couple link gets Anna's picks from the server");
+  await phone2.ctx.close();
+  const d = await coupleDetail(TOKEN);
+  ok(d && d.couple.stats.guests >= 3, `admin sees the guests' answers (${d?.couple.stats.guests})`);
+  ok(d && d.flows.reception.people.some((p) => p.pid === "a" && p.liked.length > 0), "admin sees Anna's likes");
+  ok(d && d.master.songs.length > 0 && d.master.songs[0].count >= d.master.songs.at(-1).count, "admin master list is ranked by count");
+}
+
 // ---------- abuse protection and privacy (API level) ----------
 const api = async (path, body, method = "POST") => {
   const r = await fetch(`${BASE}${path}`, { method, headers: { "content-type": "application/json" }, body: body && JSON.stringify(body) });
@@ -241,10 +261,14 @@ const txt = JSON.stringify(after);
 ok(!/never|notes|must|marks/i.test(txt), "what guests can read has counts only: no never-play, must-play or notes");
 ok((await api("/api/songs/guest", { guestToken: "x".repeat(20), sessionId: "abcdefghij", likes: ["pop-1"] })).status === 404, "a made-up guest token is rejected");
 ok((await api("/api/songs/guest", { guestToken: gt, sessionId: "bad id!", likes: [] })).status === 400, "a malformed session id is rejected");
-const link2 = (await api("/api/songs/guest-link", { token: "other" + rnd() })).json.guestToken;
+made.push(await makeCouple(["Other", "Couple"]));
+const link2 = (await api("/api/songs/guest-link", { token: made[1].token })).json.guestToken;
 let limited = 0;
 for (let i = 0; i < 14; i++) if ((await api("/api/songs/guest", { guestToken: link2, sessionId: "dev" + i + rnd(), likes: ["pop-1"], skips: [], extras: [] })).status === 429) limited++;
 ok(limited >= 3, `one device cannot open more than 10 sessions a day (${limited} of 14 were refused)`);
+
+for (const c of made) await removeCouple(c.token);
+ok((await fetch(`${BASE}/songs/g/${gt}`)).status === 404, "a deleted couple's guest link is a 404");
 
 console.log(errors.length ? `console errors:\n${errors.join("\n")}` : "no console errors");
 console.log(failures ? `\n${failures} FAILED` : "\nALL PASSED");

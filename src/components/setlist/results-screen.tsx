@@ -96,13 +96,14 @@ export function ResultsScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
       setTimeout(() => setCopied(false), 2000);
     }
   };
+  const [sendFailed, setSendFailed] = useState(false);
   const send = async () => {
-    try {
-      await fetch("/api/songs/submit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ token: c.token, flow, people: r.pids.length, must: r.must.length, never: r.never.length }) });
-    } catch {
-      // stub endpoint: ignore
-    }
-    updFlow(flow, (x) => ({ ...x, sent: true }));
+    // Picks are already on the server (synced as they go); this tells Dan's admin page they are final.
+    const ok = await fetch("/api/songs/submit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ token: c.token, flow }) })
+      .then((res) => res.ok)
+      .catch(() => false);
+    setSendFailed(!ok);
+    if (ok) updFlow(flow, (x) => ({ ...x, sent: true }));
   };
 
   const nothing = r.pids.length === 0;
@@ -189,7 +190,7 @@ export function ResultsScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
           <button className="sl-link" onClick={() => go({ screen: "styles", flow, pid: cur })}>{L.moreStyles}</button>
         )}
       </div>
-      {f.sent && <p className="sl-note sl-proto">{L.sentProto}</p>}
+      {sendFailed && <p className="sl-note sl-proto" role="alert">{L.sendFailed}</p>}
 
       {isRec && <InviteSheet c={c} open={inviting} onClose={() => setInviting(false)} />}
       <div className="sl-sticky">
