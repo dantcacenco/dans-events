@@ -1,5 +1,5 @@
-import { SONGS, songById, stylesFor, songsInStyle } from "./catalog";
-import type { Answer, FlowId, FlowState, Mark, Person, Store, View } from "./types";
+import { SONGS, stylesFor, songsInStyle } from "./catalog";
+import type { Answer, FlowId, FlowState, Mark, Person, Store } from "./types";
 
 const KEY = (token: string) => `setlist:${token}`;
 
@@ -125,9 +125,3 @@ export const flowProgress = (f: FlowState): "none" | "partial" | "done" => {
   if (ps.some((p) => p.step === "done")) return "done";
   return "partial";
 };
-
-export function setView(s: Store, view: View): Store {
-  return { ...s, view };
-}
-
-export const songTitle = (id: string) => songById(id)?.title ?? id;

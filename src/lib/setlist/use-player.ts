@@ -16,12 +16,17 @@ export type Player = {
   prefetch: (src: string) => void;
 };
 
+const KEEP_BLOBS = 6;
+
 // One shared <audio> element for the whole page. iOS only lets audio start inside a tap, and an
 // element that has already played once may be re-pointed at a new clip and started from a later tap.
+// Upcoming clips are downloaded into memory (blob URLs) so the next card starts instantly and seeks cleanly.
 export function usePlayer(): Player {
   const el = useRef<HTMLAudioElement | null>(null);
+  const cur = useRef<string | null>(null);
   const limit = useRef<number | null>(null);
-  const warmed = useRef(new Set<string>());
+  const blobs = useRef(new Map<string, string>()); // clip path -> blob URL, oldest first
+  const pending = useRef(new Set<string>());
   const raf = useRef(0);
   const [src, setSrc] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
@@ -30,9 +35,14 @@ export function usePlayer(): Player {
   const [unlocked, setUnlocked] = useState(false);
 
   useEffect(() => {
+    // iOS mutes web audio when the ringer switch is on silent; "playback" makes it behave like music (iOS 16.4+).
+    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+    if (session) session.type = "playback";
+
     const a = new Audio();
     a.preload = "auto";
     el.current = a;
+    const urls = blobs.current;
     const tick = () => {
       setTime(a.currentTime);
       if (limit.current !== null && a.currentTime >= limit.current) {
@@ -52,34 +62,51 @@ export function usePlayer(): Player {
       setTime(a.currentTime);
     };
     const onMeta = () => setDuration(Number.isFinite(a.duration) ? a.duration : 0);
+    // A tab sent to the background should go quiet.
+    const onHide = () => document.hidden && a.pause();
     a.addEventListener("play", onPlay);
     a.addEventListener("pause", onPause);
     a.addEventListener("ended", onPause);
     a.addEventListener("loadedmetadata", onMeta);
     a.addEventListener("durationchange", onMeta);
+    document.addEventListener("visibilitychange", onHide);
     return () => {
+      document.removeEventListener("visibilitychange", onHide);
       cancelAnimationFrame(raf.current);
       a.pause();
       a.removeAttribute("src");
       a.load();
+      urls.forEach((u) => URL.revokeObjectURL(u));
+      urls.clear();
     };
   }, []);
 
-  const play = useCallback((s: string, o: PlayOpts = {}) => {
-    const a = el.current;
-    if (!a) return;
-    limit.current = o.limit ?? null;
-    a.loop = !!o.loop;
-    if (!a.src.endsWith(s)) {
-      a.src = s;
-      setSrc(s);
-      setTime(0);
-      setDuration(0);
-    }
-    a.currentTime = 0;
-    setUnlocked(true);
-    a.play().catch(() => setPlaying(false));
+  const start = useCallback((a: HTMLAudioElement) => {
+    a.play().then(
+      () => setUnlocked(true),
+      () => setPlaying(false), // blocked until a tap: the card keeps asking for one
+    );
   }, []);
+
+  const play = useCallback(
+    (s: string, o: PlayOpts = {}) => {
+      const a = el.current;
+      if (!a) return;
+      limit.current = o.limit ?? null;
+      a.loop = !!o.loop;
+      if (cur.current !== s) {
+        cur.current = s;
+        a.dataset.clip = s;
+        a.src = blobs.current.get(s) ?? s;
+        setSrc(s);
+        setTime(0);
+        setDuration(0);
+      }
+      a.currentTime = 0;
+      start(a);
+    },
+    [start],
+  );
 
   const pause = useCallback(() => el.current?.pause(), []);
 
@@ -87,14 +114,13 @@ export function usePlayer(): Player {
     (s: string, o: PlayOpts = {}) => {
       const a = el.current;
       if (!a) return;
-      if (a.src.endsWith(s) && !a.paused) a.pause();
-      else if (a.src.endsWith(s) && limit.current === (o.limit ?? null)) {
+      if (cur.current === s && !a.paused) a.pause();
+      else if (cur.current === s && limit.current === (o.limit ?? null)) {
         a.loop = !!o.loop;
-        setUnlocked(true);
-        a.play().catch(() => setPlaying(false));
+        start(a);
       } else play(s, o);
     },
-    [play],
+    [play, start],
   );
 
   const seek = useCallback((t: number) => {
@@ -104,11 +130,23 @@ export function usePlayer(): Player {
     setTime(t);
   }, []);
 
-  // Warm the HTTP cache so the next card starts without a gap.
   const prefetch = useCallback((s: string) => {
-    if (warmed.current.has(s)) return;
-    warmed.current.add(s);
-    fetch(s, { cache: "force-cache" }).catch(() => warmed.current.delete(s));
+    if (blobs.current.has(s) || pending.current.has(s)) return;
+    pending.current.add(s);
+    fetch(s)
+      .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(String(r.status)))))
+      .then((b) => {
+        blobs.current.set(s, URL.createObjectURL(b));
+        // Drop the oldest copies, never the clip that is playing.
+        for (const [k, u] of blobs.current) {
+          if (blobs.current.size <= KEEP_BLOBS) break;
+          if (k === cur.current) continue;
+          URL.revokeObjectURL(u);
+          blobs.current.delete(k);
+        }
+      })
+      .catch(() => {})
+      .finally(() => pending.current.delete(s));
   }, []);
 
   return { src, playing, time, duration, unlocked, play, toggle, pause, seek, prefetch };

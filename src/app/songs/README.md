@@ -10,12 +10,14 @@ Not linked from the site, `noindex` meta + `X-Robots-Tag` header + `Disallow: /s
 - `POST /api/songs/submit` is a stub that only logs. TODO: save the submission and text Dan (Quo/OpenPhone, needs his OK).
 - `getCouple()` in `src/lib/setlist/couples.ts` returns sample names. TODO: look the couple up by token.
 
-## Designs (pick one)
-Five looks share one markup and all the logic: `/songs/<token>?design=1..5` (default 1).
-1 Tiles (giant emoji tiles) · 2 Vinyl (records) · 3 Poster (oversized type, flat red/black panels) · 4 Paper (white list, one red accent) · 5 Cinema (dark glass, album-art carousel).
-Each look is only a CSS block in `setlist.css` (`.d1` … `.d5`). Brand only: Montserrat, #BC3021 / #9A2419 / #0C0B0D / #3B3536 / #CCCAC9 / #C4B6AD.
-Screenshots + contact sheets: `node tests/setlist-design-shots.mjs <outDir>` (dev server on 3055).
-Once Dan picks one, delete the other four blocks and `src/lib/setlist/designs.ts`.
+## Design (Cinema)
+Dark, album-cover cards: swipe sideways through genre covers, the song card glows in the genre's colour.
+One CSS file, `src/app/songs/setlist.css`. Rules for every screen: one huge hero (emoji / name / number), a much smaller
+title, tiny descriptions, one primary action, 48px+ tap targets, text at WCAG AA contrast and never under 12px.
+Brand only: Montserrat, #BC3021 / #0C0B0D / #3B3536 / #CCCAC9 / #C4B6AD.
+Phone details: `viewport-fit=cover` + safe-area insets, `100dvh` (with `100vh` fallback), `touch-action: none` on the swipe
+area, `overscroll-behavior` off, the phone's back gesture steps up one screen (one spare history entry, see `setlist-app.tsx`),
+iOS silent-mode override (`navigator.audioSession.type = "playback"`), upcoming clips preloaded into memory (`use-player.ts`).
 
 ## Audio
 `public/setlist/clips/*.mp3` are 30 s, 96 kbps stereo previews cut around each song's hook.
@@ -35,4 +37,4 @@ untouched; only the level changes. `assemble.py` already calls it, so rebuilt cl
 
 Never commit or upload a clip that has not been through `cut` or `fix`.
 
-Test: `npx next dev -p 3055` then `DESIGN=1 node tests/setlist-e2e.mjs [chromium|webkit]` (any design 1..5).
+Test: `npx next dev -p 3055` then `node tests/setlist-e2e.mjs [chromium|webkit]` (flows, layout and contrast checks, phone screenshots in `$SHOTS`).

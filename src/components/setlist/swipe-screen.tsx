@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type MouseEvent, type PointerEvent } from "react";
 import { songById, styleById } from "@/lib/setlist/catalog";
 import { applyAnswer, undoAnswer } from "@/lib/setlist/store";
 import type { Answer, FlowId } from "@/lib/setlist/types";
@@ -16,6 +16,7 @@ export function SwipeScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: strin
   const [drag, setDrag] = useState({ x: 0, y: 0, on: false });
   const start = useRef<{ x: number; y: number } | null>(null);
   const dragged = useRef(false);
+  const art = useRef<HTMLDivElement>(null);
 
   const id = p?.deck[p.index];
   const song = id ? songById(id) : undefined;
@@ -76,7 +77,6 @@ export function SwipeScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: strin
   const pct = (time / dur) * 100;
 
   const down = (e: PointerEvent<HTMLDivElement>) => {
-    if ((e.target as HTMLElement).closest("button")) return;
     start.current = { x: e.clientX, y: e.clientY };
     dragged.current = false;
     e.currentTarget.setPointerCapture(e.pointerId);
@@ -97,9 +97,12 @@ export function SwipeScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: strin
     else if (drag.y < -SWIPE_UP) answer("love");
     else setDrag({ x: 0, y: 0, on: false });
   };
-  // A tap on the art (not a drag) plays or pauses. Click is a user gesture, so iOS allows it.
-  const tapArt = () => {
-    if (!dragged.current) player.toggle(song.clip, { loop: true });
+  // A tap on the picture (not a drag) plays or pauses. Click is a user gesture, so iOS allows it.
+  // The pointer is captured by the drag area, so the tap is matched to the picture by position.
+  const tapArt = (e: MouseEvent<HTMLDivElement>) => {
+    const r = art.current?.getBoundingClientRect();
+    const onArt = !!r && e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!dragged.current && onArt) player.toggle(song.clip, { loop: true });
     dragged.current = false;
   };
 
@@ -120,37 +123,42 @@ export function SwipeScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: strin
       </div>
       <div
         key={song.id}
-        className={`sl-card sl-slide ${drag.on ? "" : "settle"} ${playing ? "is-playing" : ""}`}
+        className={`sl-card sl-slide ${drag.on ? "" : "settle"}`}
         style={{ ...color, transform: `translate(${drag.x}px, ${drag.y * 0.5}px) rotate(${rot}deg)` }}
       >
         <div
-          className="sl-card-art"
-          role="button"
-          tabIndex={0}
-          aria-label={playing ? L.pause : L.play}
+          className="sl-drag"
           onPointerDown={down}
           onPointerMove={move}
           onPointerUp={up}
           onPointerCancel={up}
           onClick={tapArt}
-          onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), player.toggle(song.clip, { loop: true }))}
         >
-          <span className="sl-stamp l" style={{ opacity: stamp(drag.x / SWIPE_X) }}>{L.like.toUpperCase()}</span>
-          <span className="sl-stamp r" style={{ opacity: stamp(-drag.x / SWIPE_X) }}>{L.skip.toUpperCase()}</span>
-          <span className="sl-stamp u" style={{ opacity: stamp(-drag.y / SWIPE_UP) }}>★ {L.mustPlay.toUpperCase()}</span>
-          <span className="sl-art">
-            <span className="sl-hero emoji" aria-hidden="true">{st?.emoji}</span>
-          </span>
-          <span className={`sl-play ${player.unlocked ? "" : "pulse"}`} aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
-          {!player.unlocked && <span className="sl-playhint">{L.tapToPlay}</span>}
-        </div>
-        <div className="sl-meta">
-          <h2 className="sl-title">{song.title}</h2>
-          <p className="sl-artist">
-            {song.artist}
-            {song.explicit && <span className="sl-chip sl-chip--e" title={L.explicitTag}>E</span>}
-          </p>
-          {song.moment && <span className="sl-chip sl-chip--moment">{L.moments[song.moment]}</span>}
+          <div
+            ref={art}
+            className="sl-card-art"
+            role="button"
+            tabIndex={0}
+            aria-label={playing ? L.pause : L.play}
+            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), player.toggle(song.clip, { loop: true }))}
+          >
+            <span className="sl-stamp l" style={{ opacity: stamp(drag.x / SWIPE_X) }}>{L.like.toUpperCase()}</span>
+            <span className="sl-stamp r" style={{ opacity: stamp(-drag.x / SWIPE_X) }}>{L.skip.toUpperCase()}</span>
+            <span className="sl-stamp u" style={{ opacity: stamp(-drag.y / SWIPE_UP) }}>★ {L.mustPlay.toUpperCase()}</span>
+            <span className="sl-art">
+              <span className="sl-hero emoji" aria-hidden="true">{st?.emoji}</span>
+            </span>
+            <span className={`sl-play ${player.unlocked ? "" : "pulse"}`} aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
+            {!player.unlocked && <span className="sl-playhint">{L.tapToPlay}</span>}
+          </div>
+          <div className="sl-meta">
+            <h2 className="sl-title">{song.title}</h2>
+            <p className="sl-artist">
+              {song.artist}
+              {song.explicit && <span className="sl-chip sl-chip--e" title={L.explicitTag}>E</span>}
+            </p>
+            {song.moment && <span className="sl-chip sl-chip--moment">{L.moments[song.moment]}</span>}
+          </div>
         </div>
         <div className="sl-scrub">
           <div className="sl-scrub-row">

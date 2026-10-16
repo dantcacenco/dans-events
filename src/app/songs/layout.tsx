@@ -13,7 +13,8 @@ export const metadata: Metadata = {
   alternates: {},
 };
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#0C0B0D" };
+// viewportFit "cover" lets the page use the full screen on iPhones; the CSS keeps content out of the notch and home bar.
+export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover", themeColor: "#0C0B0D" };
 
 export default function SongsLayout({ children }: { children: React.ReactNode }) {
   return <div className={brand.className}>{children}</div>;

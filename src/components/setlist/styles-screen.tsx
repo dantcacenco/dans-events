@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { sampleFor, songById, stylesFor } from "@/lib/setlist/catalog";
 import { startDeck } from "@/lib/setlist/store";
 import type { FlowId } from "@/lib/setlist/types";
@@ -11,6 +11,7 @@ const SAMPLE_SECONDS = 11;
 export function StylesScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: string }) {
   const { L, lang, store, updFlow, go, player } = c;
   const p = store.flows[flow].people[pid];
+  const [cur, setCur] = useState(0);
   if (!p) return null;
   const styles = stylesFor(flow);
   const setP = (patch: Partial<typeof p>) => updFlow(flow, (f) => ({ ...f, people: { ...f.people, [pid]: { ...f.people[pid], ...patch } } }));
@@ -29,8 +30,16 @@ export function StylesScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: stri
 
   return (
     <>
+      <div className="sl-ambient" style={{ "--c": styles[cur]?.color } as CSSProperties} aria-hidden="true" />
       <h1 className="sl-h1">{flow === "ceremony" ? L.stylesTitleCeremony : L.stylesTitleReception}</h1>
-      <div className="sl-grid">
+      <div
+        className="sl-grid"
+        onScroll={(e) => {
+          const g = e.currentTarget;
+          const card = g.firstElementChild as HTMLElement | null;
+          if (card) setCur(Math.max(0, Math.min(styles.length - 1, Math.round(g.scrollLeft / (card.offsetWidth + 14)))));
+        }}
+      >
         {styles.map((st) => {
           const sample = sampleFor(st.id, p.cleanOnly && flow === "reception");
           const on = p.styles.includes(st.id);
@@ -65,6 +74,11 @@ export function StylesScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: stri
             </div>
           );
         })}
+      </div>
+      <div className="sl-dots" aria-hidden="true">
+        {styles.map((st, i) => (
+          <i key={st.id} className={`${p.styles.includes(st.id) ? "on" : ""} ${i === cur ? "cur" : ""}`} />
+        ))}
       </div>
       {flow === "reception" && (
         <button className="sl-clean" aria-pressed={p.cleanOnly} onClick={() => setP({ cleanOnly: !p.cleanOnly })}>
