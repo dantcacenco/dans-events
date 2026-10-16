@@ -1,0 +1,425 @@
+[
+ {
+  "style": "pop",
+  "title": "Uptown Funk",
+  "artist": "Mark Ronson ft. Bruno Mars",
+  "q": "Mark Ronson Uptown Funk ft. Bruno Mars official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "pop",
+  "title": "Shut Up and Dance",
+  "artist": "WALK THE MOON",
+  "q": "WALK THE MOON Shut Up and Dance official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "pop",
+  "title": "Can't Stop the Feeling!",
+  "artist": "Justin Timberlake",
+  "q": "Justin Timberlake CAN'T STOP THE FEELING official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "pop",
+  "title": "Mr. Brightside",
+  "artist": "The Killers",
+  "q": "The Killers Mr. Brightside official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "pop",
+  "title": "Crazy in Love",
+  "artist": "Beyoncé ft. Jay-Z",
+  "q": "Beyoncé Crazy In Love ft. JAY-Z official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "pop",
+  "title": "I Gotta Feeling",
+  "artist": "The Black Eyed Peas",
+  "q": "Black Eyed Peas I Gotta Feeling official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "8090",
+  "title": "Billie Jean",
+  "artist": "Michael Jackson",
+  "q": "Michael Jackson Billie Jean official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "8090",
+  "title": "Livin' on a Prayer",
+  "artist": "Bon Jovi",
+  "q": "Bon Jovi Livin On A Prayer official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "8090",
+  "title": "Girls Just Want to Have Fun",
+  "artist": "Cyndi Lauper",
+  "q": "Cyndi Lauper Girls Just Want To Have Fun official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "rock",
+  "title": "Don't Stop Believin'",
+  "artist": "Journey",
+  "q": "Journey Don't Stop Believin' official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "rock",
+  "title": "Sweet Caroline",
+  "artist": "Neil Diamond",
+  "q": "Neil Diamond Sweet Caroline official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "rock",
+  "title": "Brown Eyed Girl",
+  "artist": "Van Morrison",
+  "q": "Van Morrison Brown Eyed Girl official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "rock",
+  "title": "September",
+  "artist": "Earth, Wind & Fire",
+  "q": "Earth Wind & Fire September official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "rock",
+  "title": "Dancing Queen",
+  "artist": "ABBA",
+  "q": "ABBA Dancing Queen official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "rock",
+  "title": "Stayin' Alive",
+  "artist": "Bee Gees",
+  "q": "Bee Gees Stayin' Alive official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "hiphop",
+  "title": "Yeah!",
+  "artist": "Usher ft. Lil Jon & Ludacris",
+  "q": "Usher Yeah! ft. Lil Jon, Ludacris official",
+  "flow": "reception",
+  "explicit": true
+ },
+ {
+  "style": "hiphop",
+  "title": "Hey Ya!",
+  "artist": "OutKast",
+  "q": "OutKast Hey Ya! official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "hiphop",
+  "title": "In da Club",
+  "artist": "50 Cent",
+  "q": "50 Cent In Da Club official",
+  "flow": "reception",
+  "explicit": true
+ },
+ {
+  "style": "latin",
+  "title": "Danza Kuduro",
+  "artist": "Don Omar ft. Lucenzo",
+  "q": "Don Omar Danza Kuduro official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "latin",
+  "title": "Gasolina",
+  "artist": "Daddy Yankee",
+  "q": "Daddy Yankee Gasolina official",
+  "flow": "reception",
+  "explicit": true
+ },
+ {
+  "style": "latin",
+  "title": "Vivir Mi Vida",
+  "artist": "Marc Anthony",
+  "q": "Marc Anthony Vivir Mi Vida official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "country",
+  "title": "Friends in Low Places",
+  "artist": "Garth Brooks",
+  "q": "Garth Brooks Friends In Low Places official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "country",
+  "title": "Chicken Fried",
+  "artist": "Zac Brown Band",
+  "q": "Zac Brown Band Chicken Fried official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "country",
+  "title": "Cruise",
+  "artist": "Florida Georgia Line",
+  "q": "Florida Georgia Line Cruise official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "ru-pop",
+  "title": "Крошка моя",
+  "artist": "Руки Вверх!",
+  "q": "Руки Вверх Крошка моя клип",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "ru-pop",
+  "title": "Владивосток 2000",
+  "artist": "Мумий Тролль",
+  "q": "Мумий Тролль Владивосток 2000 клип",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "ru-pop",
+  "title": "Белые розы",
+  "artist": "Ласковый май",
+  "q": "Ласковый май Белые розы",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "slow",
+  "title": "At Last",
+  "artist": "Etta James",
+  "q": "Etta James At Last",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "slow",
+  "title": "Perfect",
+  "artist": "Ed Sheeran",
+  "q": "Ed Sheeran Perfect official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "slow",
+  "title": "A Thousand Years",
+  "artist": "Christina Perri",
+  "q": "Christina Perri A Thousand Years official",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "ru-folk",
+  "title": "Ой, мороз, мороз",
+  "artist": "Надежда Кадышева и «Золотое кольцо»",
+  "q": "Надежда Кадышева Ой мороз мороз",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "ru-folk",
+  "title": "Валенки",
+  "artist": "Лидия Русланова",
+  "q": "Лидия Русланова Валенки",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "ru-folk",
+  "title": "Калинка",
+  "artist": "Надежда Кадышева и «Золотое кольцо»",
+  "q": "Кадышева Калинка малинка",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "ru-slow",
+  "title": "Миллион алых роз",
+  "artist": "Алла Пугачёва",
+  "q": "Алла Пугачёва Миллион алых роз",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "ru-slow",
+  "title": "Любовь, похожая на сон",
+  "artist": "Алла Пугачёва",
+  "q": "Любовь похожая на сон Пугачёва",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "ru-slow",
+  "title": "Салют, Вера",
+  "artist": "Валерий Меладзе",
+  "q": "Меладзе Салют Вера клип",
+  "flow": "reception",
+  "explicit": false
+ },
+ {
+  "style": "c-classical",
+  "title": "Canon in D",
+  "artist": "Johann Pachelbel",
+  "q": "Pachelbel Canon in D wedding processional",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "processional"
+ },
+ {
+  "style": "c-classical",
+  "title": "Bridal Chorus (Here Comes the Bride)",
+  "artist": "Richard Wagner",
+  "q": "Wagner Bridal Chorus Here Comes the Bride",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "bridal"
+ },
+ {
+  "style": "c-classical",
+  "title": "Wedding March",
+  "artist": "Felix Mendelssohn",
+  "q": "Mendelssohn Wedding March",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "recessional"
+ },
+ {
+  "style": "c-acoustic",
+  "title": "Can't Help Falling in Love (instrumental)",
+  "artist": "Strings & guitar cover",
+  "q": "Can't Help Falling in Love instrumental string quartet wedding",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "processional"
+ },
+ {
+  "style": "c-acoustic",
+  "title": "A Thousand Years (cello & piano)",
+  "artist": "The Piano Guys",
+  "q": "The Piano Guys A Thousand Years",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "bridal"
+ },
+ {
+  "style": "c-acoustic",
+  "title": "Perfect (string quartet)",
+  "artist": "Vitamin String Quartet",
+  "q": "Vitamin String Quartet Perfect Ed Sheeran",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "bridal"
+ },
+ {
+  "style": "c-piano",
+  "title": "River Flows in You",
+  "artist": "Yiruma",
+  "q": "Yiruma River Flows in You",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "processional"
+ },
+ {
+  "style": "c-piano",
+  "title": "Comptine d'un autre été",
+  "artist": "Yann Tiersen",
+  "q": "Yann Tiersen Comptine d'un autre été",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "unity"
+ },
+ {
+  "style": "c-piano",
+  "title": "Experience",
+  "artist": "Ludovico Einaudi",
+  "q": "Ludovico Einaudi Experience",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "bridal"
+ },
+ {
+  "style": "c-joy",
+  "title": "Signed, Sealed, Delivered (I'm Yours)",
+  "artist": "Stevie Wonder",
+  "q": "Stevie Wonder Signed Sealed Delivered",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "recessional"
+ },
+ {
+  "style": "c-joy",
+  "title": "Marry You",
+  "artist": "Bruno Mars",
+  "q": "Bruno Mars Marry You official",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "recessional"
+ },
+ {
+  "style": "c-joy",
+  "title": "Happy",
+  "artist": "Pharrell Williams",
+  "q": "Pharrell Williams Happy official",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "recessional"
+ },
+ {
+  "style": "c-russian",
+  "title": "Ave Maria",
+  "artist": "Franz Schubert · Luciano Pavarotti",
+  "q": "Schubert Ave Maria",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "bridal"
+ },
+ {
+  "style": "c-russian",
+  "title": "Вальс (Мой ласковый и нежный зверь)",
+  "artist": "Евгений Дога",
+  "q": "Евгений Дога Вальс Мой ласковый и нежный зверь",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "processional"
+ },
+ {
+  "style": "c-russian",
+  "title": "Вокализ",
+  "artist": "Сергей Рахманинов · Capuçon & Lugansky",
+  "q": "Рахманинов Вокализ",
+  "flow": "ceremony",
+  "explicit": false,
+  "moment": "unity"
+ }
+]
