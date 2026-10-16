@@ -22,6 +22,10 @@ export type Song = {
   title: string;
   artist: string;
   explicit: boolean;
+  // Lyrics check (local ASR + Apple). "unverified" counts as not clean in clean-only mode.
+  explicitStatus?: "explicit" | "clean" | "unverified";
+  explicitWords?: string[];
+  explicitConfidence?: "high" | "medium" | "low";
   moment?: Moment;
   clip: string;
   sourceUrl: string;

@@ -30,5 +30,5 @@ export async function coupleDetail(token) {
 
 // Catalog facts, so the tests follow the song library as it grows.
 const catalog = JSON.parse(fs.readFileSync(new URL("../src/data/setlist-songs.json", import.meta.url), "utf8"));
-export const songsIn = (style, cleanOnly) => catalog.songs.filter((s) => s.style === style && (!cleanOnly || !s.explicit));
+export const songsIn = (style, cleanOnly) => catalog.songs.filter((s) => s.style === style && (!cleanOnly || (!s.explicit && s.explicitStatus !== "unverified")));
 export const stylesOf = (flow) => catalog.styles.filter((s) => s.flow === flow && catalog.songs.some((x) => x.style === s.id));

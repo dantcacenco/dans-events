@@ -16,7 +16,7 @@ export const songById = (id: string) => songIndex.get(id);
 export const stylesFor = (flow: FlowId) => STYLES.filter((s) => s.flow === flow && SONGS.some((x) => x.style === s.id && !hiddenSongs.has(x.id)));
 export const styleById = (id: string) => STYLES.find((s) => s.id === id);
 export const songsInStyle = (styleId: string, cleanOnly: boolean) =>
-  SONGS.filter((s) => s.style === styleId && !hiddenSongs.has(s.id) && (!cleanOnly || !s.explicit));
+  SONGS.filter((s) => s.style === styleId && !hiddenSongs.has(s.id) && (!cleanOnly || (!s.explicit && s.explicitStatus !== "unverified")));
 
 // The style card plays the first song's hook (first clean song when clean-only is on).
 export const sampleFor = (styleId: string, cleanOnly: boolean) => songsInStyle(styleId, cleanOnly)[0];
