@@ -2,7 +2,7 @@
 
 import { useState, type CSSProperties } from "react";
 import { sampleFor, songById, stylesFor } from "@/lib/setlist/catalog";
-import { startDeck } from "@/lib/setlist/store";
+import { GUEST_MAX_SONGS, startDeck } from "@/lib/setlist/store";
 import type { FlowId } from "@/lib/setlist/types";
 import type { Ctx } from "./ctx";
 
@@ -18,9 +18,9 @@ export function StylesScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: stri
   const toggle = (id: string) => setP({ styles: p.styles.includes(id) ? p.styles.filter((x) => x !== id) : [...p.styles, id] });
 
   const next = () => {
-    const np = startDeck(p, flow);
+    const np = startDeck(p, flow, c.guest ? GUEST_MAX_SONGS : Infinity);
     updFlow(flow, (f) => ({ ...f, people: { ...f.people, [pid]: np } }));
-    if (np.step === "done") return go({ screen: "results", flow, pid });
+    if (np.step === "done") return go(c.guest ? { screen: "thanks", flow } : { screen: "results", flow, pid });
     const first = np.deck[np.index];
     // Called inside the Continue tap so iOS lets the first song start by itself.
     const clip = first ? songById(first)?.clip : undefined;
@@ -84,6 +84,11 @@ export function StylesScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: stri
         <button className="sl-clean" aria-pressed={p.cleanOnly} onClick={() => setP({ cleanOnly: !p.cleanOnly })}>
           <span>{L.cleanOnly}</span>
           <span className="sl-switch" aria-hidden="true" />
+        </button>
+      )}
+      {c.guest && (
+        <button className="sl-link sl-add-link" onClick={c.openAdd}>
+          ＋ {L.addSong}
         </button>
       )}
       <div className="sl-sticky">

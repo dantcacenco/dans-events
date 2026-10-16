@@ -49,19 +49,39 @@ export type FlowState = {
   marks: Record<string, Mark>;
   notes: string;
   sent: boolean;
+  hidden: string[]; // guest-suggested songs (by key) the couple removed from the master list
 };
 
 export type View = {
-  screen: "home" | "who" | "styles" | "swipe" | "results";
+  screen: "home" | "who" | "styles" | "swipe" | "results" | "welcome" | "thanks"; // welcome + thanks: guest link only
   flow?: FlowId;
   pid?: string;
 };
+
+// A song a guest wants that is not in the catalog (free text).
+export type Extra = { title: string; artist: string };
+
+export type GuestState = { sessionId: string; name: string; extras: Extra[]; sent: boolean };
 
 export type Store = {
   v: 2;
   lang: Lang;
   view: View;
   flows: Record<FlowId, FlowState>;
+  guestToken?: string; // couple side: the link they share with guests
+  guest?: GuestState; // guest side only
 };
+
+// What the server tells both the couple and the guests about the guest votes (names never leave the server).
+export type MasterExtra = { key: string; title: string; artist: string; count: number };
+export type MasterData = {
+  guests: number; // guests who answered at least one song
+  coupleLikes: Record<string, number>; // catalog song -> partners who approved it
+  guestLikes: Record<string, number>; // catalog song -> guests who liked it
+  extras: MasterExtra[]; // songs guests added that are not in the catalog, merged by title + artist
+};
+
+export type CouplePicks = { partners: Record<string, string[]>; must: string[]; never: string[] };
+export type GuestVote = { sessionId: string; name: string; likes: string[]; skips: string[]; extras: Extra[] };
 
 export type Couple = { names: [string, string] };

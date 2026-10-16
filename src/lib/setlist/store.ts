@@ -1,33 +1,42 @@
 import { SONGS, stylesFor, songsInStyle } from "./catalog";
 import type { Answer, FlowId, FlowState, Mark, Person, Store } from "./types";
 
-const KEY = (token: string) => `setlist:${token}`;
+// Guests get a shorter walk: up to this many cards, and a Finish button once they have answered a few.
+export const GUEST_MAX_SONGS = 30;
+export const GUEST_MIN_SONGS = 8;
 
-export const emptyFlow = (): FlowState => ({ people: {}, marks: {}, notes: "", sent: false });
+const KEY = (token: string, guest: boolean) => (guest ? `setlist-guest:${token}` : `setlist:${token}`);
+
+export const emptyFlow = (): FlowState => ({ people: {}, marks: {}, notes: "", sent: false, hidden: [] });
 export const emptyPerson = (): Person => ({ step: "styles", styles: [], cleanOnly: true, deck: [], index: 0, answers: {} });
 
-export const initialStore = (): Store => ({
+const newId = () => Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) => (b % 36).toString(36)).join("");
+
+// A guest walks the reception flow alone (as the "solo" person) and starts on a welcome screen.
+export const initialStore = (guest = false): Store => ({
   v: 2,
   lang: "en",
-  view: { screen: "home" },
+  view: guest ? { screen: "welcome", flow: "reception" } : { screen: "home" },
   flows: { reception: emptyFlow(), ceremony: emptyFlow() },
+  ...(guest ? { guest: { sessionId: newId(), name: "", extras: [], sent: false } } : {}),
 });
 
-export function loadStore(token: string): Store {
+export function loadStore(token: string, guest = false): Store {
   try {
-    const raw = window.localStorage.getItem(KEY(token));
-    if (!raw) return initialStore();
+    const raw = window.localStorage.getItem(KEY(token, guest));
+    if (!raw) return initialStore(guest);
     const s = JSON.parse(raw) as Store;
-    if (s?.v !== 2) return initialStore();
+    if (s?.v !== 2) return initialStore(guest);
+    for (const f of [s.flows.reception, s.flows.ceremony]) f.hidden ??= []; // saved before guest links existed
     return s;
   } catch {
-    return initialStore();
+    return initialStore(guest);
   }
 }
 
-export function saveStore(token: string, s: Store) {
+export function saveStore(token: string, s: Store, guest = false) {
   try {
-    window.localStorage.setItem(KEY(token), JSON.stringify(s));
+    window.localStorage.setItem(KEY(token, guest), JSON.stringify(s));
   } catch {
     // private mode or full storage: the page still works, it just can't resume
   }
@@ -42,9 +51,9 @@ export function buildDeck(flow: FlowId, styles: string[], cleanOnly: boolean, sk
   return out;
 }
 
-export function startDeck(p: Person, flow: FlowId): Person {
+export function startDeck(p: Person, flow: FlowId, cap = Infinity): Person {
   const answered = p.deck.slice(0, p.index);
-  const fresh = buildDeck(flow, p.styles, p.cleanOnly, new Set(answered));
+  const fresh = buildDeck(flow, p.styles, p.cleanOnly, new Set(answered)).slice(0, Math.max(0, cap - answered.length));
   const deck = [...answered, ...fresh];
   return { ...p, deck, index: answered.length, step: fresh.length ? "swipe" : "done" };
 }

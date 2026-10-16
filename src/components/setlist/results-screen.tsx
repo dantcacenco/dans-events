@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchMaster } from "@/lib/setlist/api";
 import { songById, STYLES } from "@/lib/setlist/catalog";
-import { copyText, download, toCsv, toText } from "@/lib/setlist/export";
+import { copyText, download, masterToCsv, masterToText, toCsv, toText } from "@/lib/setlist/export";
+import { buildMaster } from "@/lib/setlist/master";
 import { resultFor, toggleLike, toggleMark } from "@/lib/setlist/store";
-import type { FlowId, Moment } from "@/lib/setlist/types";
+import type { FlowId, MasterData, Moment } from "@/lib/setlist/types";
 import type { Ctx } from "./ctx";
+import { InviteSheet } from "./invite-sheet";
+import { MasterList } from "./master-list";
 
 const MOMENTS: Moment[] = ["processional", "bridal", "unity", "recessional"];
 
@@ -17,8 +21,31 @@ export function ResultsScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
   const hasBoth = partners.length === 2;
   const [tab, setTab] = useState<string>(hasBoth ? "both" : r.pids[0] ?? "solo");
   const [copied, setCopied] = useState(false);
+  const [inviting, setInviting] = useState(false);
+  const [master, setMaster] = useState<MasterData | null>(null);
+  const [rev, setRev] = useState(0);
+  const isRec = flow === "reception";
   const cur = tab === "both" && !hasBoth ? r.pids[0] : tab;
-  const personTab = cur !== "both";
+  const isMaster = isRec && cur === "master";
+  const personTab = cur !== "both" && !isMaster;
+  const hasLink = !!store.guestToken;
+
+  // The guest votes live on the server: load them, and look again every 20 s while the master list is open.
+  useEffect(() => {
+    if (!isRec || !hasLink) return;
+    let live = true;
+    fetchMaster({ token: c.token }).then((m) => live && setMaster(m));
+    return () => {
+      live = false;
+    };
+  }, [isRec, hasLink, c.token, rev]);
+  useEffect(() => {
+    if (!isMaster || !hasLink) return;
+    const id = setInterval(() => !document.hidden && setRev((n) => n + 1), 20000);
+    return () => clearInterval(id);
+  }, [isMaster, hasLink]);
+  const built = buildMaster(master, f);
+  const masterCount = built.songs.length + built.extras.length;
   const approvedIds = cur === "both" ? r.both : r.approved[cur] ?? [];
   const skippedIds = personTab ? r.skipped[cur] ?? [] : [];
   const missingPartner = !hasBoth && partners.length === 1 ? (partners[0] === "a" ? names.b : names.a) : null;
@@ -59,12 +86,12 @@ export function ResultsScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
   else for (const st of STYLES.filter((s) => s.flow === "reception")) groups.push({ key: st.id, label: lang === "ru" ? st.nameRu : st.name, ids: regular.filter((id) => songById(id)?.style === st.id) });
 
   const exp = (kind: "csv" | "txt") => {
-    const base = `${flow === "ceremony" ? "ceremony" : "dance-set"}-${c.token.slice(0, 6)}`;
-    if (kind === "csv") download(`${base}.csv`, "text/csv", toCsv(flow, f, names));
-    else download(`${base}.txt`, "text/plain", toText(flow, f, names));
+    const base = `${flow === "ceremony" ? "ceremony" : isMaster ? "master-list" : "dance-set"}-${c.token.slice(0, 6)}`;
+    if (kind === "csv") download(`${base}.csv`, "text/csv", isMaster ? masterToCsv(built, f.notes) : toCsv(flow, f, names));
+    else download(`${base}.txt`, "text/plain", isMaster ? masterToText(built, master?.guests ?? 0, f.notes) : toText(flow, f, names));
   };
   const doCopy = async () => {
-    if (await copyText(toText(flow, f, names))) {
+    if (await copyText(isMaster ? masterToText(built, master?.guests ?? 0, f.notes) : toText(flow, f, names))) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -83,26 +110,48 @@ export function ResultsScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
   return (
     <div className="sl-results">
       <h1 className="sl-h1">{L.resultsTitle}</h1>
-      {!nothing && (
+      {isMaster ? (
         <div className="sl-count">
-          <b className="sl-hero">{count}</b>
-          <span>{L.songsWord(count)}</span>
+          <b className="sl-hero">{masterCount}</b>
+          <span>{L.songsWord(masterCount)}</span>
         </div>
+      ) : (
+        !nothing && (
+          <div className="sl-count">
+            <b className="sl-hero">{count}</b>
+            <span>{L.songsWord(count)}</span>
+          </div>
+        )
       )}
-      {missingPartner && <p className="sl-msg">{L.onlyOnePicked(missingPartner)}</p>}
+      {isRec && (
+        <button className="sl-invite" onClick={() => setInviting(true)}>
+          <span aria-hidden="true">👥</span> {L.invite}
+        </button>
+      )}
+      {missingPartner && !isMaster && <p className="sl-msg">{L.onlyOnePicked(missingPartner)}</p>}
 
-      {nothing ? (
+      {isRec || r.pids.length > 1 || hasBoth ? (
+        <div className="sl-tabs" role="tablist">
+          {hasBoth && <button aria-pressed={cur === "both"} onClick={() => setTab("both")}>♥ {L.tabBoth} <small>{r.both.length}</small></button>}
+          {r.pids.map((pid) => (
+            <button key={pid} aria-pressed={cur === pid} onClick={() => setTab(pid)}>{names[pid]} <small>{r.approved[pid].length}</small></button>
+          ))}
+          {isRec && <button aria-pressed={isMaster} onClick={() => setTab("master")}>{L.tabMaster}</button>}
+        </div>
+      ) : null}
+
+      {isMaster ? (
+        <>
+          <p className="sl-msg sl-guests">
+            {hasLink && master ? L.guestsWord(master.guests) : L.noGuestsYet}{" "}
+            {hasLink && <button className="sl-link" onClick={() => setRev((n) => n + 1)}>{L.refresh}</button>}
+          </p>
+          <MasterList c={c} data={master} readOnly={false} />
+        </>
+      ) : nothing ? (
         <p className="sl-msg">{L.nothingApproved}</p>
       ) : (
         <>
-          {r.pids.length > 1 || hasBoth ? (
-            <div className="sl-tabs" role="tablist">
-              {hasBoth && <button aria-pressed={cur === "both"} onClick={() => setTab("both")}>♥ {L.tabBoth} <small>{r.both.length}</small></button>}
-              {r.pids.map((pid) => (
-                <button key={pid} aria-pressed={cur === pid} onClick={() => setTab(pid)}>{names[pid]} <small>{r.approved[pid].length}</small></button>
-              ))}
-            </div>
-          ) : null}
 
           <h2 className="sl-sec sl-sec--must"><span className="ic" aria-hidden="true">★</span> {L.alwaysList} <small>{r.must.length}</small></h2>
           {r.must.length ? r.must.map((id) => row(id)) : <p className="sl-note">{L.nothingAlways}</p>}
@@ -133,8 +182,8 @@ export function ResultsScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
 
       <div className="sl-more">
         <button className="sl-link" onClick={doCopy} aria-label={copied ? L.copied : L.copy}>{copied ? `✓ ${L.copied}` : L.copy}</button>
-        <button className="sl-link" onClick={() => exp("csv")} disabled={nothing} aria-label={L.downloadCsv}>CSV</button>
-        <button className="sl-link" onClick={() => exp("txt")} disabled={nothing} aria-label={L.downloadTxt}>TXT</button>
+        <button className="sl-link" onClick={() => exp("csv")} disabled={nothing && !isMaster} aria-label={L.downloadCsv}>CSV</button>
+        <button className="sl-link" onClick={() => exp("txt")} disabled={nothing && !isMaster} aria-label={L.downloadTxt}>TXT</button>
         <button className="sl-link" onClick={() => go({ screen: "who", flow })}>{L.whoTitle}</button>
         {personTab && cur !== "both" && (
           <button className="sl-link" onClick={() => go({ screen: "styles", flow, pid: cur })}>{L.moreStyles}</button>
@@ -142,6 +191,7 @@ export function ResultsScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
       </div>
       {f.sent && <p className="sl-note sl-proto">{L.sentProto}</p>}
 
+      {isRec && <InviteSheet c={c} open={inviting} onClose={() => setInviting(false)} />}
       <div className="sl-sticky">
         <button className="sl-cta" onClick={send} disabled={nothing}>{f.sent ? `✓ ${L.sent}` : L.sendToDan}</button>
       </div>

@@ -1,4 +1,5 @@
 import { songById, styleById } from "./catalog";
+import type { MasterItem } from "./master";
 import { resultFor } from "./store";
 import type { FlowId, FlowState, Moment } from "./types";
 
@@ -33,7 +34,11 @@ export function exportRows(flow: FlowId, f: FlowState, names: Record<string, str
   return rows;
 }
 
-const csvCell = (v: string) => (/[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
+// Cells that start with = + - @ would run as formulas in Excel; guests type some of these cells, so defuse them.
+const csvCell = (v: string) => {
+  const safe = /^[=+\-@\t\r]/.test(v) ? `'${v}` : v;
+  return /[",\n]/.test(safe) ? `"${safe.replace(/"/g, '""')}"` : safe;
+};
 
 export function toCsv(flow: FlowId, f: FlowState, names: Record<string, string>): string {
   const head = ["Priority", "Style", "Moment", "Title", "Artist", "Liked by", "Explicit"];
@@ -82,4 +87,30 @@ export async function copyText(text: string): Promise<boolean> {
     ta.remove();
     return ok;
   }
+}
+
+// The master list for the DJ: both sections, ranked, with how many people chose each song.
+type Built = { songs: MasterItem[]; extras: MasterItem[] };
+const SECTION = { songs: "Song list", extras: "Songs chosen by guests" };
+
+export function masterToCsv(m: Built, notes: string): string {
+  const head = ["Rank", "Category", "Title", "Artist", "People who chose it", "Couple liked", "Always play", "Explicit"];
+  const line = (it: MasterItem, rank: number, cat: string) => [String(rank), cat, it.title, it.artist, String(it.count), it.coupleLiked ? "yes" : "", it.must ? "yes" : "", it.explicit ? "yes" : ""].map(csvCell).join(",");
+  const lines = [...m.songs.map((it, i) => line(it, i + 1, SECTION.songs)), ...m.extras.map((it, i) => line(it, i + 1, SECTION.extras))];
+  if (notes.trim()) lines.push(["Notes", "", notes.trim(), "", "", "", "", ""].map(csvCell).join(","));
+  return "\ufeff" + [head.join(","), ...lines].join("\r\n") + "\r\n";
+}
+
+export function masterToText(m: Built, guests: number, notes: string): string {
+  const out = ["MASTER LIST", `${guests} guests answered`, ""];
+  const block = (title: string, items: MasterItem[]) => {
+    if (!items.length) return;
+    out.push(title.toUpperCase());
+    items.forEach((it, i) => out.push(`${i + 1}. ${it.artist ? `${it.artist} - ` : ""}${it.title} (${it.count})${it.must ? " [always play]" : ""}${it.explicit ? " (explicit)" : ""}`));
+    out.push("");
+  };
+  block(SECTION.songs, m.songs);
+  block(SECTION.extras, m.extras);
+  if (notes.trim()) out.push("NOTES", notes.trim(), "");
+  return out.join("\n");
 }
