@@ -1,4 +1,6 @@
-import json,subprocess,os,glob
+import json,subprocess,os,glob,sys
+sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+from loudnorm import cut  # two-pass loudness normalization, required for every clip
 WT=os.path.expanduser('~/Documents/GitHub/dans-events-setlist')
 A=json.load(open('analysis.json')); S=json.load(open('songs.json')); ids=open('ids.txt').read().split()
 for f in glob.glob(f'{WT}/public/setlist/clips/*.mp3'): os.remove(f)
@@ -23,7 +25,7 @@ ctr={};songs=[]
 for a,s in zip(A,S):
     i=a['i']; st=s['style']; ctr[st]=ctr.get(st,0)+1; fid=f"{st}-{ctr[st]}"
     out=f"{WT}/public/setlist/clips/{fid}.mp3"
-    subprocess.run(['ffmpeg','-y','-v','error','-ss',str(a['start']),'-t','30','-i',f'full/{i:02d}.mp3','-af','afade=t=in:st=0:d=0.3,afade=t=out:st=28.5:d=1.5,loudnorm=I=-16:TP=-1.5:LRA=11','-ac','2','-ar','44100','-c:a','libmp3lame','-b:a','96k','-map_metadata','-1',out],check=True)
+    cut(f'full/{i:02d}.mp3',a['start'],out)
     d=dict(id=fid,flow=s['flow'],style=st,title=s['title'],artist=s['artist'],explicit=s['explicit'])
     if 'moment' in s: d['moment']=s['moment']
     d.update(clip=f"/setlist/clips/{fid}.mp3",sourceUrl=f"https://www.youtube.com/watch?v={ids[i]}",hookStartSec=round(a['start'],1),hookOnsetSec=a['hook_onset'],songDurationSec=a['duration'],confidence=a['confidence'],method=a['method'],heatmapPeakSec=a['heat_onset'],audioOnlySec=a['audio_only_onset'],repeatOccurrencesSec=a['occurrences'])
