@@ -293,7 +293,7 @@ ok(await page.locator(".sl-results").count() === 1, "reload lands back on the re
   await pg.waitForSelector(".sl-card");
   await rshot("ru-4-swipe-card");
   await raudit("RU song card");
-  for (let i = 0; i < 40 && !(await pg.locator(".sl-results").count()); i++) await pg.locator(".sl-act--like").click({ timeout: 2000 }).catch(() => {});
+  for (let i = 0; i < 200 && !(await pg.locator(".sl-results").count()); i++) await pg.locator(".sl-act--like").click({ timeout: 2000 }).catch(() => {});
   await pg.waitForSelector(".sl-results");
   await rshot("ru-5-results");
   await pg.locator(".sl-back").click();

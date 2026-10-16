@@ -6,7 +6,8 @@
 - Copies every finished clip to public/setlist/clips/<id>.mp3 (they are already cut to 30 s and loudness-normalized).
 - Rewrites the library songs (ids lib-*) in src/data/setlist-songs.json; the hand-made prototype songs stay first in each style.
 - Explicit flag: from Apple only (iTunes Search API trackExplicitness). A song is explicit when Apple lists it as
-  'explicit' or 'cleaned' (a cleaned edit exists, so the original is explicit); clean when Apple only has 'notExplicit';
+  'explicit' or 'cleaned' (an edited copy of an explicit original), matched on the real artist (covers/tributes ignored);
+  clean when Apple only has 'notExplicit';
   when Apple has no match the song counts as clean and explicitSource says 'apple:no-match'.
   Lookups are cached in <library>/itunes-cache.json (the API allows ~20 requests a minute).
 """
@@ -17,7 +18,7 @@ LIB = os.path.abspath(os.path.expanduser(sys.argv[1]))
 COPY = '--no-copy' not in sys.argv
 DATA = os.path.join(ROOT, 'src', 'data', 'setlist-songs.json')
 CLIPS = os.path.join(ROOT, 'public', 'setlist', 'clips')
-CACHE = os.path.join(LIB, 'itunes-cache.json')
+CACHE = os.path.join(LIB, 'itunes-cache-v2.json')
 
 NEW_STYLES = [
     {"flow": "reception", "id": "dance", "name": "Dance & EDM", "nameRu": "Танцевальная и EDM", "blurb": "Big drops, big hands", "blurbRu": "Клубные хиты", "emoji": "🪩", "color": "#3f7fd1"},
@@ -34,31 +35,33 @@ cache = json.load(open(CACHE)) if os.path.exists(CACHE) else {}
 
 
 def apple(title, artist, language):
+    """Apple's ratings for this song by this artist (covers, tributes and karaoke versions are ignored)."""
     key = f'{title}|{artist}|{language}'
     if key in cache:
         return cache[key]
     t = re.sub(r'\(.*?\)', '', title)
     toks = [w for w in norm(t).split() if len(w) > 1]
-    a0 = [w for w in norm(artist).split() if len(w) > 2][:2]
+    a0 = [w for w in norm(re.split(r'\b(?:ft|feat|featuring)\b|&|,', artist)[0]).split() if len(w) > 1][:2]
     found = []
     for cc in (['US', 'RU'] if language == 'ru' else ['US']):
-        u = 'https://itunes.apple.com/search?' + urllib.parse.urlencode(dict(term=f'{t} {artist}', entity='song', limit=8, country=cc))
-        for attempt in range(3):
+        u = 'https://itunes.apple.com/search?' + urllib.parse.urlencode(dict(term=f'{t} {artist}', entity='song', limit=15, country=cc))
+        res = None
+        for attempt in range(4):
             try:
                 res = json.load(urllib.request.urlopen(u, timeout=20))['results']
                 break
             except Exception:
-                time.sleep(10)
-        else:
-            res = None
+                time.sleep(15)
         if res is None:
             return None  # API trouble: do not cache, try again next run
         for r in res:
             tn = norm(r.get('trackName', ''))
-            an = norm(r.get('artistName', '') + ' ' + r.get('collectionName', ''))
-            if sum(w in tn for w in toks) / max(1, len(toks)) >= 0.7 and (not a0 or any(w in an for w in a0)):
+            an = norm(r.get('artistName', ''))
+            if re.search(r'karaoke|tribute|cover|instrumental|lullaby|string quartet|in the style', tn + ' ' + an + ' ' + norm(r.get('collectionName', ''))):
+                continue
+            if sum(w in tn for w in toks) / max(1, len(toks)) >= 0.7 and (not a0 or all(w in an for w in a0)):
                 found.append(r.get('trackExplicitness'))
-        time.sleep(3)
+        time.sleep(1.5)
     cache[key] = sorted(set(map(str, found)))
     json.dump(cache, open(CACHE, 'w'), ensure_ascii=False, indent=1)
     return cache[key]
@@ -68,7 +71,7 @@ def verdict(found):
     if found is None:
         return None, 'apple:lookup-failed'
     if 'explicit' in found or 'cleaned' in found:
-        return True, 'apple:' + ('explicit' if 'explicit' in found else 'cleaned')
+        return True, 'apple:' + ('explicit' if 'explicit' in found else 'cleaned')  # a cleaned edit means the original is explicit
     if found:
         return False, 'apple:notExplicit'
     return False, 'apple:no-match'
