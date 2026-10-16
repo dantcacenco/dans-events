@@ -62,7 +62,7 @@ iOS silent-mode override (`navigator.audioSession.type = "playback"`), upcoming 
 `src/data/setlist-songs.json` is the manifest (title, artist, style, explicit, source URL, hook start, method, confidence).
 `scripts/setlist/` rebuilds them: `fetch.sh` (yt-dlp), `analyze.py` (librosa: repeated high-energy section + YouTube replay
 heatmap), `assemble.py` (cut + manifest). The full MP3s are NOT in git.
-The clips are served from `public/` (about 100 MB, fine for Vercel and GitHub; no paid storage). Library clips (`lib-*`) are YouTube-sourced
+The clips are served from `public/` (about 100 MB, fine for Vercel and GitHub; no paid storage). To move them to Cloudflare R2: `CLOUDFLARE_API_TOKEN=… npm run songs:upload-r2` (uploads, sets `SETLIST_CLIP_BASE` on Vercel, redeploys; remove that env var to switch back). Library clips (`lib-*`) are YouTube-sourced
 proof-of-concept clips (`source: "youtube-proof-of-concept"` on each song): replace them with Dan-owned MP3s over time (same id, run `loudnorm.py cut`).
 `scripts/setlist/import-library.py <library dir>` copies finished clips in and rewrites the `lib-*` songs. Explicit flags come from Apple only
 (iTunes Search API `trackExplicitness`: explicit or cleaned = explicit; `explicitSource` says which, or `apple:no-match`).

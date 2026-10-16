@@ -13,5 +13,5 @@ export default async function AdminSongsPage() {
         </main>
       </div>
     );
-  return (await isAdmin()) ? <AdminApp /> : <AdminLogin />;
+  return (await isAdmin()) ? <AdminApp clipBase={process.env.SETLIST_CLIP_BASE ?? ""} /> : <AdminLogin />;
 }

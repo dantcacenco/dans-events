@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { pullCoupleState, pushCoupleState, sendGuestVote } from "@/lib/setlist/api";
-import { setHiddenSongs } from "@/lib/setlist/catalog";
+import { setClipBase, setHiddenSongs } from "@/lib/setlist/catalog";
 import { t } from "@/lib/setlist/i18n";
 import { initialStore, loadStore, saveStore } from "@/lib/setlist/store";
 import { mergeFlows, stampFlow } from "@/lib/setlist/sync";
@@ -20,9 +20,10 @@ import { WelcomeScreen } from "./welcome-screen";
 import { WhoScreen } from "./who-screen";
 
 // The couple's page (token = their private link) and the guest page (token = the guest link, guest = true).
-export default function SetlistApp({ token, couple, guest = false, hidden = [] }: { token: string; couple: Couple; guest?: boolean; hidden?: string[] }) {
+export default function SetlistApp({ token, couple, guest = false, hidden = [], clipBase = "" }: { token: string; couple: Couple; guest?: boolean; hidden?: string[]; clipBase?: string }) {
   const [store, setStore] = useState<Store>(() => {
     setHiddenSongs(hidden); // before the first deck or style list is built
+    setClipBase(clipBase);
     return initialStore(guest, couple.lang);
   });
   const [ready, setReady] = useState(false);

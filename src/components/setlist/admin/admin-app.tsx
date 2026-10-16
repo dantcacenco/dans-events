@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { setClipBase } from "@/lib/setlist/catalog";
 import { useCallback, useEffect, useState } from "react";
 import { api, Unauthorized, type Library } from "./api";
 import { CoupleDetailView } from "./couple-detail";
@@ -11,7 +12,8 @@ import type { CoupleRow } from "@/lib/setlist/admin/data";
 
 type Tab = "couples" | "library";
 
-export function AdminApp() {
+export function AdminApp({ clipBase = "" }: { clipBase?: string }) {
+  useState(() => setClipBase(clipBase)); // before the library and players read clip URLs
   const router = useRouter();
   const token = useSelectedToken();
   const [tab, setTab] = useState<Tab>("couples");

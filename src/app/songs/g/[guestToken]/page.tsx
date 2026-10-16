@@ -11,5 +11,5 @@ export default async function GuestSongsPage({ params }: { params: Promise<{ gue
   if (!TOKEN_RE.test(guestToken)) notFound();
   const [info, lib] = await Promise.all([coupleForGuestLink(guestToken), getLibrary()]);
   if (!info) notFound();
-  return <SetlistApp token={guestToken} couple={{ names: info.names, lang: info.lang }} hidden={lib.hidden} guest />;
+  return <SetlistApp token={guestToken} couple={{ names: info.names, lang: info.lang }} hidden={lib.hidden} clipBase={process.env.SETLIST_CLIP_BASE ?? ""} guest />;
 }

@@ -102,3 +102,14 @@ describe("admin auth", () => {
     expect(validSession(value, 2000)).toBe(false); // rotating signs everyone out
   });
 });
+
+describe("clip location", () => {
+  it("points every clip at the storage URL and back", async () => {
+    const { setClipBase } = await import("@/lib/setlist/catalog");
+    const first = SONGS[0].clip;
+    setClipBase("https://pub-abc.r2.dev/");
+    expect(SONGS[0].clip).toBe(`https://pub-abc.r2.dev${first}`);
+    setClipBase("");
+    expect(SONGS[0].clip).toBe(first);
+  });
+});

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "audio:check": "python3 scripts/setlist/loudnorm.py check public/setlist/clips",
-    "test": "vitest run"
+    "test": "vitest run",
+    "songs:upload-r2": "zsh scripts/setlist/upload-r2.sh"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1121.0",

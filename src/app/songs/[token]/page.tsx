@@ -10,5 +10,5 @@ export default async function SongsPage({ params }: { params: Promise<{ token: s
   if (!TOKEN_RE.test(token)) notFound();
   const [info, lib] = await Promise.all([activeCouple(token), getLibrary()]);
   if (!info) notFound();
-  return <SetlistApp token={token} couple={{ names: info.names, lang: info.lang }} hidden={lib.hidden} />;
+  return <SetlistApp token={token} couple={{ names: info.names, lang: info.lang }} hidden={lib.hidden} clipBase={process.env.SETLIST_CLIP_BASE ?? ""} />;
 }

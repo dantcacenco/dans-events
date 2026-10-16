@@ -12,6 +12,17 @@ export const setHiddenSongs = (ids: string[]) => {
   hiddenSongs = new Set(ids);
 };
 
+// Where the clips live: "" = this site (public/setlist/clips), or a storage URL such as an R2 public bucket
+// (env SETLIST_CLIP_BASE; the pages pass it to the browser). Clip paths in the manifest stay relative.
+let clipBase = "";
+export const setClipBase = (base: string | undefined) => {
+  const next = (base ?? "").replace(/\/+$/, "");
+  if (next === clipBase) return;
+  for (const s of SONGS) s.clip = next + s.clip.slice(clipBase.length);
+  clipBase = next;
+};
+if (typeof window === "undefined") setClipBase(process.env.SETLIST_CLIP_BASE);
+
 export const songById = (id: string) => songIndex.get(id);
 export const stylesFor = (flow: FlowId) => STYLES.filter((s) => s.flow === flow && SONGS.some((x) => x.style === s.id && !hiddenSongs.has(x.id)));
 export const styleById = (id: string) => STYLES.find((s) => s.id === id);
