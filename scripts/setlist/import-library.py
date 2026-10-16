@@ -127,6 +127,19 @@ for r in sorted(ok, key=lambda r: (order.get(r['genre'], 99), int(r['id'].rsplit
         os.makedirs(CLIPS, exist_ok=True)
         shutil.copyfile(os.path.join(LIB, r['clip_file']), os.path.join(CLIPS, f"{r['id']}.mp3"))
 
+# The local lyrics check (EXPLICIT_UPDATES.json, written on the Mac) settles the songs Apple was unsure about.
+UPD = os.path.join(LIB, 'EXPLICIT_UPDATES.json')
+if os.path.exists(UPD):
+    upd = {u['id']: u for u in json.load(open(UPD))['updates'] if u.get('new_status') in ('explicit', 'clean', 'unverified')}
+    for s in proto + lib:
+        u = upd.get(s['id'])
+        if u:
+            s['explicit'] = u['new_status'] == 'explicit'
+            s['explicitSource'] = u.get('explicit_source', 'local-asr+apple')
+            s['explicitStatus'] = u['new_status']  # "unverified" is left out of clean-only decks
+            s['explicitWords'] = u.get('matched_words', [])
+            s['explicitConfidence'] = u.get('confidence', 'medium')
+
 # Keep songs grouped by style in style order; prototype songs first inside each style.
 songs = proto + lib
 songs.sort(key=lambda s: (order.get(s['style'], 99), s['id'].startswith('lib-')))
