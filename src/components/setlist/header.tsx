@@ -9,10 +9,10 @@ export function Header({ lang, setLang, back, backLabel }: { lang: Lang; setLang
     <header className="sl-head">
       {back ? (
         <button className="sl-back" onClick={back} aria-label={backLabel}>
-          <span aria-hidden="true">←</span> {backLabel}
+          <span aria-hidden="true">←</span>
         </button>
       ) : (
-        <Image src="/logos/logo-white-transparent.png" alt="Dan's Events" width={200} height={23} priority />
+        <Image className="sl-logo" src="/logos/logo-white-transparent.png" alt="Dan's Events" width={200} height={23} priority />
       )}
       <div className="sl-lang" role="group" aria-label="Language">
         {(["en", "ru"] as const).map((l) => (

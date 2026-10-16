@@ -6,7 +6,7 @@ import type { Ctx } from "./ctx";
 
 export function HomeScreen({ c }: { c: Ctx }) {
   const { L, store, go } = c;
-  const card = (flow: FlowId, title: string, sub: string, emoji: string) => {
+  const card = (flow: FlowId, title: string, emoji: string) => {
     const prog = flowProgress(store.flows[flow]);
     return (
       <button
@@ -19,21 +19,19 @@ export function HomeScreen({ c }: { c: Ctx }) {
           go({ screen: finished ? "results" : "who", flow });
         }}
       >
-        <span className="emoji" aria-hidden="true">{emoji}</span>
-        <h2 className={flow === "ceremony" ? "sl-serif" : ""}>{title}</h2>
-        <p>{sub}</p>
-        <span className={`sl-pill ${prog === "done" ? "sl-pill--done" : ""}`}>
-          {prog === "none" ? L.notStarted : prog === "partial" ? L.inProgress : `✓ ${L.finished}`}
-        </span>
+        <span className="sl-hero" aria-hidden="true">{emoji}</span>
+        <span className="sl-big-t">{title}</span>
+        {prog !== "none" && <span className={`sl-pill ${prog === "done" ? "sl-pill--done" : ""}`}>{prog === "partial" ? L.inProgress : `✓ ${L.finished}`}</span>}
       </button>
     );
   };
   return (
     <>
       <h1 className="sl-h1">{L.homeTitle}</h1>
-      <p className="sl-sub">{L.homeSub}</p>
-      {card("ceremony", L.ceremonyCard, L.ceremonySub, "💍")}
-      {card("reception", L.receptionCard, L.receptionSub, "🎉")}
+      <div className="sl-homes">
+        {card("ceremony", L.ceremonyCard, "💍")}
+        {card("reception", L.receptionCard, "🎉")}
+      </div>
     </>
   );
 }

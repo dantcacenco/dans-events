@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./setlist.css";
 
-const serif = Playfair_Display({ subsets: ["latin", "cyrillic"], variable: "--font-sl-serif" });
+// Same brand face as the site, plus Cyrillic for the Russian toggle.
+const brand = Montserrat({ subsets: ["latin", "cyrillic"], weight: ["400", "500", "600", "700", "800", "900"] });
 
 export const metadata: Metadata = {
   title: "Your music — Dan's Events",
@@ -12,8 +13,8 @@ export const metadata: Metadata = {
   alternates: {},
 };
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#161213" };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#0C0B0D" };
 
 export default function SongsLayout({ children }: { children: React.ReactNode }) {
-  return <div className={serif.variable}>{children}</div>;
+  return <div className={brand.className}>{children}</div>;
 }

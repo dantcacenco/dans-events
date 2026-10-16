@@ -29,60 +29,58 @@ export function StylesScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: stri
 
   return (
     <>
-      <h1 className={`sl-h1 ${flow === "ceremony" ? "sl-serif" : ""}`}>{flow === "ceremony" ? L.stylesTitleCeremony : L.stylesTitleReception}</h1>
-      <p className="sl-sub">{L.stylesSub}</p>
-      <p className="sl-note" style={{ margin: "-8px 0 14px" }}>🔊 {L.soundOn}</p>
+      <h1 className="sl-h1">{flow === "ceremony" ? L.stylesTitleCeremony : L.stylesTitleReception}</h1>
       <div className="sl-grid">
         {styles.map((st) => {
           const sample = sampleFor(st.id, p.cleanOnly && flow === "reception");
           const on = p.styles.includes(st.id);
           const playing = !!sample && player.playing && player.src?.endsWith(sample.clip);
+          const name = lang === "ru" ? st.nameRu : st.name;
           return (
             <div
               key={st.id}
               role="button"
               tabIndex={0}
               aria-pressed={on}
-              className="sl-style"
+              className={`sl-style ${playing ? "is-playing" : ""}`}
               style={{ "--c": st.color } as CSSProperties}
               onClick={() => toggle(st.id)}
               onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), toggle(st.id))}
             >
-              <div className="top">
-                <button
-                  className="sl-circle"
-                  aria-label={`${playing ? L.pause : L.play}: ${lang === "ru" ? st.nameRu : st.name}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (sample) player.toggle(sample.clip, { limit: SAMPLE_SECONDS });
-                  }}
-                >
-                  {playing ? "❚❚" : "▶"}
-                </button>
-                <span className="sl-circle sl-circle--check" aria-hidden="true">✓</span>
-              </div>
-              <div className="emoji" aria-hidden="true">{st.emoji}</div>
-              <div className="name">{lang === "ru" ? st.nameRu : st.name}</div>
-              <div className="blurb">{lang === "ru" ? st.blurbRu : st.blurb}</div>
+              <span className="sl-art">
+                <span className="sl-hero emoji" aria-hidden="true">{st.emoji}</span>
+              </span>
+              <span className="name">{name}</span>
+              <button
+                className="sl-circle"
+                aria-label={`${playing ? L.pause : L.play}: ${name}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (sample) player.toggle(sample.clip, { limit: SAMPLE_SECONDS });
+                }}
+              >
+                {playing ? "❚❚" : "▶"}
+              </button>
+              <span className="sl-check" aria-hidden="true">✓</span>
             </div>
           );
         })}
       </div>
       {flow === "reception" && (
         <button className="sl-clean" aria-pressed={p.cleanOnly} onClick={() => setP({ cleanOnly: !p.cleanOnly })}>
-          <span>
-            <b>{L.cleanOnly}</b>
-            <span className="s">{L.cleanOnlyHint}</span>
-          </span>
+          <span>{L.cleanOnly}</span>
           <span className="sl-switch" aria-hidden="true" />
         </button>
       )}
       <div className="sl-sticky">
         <button className="sl-cta" disabled={p.styles.length === 0} onClick={next}>
-          {p.styles.length === 0 ? L.chooseOne : `${L.continueBtn} (${p.styles.length} ${L.chosen}) →`}
+          {p.styles.length === 0 ? L.chooseOne : (
+            <>
+              {L.continueBtn} <span className="sl-cta-n">{p.styles.length}</span>
+            </>
+          )}
         </button>
       </div>
     </>
   );
 }
-

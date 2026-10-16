@@ -22,31 +22,26 @@ export function WhoScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
     }
   };
   const any = Object.values(f.people).some((p) => p.step === "done");
+  const tick = (pid: string) => (f.people[pid]?.step === "done" ? <span className="sl-tick" aria-label={L.done}>✓</span> : null);
   return (
     <>
-      <h1 className={`sl-h1 ${flow === "ceremony" ? "sl-serif" : ""}`}>{L.whoTitle}</h1>
-      <p className="sl-sub">{L.whoSub}</p>
+      <h1 className="sl-h1">{L.whoTitle}</h1>
       <div className="sl-who">
         {(["a", "b"] as const).map((pid) => (
-          <button key={pid} onClick={() => pick(pid)}>
-            <span>{names[pid]}</span>
-            {f.people[pid]?.step === "done" ? <span className="sl-tick">✓ {L.done}</span> : <span aria-hidden="true">→</span>}
+          <button key={pid} className="sl-name" onClick={() => pick(pid)}>
+            <span className="sl-hero">{names[pid]}</span>
+            {tick(pid)}
           </button>
         ))}
         <button className="solo" onClick={() => pick("solo")}>
-          <span>
-            {L.justOne}
-            <small>{L.justOneSub}</small>
-          </span>
-          {f.people.solo?.step === "done" ? <span className="sl-tick">✓ {L.done}</span> : <span aria-hidden="true">→</span>}
+          <span>{L.justOne}</span>
+          {tick("solo")}
         </button>
       </div>
       {any && (
-        <p style={{ marginTop: 22 }}>
-          <button className="sl-ghost" onClick={() => go({ screen: "results", flow })}>
-            {L.seeResults}
-          </button>
-        </p>
+        <button className="sl-link sl-see" onClick={() => go({ screen: "results", flow })}>
+          {L.seeResults} →
+        </button>
       )}
     </>
   );

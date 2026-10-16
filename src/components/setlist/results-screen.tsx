@@ -45,7 +45,7 @@ export function ResultsScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
             {liked ? "♥" : "♡"}
           </button>
         )}
-        <button className="sl-ic flag" aria-pressed={mark === "must"} aria-label={L.flag} onClick={() => updFlow(flow, (x) => toggleMark(x, id, "must"))}>⚑</button>
+        <button className="sl-ic flag" aria-pressed={mark === "must"} aria-label={L.flag} onClick={() => updFlow(flow, (x) => toggleMark(x, id, "must"))}>★</button>
         <button className="sl-ic x" aria-pressed={mark === "never"} aria-label={L.never} onClick={() => updFlow(flow, (x) => toggleMark(x, id, "never"))}>✕</button>
       </div>
     );
@@ -79,16 +79,16 @@ export function ResultsScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
   };
 
   const nothing = r.pids.length === 0;
+  const count = nonNever.length;
   return (
-    <>
-      <h1 className={`sl-h1 ${flow === "ceremony" ? "sl-serif" : ""}`}>{L.resultsTitle}</h1>
-      <p className="sl-sub">{L.resultsSub}</p>
-      <div className="sl-legend" aria-label="Legend">
-        <span><b style={{ color: "#c43a52" }}>♥</b> {L.legendHeart}</span>
-        <span><b style={{ color: "var(--gold)" }}>⚑</b> {L.legendMust}</span>
-        <span><b style={{ color: "#ff8a80" }}>✕</b> {L.legendNever}</span>
-      </div>
-      {flow === "ceremony" && <p className="sl-note" style={{ margin: "-6px 0 14px" }}>{L.momentHelp}</p>}
+    <div className="sl-results">
+      <h1 className="sl-h1">{L.resultsTitle}</h1>
+      {!nothing && (
+        <div className="sl-count">
+          <b className="sl-hero">{count}</b>
+          <span>{L.songsWord(count)}</span>
+        </div>
+      )}
       {missingPartner && <p className="sl-msg">{L.onlyOnePicked(missingPartner)}</p>}
 
       {nothing ? (
@@ -97,52 +97,54 @@ export function ResultsScreen({ c, flow }: { c: Ctx; flow: FlowId }) {
         <>
           {r.pids.length > 1 || hasBoth ? (
             <div className="sl-tabs" role="tablist">
-              {hasBoth && <button aria-pressed={cur === "both"} onClick={() => setTab("both")}>♥ {L.tabBoth} ({r.both.length})</button>}
+              {hasBoth && <button aria-pressed={cur === "both"} onClick={() => setTab("both")}>♥ {L.tabBoth} <small>{r.both.length}</small></button>}
               {r.pids.map((pid) => (
-                <button key={pid} aria-pressed={cur === pid} onClick={() => setTab(pid)}>{names[pid]} ({r.approved[pid].length})</button>
+                <button key={pid} aria-pressed={cur === pid} onClick={() => setTab(pid)}>{names[pid]} <small>{r.approved[pid].length}</small></button>
               ))}
             </div>
           ) : null}
 
-          <h2 className="sl-sec">⚑ {L.alwaysList} <small>({r.must.length})</small></h2>
+          <h2 className="sl-sec sl-sec--must"><span className="ic" aria-hidden="true">★</span> {L.alwaysList} <small>{r.must.length}</small></h2>
           {r.must.length ? r.must.map((id) => row(id)) : <p className="sl-note">{L.nothingAlways}</p>}
 
-          <h2 className="sl-sec">♥ {cur === "both" ? L.tabBoth : L.approved} <small>({nonNever.length})</small></h2>
+          <h2 className="sl-sec sl-sec--liked"><span className="ic" aria-hidden="true">♥</span> {cur === "both" ? L.tabBoth : L.approved} <small>{regular.length}</small></h2>
           {regular.length === 0 && <p className="sl-note">{L.nothingApproved}</p>}
           {groups.filter((g) => g.ids.length).map((g) => (
-            <div key={g.key}>
+            <div key={g.key} className="sl-group">
               <div className="sl-sub2">{g.label}</div>
               {g.ids.map((id) => row(id))}
             </div>
           ))}
 
           {skippedIds.length > 0 && (
-            <details style={{ marginTop: 18 }}>
-              <summary>{L.skipped} ({skippedIds.length})</summary>
+            <details className="sl-skipped">
+              <summary>{L.skipped} <small>{skippedIds.length}</small></summary>
               {skippedIds.map((id) => row(id))}
             </details>
           )}
 
-          <h2 className="sl-sec">✕ {L.neverList} <small>({r.never.length})</small></h2>
+          <h2 className="sl-sec sl-sec--never"><span className="ic" aria-hidden="true">✕</span> {L.neverList} <small>{r.never.length}</small></h2>
           {r.never.length ? r.never.map((id) => row(id)) : <p className="sl-note">{L.nothingNever}</p>}
         </>
       )}
 
-      <h2 className="sl-sec">{L.notesTitle}</h2>
-      <p className="sl-note" style={{ margin: "-4px 0 10px" }}>{L.notesSub}</p>
+      <h2 className="sl-sec sl-sec--notes">{L.notesTitle}</h2>
       <textarea className="sl-notes" value={f.notes} placeholder={L.notesPlaceholder} onChange={(e) => updFlow(flow, (x) => ({ ...x, notes: e.target.value }))} aria-label={L.notesTitle} />
 
-      <div className="sl-btns">
-        <button className="sl-cta" onClick={send} disabled={nothing}>{f.sent ? `✓ ${L.sent}` : L.sendToDan}</button>
-        {f.sent && <p className="sl-note" style={{ textAlign: "center", margin: 0 }}>{L.sentProto}</p>}
-        <button className="sl-ghost" onClick={doCopy}>{copied ? `✓ ${L.copied}` : `📋 ${L.copy}`}</button>
-        <button className="sl-ghost" onClick={() => exp("csv")} disabled={nothing}>⬇ {L.downloadCsv}</button>
-        <button className="sl-ghost" onClick={() => exp("txt")} disabled={nothing}>⬇ {L.downloadTxt}</button>
-        <button className="sl-ghost" onClick={() => go({ screen: "who", flow })}>{L.whoTitle}</button>
+      <div className="sl-more">
+        <button className="sl-link" onClick={doCopy} aria-label={copied ? L.copied : L.copy}>{copied ? `✓ ${L.copied}` : L.copy}</button>
+        <button className="sl-link" onClick={() => exp("csv")} disabled={nothing} aria-label={L.downloadCsv}>CSV</button>
+        <button className="sl-link" onClick={() => exp("txt")} disabled={nothing} aria-label={L.downloadTxt}>TXT</button>
+        <button className="sl-link" onClick={() => go({ screen: "who", flow })}>{L.whoTitle}</button>
         {personTab && cur !== "both" && (
-          <button className="sl-ghost" onClick={() => go({ screen: "styles", flow, pid: cur })}>{L.moreStyles}</button>
+          <button className="sl-link" onClick={() => go({ screen: "styles", flow, pid: cur })}>{L.moreStyles}</button>
         )}
       </div>
-    </>
+      {f.sent && <p className="sl-note sl-proto">{L.sentProto}</p>}
+
+      <div className="sl-sticky">
+        <button className="sl-cta" onClick={send} disabled={nothing}>{f.sent ? `✓ ${L.sent}` : L.sendToDan}</button>
+      </div>
+    </div>
   );
 }

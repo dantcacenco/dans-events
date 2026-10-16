@@ -1,11 +1,12 @@
 // End-to-end check of the couple music picker. Run with the dev server up:
-//   npx next dev -p 3055 & node tests/setlist-e2e.mjs [chromium|webkit]
+//   npx next dev -p 3055 & DESIGN=1 node tests/setlist-e2e.mjs [chromium|webkit]   (DESIGN = 1..5)
 import { chromium, webkit, devices } from "playwright";
 import fs from "fs";
 
 const BASE = process.env.BASE || "http://localhost:3055";
-const SHOTS = process.env.SHOTS || "/tmp/setlist-shots";
+const SHOTS = process.env.SHOTS || `/tmp/setlist-shots/d${process.env.DESIGN || "1"}`;
 const engine = process.argv[2] === "webkit" ? webkit : chromium;
+const DESIGN = process.env.DESIGN || "1";
 const TOKEN = "demo" + Math.random().toString(36).slice(2, 12).padEnd(10, "x");
 fs.mkdirSync(SHOTS, { recursive: true });
 
@@ -29,7 +30,7 @@ const audio = () => page.evaluate(() => { const a = window.__audios[0]; return a
 const card = (n) => page.locator(`.sl-style:has(.name:text-is("${n}"))`);
 const progress = () => page.locator(".sl-prog").innerText();
 
-await page.goto(`${BASE}/songs/${TOKEN}`);
+await page.goto(`${BASE}/songs/${TOKEN}?design=${DESIGN}`);
 await page.waitForSelector(".sl-big");
 await shot("01-home");
 ok((await page.locator(".sl-big").count()) === 2, "home shows two big choices (ceremony, reception)");
@@ -64,7 +65,7 @@ await page.locator(".sl-cta").click();
 await page.waitForSelector(".sl-card");
 await page.waitForTimeout(800);
 const p1 = await progress();
-ok(/1 of 11/.test(p1), `clean-only deck = 6 pop + 2 latin (explicit Gasolina hidden) + 3 folk = 11 (${p1})`);
+ok(/^1 \/ 11$/.test(p1), `clean-only deck = 6 pop + 2 latin (explicit Gasolina hidden) + 3 folk = 11 (${p1})`);
 a = await audio();
 ok(a && !a.paused && a.loop, `first song auto-plays after Continue tap, looping (${a?.src}, t=${a?.t?.toFixed(1)})`);
 await shot("05-swipe-card");
@@ -76,23 +77,30 @@ a = await audio();
 ok(Math.abs(a.t - 14) < 2, `scrub bar seeks the clip (currentTime ${a.t.toFixed(1)})`);
 ok(/0:1[4-6]/.test(await page.locator(".sl-scrub-row span").first().innerText()), "elapsed time label follows the scrub");
 await shot("06-swipe-scrubbed");
+// tap on the art (not a drag) pauses and plays
+await page.locator(".sl-card-art").click({ position: { x: 60, y: 60 } });
+await page.waitForTimeout(200);
+ok((await audio()).paused, "tapping the card art pauses the clip");
+await page.locator(".sl-card-art").click({ position: { x: 60, y: 60 } });
+await page.waitForTimeout(300);
+ok(!(await audio()).paused, "tapping it again plays");
 
 // like → next song plays by itself
 await page.locator(".sl-act--like").click();
 await page.waitForTimeout(500);
-ok(/2 of 11/.test(await progress()), "Like moves to song 2");
+ok(/^2 \/ 11$/.test(await progress()), "Like moves to song 2");
 a = await audio();
 ok(a && !a.paused, `next clip started playing on its own (${a?.src})`);
 // skip
 await page.locator(".sl-act--skip").click();
-ok(/3 of 11/.test(await progress()), "Skip moves to song 3");
+ok(/^3 \/ 11$/.test(await progress()), "Skip moves to song 3");
 // must play
 const titleMust = await page.locator(".sl-title").innerText();
 await page.locator(".sl-act--love").click();
-ok(/4 of 11/.test(await progress()), "Must play moves to song 4");
+ok(/^4 \/ 11$/.test(await progress()), "Must play moves to song 4");
 // undo twice
 await page.locator(".sl-undo").click();
-ok(/3 of 11/.test(await progress()) && (await page.locator(".sl-title").innerText()) === titleMust, "Undo returns to the must-play card");
+ok(/^3 \/ 11$/.test(await progress()) && (await page.locator(".sl-title").innerText()) === titleMust, "Undo returns to the must-play card");
 await page.locator(".sl-act--love").click();
 // swipe right with mouse drag (touch-like)
 const art = page.locator(".sl-card-art");
@@ -103,7 +111,7 @@ await page.mouse.move(box.x + box.width / 2 + 160, box.y + 130, { steps: 8 });
 await shot("07-swipe-dragging");
 await page.mouse.up();
 await page.waitForTimeout(300);
-ok(/5 of 11/.test(await progress()), "dragging the card right = Like");
+ok(/^5 \/ 11$/.test(await progress()), "dragging the card right = Like");
 // drag left = skip
 const b2 = await page.locator(".sl-card-art").boundingBox();
 await page.mouse.move(b2.x + b2.width / 2, b2.y + 120);
@@ -111,17 +119,17 @@ await page.mouse.down();
 await page.mouse.move(b2.x + b2.width / 2 - 170, b2.y + 125, { steps: 8 });
 await page.mouse.up();
 await page.waitForTimeout(300);
-ok(/6 of 11/.test(await progress()), "dragging the card left = Skip");
+ok(/^6 \/ 11$/.test(await progress()), "dragging the card left = Skip");
 
 // reload mid-swipe resumes at the same card
 await page.reload();
 await page.waitForSelector(".sl-card");
-ok(/6 of 11/.test(await progress()), "refresh resumes at song 6 (progress saved)");
+ok(/^6 \/ 11$/.test(await progress()), "refresh resumes at song 6 (progress saved)");
 ok(await page.locator(".sl-playhint", { hasText: "Tap to play" }).count() === 1, "after refresh the card asks for one tap to play (iOS rule)");
 
 // finish the deck liking everything
 for (let i = 6; i <= 11; i++) { await page.locator(".sl-act--like").click(); }
-await page.waitForSelector(".sl-legend");
+await page.waitForSelector(".sl-results");
 await shot("08-results-anna");
 ok(await page.locator("h1", { hasText: "Your picks" }).count() === 1, "deck end opens the results");
 const mustRows = await page.locator(".sl-row.must").count();
@@ -136,9 +144,9 @@ await shot("09-results-skipped-open");
 await page.locator("details .heart[aria-pressed=false]").first().click();
 ok((await page.locator(".sl-row .heart[aria-pressed=true]").count()) === before, "skipped song can be added back with the heart");
 const mustNow = await page.locator(".sl-row.must").count();
-await page.locator("h2:has-text('Songs you like') ~ div .sl-row .flag").first().click();
+await page.locator(".sl-sec--liked ~ .sl-group .sl-row .flag").first().click();
 ok((await page.locator(".sl-row.must").count()) === mustNow + 1, "flag marks a song Always play");
-const xBtn = page.locator("h2:has-text('Songs you like') ~ div .sl-row .x").first();
+const xBtn = page.locator(".sl-sec--liked ~ .sl-group .sl-row .x").first();
 await xBtn.click();
 ok((await page.locator(".sl-row.never").count()) >= 1, "X marks a song Never play");
 
@@ -159,19 +167,19 @@ await ctx.grantPermissions(["clipboard-read", "clipboard-write"]).catch(() => {}
 await page.getByRole("button", { name: /Copy list/ }).click();
 await page.getByRole("button", { name: /Copied/ }).waitFor({ timeout: 3000 }).catch(() => {});
 ok(await page.getByRole("button", { name: /Copied/ }).count() === 1, "copy-to-clipboard shows Copied");
-await page.getByRole("button", { name: /Send my picks/ }).click();
+await page.getByRole("button", { name: /Send to Dan/ }).click();
 await page.waitForTimeout(300);
 ok(await page.getByText("Prototype: nothing was actually sent yet.").count() === 1, "Send-to-Dan is a stub (nothing sent)");
 
 // ---- Mike picks separately, then the match view ----
-await page.getByRole("button", { name: "Who is picking?" }).click();
+await page.getByRole("button", { name: "Who's picking?" }).click();
 await page.locator(".sl-who button", { hasText: "Mike" }).click();
 await card("Pop hits").click();
 await card("R&B & hip-hop").click();
 await page.locator(".sl-clean").click(); // clean off for Mike
 await page.locator(".sl-cta").click();
 await page.waitForSelector(".sl-card");
-const mikeTotal = Number((await progress()).match(/of (\d+)/)[1]);
+const mikeTotal = Number((await progress()).match(/\/ (\d+)/)[1]);
 ok(mikeTotal === 9, `Mike with clean-only OFF gets 6 pop + 3 hip-hop = 9 (${mikeTotal})`);
 for (let i = 0; i < mikeTotal; i++) { await page.locator(i % 3 === 2 ? ".sl-act--skip" : ".sl-act--like").click(); }
 await page.waitForSelector(".sl-tabs");
@@ -209,19 +217,19 @@ await shot("16-ceremony-styles");
 for (const n of ["Classical & strings", "Piano & modern", "Joyful exit songs"]) await card(n).click();
 await page.locator(".sl-cta").click();
 await page.waitForSelector(".sl-card");
-ok(await page.locator(".sl-chip").nth(1).count() === 1, "ceremony card carries its moment tag");
+ok(await page.locator(".sl-chip--moment").count() === 1, "ceremony card carries its moment tag");
 await shot("17-ceremony-card");
-const cTotal = Number((await progress()).match(/of (\d+)/)[1]);
+const cTotal = Number((await progress()).match(/\/ (\d+)/)[1]);
 for (let i = 0; i < cTotal; i++) await page.locator(i % 2 ? ".sl-act--skip" : ".sl-act--like").click();
-await page.waitForSelector(".sl-legend");
+await page.waitForSelector(".sl-results");
 await shot("18-ceremony-results");
 const sections = await page.locator(".sl-sub2").allInnerTexts();
 ok(sections.length >= 2, `ceremony results grouped by moment (${sections.join(", ")})`);
 
 // ---- persistence across a fresh page load ----
 await page.reload();
-await page.waitForSelector(".sl-legend");
-ok(await page.locator(".sl-legend").count() === 1, "reload lands back on the results (state in localStorage)");
+await page.waitForSelector(".sl-results");
+ok(await page.locator(".sl-results").count() === 1, "reload lands back on the results (state in localStorage)");
 
 console.log(errors.length ? `console errors:\n${errors.join("\n")}` : "no console errors");
 console.log(failures ? `\n${failures} FAILED` : "\nALL PASSED");

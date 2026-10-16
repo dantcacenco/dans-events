@@ -11,10 +11,11 @@ const SWIPE_X = 90;
 const SWIPE_UP = 110;
 
 export function SwipeScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: string }) {
-  const { L, lang, store, updFlow, go, player } = c;
+  const { L, store, updFlow, go, player } = c;
   const p = store.flows[flow].people[pid];
   const [drag, setDrag] = useState({ x: 0, y: 0, on: false });
   const start = useRef<{ x: number; y: number } | null>(null);
+  const dragged = useRef(false);
 
   const id = p?.deck[p.index];
   const song = id ? songById(id) : undefined;
@@ -77,12 +78,16 @@ export function SwipeScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: strin
   const down = (e: PointerEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest("button")) return;
     start.current = { x: e.clientX, y: e.clientY };
+    dragged.current = false;
     e.currentTarget.setPointerCapture(e.pointerId);
     setDrag({ x: 0, y: 0, on: true });
   };
   const move = (e: PointerEvent<HTMLDivElement>) => {
     if (!start.current) return;
-    setDrag({ x: e.clientX - start.current.x, y: Math.min(0, e.clientY - start.current.y), on: true });
+    const x = e.clientX - start.current.x;
+    const y = Math.min(0, e.clientY - start.current.y);
+    if (Math.abs(x) > 8 || Math.abs(y) > 8) dragged.current = true;
+    setDrag({ x, y, on: true });
   };
   const up = () => {
     if (!start.current) return;
@@ -92,40 +97,60 @@ export function SwipeScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: strin
     else if (drag.y < -SWIPE_UP) answer("love");
     else setDrag({ x: 0, y: 0, on: false });
   };
+  // A tap on the art (not a drag) plays or pauses. Click is a user gesture, so iOS allows it.
+  const tapArt = () => {
+    if (!dragged.current) player.toggle(song.clip, { loop: true });
+    dragged.current = false;
+  };
 
   const rot = drag.x / 18;
   const stamp = (v: number) => Math.max(0, Math.min(1, v));
+  const color = { "--c": st?.color ?? "#555" } as CSSProperties;
   return (
     <>
+      <div className="sl-ambient" style={color} aria-hidden="true" />
       <div className="sl-top">
+        <div className="sl-bar" aria-hidden="true">
+          <i style={{ width: `${(p.index / Math.max(1, total)) * 100}%` }} />
+        </div>
         <div className="sl-prog">{L.songOf(p.index + 1, total)}</div>
-        <button className="sl-undo" onClick={undo} disabled={p.index === 0}>
-          ↶ {L.undo}
+        <button className="sl-undo" onClick={undo} disabled={p.index === 0} aria-label={L.undo}>
+          <span aria-hidden="true">↶</span> <span className="lb">{L.undo}</span>
         </button>
-      </div>
-      <div className="sl-bar" aria-hidden="true">
-        <i style={{ width: `${(p.index / Math.max(1, total)) * 100}%` }} />
       </div>
       <div
         key={song.id}
-        className={`sl-card sl-slide ${drag.on ? "" : "settle"}`}
-        style={{ transform: `translate(${drag.x}px, ${drag.y * 0.5}px) rotate(${rot}deg)` }}
+        className={`sl-card sl-slide ${drag.on ? "" : "settle"} ${playing ? "is-playing" : ""}`}
+        style={{ ...color, transform: `translate(${drag.x}px, ${drag.y * 0.5}px) rotate(${rot}deg)` }}
       >
-        <div className="sl-card-art" style={{ "--c": st?.color ?? "#555" } as CSSProperties} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
+        <div
+          className="sl-card-art"
+          role="button"
+          tabIndex={0}
+          aria-label={playing ? L.pause : L.play}
+          onPointerDown={down}
+          onPointerMove={move}
+          onPointerUp={up}
+          onPointerCancel={up}
+          onClick={tapArt}
+          onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), player.toggle(song.clip, { loop: true }))}
+        >
           <span className="sl-stamp l" style={{ opacity: stamp(drag.x / SWIPE_X) }}>{L.like.toUpperCase()}</span>
           <span className="sl-stamp r" style={{ opacity: stamp(-drag.x / SWIPE_X) }}>{L.skip.toUpperCase()}</span>
           <span className="sl-stamp u" style={{ opacity: stamp(-drag.y / SWIPE_UP) }}>★ {L.mustPlay.toUpperCase()}</span>
-          <div>
-            <span className="sl-chip">{st?.emoji} {st ? (lang === "ru" ? st.nameRu : st.name) : ""}</span>
-            {song.moment && <span className="sl-chip">{L.moments[song.moment]}</span>}
-            {song.explicit && <span className="sl-chip">{L.explicitTag}</span>}
-          </div>
+          <span className="sl-art">
+            <span className="sl-hero emoji" aria-hidden="true">{st?.emoji}</span>
+          </span>
+          <span className={`sl-play ${player.unlocked ? "" : "pulse"}`} aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
+          {!player.unlocked && <span className="sl-playhint">{L.tapToPlay}</span>}
+        </div>
+        <div className="sl-meta">
           <h2 className="sl-title">{song.title}</h2>
-          <p className="sl-artist">{song.artist}</p>
-          <button className={`sl-play ${player.unlocked ? "" : "pulse"}`} aria-label={playing ? L.pause : L.play} onClick={() => player.toggle(song.clip, { loop: true })}>
-            {playing ? "❚❚" : "▶"}
-          </button>
-          <div className="sl-playhint">{!player.unlocked ? L.tapToPlay : playing ? `🔊 ${L.hearing}` : ""}</div>
+          <p className="sl-artist">
+            {song.artist}
+            {song.explicit && <span className="sl-chip sl-chip--e" title={L.explicitTag}>E</span>}
+          </p>
+          {song.moment && <span className="sl-chip sl-chip--moment">{L.moments[song.moment]}</span>}
         </div>
         <div className="sl-scrub">
           <div className="sl-scrub-row">
@@ -147,17 +172,16 @@ export function SwipeScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: strin
           </div>
         </div>
       </div>
-      <p className="sl-hint">{L.swipeHint}</p>
       <div className="sl-sticky">
         <div className="sl-actions">
           <button className="sl-act sl-act--skip" onClick={() => answer("skip")}>
-            ✕ {L.skip}
+            <span className="ic" aria-hidden="true">✕</span> <span className="lb">{L.skip}</span>
           </button>
           <button className="sl-act sl-act--like" onClick={() => answer("like")}>
-            ♥ {L.like}
+            <span className="ic" aria-hidden="true">♥</span> <span className="lb">{L.like}</span>
           </button>
           <button className="sl-act sl-act--love" onClick={() => answer("love")}>
-            ★ {L.mustPlay}
+            <span className="ic" aria-hidden="true">★</span> <span className="lb">{L.mustPlay}</span>
           </button>
         </div>
       </div>

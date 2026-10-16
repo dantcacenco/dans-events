@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import type { DesignId } from "@/lib/setlist/designs";
 import { t } from "@/lib/setlist/i18n";
 import { initialStore, loadStore, saveStore } from "@/lib/setlist/store";
 import type { Couple, FlowId, FlowState, Lang, Store, View } from "@/lib/setlist/types";
@@ -13,7 +14,7 @@ import { StylesScreen } from "./styles-screen";
 import { SwipeScreen } from "./swipe-screen";
 import { WhoScreen } from "./who-screen";
 
-export default function SetlistApp({ token, couple }: { token: string; couple: Couple }) {
+export default function SetlistApp({ token, couple, design }: { token: string; couple: Couple; design: DesignId }) {
   const [store, setStore] = useState<Store>(initialStore);
   const [ready, setReady] = useState(false);
   const player = usePlayer();
@@ -43,7 +44,7 @@ export default function SetlistApp({ token, couple }: { token: string; couple: C
   const setLang = (lang: Lang) => setStore((s) => ({ ...s, lang }));
 
   const names = { a: couple.names[0], b: couple.names[1], solo: store.lang === "ru" ? "Мы" : "Us" };
-  const c: Ctx = { token, lang: store.lang, L, names, store, player, go, updFlow };
+  const c: Ctx = { token, design, lang: store.lang, L, names, store, player, go, updFlow };
   const v = store.view;
 
   // A saved view may point at a person that no longer exists: fall back to home.
@@ -57,9 +58,9 @@ export default function SetlistApp({ token, couple }: { token: string; couple: C
   if (v.screen === "who" || v.screen === "results") back = () => go({ screen: "home" });
   else if (v.screen === "styles" || v.screen === "swipe") back = () => go({ screen: "who", flow });
 
-  if (!ready) return <div className="sl" />;
+  if (!ready) return <div className={`sl d${design}`} />;
   return (
-    <div className={`sl sl--${v.flow ?? "home"}`} lang={store.lang}>
+    <div className={`sl d${design} sl--${v.flow ?? "home"} sl-on-${valid ? v.screen : "home"}`} lang={store.lang}>
       <Header lang={store.lang} setLang={setLang} back={valid ? back : undefined} backLabel={L.back} />
       <main className="sl-main">
         {!valid || v.screen === "home" ? (
