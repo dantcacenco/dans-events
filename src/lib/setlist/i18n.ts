@@ -3,7 +3,7 @@ import type { Lang, Moment } from "./types";
 const en = {
   homeTitle: "Your wedding music",
   ceremonyCard: "Ceremony",
-  receptionCard: "Party",
+  receptionCard: "Dance party",
   inProgress: "Started",
   finished: "Finished",
   seeResults: "See your picks",
