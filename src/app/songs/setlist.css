@@ -202,6 +202,8 @@ html:has(.sl) { background: #0c0b0d; overscroll-behavior: none; }
 .sl-thanks .sl-hero { font-size: 80px; }
 .sl-welcome .sl-h1, .sl-thanks .sl-h1 { margin: 6px 0 4px; }
 .sl-sub { margin: 0 0 22px; font-size: 15px; color: var(--muted); }
+.sl-h1--home { margin-bottom: 4px; }
+.sl-sub--home { margin: 0 0 22px; }
 .sl-input { width: 100%; min-height: 56px; margin: 0 0 12px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); color: var(--fg); font: inherit; font-size: 16px; padding: 0 16px; }
 .sl-input::placeholder { color: var(--muted); }
 .sl-add-link { display: block; margin: 4px auto 0; }

@@ -2,6 +2,7 @@ import type { Lang, Moment } from "./types";
 
 const en = {
   homeTitle: "Your wedding music",
+  homeSub: "Let's hear some music!",
   ceremonyCard: "Ceremony",
   receptionCard: "Dance party",
   inProgress: "Started",
@@ -85,6 +86,7 @@ const en = {
 
 const ru: typeof en = {
   homeTitle: "Музыка вашей свадьбы",
+  homeSub: "Давайте послушаем музыку!",
   ceremonyCard: "Церемония",
   receptionCard: "Банкет",
   inProgress: "Начато",

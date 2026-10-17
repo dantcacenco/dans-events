@@ -5,7 +5,7 @@ import type { FlowId } from "@/lib/setlist/types";
 import type { Ctx } from "./ctx";
 
 export function HomeScreen({ c }: { c: Ctx }) {
-  const { L, store, go } = c;
+  const { L, store, go, names } = c;
   const card = (flow: FlowId, title: string, emoji: string) => {
     const prog = flowProgress(store.flows[flow]);
     return (
@@ -27,7 +27,8 @@ export function HomeScreen({ c }: { c: Ctx }) {
   };
   return (
     <>
-      <h1 className="sl-h1">{L.homeTitle}</h1>
+      <h1 className="sl-h1 sl-h1--home">{names.a && names.b ? L.guestTitle(names.a, names.b) : L.homeTitle}</h1>
+      <p className="sl-sub sl-sub--home">{L.homeSub}</p>
       <div className="sl-homes">
         {card("ceremony", L.ceremonyCard, "💍")}
         {card("reception", L.receptionCard, "🎉")}
