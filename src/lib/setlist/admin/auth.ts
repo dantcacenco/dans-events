@@ -11,7 +11,7 @@ const MAX_TRIES = 8; // per device per 15 minutes
 const WINDOW_MS = 15 * 60 * 1000;
 
 const password = () => process.env.SETLIST_ADMIN_PASSWORD ?? "";
-export const adminConfigured = () => password().length >= 12;
+export const adminConfigured = () => password().length >= 6;
 
 const signKey = () => createHash("sha256").update(`setlist-admin:${password()}`).digest();
 const sign = (exp: number) => createHmac("sha256", signKey()).update(String(exp)).digest("base64url");
