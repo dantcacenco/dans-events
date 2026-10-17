@@ -4,6 +4,7 @@ import type { Answer, FlowId, FlowState, Lang, Mark, Person, Store } from "./typ
 // Guests get a shorter walk: up to this many cards, and a Finish button once they have answered a few.
 export const GUEST_MAX_SONGS = 30;
 export const GUEST_MIN_SONGS = 8;
+export const DONE_PILL_LIKES = 30; // couple flow: the Done pill appears after this many likes
 
 const KEY = (token: string, guest: boolean) => (guest ? `setlist-guest:${token}` : `setlist:${token}`);
 
