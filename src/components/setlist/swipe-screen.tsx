@@ -25,13 +25,13 @@ export function SwipeScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: strin
         !c.guest ? (
           likes >= DONE_PILL_LIKES && (
             <button
-              className="sl-undo sl-finish sl-donepill"
+              className="sl-undo"
               onClick={() => {
                 updFlow(flow, (f) => ({ ...f, people: { ...f.people, [pid]: { ...f.people[pid], step: "done" } } }));
                 go({ screen: "results", flow, pid });
               }}
             >
-              {L.donePill}
+              <span aria-hidden="true">✓</span> <span className="lb">{L.donePill}</span>
             </button>
           )
         ) : (
