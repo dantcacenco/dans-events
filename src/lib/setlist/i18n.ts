@@ -88,7 +88,7 @@ const ru: typeof en = {
   homeTitle: "Музыка вашей свадьбы",
   homeSub: "Давайте послушаем музыку!",
   ceremonyCard: "Церемония",
-  receptionCard: "Банкет",
+  receptionCard: "Танцы",
   inProgress: "Начато",
   finished: "Готово",
   seeResults: "Посмотреть выбор",
