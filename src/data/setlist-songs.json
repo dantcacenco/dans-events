@@ -1224,7 +1224,7 @@
    "title": "Come On Eileen",
    "artist": "Dexys Midnight Runners",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-8.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=6BODDyZRF6A",
    "source": "youtube-proof-of-concept",
@@ -1237,7 +1237,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 59.58,
    "audioOnlySec": 125.09,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-8090-9",
@@ -4041,7 +4044,10 @@
     210.4
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "slow-3",
@@ -4065,7 +4071,10 @@
     232.6
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-1",
@@ -4074,7 +4083,7 @@
    "title": "Can't Help Falling in Love",
    "artist": "Elvis Presley",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=vGJTaP6anOU",
    "source": "youtube-proof-of-concept",
@@ -4087,7 +4096,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 69.17,
    "audioOnlySec": 144.06,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-2",
@@ -4096,7 +4108,7 @@
    "title": "All of Me",
    "artist": "John Legend",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=xwsYvBYZcx4",
    "source": "youtube-proof-of-concept",
@@ -4109,7 +4121,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 109.67,
    "audioOnlySec": 153.79,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-3",
@@ -4118,7 +4133,7 @@
    "title": "Thinking Out Loud",
    "artist": "Ed Sheeran",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=lp-EO5I60KA",
    "source": "youtube-proof-of-concept",
@@ -4131,7 +4146,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 35.22,
    "audioOnlySec": 82.31,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-4",
@@ -4140,7 +4158,7 @@
    "title": "Make You Feel My Love",
    "artist": "Adele",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=0put0_a--Ng",
    "source": "youtube-proof-of-concept",
@@ -4153,7 +4171,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 86.47,
    "audioOnlySec": 129.08,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-5",
@@ -4162,7 +4183,7 @@
    "title": "Unchained Melody",
    "artist": "The Righteous Brothers",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=Zv8czIoAw5w",
    "source": "youtube-proof-of-concept",
@@ -4175,7 +4196,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 47.28,
    "audioOnlySec": 147.49,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-slow-6",
@@ -4184,7 +4208,7 @@
    "title": "The Way You Look Tonight",
    "artist": "Frank Sinatra",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-6.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=h9ZGKALMMuc",
    "source": "youtube-proof-of-concept",
@@ -4197,7 +4221,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 26.87,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-7",
@@ -4206,7 +4233,7 @@
    "title": "Fly Me to the Moon",
    "artist": "Frank Sinatra",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=rSrc7aulay8",
    "source": "youtube-proof-of-concept",
@@ -4219,7 +4246,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 18.27,
    "audioOnlySec": 106.21,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-slow-8",
@@ -4228,7 +4258,7 @@
    "title": "What a Wonderful World",
    "artist": "Louis Armstrong",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-8.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=rBrd_3VMC3c",
    "source": "youtube-proof-of-concept",
@@ -4241,7 +4271,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 75.72,
    "audioOnlySec": 89.07,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-9",
@@ -4250,7 +4283,7 @@
    "title": "Stand by Me",
    "artist": "Ben E. King",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-9.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=VMNKlr_MCdM",
    "source": "youtube-proof-of-concept",
@@ -4263,7 +4296,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 143.31,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-10",
@@ -4272,7 +4308,7 @@
    "title": "Come Away with Me",
    "artist": "Norah Jones",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-10.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=lbjZPFBD6JU",
    "source": "youtube-proof-of-concept",
@@ -4285,7 +4321,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 57.03,
    "audioOnlySec": 89.88,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-11",
@@ -4294,7 +4333,7 @@
    "title": "I Don't Want to Miss a Thing",
    "artist": "Aerosmith",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-11.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=JkK8g6FMEXE",
    "source": "youtube-proof-of-concept",
@@ -4307,7 +4346,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 64.51,
    "audioOnlySec": 197.9,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-12",
@@ -4316,7 +4358,7 @@
    "title": "Endless Love",
    "artist": "Diana Ross & Lionel Richie",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-12.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=UsqDoz2Co4o",
    "source": "youtube-proof-of-concept",
@@ -4329,7 +4371,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 192.84,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-13",
@@ -4338,7 +4383,7 @@
    "title": "I Cross My Heart",
    "artist": "George Strait",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-13.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=3IUlCNqAKKA",
    "source": "youtube-proof-of-concept",
@@ -4351,7 +4396,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 25.7,
    "audioOnlySec": 125.76,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-14",
@@ -4360,7 +4408,7 @@
    "title": "God Gave Me You",
    "artist": "Blake Shelton",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-14.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=nCf2PoTuh4Q",
    "source": "youtube-proof-of-concept",
@@ -4373,7 +4421,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 30.56,
    "audioOnlySec": 122.53,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-15",
@@ -4382,7 +4433,7 @@
    "title": "You Are the Best Thing",
    "artist": "Ray LaMontagne",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-15.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=pkntWssHboY",
    "source": "youtube-proof-of-concept",
@@ -4395,7 +4446,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 30.67,
    "audioOnlySec": 190.89,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-16",
@@ -4404,7 +4458,7 @@
    "title": "Lover",
    "artist": "Taylor Swift",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-16.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=cvUAzpn48xA",
    "source": "youtube-proof-of-concept",
@@ -4417,7 +4471,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 136.56,
    "audioOnlySec": 189.1,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-17",
@@ -4426,7 +4483,7 @@
    "title": "Cheek to Cheek",
    "artist": "Ella Fitzgerald & Louis Armstrong",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-17.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=20iOlPwz0J0",
    "source": "youtube-proof-of-concept",
@@ -4439,7 +4496,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 144.68,
    "audioOnlySec": 263.27,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-18",
@@ -4448,7 +4508,7 @@
    "title": "Butterfly Kisses",
    "artist": "Bob Carlisle",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-18.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=SwlAdEnT-do",
    "source": "youtube-proof-of-concept",
@@ -4461,7 +4521,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 48.18,
    "audioOnlySec": 126.8,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-19",
@@ -4470,7 +4533,7 @@
    "title": "I Loved Her First",
    "artist": "Heartland",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-19.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=svDDL2OHQ-I",
    "source": "youtube-proof-of-concept",
@@ -4483,7 +4546,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 51.5,
    "audioOnlySec": 141.08,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-20",
@@ -4492,7 +4558,7 @@
    "title": "Forever Young",
    "artist": "Rod Stewart",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-20.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=mwG6g5boyF4",
    "source": "youtube-proof-of-concept",
@@ -4505,7 +4571,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 56.38,
    "audioOnlySec": 42.24,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-slow-21",
@@ -4514,7 +4583,7 @@
    "title": "My Wish",
    "artist": "Rascal Flatts",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-slow-21.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=hW3UFC5b4DI",
    "source": "youtube-proof-of-concept",
@@ -4527,7 +4596,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 123.97,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "ru-pop-1",
@@ -4576,7 +4648,10 @@
     64.4
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "ru-pop-3",
@@ -4601,7 +4676,10 @@
     310.6
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-1",
@@ -4635,7 +4713,7 @@
    "title": "Всё будет хорошо",
    "artist": "Верка Сердючка",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=KRVhWPignvU",
    "source": "youtube-proof-of-concept",
@@ -4648,7 +4726,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 140.34,
    "audioOnlySec": 57.56,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-3",
@@ -4657,7 +4738,7 @@
    "title": "Кружит",
    "artist": "Monatik",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=BfFK1oQaO80",
    "source": "youtube-proof-of-concept",
@@ -4670,7 +4751,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 55.61,
    "audioOnlySec": 63.95,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-4",
@@ -4679,7 +4763,7 @@
    "title": "Love it ритм",
    "artist": "Monatik",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=QRynDodppjo",
    "source": "youtube-proof-of-concept",
@@ -4692,7 +4776,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 75.88,
    "audioOnlySec": 62.74,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-5",
@@ -4701,7 +4788,7 @@
    "title": "Глубоко",
    "artist": "Monatik & Надя Дорофеева",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=j6-Bh-ID8qE",
    "source": "youtube-proof-of-concept",
@@ -4714,7 +4801,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 62.35,
    "audioOnlySec": 170.36,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-6",
@@ -4723,7 +4813,7 @@
    "title": "Сопрано",
    "artist": "Мот ft. Ани Лорак",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-6.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=jXCxdLvdscU",
    "source": "youtube-proof-of-concept",
@@ -4736,7 +4826,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 42.07,
    "audioOnlySec": 121.77,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-7",
@@ -4745,7 +4838,7 @@
    "title": "Соло",
    "artist": "Мот",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=8ptD1rws4qc",
    "source": "youtube-proof-of-concept",
@@ -4758,7 +4851,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 23.66,
    "audioOnlySec": 132.47,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-8",
@@ -4767,7 +4863,7 @@
    "title": "Life",
    "artist": "Zivert",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-8.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=7XbH76Eldj8",
    "source": "youtube-proof-of-concept",
@@ -4780,7 +4876,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 32.58,
    "audioOnlySec": 149.58,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-9",
@@ -4789,7 +4888,7 @@
    "title": "Beverly Hills",
    "artist": "Zivert",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-9.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=UR4AnXtLI1w",
    "source": "youtube-proof-of-concept",
@@ -4802,7 +4901,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 34.16,
    "audioOnlySec": 184.92,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-10",
@@ -4836,7 +4938,7 @@
    "title": "Грустный дэнс",
    "artist": "Artik & Asti ft. Артём Качер",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-11.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=XnrXCpHBor8",
    "source": "youtube-proof-of-concept",
@@ -4849,7 +4951,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 37.43,
    "audioOnlySec": 130.75,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-12",
@@ -4858,7 +4963,7 @@
    "title": "Номер 1",
    "artist": "Artik & Asti",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-12.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=XXtjgcBrU8Q",
    "source": "youtube-proof-of-concept",
@@ -4871,7 +4976,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 43.56,
    "audioOnlySec": 115.82,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-13",
@@ -4930,7 +5038,7 @@
    "title": "Самая самая",
    "artist": "Егор Крид",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-15.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=bFHak21e230",
    "source": "youtube-proof-of-concept",
@@ -4943,7 +5051,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 52.45,
    "audioOnlySec": 179.61,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-16",
@@ -5006,7 +5117,7 @@
    "title": "Комета",
    "artist": "Jony",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-18.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=yM1QjdoLmxQ",
    "source": "youtube-proof-of-concept",
@@ -5019,7 +5130,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 19.2,
    "audioOnlySec": 40.22,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-19",
@@ -5028,7 +5142,7 @@
    "title": "Аллея",
    "artist": "Jony",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-19.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=Bbif6bMWr1A",
    "source": "youtube-proof-of-concept",
@@ -5041,7 +5155,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 95.62,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-20",
@@ -5050,7 +5167,7 @@
    "title": "Болен тобой",
    "artist": "Дима Билан",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-20.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=q-ZFbmWG05k",
    "source": "youtube-proof-of-concept",
@@ -5063,7 +5180,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 30.93,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-21",
@@ -5097,7 +5217,7 @@
    "title": "Это всё она",
    "artist": "Сергей Лазарев",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-22.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=qPMypN6lQU0",
    "source": "youtube-proof-of-concept",
@@ -5110,7 +5230,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 61.7,
    "audioOnlySec": 210.7,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-23",
@@ -5119,7 +5242,7 @@
    "title": "Так красиво",
    "artist": "Сергей Лазарев",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-23.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=7hLdeYLwwKc",
    "source": "youtube-proof-of-concept",
@@ -5132,7 +5255,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 181.6,
    "audioOnlySec": 60.86,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-24",
@@ -5141,7 +5267,7 @@
    "title": "Твои глаза",
    "artist": "Loboda",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-24.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=6gCbAkqMKYg",
    "source": "youtube-proof-of-concept",
@@ -5154,7 +5280,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 55.57,
    "audioOnlySec": 61.14,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-25",
@@ -5188,7 +5317,7 @@
    "title": "Прованс",
    "artist": "Ёлка",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-26.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=U0vduC21YwI",
    "source": "youtube-proof-of-concept",
@@ -5201,7 +5330,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 51.48,
    "audioOnlySec": 120.4,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-27",
@@ -5210,7 +5342,7 @@
    "title": "Алёшка",
    "artist": "Руки Вверх!",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-27.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=oU_8tl-o1NI",
    "source": "youtube-proof-of-concept",
@@ -5223,7 +5355,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 58.56,
    "audioOnlySec": 136.79,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-28",
@@ -5232,7 +5367,7 @@
    "title": "Районы-кварталы",
    "artist": "Звери",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-28.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=1EozE3URh-8",
    "source": "youtube-proof-of-concept",
@@ -5245,7 +5380,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 24.54,
    "audioOnlySec": 88.35,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-29",
@@ -5254,7 +5392,7 @@
    "title": "Попытка №5",
    "artist": "ВИА Гра",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-29.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=Nu6WLinydzY",
    "source": "youtube-proof-of-concept",
@@ -5267,7 +5405,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 44.7,
    "audioOnlySec": 158.31,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-ru-pop-30",
@@ -5276,7 +5417,7 @@
    "title": "Dancing Lasha Tumbai",
    "artist": "Верка Сердючка",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-30.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=fQX6qmLNamM",
    "source": "youtube-proof-of-concept",
@@ -5289,7 +5430,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 23.64,
    "audioOnlySec": 36.15,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-ru-pop-31",
@@ -5298,7 +5442,7 @@
    "title": "Зови",
    "artist": "Ани Лорак",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-pop-31.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=5Pl6--zPj-I",
    "source": "youtube-proof-of-concept",
@@ -5311,7 +5455,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 37.15,
    "audioOnlySec": 176.36,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-pop-32",
@@ -5362,7 +5509,10 @@
     78.9
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "ru-folk-2",
@@ -5384,7 +5534,10 @@
     45.3
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "ru-folk-3",
@@ -5407,7 +5560,10 @@
     125.3
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-ru-folk-1",
@@ -5416,7 +5572,7 @@
    "title": "Катюша",
    "artist": "Ансамбль Александрова",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-folk-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=8tdqWmUaMxE",
    "source": "youtube-proof-of-concept",
@@ -5429,7 +5585,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 120.67,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-ru-folk-2",
@@ -5463,7 +5622,7 @@
    "title": "Из-за острова на стрежень",
    "artist": "Фёдор Шаляпин",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-folk-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=M-3IBkkxiDA",
    "source": "youtube-proof-of-concept",
@@ -5476,7 +5635,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 33.34,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-ru-folk-4",
@@ -5485,7 +5647,7 @@
    "title": "Эх, дороги",
    "artist": "Лев Лещенко",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-folk-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=x9gNg3lmiOk",
    "source": "youtube-proof-of-concept",
@@ -5498,7 +5660,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 160.15,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-ru-folk-5",
@@ -5557,7 +5722,7 @@
    "title": "Тёмная ночь",
    "artist": "Марк Бернес",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-folk-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=zfVXgWRK4I8",
    "source": "youtube-proof-of-concept",
@@ -5570,7 +5735,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 20.5,
    "audioOnlySec": 129.03,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-folk-8",
@@ -5618,7 +5786,10 @@
     91.1
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "ru-slow-2",
@@ -5642,7 +5813,10 @@
     264.5
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "ru-slow-3",
@@ -5665,7 +5839,10 @@
     135.0
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-ru-slow-1",
@@ -5674,7 +5851,7 @@
    "title": "Беловежская пуща",
    "artist": "Песняры",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-slow-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=zld7kWdAQgk",
    "source": "youtube-proof-of-concept",
@@ -5687,7 +5864,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 89.03,
    "audioOnlySec": 188.55,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-ru-slow-2",
@@ -5696,7 +5876,7 @@
    "title": "Всё для тебя",
    "artist": "Стас Михайлов",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-slow-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=NQz3MkLjHSA",
    "source": "youtube-proof-of-concept",
@@ -5709,7 +5889,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 63.76,
    "audioOnlySec": 70.7,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-slow-3",
@@ -5718,7 +5901,7 @@
    "title": "Сэра",
    "artist": "Валерий Меладзе",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-slow-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=d5bhQUEA5d4",
    "source": "youtube-proof-of-concept",
@@ -5731,7 +5914,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 43.75,
    "audioOnlySec": 119.37,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-slow-4",
@@ -5740,7 +5926,7 @@
    "title": "Небеса",
    "artist": "Валерий Меладзе",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-slow-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=mHTx0mhRFws",
    "source": "youtube-proof-of-concept",
@@ -5753,7 +5939,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 84.13,
    "audioOnlySec": 116.89,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-slow-5",
@@ -5762,7 +5951,7 @@
    "title": "Зеркала",
    "artist": "Григорий Лепс & Ани Лорак",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-slow-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=PDm9HfLCagM",
    "source": "youtube-proof-of-concept",
@@ -5775,7 +5964,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 30.3,
    "audioOnlySec": 158.48,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-slow-6",
@@ -5784,7 +5976,7 @@
    "title": "Вернисаж",
    "artist": "Лайма Вайкуле",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-slow-6.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=F1VmicHLBjo",
    "source": "youtube-proof-of-concept",
@@ -5797,7 +5989,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 49.69,
    "audioOnlySec": 72.77,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-slow-7",
@@ -5806,7 +6001,7 @@
    "title": "Я люблю тебя до слёз",
    "artist": "Александр Серов",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-ru-slow-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=HAIMc1ambRk",
    "source": "youtube-proof-of-concept",
@@ -5819,7 +6014,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 56.4,
    "audioOnlySec": 177.21,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-ru-slow-8",
@@ -5853,7 +6051,7 @@
    "title": "Titanium",
    "artist": "David Guetta ft. Sia",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-dance-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=JRfuAukYTKg",
    "source": "youtube-proof-of-concept",
@@ -5866,7 +6064,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 105.88,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-dance-2",
@@ -5875,7 +6076,7 @@
    "title": "Don't You Worry Child",
    "artist": "Swedish House Mafia",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-dance-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=1y6smkh6c-0",
    "source": "youtube-proof-of-concept",
@@ -5888,7 +6089,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 50.71,
    "audioOnlySec": 219.24,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-dance-3",
@@ -5897,7 +6101,7 @@
    "title": "Levels",
    "artist": "Avicii",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-dance-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=KJ_kKmRnuSw",
    "source": "youtube-proof-of-concept",
@@ -5910,7 +6114,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 35.39,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-dance-4",
@@ -5944,7 +6151,7 @@
    "title": "Lean On",
    "artist": "Major Lazer & DJ Snake",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-dance-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=rn9AQoI7mYU",
    "source": "youtube-proof-of-concept",
@@ -5957,7 +6164,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 39.43,
    "audioOnlySec": 113.8,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-dance-6",
@@ -5966,7 +6176,7 @@
    "title": "Clarity",
    "artist": "Zedd ft. Foxes",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-dance-6.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=KsPALP3igSA",
    "source": "youtube-proof-of-concept",
@@ -5979,7 +6189,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 152.46,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-dance-7",
@@ -5987,8 +6200,8 @@
    "style": "dance",
    "title": "Animals",
    "artist": "Martin Garrix",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-dance-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=gCYcHz2k5x0",
    "source": "youtube-proof-of-concept",
@@ -6001,7 +6214,12 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 82.8,
    "audioOnlySec": 91.21,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "fucking"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-dance-8",
@@ -6010,7 +6228,7 @@
    "title": "One More Time",
    "artist": "Daft Punk",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-dance-8.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=FGBhQbmPwH8",
    "source": "youtube-proof-of-concept",
@@ -6023,7 +6241,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 58.26,
    "audioOnlySec": 275.32,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-dance-9",
@@ -6032,7 +6253,7 @@
    "title": "Get Lucky",
    "artist": "Daft Punk ft. Pharrell",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-dance-9.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=CCHdMIEGaaM",
    "source": "youtube-proof-of-concept",
@@ -6045,7 +6266,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 30.26,
    "audioOnlySec": 180.72,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-dance-10",
@@ -6054,7 +6278,7 @@
    "title": "Sandstorm",
    "artist": "Darude",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-dance-10.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=erb4n8PW2qw",
    "source": "youtube-proof-of-concept",
@@ -6067,7 +6291,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 146.82,
    "audioOnlySec": 46.09,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-dance-11",
@@ -6126,7 +6353,7 @@
    "title": "Where Have You Been",
    "artist": "Rihanna",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-dance-13.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=p9Ygppti7YI",
    "source": "youtube-proof-of-concept",
@@ -6139,7 +6366,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 158.87,
    "audioOnlySec": 151.81,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-dance-14",
@@ -6189,7 +6419,10 @@
     148.5
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "c-classical-2",
@@ -6240,7 +6473,10 @@
     73.5
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-classical-1",
@@ -6324,7 +6560,7 @@
    "title": "Clair de Lune",
    "artist": "Claude Debussy",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-classical-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=WNcsUNKlAKw",
    "source": "youtube-proof-of-concept",
@@ -6337,7 +6573,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 119.7,
    "audioOnlySec": 174.34,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-classical-5",
@@ -6346,7 +6585,7 @@
    "title": "Ode to Joy",
    "artist": "Ludwig van Beethoven",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-classical-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=uooe16ILaPo",
    "source": "youtube-proof-of-concept",
@@ -6359,7 +6598,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 95.25,
    "audioOnlySec": 71.59,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "c-acoustic-1",
@@ -6409,7 +6651,10 @@
     176.1
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "c-acoustic-3",
@@ -6445,7 +6690,7 @@
    "title": "Marry Me",
    "artist": "Train",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-acoustic-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=W3cNIc9gCnM",
    "source": "youtube-proof-of-concept",
@@ -6458,7 +6703,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 136.23,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-acoustic-2",
@@ -6467,7 +6715,7 @@
    "title": "Hallelujah (Strings)",
    "artist": "Leonard Cohen",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-acoustic-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=TT5u2xVEO5M",
    "source": "youtube-proof-of-concept",
@@ -6480,7 +6728,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 202.41,
    "audioOnlySec": 217.25,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-acoustic-3",
@@ -6489,7 +6740,7 @@
    "title": "Over the Rainbow (Ukulele)",
    "artist": "Israel Kamakawiwo'ole",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-acoustic-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=w_DKWlrA24k",
    "source": "youtube-proof-of-concept",
@@ -6502,7 +6753,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 50.11,
    "audioOnlySec": 108.74,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-c-acoustic-4",
@@ -6511,7 +6765,7 @@
    "title": "Beautiful in White (Strings)",
    "artist": "Shane Filan",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-acoustic-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=7robQRYRO2A",
    "source": "youtube-proof-of-concept",
@@ -6524,7 +6778,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 41.82,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "c-piano-1",
@@ -6549,7 +6806,10 @@
     157.6
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "c-piano-2",
@@ -6573,7 +6833,10 @@
     128.1
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "c-piano-3",
@@ -6599,7 +6862,10 @@
     255.8
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-piano-1",
@@ -6608,7 +6874,7 @@
    "title": "Nuvole Bianche",
    "artist": "Ludovico Einaudi",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-piano-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=sR2W2scFS4Y",
    "source": "youtube-proof-of-concept",
@@ -6621,7 +6887,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 134.51,
    "audioOnlySec": 155.78,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-piano-2",
@@ -6630,7 +6899,7 @@
    "title": "Una Mattina",
    "artist": "Ludovico Einaudi",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-piano-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=j1Ck42-_btY",
    "source": "youtube-proof-of-concept",
@@ -6643,7 +6912,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 54.64,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-piano-3",
@@ -6652,7 +6924,7 @@
    "title": "Kiss the Rain",
    "artist": "Yiruma",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-piano-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=imGaOIm5HOk",
    "source": "youtube-proof-of-concept",
@@ -6665,7 +6937,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 161.01,
    "audioOnlySec": 106.6,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-piano-4",
@@ -6674,7 +6949,7 @@
    "title": "Gymnopédie No. 1",
    "artist": "Erik Satie",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-piano-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=S-Xm7s9eGxU",
    "source": "youtube-proof-of-concept",
@@ -6687,7 +6962,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 112.34,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "c-joy-1",
@@ -6710,7 +6988,10 @@
     27.4
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "c-joy-2",
@@ -6734,7 +7015,10 @@
     145.4
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "c-joy-3",
@@ -6758,7 +7042,10 @@
     149.7
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-joy-1",
@@ -6767,7 +7054,7 @@
    "title": "Beautiful Day",
    "artist": "U2",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-joy-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=co6WMzDOh1o",
    "source": "youtube-proof-of-concept",
@@ -6780,7 +7067,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 49.16,
    "audioOnlySec": 183.14,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-joy-2",
@@ -6789,7 +7079,7 @@
    "title": "You Make My Dreams",
    "artist": "Hall & Oates",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-joy-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=EErSKhC0CZs",
    "source": "youtube-proof-of-concept",
@@ -6802,7 +7092,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 22.29,
    "audioOnlySec": 39.17,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-joy-3",
@@ -6811,7 +7104,7 @@
    "title": "Best Day of My Life",
    "artist": "American Authors",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-joy-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=Y66j_BUCBMY",
    "source": "youtube-proof-of-concept",
@@ -6824,7 +7117,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 35.46,
    "audioOnlySec": 157.55,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-joy-4",
@@ -6833,7 +7129,7 @@
    "title": "I'm a Believer",
    "artist": "The Monkees",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-joy-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=xvqeSJlgaNk",
    "source": "youtube-proof-of-concept",
@@ -6846,7 +7142,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 32.02,
    "audioOnlySec": 128.71,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-c-joy-5",
@@ -6855,7 +7154,7 @@
    "title": "Here Comes the Sun",
    "artist": "The Beatles",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-c-joy-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=KQetemT1sWc",
    "source": "youtube-proof-of-concept",
@@ -6868,7 +7167,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 23.13,
    "audioOnlySec": 147.45,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "c-russian-1",

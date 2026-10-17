@@ -66,7 +66,7 @@ The clips are served from `public/` (about 100 MB, fine for Vercel and GitHub; n
 proof-of-concept clips (`source: "youtube-proof-of-concept"` on each song): replace them with Dan-owned MP3s over time (same id, run `loudnorm.py cut`).
 `scripts/setlist/import-library.py <library dir>` copies finished clips in and rewrites the `lib-*` songs. Explicit flags come from Apple only
 (iTunes Search API `trackExplicitness`: explicit or cleaned = explicit; `explicitSource` says which, or `apple:no-match`).
-The disputed songs (Apple no-match, cleaned, or conflicting) were re-checked from the lyrics with a free local ASR (whisper.cpp, EN/RU/ES wordlist): `explicitSource: "local-asr+apple"`, `explicitStatus` explicit/clean/unverified, `explicitWords` (matched words only, no lyrics), `explicitConfidence`. `unverified` counts as not clean in clean-only mode.
+Every song in the library was re-checked (first the disputed ones: Apple no-match, cleaned, or conflicting; then the rest, because Apple's notExplicit rating proved unreliable) from the lyrics with a free local ASR (whisper.cpp, EN/RU/ES wordlist): `explicitSource: "local-asr+apple"`, `explicitStatus` explicit/clean/unverified, `explicitWords` (matched words only, no lyrics), `explicitConfidence`. `unverified` counts as not clean in clean-only mode.
 
 ### Loudness rule (always, for every upload)
 Every clip must play at the same level. All clips go through `scripts/setlist/loudnorm.py`: two-pass EBU R128
