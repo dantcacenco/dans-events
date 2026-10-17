@@ -31,7 +31,7 @@ export function SwipeScreen({ c, flow, pid }: { c: Ctx; flow: FlowId; pid: strin
                 go({ screen: "results", flow, pid });
               }}
             >
-              <span aria-hidden="true">✓</span> <span className="lb">{L.donePill}</span>
+              <span aria-hidden="true">→</span> <span className="lb">{L.donePill}</span>
             </button>
           )
         ) : (
