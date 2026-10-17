@@ -168,7 +168,7 @@
    "style": "pop",
    "title": "Uptown Funk",
    "artist": "Mark Ronson ft. Bruno Mars",
-   "explicit": false,
+   "explicit": true,
    "clip": "/setlist/clips/pop-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=7Ya2U8XN_Zw",
    "hookStartSec": 66.4,
@@ -184,7 +184,12 @@
     209.3
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "nigger"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "pop-2",
@@ -207,7 +212,10 @@
     90.6
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "pop-3",
@@ -230,7 +238,10 @@
     135.8
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "pop-4",
@@ -253,7 +264,10 @@
     153.5
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "pop-5",
@@ -312,7 +326,7 @@
    "title": "Dance Monkey",
    "artist": "Tones and I",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=q0hyYWKXF0Q",
    "source": "youtube-proof-of-concept",
@@ -325,7 +339,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 28.37,
    "audioOnlySec": 186.76,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-2",
@@ -361,7 +378,7 @@
    "title": "Shake It Off",
    "artist": "Taylor Swift",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=vkxJqKvh8lo",
    "source": "youtube-proof-of-concept",
@@ -374,7 +391,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 44.65,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-4",
@@ -383,7 +403,7 @@
    "title": "Love on Top",
    "artist": "Beyoncé",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=Ob7vObnFUJc",
    "source": "youtube-proof-of-concept",
@@ -396,7 +416,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 49.18,
    "audioOnlySec": 111.69,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-5",
@@ -404,8 +427,8 @@
    "style": "pop",
    "title": "Good as Hell",
    "artist": "Lizzo",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=vuq-VAiW9kw",
    "source": "youtube-proof-of-concept",
@@ -418,7 +441,12 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 38.75,
    "audioOnlySec": 84.29,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "ass"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-pop-6",
@@ -455,7 +483,7 @@
    "title": "As It Was",
    "artist": "Harry Styles",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=H5v3kku4y6Q",
    "source": "youtube-proof-of-concept",
@@ -468,7 +496,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 123.0,
    "audioOnlySec": 43.33,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-8",
@@ -477,7 +508,7 @@
    "title": "Watermelon Sugar",
    "artist": "Harry Styles",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-8.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=E07s5ZYygMg",
    "source": "youtube-proof-of-concept",
@@ -490,7 +521,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 47.9,
    "audioOnlySec": 86.8,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-9",
@@ -499,7 +533,7 @@
    "title": "Levitating",
    "artist": "Dua Lipa",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-9.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=TUVcZfQe-Kw",
    "source": "youtube-proof-of-concept",
@@ -512,7 +546,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 27.96,
    "audioOnlySec": 94.97,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-10",
@@ -521,7 +558,7 @@
    "title": "Don't Start Now",
    "artist": "Dua Lipa",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-10.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=oygrmJFKYZY",
    "source": "youtube-proof-of-concept",
@@ -534,7 +571,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 21.9,
    "audioOnlySec": 52.34,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-11",
@@ -568,7 +608,7 @@
    "title": "Wake Me Up",
    "artist": "Avicii",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-12.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=IcrbM1l_BoI",
    "source": "youtube-proof-of-concept",
@@ -581,7 +621,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 68.64,
    "audioOnlySec": 93.14,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-13",
@@ -590,7 +633,7 @@
    "title": "Dynamite",
    "artist": "Taio Cruz",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-13.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=VUjdiDeJ0xg",
    "source": "youtube-proof-of-concept",
@@ -603,7 +646,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 30.09,
    "audioOnlySec": 145.31,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-14",
@@ -639,7 +685,7 @@
    "title": "Firework",
    "artist": "Katy Perry",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-15.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=QGJuMBdaqIw",
    "source": "youtube-proof-of-concept",
@@ -652,7 +698,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 44.91,
    "audioOnlySec": 76.83,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-16",
@@ -661,7 +710,7 @@
    "title": "Roar",
    "artist": "Katy Perry",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-16.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=_esBG-Tu3Po",
    "source": "youtube-proof-of-concept",
@@ -674,7 +723,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 186.73,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-17",
@@ -683,7 +735,7 @@
    "title": "Just Dance",
    "artist": "Lady Gaga",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-17.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=2Abk1jAONjw",
    "source": "youtube-proof-of-concept",
@@ -696,7 +748,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 49.55,
    "audioOnlySec": 107.53,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-18",
@@ -705,7 +760,7 @@
    "title": "Poker Face",
    "artist": "Lady Gaga",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-18.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=bESGLojNYSo",
    "source": "youtube-proof-of-concept",
@@ -718,7 +773,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 51.83,
    "audioOnlySec": 113.85,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-19",
@@ -727,7 +785,7 @@
    "title": "Since U Been Gone",
    "artist": "Kelly Clarkson",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-19.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=E5Lt9MHuUNc",
    "source": "youtube-proof-of-concept",
@@ -740,7 +798,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 38.27,
    "audioOnlySec": 92.32,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-20",
@@ -749,7 +810,7 @@
    "title": "Hung Up",
    "artist": "Madonna",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-20.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=EDwb9jOVRtU",
    "source": "youtube-proof-of-concept",
@@ -762,7 +823,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 40.38,
    "audioOnlySec": 187.99,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-21",
@@ -770,8 +834,8 @@
    "style": "pop",
    "title": "Rolling in the Deep",
    "artist": "Adele",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-21.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=rYEDA3JcQqw",
    "source": "youtube-proof-of-concept",
@@ -784,7 +848,12 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 47.14,
    "audioOnlySec": 187.15,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "shit"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-pop-22",
@@ -819,8 +888,8 @@
    "style": "pop",
    "title": "24K Magic",
    "artist": "Bruno Mars",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-23.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=UqyT8IEBkvY",
    "source": "youtube-proof-of-concept",
@@ -833,7 +902,14 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 27.47,
    "audioOnlySec": 81.85,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "ass",
+    "bitches",
+    "shit"
+   ],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-24",
@@ -842,7 +918,7 @@
    "title": "Just the Way You Are",
    "artist": "Bruno Mars",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-24.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=LjhCEhWiKXk",
    "source": "youtube-proof-of-concept",
@@ -855,7 +931,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 33.27,
    "audioOnlySec": 142.11,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-pop-25",
@@ -864,7 +943,7 @@
    "title": "Moves Like Jagger",
    "artist": "Maroon 5 ft. Christina Aguilera",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-pop-25.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=iEPTlhBmwRg",
    "source": "youtube-proof-of-concept",
@@ -877,7 +956,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 97.76,
    "audioOnlySec": 166.72,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "8090-1",
@@ -901,7 +983,10 @@
     233.5
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "8090-2",
@@ -924,7 +1009,10 @@
     160.9
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "8090-3",
@@ -947,7 +1035,10 @@
     108.9
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-1",
@@ -956,7 +1047,7 @@
    "title": "I Wanna Dance with Somebody",
    "artist": "Whitney Houston",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=eH3giaIzONA",
    "source": "youtube-proof-of-concept",
@@ -969,7 +1060,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 79.06,
    "audioOnlySec": 103.82,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-2",
@@ -978,7 +1072,7 @@
    "title": "Don't Stop Me Now",
    "artist": "Queen",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=HgzGwKwLmgM",
    "source": "youtube-proof-of-concept",
@@ -991,7 +1085,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 32.42,
    "audioOnlySec": 55.61,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-3",
@@ -1000,7 +1097,7 @@
    "title": "Take On Me",
    "artist": "a-ha",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=djV11Xbc914",
    "source": "youtube-proof-of-concept",
@@ -1013,7 +1110,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 49.09,
    "audioOnlySec": 53.71,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-4",
@@ -1022,7 +1122,7 @@
    "title": "Just Can't Get Enough",
    "artist": "Depeche Mode",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=_6FBfAQ-NDE",
    "source": "youtube-proof-of-concept",
@@ -1035,7 +1135,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 28.61,
    "audioOnlySec": 46.46,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-5",
@@ -1044,7 +1147,7 @@
    "title": "Footloose",
    "artist": "Kenny Loggins",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=ltrMfT4Qz5Y",
    "source": "youtube-proof-of-concept",
@@ -1057,7 +1160,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 52.8,
    "audioOnlySec": 121.12,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-8090-6",
@@ -1066,7 +1172,7 @@
    "title": "Africa",
    "artist": "Toto",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-6.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=FTQbiNvZqaY",
    "source": "youtube-proof-of-concept",
@@ -1079,7 +1185,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 65.67,
    "audioOnlySec": 194.93,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-7",
@@ -1087,8 +1196,8 @@
    "style": "8090",
    "title": "Total Eclipse of the Heart",
    "artist": "Bonnie Tyler",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=lcOxhH8N3Bo",
    "source": "youtube-proof-of-concept",
@@ -1101,7 +1210,12 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 83.89,
    "audioOnlySec": 88.05,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "fuck"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-8090-8",
@@ -1132,7 +1246,7 @@
    "title": "Walking on Sunshine",
    "artist": "Katrina and the Waves",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-9.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=iPUmE-tne5U",
    "source": "youtube-proof-of-concept",
@@ -1145,7 +1259,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 45.88,
    "audioOnlySec": 44.23,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-10",
@@ -1154,7 +1271,7 @@
    "title": "Time After Time",
    "artist": "Cyndi Lauper",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-10.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=VdQY7BusJNU",
    "source": "youtube-proof-of-concept",
@@ -1167,7 +1284,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 101.38,
    "audioOnlySec": 228.86,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-11",
@@ -1176,7 +1296,7 @@
    "title": "Like a Prayer",
    "artist": "Madonna",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-11.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=79fzeNUqQbQ",
    "source": "youtube-proof-of-concept",
@@ -1189,7 +1309,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 193.14,
    "audioOnlySec": 277.43,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-12",
@@ -1198,7 +1321,7 @@
    "title": "Wannabe",
    "artist": "Spice Girls",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-12.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=gJLIiF15wjQ",
    "source": "youtube-proof-of-concept",
@@ -1211,7 +1334,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 45.05,
    "audioOnlySec": 89.72,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-13",
@@ -1220,7 +1346,7 @@
    "title": "I Want It That Way",
    "artist": "Backstreet Boys",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-13.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=4fndeDfaWCg",
    "source": "youtube-proof-of-concept",
@@ -1233,7 +1359,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 48.67,
    "audioOnlySec": 177.24,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-14",
@@ -1242,7 +1371,7 @@
    "title": "...Baby One More Time",
    "artist": "Britney Spears",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-14.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=C-u5WLJ9Yk4",
    "source": "youtube-proof-of-concept",
@@ -1255,7 +1384,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 59.4,
    "audioOnlySec": 114.24,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-15",
@@ -1264,7 +1396,7 @@
    "title": "Mr. Jones",
    "artist": "Counting Crows",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-15.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=-oqAU5VxFWs",
    "source": "youtube-proof-of-concept",
@@ -1277,7 +1409,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 32.76,
    "audioOnlySec": 135.84,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-16",
@@ -1286,7 +1421,7 @@
    "title": "Gimme! Gimme! Gimme!",
    "artist": "ABBA",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-16.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=-mHMvYn6RVs",
    "source": "youtube-proof-of-concept",
@@ -1299,7 +1434,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 55.33,
    "audioOnlySec": 68.43,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-17",
@@ -1308,7 +1446,7 @@
    "title": "Celebration",
    "artist": "Kool & The Gang",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-17.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=3GwjfUFyY6M",
    "source": "youtube-proof-of-concept",
@@ -1321,7 +1459,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 31.11,
    "audioOnlySec": 34.11,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-18",
@@ -1355,7 +1496,7 @@
    "title": "Macarena (Bayside Boys Remix)",
    "artist": "Los del Río",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-19.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=qxa9C2ESdrc",
    "source": "youtube-proof-of-concept",
@@ -1368,7 +1509,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 162.4,
    "audioOnlySec": 139.71,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-8090-20",
@@ -1377,7 +1521,7 @@
    "title": "The Git Up",
    "artist": "Blanco Brown",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-20.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=bN8vY8qkgVs",
    "source": "youtube-proof-of-concept",
@@ -1390,7 +1534,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 25.17,
    "audioOnlySec": 102.93,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-21",
@@ -1399,7 +1546,7 @@
    "title": "Cupid Shuffle",
    "artist": "Cupid",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-21.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=uPna1dIeUHQ",
    "source": "youtube-proof-of-concept",
@@ -1412,7 +1559,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 67.69,
    "audioOnlySec": 148.75,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-8090-22",
@@ -1420,8 +1570,8 @@
    "style": "8090",
    "title": "Cha Cha Slide",
    "artist": "DJ Casper",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-8090-22.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=uN0oVHOD4GU",
    "source": "youtube-proof-of-concept",
@@ -1434,7 +1584,12 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 124.44,
    "audioOnlySec": 303.9,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "fucking"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-8090-23",
@@ -1509,7 +1664,10 @@
     154.3
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "rock-2",
@@ -1532,7 +1690,10 @@
     135.6
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "rock-3",
@@ -1582,7 +1743,10 @@
     112.0
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "rock-5",
@@ -1605,7 +1769,10 @@
     182.4
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "rock-6",
@@ -1629,7 +1796,10 @@
     152.9
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-1",
@@ -1638,7 +1808,7 @@
    "title": "Bohemian Rhapsody",
    "artist": "Queen",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=fJ9rUzIMcZQ",
    "source": "youtube-proof-of-concept",
@@ -1651,7 +1821,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 187.5,
    "audioOnlySec": 110.36,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-2",
@@ -1660,7 +1833,7 @@
    "title": "You Shook Me All Night Long",
    "artist": "AC/DC",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=Lo2qQmj0_h4",
    "source": "youtube-proof-of-concept",
@@ -1673,7 +1846,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 25.24,
    "audioOnlySec": 61.23,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-3",
@@ -1681,8 +1857,8 @@
    "style": "rock",
    "title": "Sweet Home Alabama",
    "artist": "Lynyrd Skynyrd",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=ye5BuYf8q4o",
    "source": "youtube-proof-of-concept",
@@ -1695,7 +1871,12 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 124.39,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "fucking"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-rock-4",
@@ -1704,7 +1885,7 @@
    "title": "Free Bird",
    "artist": "Lynyrd Skynyrd",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=0LwcvjNJTuM",
    "source": "youtube-proof-of-concept",
@@ -1717,7 +1898,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 286.79,
    "audioOnlySec": 210.93,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-5",
@@ -1726,7 +1910,7 @@
    "title": "Johnny B. Goode",
    "artist": "Chuck Berry",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=TReqmJ7iX2M",
    "source": "youtube-proof-of-concept",
@@ -1739,7 +1923,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 19.6,
    "audioOnlySec": 69.31,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-6",
@@ -1748,7 +1935,7 @@
    "title": "Twist and Shout",
    "artist": "The Beatles",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-6.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=xcdwr9RCg2A",
    "source": "youtube-proof-of-concept",
@@ -1761,7 +1948,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 40.33,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-7",
@@ -1770,7 +1960,7 @@
    "title": "Hey Jude",
    "artist": "The Beatles",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=mQER0A0ej0M",
    "source": "youtube-proof-of-concept",
@@ -1783,7 +1973,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 174.96,
    "audioOnlySec": 223.19,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-8",
@@ -1792,7 +1985,7 @@
    "title": "Hound Dog",
    "artist": "Elvis Presley",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-8.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=-eHJ12Vhpyc",
    "source": "youtube-proof-of-concept",
@@ -1805,7 +1998,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 16.3,
    "audioOnlySec": 41.05,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-9",
@@ -1814,7 +2010,7 @@
    "title": "Jailhouse Rock",
    "artist": "Elvis Presley",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-9.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=PpsUOOfb-vE",
    "source": "youtube-proof-of-concept",
@@ -1827,7 +2023,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 19.16,
    "audioOnlySec": 119.56,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-rock-10",
@@ -1836,7 +2035,7 @@
    "title": "Shout",
    "artist": "The Isley Brothers",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-10.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=DPVf01jXL7M",
    "source": "youtube-proof-of-concept",
@@ -1849,7 +2048,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 220.15,
    "audioOnlySec": 163.63,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-11",
@@ -1858,7 +2060,7 @@
    "title": "Respect",
    "artist": "Aretha Franklin",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-11.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=A134hShx_gw",
    "source": "youtube-proof-of-concept",
@@ -1871,7 +2073,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 104.35,
    "audioOnlySec": 36.57,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-12",
@@ -1880,7 +2085,7 @@
    "title": "My Girl",
    "artist": "The Temptations",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-12.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=eepLY8J4E6c",
    "source": "youtube-proof-of-concept",
@@ -1893,7 +2098,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 22.04,
    "audioOnlySec": 35.9,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-13",
@@ -1902,7 +2110,7 @@
    "title": "Ain't No Mountain High Enough",
    "artist": "Marvin Gaye & Tammi Terrell",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-13.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=ABfQuZqq8wg",
    "source": "youtube-proof-of-concept",
@@ -1915,7 +2123,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 18.25,
    "audioOnlySec": 60.63,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-14",
@@ -1924,7 +2135,7 @@
    "title": "I Heard It Through the Grapevine",
    "artist": "Marvin Gaye",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-14.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=YUzTr2P0AJo",
    "source": "youtube-proof-of-concept",
@@ -1937,7 +2148,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 159.45,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-15",
@@ -1946,7 +2160,7 @@
    "title": "Dancing in the Street",
    "artist": "Martha and the Vandellas",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-15.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=1PXzYVhA2CQ",
    "source": "youtube-proof-of-concept",
@@ -1959,7 +2173,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 43.98,
    "audioOnlySec": 101.01,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-16",
@@ -1993,7 +2210,7 @@
    "title": "Let's Groove",
    "artist": "Earth, Wind & Fire",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-17.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=Lrle0x_DHBM",
    "source": "youtube-proof-of-concept",
@@ -2006,7 +2223,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 28.63,
    "audioOnlySec": 185.88,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-18",
@@ -2015,7 +2235,7 @@
    "title": "Boogie Wonderland",
    "artist": "Earth, Wind & Fire",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-18.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=god7hAPv8f0",
    "source": "youtube-proof-of-concept",
@@ -2028,7 +2248,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 35.18,
    "audioOnlySec": 153.18,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-rock-19",
@@ -2037,7 +2260,7 @@
    "title": "Funkytown",
    "artist": "Lipps Inc.",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-19.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=Z6dqIYKIBSU",
    "source": "youtube-proof-of-concept",
@@ -2050,7 +2273,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 56.75,
    "audioOnlySec": 354.13,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-20",
@@ -2059,7 +2285,7 @@
    "title": "I Will Survive",
    "artist": "Gloria Gaynor",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-20.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=nXMPx4DDVWM",
    "source": "youtube-proof-of-concept",
@@ -2072,7 +2298,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 31.97,
    "audioOnlySec": 129.59,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-21",
@@ -2080,8 +2309,8 @@
    "style": "rock",
    "title": "Le Freak",
    "artist": "Chic",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-21.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=aXgSHL7efKg",
    "source": "youtube-proof-of-concept",
@@ -2094,7 +2323,12 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 96.6,
    "audioOnlySec": 182.21,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "shit"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-rock-22",
@@ -2103,7 +2337,7 @@
    "title": "Shake Your Groove Thing",
    "artist": "Peaches & Herb",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-22.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=e-LeujZNV08",
    "source": "youtube-proof-of-concept",
@@ -2116,7 +2350,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 60.02,
    "audioOnlySec": 190.26,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-23",
@@ -2125,7 +2362,7 @@
    "title": "Wonderful Tonight",
    "artist": "Eric Clapton",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-23.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=mMW8CIKMOyQ",
    "source": "youtube-proof-of-concept",
@@ -2138,7 +2375,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 62.25,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-24",
@@ -2147,7 +2387,7 @@
    "title": "Pretty Woman",
    "artist": "Roy Orbison",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-24.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=_PLq0_7k1jk",
    "source": "youtube-proof-of-concept",
@@ -2160,7 +2400,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 68.34,
    "audioOnlySec": 51.39,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-rock-25",
@@ -2169,7 +2412,7 @@
    "title": "Great Balls of Fire",
    "artist": "Jerry Lee Lewis",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-rock-25.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=0VJ1NuAbEBI",
    "source": "youtube-proof-of-concept",
@@ -2182,7 +2425,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 18.48,
    "audioOnlySec": 84.96,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-rock-26",
@@ -2231,7 +2477,10 @@
     185.9
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "hiphop-2",
@@ -2458,7 +2707,7 @@
    "title": "Single Ladies (Put a Ring on It)",
    "artist": "Beyoncé",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-hiphop-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=4m1EFMoRFvY",
    "source": "youtube-proof-of-concept",
@@ -2471,7 +2720,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 30.42,
    "audioOnlySec": 101.63,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-hiphop-8",
@@ -2555,7 +2807,7 @@
    "title": "Independent Women",
    "artist": "Destiny's Child",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-hiphop-11.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=0lPQZni7I18",
    "source": "youtube-proof-of-concept",
@@ -2568,7 +2820,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 50.48,
    "audioOnlySec": 81.04,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-hiphop-12",
@@ -2577,7 +2832,7 @@
    "title": "Waterfalls",
    "artist": "TLC",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-hiphop-12.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=8WEtxJ4-sh4",
    "source": "youtube-proof-of-concept",
@@ -2590,7 +2845,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 227.28,
    "audioOnlySec": 275.09,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-hiphop-13",
@@ -2682,7 +2940,7 @@
    "title": "Hotline Bling",
    "artist": "Drake",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-hiphop-16.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=zt6aRKpf9T4",
    "source": "youtube-proof-of-concept",
@@ -2695,7 +2953,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 153.02,
    "audioOnlySec": 141.01,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-hiphop-17",
@@ -2703,8 +2964,8 @@
    "style": "hiphop",
    "title": "Can't Hold Us",
    "artist": "Macklemore & Ryan Lewis",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-hiphop-17.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=2zNSgSzhBfM",
    "source": "youtube-proof-of-concept",
@@ -2717,7 +2978,12 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 148.7,
    "audioOnlySec": 165.95,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "shit"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-hiphop-18",
@@ -2789,8 +3055,8 @@
    "style": "hiphop",
    "title": "Yeah 3x",
    "artist": "Chris Brown",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-hiphop-20.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=3mC2ixOAivA",
    "source": "youtube-proof-of-concept",
@@ -2803,7 +3069,12 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 85.1,
    "audioOnlySec": 92.02,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "fuck"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "latin-1",
@@ -2826,7 +3097,10 @@
     167.5
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "latin-2",
@@ -2849,7 +3123,10 @@
     146.1
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "latin-3",
@@ -2872,7 +3149,10 @@
     153.0
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-latin-1",
@@ -2881,7 +3161,7 @@
    "title": "Bailando",
    "artist": "Enrique Iglesias ft. Descemer Bueno",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=rClsc05_eU0",
    "source": "youtube-proof-of-concept",
@@ -2894,7 +3174,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 68.5,
    "audioOnlySec": 169.71,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-latin-2",
@@ -2903,7 +3186,7 @@
    "title": "Mi Gente",
    "artist": "J Balvin & Willy William",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=wnJ6LuUFpMo",
    "source": "youtube-proof-of-concept",
@@ -2916,7 +3199,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 24.26,
    "audioOnlySec": 147.66,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-3",
@@ -2925,7 +3211,7 @@
    "title": "Despacito",
    "artist": "Luis Fonsi ft. Daddy Yankee",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-3.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
    "source": "youtube-proof-of-concept",
@@ -2938,7 +3224,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 79.04,
    "audioOnlySec": 106.51,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-4",
@@ -2947,7 +3236,7 @@
    "title": "Hips Don't Lie",
    "artist": "Shakira ft. Wyclef Jean",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=DUT5rEU6pqM",
    "source": "youtube-proof-of-concept",
@@ -2960,7 +3249,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 26.35,
    "audioOnlySec": 65.97,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-5",
@@ -2969,7 +3261,7 @@
    "title": "Waka Waka",
    "artist": "Shakira",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=pRpeEdMmmQ0",
    "source": "youtube-proof-of-concept",
@@ -2982,7 +3274,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 57.03,
    "audioOnlySec": 116.89,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-6",
@@ -2991,7 +3286,7 @@
    "title": "La Bamba",
    "artist": "Ritchie Valens",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-6.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=BycLmWI97Nc",
    "source": "youtube-proof-of-concept",
@@ -3004,7 +3299,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 15.33,
    "audioOnlySec": 51.78,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-7",
@@ -3013,7 +3311,7 @@
    "title": "Suavemente",
    "artist": "Elvis Crespo",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=WPiEbYSF9kE",
    "source": "youtube-proof-of-concept",
@@ -3026,7 +3324,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 32.25,
    "audioOnlySec": 193.65,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-8",
@@ -3035,7 +3336,7 @@
    "title": "Conga",
    "artist": "Gloria Estefan & Miami Sound Machine",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-8.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=7RT3q0VZjZQ",
    "source": "youtube-proof-of-concept",
@@ -3048,7 +3349,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness (no heatmap available)",
    "heatmapPeakSec": null,
    "audioOnlySec": 161.29,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-9",
@@ -3057,7 +3361,7 @@
    "title": "Livin' la Vida Loca",
    "artist": "Ricky Martin",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-9.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=p47fEXGabaY",
    "source": "youtube-proof-of-concept",
@@ -3070,7 +3374,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 45.05,
    "audioOnlySec": 180.56,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-10",
@@ -3079,7 +3386,7 @@
    "title": "Oye Como Va",
    "artist": "Santana",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-10.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=J7ATTjg7tpE",
    "source": "youtube-proof-of-concept",
@@ -3092,7 +3399,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 31.09,
    "audioOnlySec": 202.18,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-11",
@@ -3101,7 +3411,7 @@
    "title": "Smooth",
    "artist": "Santana ft. Rob Thomas",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-11.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=6Whgn_iE5uc",
    "source": "youtube-proof-of-concept",
@@ -3114,7 +3424,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 66.97,
    "audioOnlySec": 157.55,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-12",
@@ -3176,7 +3489,7 @@
    "title": "Propuesta Indecente",
    "artist": "Romeo Santos",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-latin-14.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=QFs3PIZb3js",
    "source": "youtube-proof-of-concept",
@@ -3189,7 +3502,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 59.21,
    "audioOnlySec": 69.89,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-latin-15",
@@ -3268,7 +3584,10 @@
     185.2
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "country-3",
@@ -3292,7 +3611,10 @@
     164.2
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-1",
@@ -3301,7 +3623,7 @@
    "title": "Boot Scootin' Boogie",
    "artist": "Brooks & Dunn",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-1.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=d05tQrhNMkA",
    "source": "youtube-proof-of-concept",
@@ -3314,7 +3636,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 24.36,
    "audioOnlySec": 129.59,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-2",
@@ -3323,7 +3648,7 @@
    "title": "Body Like a Back Road",
    "artist": "Sam Hunt",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-2.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=Mdh2p03cRfw",
    "source": "youtube-proof-of-concept",
@@ -3336,7 +3661,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 19.99,
    "audioOnlySec": 74.54,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-3",
@@ -3369,8 +3697,8 @@
    "style": "country",
    "title": "Wagon Wheel",
    "artist": "Darius Rucker",
-   "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicit": true,
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-4.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=hvKyBcCDOB4",
    "source": "youtube-proof-of-concept",
@@ -3383,7 +3711,12 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 41.91,
    "audioOnlySec": 75.14,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "explicit",
+   "explicitWords": [
+    "shit"
+   ],
+   "explicitConfidence": "medium"
   },
   {
    "id": "lib-country-5",
@@ -3392,7 +3725,7 @@
    "title": "Country Girl (Shake It for Me)",
    "artist": "Luke Bryan",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-5.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=7HX4SfnVlP4",
    "source": "youtube-proof-of-concept",
@@ -3405,7 +3738,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 43.93,
    "audioOnlySec": 137.9,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-6",
@@ -3414,7 +3750,7 @@
    "title": "Take Me Home, Country Roads",
    "artist": "John Denver",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-6.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=1vrEljMfXYo",
    "source": "youtube-proof-of-concept",
@@ -3427,7 +3763,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 25.61,
    "audioOnlySec": 155.04,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-7",
@@ -3436,7 +3775,7 @@
    "title": "Man! I Feel Like a Woman!",
    "artist": "Shania Twain",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-7.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=ZJL4UGSbeFg",
    "source": "youtube-proof-of-concept",
@@ -3449,7 +3788,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 47.32,
    "audioOnlySec": 53.55,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-8",
@@ -3458,7 +3800,7 @@
    "title": "Chattahoochee",
    "artist": "Alan Jackson",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-8.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=JW5UEW2kYvc",
    "source": "youtube-proof-of-concept",
@@ -3471,7 +3813,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 29.93,
    "audioOnlySec": 104.1,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-9",
@@ -3480,7 +3825,7 @@
    "title": "Fishin' in the Dark",
    "artist": "Nitty Gritty Dirt Band",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-9.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=jBRfkxUAyOk",
    "source": "youtube-proof-of-concept",
@@ -3493,7 +3838,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 42.68,
    "audioOnlySec": 124.04,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-10",
@@ -3502,7 +3850,7 @@
    "title": "Good Time",
    "artist": "Alan Jackson",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-10.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=PSROm-vgVRk",
    "source": "youtube-proof-of-concept",
@@ -3515,7 +3863,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 46.11,
    "audioOnlySec": 294.31,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-11",
@@ -3524,7 +3875,7 @@
    "title": "Dirt Road Anthem",
    "artist": "Jason Aldean",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-11.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=dPkzzAeUQ7s",
    "source": "youtube-proof-of-concept",
@@ -3537,7 +3888,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 69.06,
    "audioOnlySec": 145.1,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-12",
@@ -3546,7 +3900,7 @@
    "title": "Buy Dirt",
    "artist": "Jordan Davis ft. Luke Bryan",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-12.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=AKec3LTILRU",
    "source": "youtube-proof-of-concept",
@@ -3559,7 +3913,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 53.89,
    "audioOnlySec": 188.73,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-13",
@@ -3595,7 +3952,7 @@
    "title": "Tennessee Whiskey",
    "artist": "Chris Stapleton",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-14.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=4zAThXFOy2c",
    "source": "youtube-proof-of-concept",
@@ -3608,7 +3965,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 35.29,
    "audioOnlySec": 227.53,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "lib-country-15",
@@ -3617,7 +3977,7 @@
    "title": "Strawberry Wine",
    "artist": "Deana Carter",
    "explicit": false,
-   "explicitSource": "apple:notExplicit",
+   "explicitSource": "local-asr+apple",
    "clip": "/setlist/clips/lib-country-15.mp3",
    "sourceUrl": "https://www.youtube.com/watch?v=Up06CryWQpE",
    "source": "youtube-proof-of-concept",
@@ -3630,7 +3990,10 @@
    "method": "librosa beat-sync chroma+MFCC self-similarity (repeated 14s section) + loudness + YouTube most-replayed heatmap",
    "heatmapPeakSec": 30.33,
    "audioOnlySec": 133.26,
-   "repeatOccurrencesSec": []
+   "repeatOccurrencesSec": [],
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "high"
   },
   {
    "id": "slow-1",
@@ -3652,7 +4015,10 @@
     34.2
    ],
    "source": "youtube-proof-of-concept",
-   "explicitSource": "apple:notExplicit"
+   "explicitSource": "local-asr+apple",
+   "explicitStatus": "clean",
+   "explicitWords": [],
+   "explicitConfidence": "medium"
   },
   {
    "id": "slow-2",
