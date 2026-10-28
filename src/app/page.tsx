@@ -161,7 +161,7 @@ export default function Home() {
         {[
           {
             title: "DJ",
-            titleHref: "/the-dj",
+            titleHref: "/dj",
             number: "01",
             bg: "bg-red",
             descNode: (
@@ -172,13 +172,13 @@ export default function Home() {
           },
           {
             title: "MC &\nHost",
-            titleHref: "/the-host",
+            titleHref: "/mc",
             number: "02",
             bg: "bg-black",
             descNode: (
               <>
                 In my culture, the wedding host is called a{" "}
-                <Link href="/the-host" className="underline underline-offset-[3px] decoration-white/30 hover:decoration-white transition-colors">
+                <Link href="/mc" className="underline underline-offset-[3px] decoration-white/30 hover:decoration-white transition-colors">
                   tamada
                 </Link>
                 {" "}— the emotional anchor of the celebration. Not someone who reads announcements off a card. Someone who turns the father-of-the-bride into the hero of his own speech. Who makes the shy uncle feel like the most important person in the room. Who gives 150 strangers a shared identity before the first dance even starts.

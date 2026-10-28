@@ -23,8 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/lighting", 0.9),
     page("/pricing", 0.9),
     page("/2027", 0.9, "weekly"),
-    page("/the-dj", 0.6),
-    page("/the-host", 0.6),
 
     // Effects and guides
     page("/special-effects", 0.85),

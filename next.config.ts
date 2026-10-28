@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      // /the-dj and /the-host duplicated /dj and /mc (same intent, two URLs): consolidate with permanent redirects.
+      { source: "/the-dj", destination: "/dj", permanent: true },
+      { source: "/the-host", destination: "/mc", permanent: true },
+    ];
+  },
   async headers() {
     return [
       // The couple music picker is private: keep it out of search results even if the link leaks.
