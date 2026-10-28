@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
     return [
       // The couple music picker is private: keep it out of search results even if the link leaks.
       { source: "/songs/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
+      // Youth Camp check-in kiosk, staff screen and its API: private, never indexed, never cached.
+      { source: "/checkin", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
+      { source: "/checkin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
+      { source: "/api/checkin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }, { key: "Cache-Control", value: "no-store" }] },
       { source: "/admin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }, { key: "Cache-Control", value: "no-store" }] },
       // Preview clips: cache for a week (a clip may be swapped for Dan's own MP3 under the same name).
       { source: "/setlist/clips/:file*", headers: [{ key: "Cache-Control", value: "public, max-age=604800" }] },
