@@ -1,0 +1,106 @@
+{
+  "slug": "splendor-valley",
+  "name": "Splendor Valley Events",
+  "citySlug": "asheville",
+  "tier": "worked",
+  "town": "Leicester",
+  "state": "NC",
+  "address": null,
+  "title": "Splendor Valley Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Splendor Valley in Leicester, NC? See the ceremony sites, pavilion and hours, and how I run hosting, sound and lighting there.",
+  "h1": "Hosting, DJ and lighting at Splendor Valley",
+  "lede": "Splendor Valley Events is a family farm venue in the Sandy Mush community near Leicester, with three ceremony sites and a covered pavilion. I hosted a wedding here in April 2026, with cold sparklers for the dance floor and the grand exit.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "Sandy Mush community, Leicester, NC. The venue describes itself as a mountain wedding venue near Asheville."
+    },
+    {
+      "label": "Ceremony sites",
+      "value": "Main Arbor, The Cross at the Pond, and The Fireplace (a gas fireplace about 14 feet long and over 20 feet tall). Permanent bench seating for up to 125."
+    },
+    {
+      "label": "Reception spaces",
+      "value": "A covered pavilion of 2,000 square feet and a climate-controlled main building with a 1,000 square foot great room."
+    },
+    {
+      "label": "Hours and guest counts",
+      "value": "The Intimate: 9 a.m. to 11 p.m., up to 100 guests, Friday or Saturday. Two-Day: Friday 1 to 9 p.m. for rehearsal and setup, Saturday 9 a.m. to 11 p.m., up to 150 guests. The Mini: 9 a.m. to 9 p.m., up to 50 guests. April to November."
+    },
+    {
+      "label": "Vendors",
+      "value": "Semi-open policy: outside vendors are allowed with insurance and certifications, no fee. A day-of coordinator and a special event insurance policy are required."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "A family farm in Sandy Mush",
+      "p": [
+        "Dustin and Amanda Brown bought the property in 2020. It has been in Dustin's family for generations and it is still a working farm, surrounded by mountains and green fields.",
+        "The venue lists three ceremony sites. The Main Arbor has a concrete walkway leading to a rustic wooden arch. The Cross at the Pond is a water feature. The Fireplace is a gas fireplace about 14 feet long and over 20 feet tall. For receptions there is a 2,000 square foot covered pavilion and a climate-controlled main building with a 1,000 square foot great room. Outside, gas fire pits and Edison bulb string lights are part of the grounds."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at Splendor Valley",
+      "p": [
+        "Three ceremony sites means three different sound jobs. At the arbor and the pond you are outdoors, so I keep speakers small and close to the aisle, put a mic on the officiant, and test everything before guests arrive. The Two-Day and Intimate packages include an on-site attendant starting two hours before the ceremony, which is a good window for my sound check.",
+        "After the vows, guests move to the pavilion or the great room. I announce the move, run cocktail music, then host the grand entrance, toasts and games from there. The venue requires a day-of coordinator, so I build the timeline with that person. The Intimate and Two-Day nights end at 11:00 p.m. and The Mini ends at 9:00 p.m., so I plan the last dance and the send-off backward from your end time."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects here",
+      "p": [
+        "The grounds already have Edison bulb string lights, so I keep my own lighting warm white and let those do their part. In the pavilion I use warm tungsten-look fixtures and soft wash lights on the structure, then a spotlight for the entrance and the first dance. The pond and the fireplace are two ceremony backdrops with their own glow, so I light faces and leave the rest alone.",
+        "My low fog machine draws up to 3,000 watts for about five minutes while it warms up, so it needs its own dedicated 30 amp circuit. Lights and sound run on ordinary 20 amp circuits. Splendor Valley does not publish its electrical layout, so I ask for a walk-through and send a power plan listing what I need and where. The venue also does not publish a rule on fog or cold sparks, so I get both approved in writing before your date."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Packages run April to November. The Intimate covers up to 100 guests on a Friday or Saturday. The Two-Day covers up to 150 and gives you Friday afternoon for rehearsal and setup. The venue requires a special event insurance policy, and its outside vendors must carry insurance and certifications.",
+        "On getting there, the venue says it is about 45 minutes from the Asheville airport and about 30 minutes from the nearest hotel, with Airbnb options as close as 0.2 miles. It does not publish a rain plan, so ask which covered space your ceremony would move to."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I bring my own DJ and host to Splendor Valley?",
+      "a": "Yes. The venue runs a semi-open vendor policy, so outside vendors are welcome at no fee as long as they carry insurance and the right certifications. I confirm those requirements with the venue when you book me."
+    },
+    {
+      "q": "What do you need from the venue for power?",
+      "a": "A dedicated 30 amp circuit for the fog machine, and ordinary 20 amp circuits for lights and sound near the pavilion or great room. I send a power plan so the Browns' team knows exactly where."
+    },
+    {
+      "q": "How late can the party go?",
+      "a": "The Intimate and Two-Day packages run until 11:00 p.m., and The Mini ends at 9:00 p.m. The venue does not publish a separate amplified music cutoff, so I ask when we plan the timeline."
+    },
+    {
+      "q": "What if it rains?",
+      "a": "The venue does not publish a rain plan. It has a covered pavilion and a climate-controlled great room, so ask which one holds your ceremony and how many guests it seats."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Splendor Valley Events: home page",
+      "url": "https://splendorvalleyevents.com/"
+    },
+    {
+      "label": "Splendor Valley Events: What is included",
+      "url": "https://splendorvalleyevents.com/see-what-is-included"
+    },
+    {
+      "label": "Splendor Valley Events: One-Day packages",
+      "url": "https://splendorvalleyevents.com/one-day-1"
+    },
+    {
+      "label": "Splendor Valley Events: Two-Day package",
+      "url": "https://splendorvalleyevents.com/two-day-1"
+    },
+    {
+      "label": "Splendor Valley Events: Meet our staff",
+      "url": "https://splendorvalleyevents.com/meet-our-staff"
+    }
+  ],
+  "asOf": "October 2026"
+}

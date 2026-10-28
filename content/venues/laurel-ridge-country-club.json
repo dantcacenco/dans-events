@@ -1,0 +1,98 @@
+{
+  "slug": "laurel-ridge-country-club",
+  "name": "Laurel Ridge Country Club",
+  "citySlug": "waynesville",
+  "tier": "guide",
+  "town": "Waynesville",
+  "state": "NC",
+  "address": "49 Cupp Lane, Waynesville, NC 28786",
+  "title": "Laurel Ridge Wedding DJ & Host | Dan's Events",
+  "description": "A guide to weddings at Laurel Ridge Country Club in Waynesville, NC: the Grand Lodge, Rustic Pavilion and Arbor, with notes on sound and lighting.",
+  "h1": "Planning sound, hosting and lighting at Laurel Ridge Country Club",
+  "lede": "Laurel Ridge is a golf club in Waynesville, about 30 minutes west of Asheville, with a stone-and-beam Grand Lodge, a covered Rustic Pavilion and an Arbor that looks out over the course. Here is how the spaces work and what I would ask.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "49 Cupp Lane, Waynesville, NC 28786, which the venue describes as 30 minutes west of Asheville."
+    },
+    {
+      "label": "Grand Lodge",
+      "value": "Seated capacity 175, cocktail style 250. Stonework, rustic beams, cathedral ceilings and walls of windows overlooking the golf course."
+    },
+    {
+      "label": "Rustic Pavilion",
+      "value": "Seated capacity 200, cocktail style 250. A covered outdoor venue with a full bar, deck and stone fireplace hearth, with heating elements and clear drop-down sides."
+    },
+    {
+      "label": "The Arbor",
+      "value": "Ceremony only, seated capacity 250. Natural laurel branches and poplar posts, adjacent to the Rustic Pavilion."
+    },
+    {
+      "label": "Event time",
+      "value": "One hour of rehearsal and five hours of event time are included for every wedding. The Bridal Suite opens at 9 a.m."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "Three spaces on the golf course",
+      "p": [
+        "The Grand Lodge is the indoor room, with stonework, rustic beams, cathedral ceilings and walls of windows toward the course. The Rustic Pavilion is a covered outdoor space with a deck, a full bar and a stone fireplace hearth, plus heating elements and clear drop-down sides for cool evenings. The Arbor is for ceremonies only, built from natural laurel branches and poplar posts.",
+        "The Arbor sits next to the Pavilion, so a ceremony and a reception can happen a few steps apart. Smaller rooms in the Lodge, the Mountain Vista Room and the Cedar Room, are used for rehearsal dinners and similar events."
+      ]
+    },
+    {
+      "h2": "Sound and hosting in each room",
+      "p": [
+        "The Pavilion and the Lodge call for different plans. In the Lodge, cathedral ceilings and glass make a large reflective room, so I aim speakers into the crowd and keep the level controlled. In the Pavilion, the sides can be down for heat or up for air, so I check the sound both ways at the sound check.",
+        "The five-hour event time shapes the host's job. I plan the entrance, toasts, dinner, first dance and open floor to fit inside it, and the venue says extra event hours can be added when pre-arranged. Laurel Ridge does not publish a music cutoff or sound rules in the materials I found, so I ask the events team."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "Stone, beams and windows make the Lodge a good canvas for warm white light. I would wash the beams, light faces and leave the window wall alone, so guests see the course at dusk. In the Pavilion, I would keep fixtures low and out of the way of the fireplace and the drop-down sides.",
+        "Low fog needs its own dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up. Lights and sound run on ordinary 20 amp circuits. The venue does not publish its power layout or a rule on fog, cold sparks or open flame in the guide I read, so I would ask the events team and get approval in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Lodging on site includes the Inn on the Green with four guest rooms, a one-bedroom First Tee Condo, the two-bedroom Condo on the Green and The Hideaway. Wedding packages include an in-house wedding planner, and food and beverage are separate from the venue fee.",
+        "The Bridal Suite is included with the Lodge and Pavilion packages from 9 a.m., and the Tee-Box Tavern is set aside for groomsmen. The guide does not publish a rain plan. The Pavilion has a roof, so ask whether your ceremony would move there from the Arbor."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is Laurel Ridge close to Asheville?",
+      "a": "The venue says it is conveniently located 30 minutes west of Asheville, in Waynesville. Check your own route and timing for the day."
+    },
+    {
+      "q": "Can I bring my own DJ and host?",
+      "a": "The venue's wedding page lists bands and DJs among its vendor recommendations. I would ask the events team to confirm in writing that an outside DJ and host can work with your package."
+    },
+    {
+      "q": "How long does the event run?",
+      "a": "Every wedding gets one hour of rehearsal and five hours of event time. Extra hours can be added if pre-arranged."
+    },
+    {
+      "q": "Can we use cold sparks or fog?",
+      "a": "The materials I read do not publish a rule on either. I ask for written approval for your room and date."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Laurel Ridge CC: Wedding Planning Guide 2026-27 (PDF)",
+      "url": "https://www.laurelridgeexperience.com/files/Wedding%20Planning%20Guide%202026-27.pdf"
+    },
+    {
+      "label": "Laurel Ridge CC: Weddings",
+      "url": "https://www.laurelridgeexperience.com/weddings"
+    },
+    {
+      "label": "Laurel Ridge CC: Mountain wedding venue",
+      "url": "https://www.laurelridgeexperience.com/weddings/mountain-wedding-venue"
+    }
+  ],
+  "asOf": "October 2026"
+}

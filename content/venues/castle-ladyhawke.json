@@ -1,0 +1,98 @@
+{
+  "slug": "castle-ladyhawke",
+  "name": "Castle Ladyhawke",
+  "citySlug": "waynesville",
+  "tier": "worked",
+  "town": "Tuckasegee",
+  "state": "NC",
+  "address": "1698 Shook Cove Road, Tuckasegee, NC 28783",
+  "title": "Castle Ladyhawke Wedding DJ & Host | Dan's Events",
+  "description": "Getting married at Castle Ladyhawke in Tuckasegee, NC? Read about the lawn, Great Hall, vendor access and lodging, and how I run sound and lighting.",
+  "h1": "Hosting, DJ and lighting at Castle Ladyhawke",
+  "lede": "Castle Ladyhawke is a castle venue in the mountains of Tuckasegee, with a lawn facing the Blue Ridge and a Great Hall the venue says has outstanding acoustics. I hosted a wedding here in May 2026.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "1698 Shook Cove Road, Tuckasegee, NC 28783, in the western NC mountains near Sylva. This is a drive west of Asheville, not a nearby venue."
+    },
+    {
+      "label": "Spaces",
+      "value": "Mountain View Lawn (outdoor ceremony), the Great Hall (indoor reception), and Mill Pond Pavilion, about a mile away inside Bear Lake Reserve, for welcome parties, rehearsal dinners and brunches."
+    },
+    {
+      "label": "Capacity",
+      "value": "Maximum seated banquet capacity of 125 guests, indoors and outdoors."
+    },
+    {
+      "label": "Getting ready",
+      "value": "Three private suites, each with an en suite bathroom."
+    },
+    {
+      "label": "Vendor access",
+      "value": "Custom Luxury packages begin at 11:00 a.m. and Inclusive weddings at 2:00 p.m. Venue access runs up to 12 hours depending on the package."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The castle, the lawn and the Great Hall",
+      "p": [
+        "The venue sits on Shook Cove Road in Tuckasegee. Ceremonies happen on the Mountain View Lawn, set in front of a Blue Ridge backdrop. Receptions are in the Great Hall, which the venue describes as having outstanding acoustics for live music and dancing.",
+        "A third space, Mill Pond Pavilion, is about a mile from the castle inside Bear Lake Reserve. The venue uses it for welcome parties, rehearsal dinners and send-off brunches. Three private suites with en suite bathrooms handle getting ready."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at the castle",
+      "p": [
+        "A lawn ceremony on a mountainside is mostly an outdoor sound job: wind, open air and guests spread along the rows. I put small speakers near the front, give the officiant a clean mic, and test from the back row before anyone arrives.",
+        "The Great Hall changes the job. A room praised for its acoustics is also a room where a mix can get muddy if the speakers are too loud, so I keep the sound controlled and let the room carry the voices during toasts. I host the night from there: grand entrance, toasts, first dance and open floor. Because the Mill Pond Pavilion is a separate place, I can also host a rehearsal dinner or welcome party there if you want one voice across the whole weekend."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects here",
+      "p": [
+        "For the Great Hall I plan warm white lighting that shapes the room instead of repainting it: wash lights on the walls and ceiling, a spotlight for the entrance and first dance, and low fog for the dance floor if the room allows it.",
+        "Fog needs its own dedicated 30 amp circuit because the machine draws up to 3,000 watts for about five minutes at warm-up. Lights and sound run on 20 amp circuits. Castle Ladyhawke does not publish its electrical layout or any rule on fog, cold sparks or open flame, so I ask for a walk-through, send a power plan, and get effects approved in writing before the date."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The venue keeps a Preferred Vendors List, and vendors new to the castle must provide proof of insurance. The FAQ does not mention DJs or lighting specifically, so ask the team how outside entertainment fits your package. You also provide Day of Event liability insurance no later than 30 days before the event.",
+        "For lodging, Bear Lake Reserve is under two miles from the castle's front gate with over 40 rental homes, and guests may get 10 percent off nightly rates. The castle can host the couple overnight. The venue does not publish a rain plan, so ask about the Great Hall as a backup for the lawn."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is Castle Ladyhawke close to Asheville?",
+      "a": "No. The address is in Tuckasegee, in the mountains near Sylva and about 20 minutes north of Cashiers according to a venue guide. Plan for a real drive west from Asheville and for guests to stay nearby."
+    },
+    {
+      "q": "Can I bring an outside DJ and host?",
+      "a": "The venue has a preferred vendor list and asks new vendors for proof of insurance. Its FAQ does not address DJs, so I ask your coordinator to confirm in writing before we sign anything."
+    },
+    {
+      "q": "How many guests fit?",
+      "a": "The venue's FAQ gives a maximum seated banquet capacity of 125, indoors and outdoors combined."
+    },
+    {
+      "q": "When can vendors set up?",
+      "a": "The venue says vendor access starts at 11:00 a.m. on Custom Luxury packages and 2:00 p.m. on Inclusive weddings. I plan my sound check inside that window."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Castle Ladyhawke: home page",
+      "url": "https://castleladyhawke.com/"
+    },
+    {
+      "label": "Castle Ladyhawke: FAQs",
+      "url": "https://castleladyhawke.com/faqs/"
+    },
+    {
+      "label": "Here Comes The Guide: Castle Ladyhawke",
+      "url": "https://www.herecomestheguide.com/wedding-venues/north-carolina/castle-ladyhawke"
+    }
+  ],
+  "asOf": "October 2026"
+}

@@ -1,0 +1,102 @@
+{
+  "slug": "hidden-river-events",
+  "name": "Hidden River Events",
+  "citySlug": "asheville",
+  "tier": "guide",
+  "town": "Swannanoa",
+  "state": "NC",
+  "address": "30 Hidden River Drive, Swannanoa, NC 28778",
+  "title": "Hidden River Events Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Hidden River Events near Asheville? See the river ceremony sites, tent, rain plans and 10:30 p.m. music rule, and how I run sound.",
+  "h1": "Hosting, DJ and lighting at Hidden River Events",
+  "lede": "Hidden River is a private 17-acre property on the Swannanoa River, about 15 minutes from downtown Asheville. Its packages include a DJ, and its FAQ says you can remove the DJ and bring your own, with someone to MC.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "A private 17-acre property beside the Swannanoa River, about 15 minutes from downtown Asheville. Listed at 30 Hidden River Drive, Swannanoa."
+    },
+    {
+      "label": "Ceremony sites",
+      "value": "Beside the river, under trees, among flower gardens and in open meadows. Receptions are held in a peaked tent."
+    },
+    {
+      "label": "Music rule",
+      "value": "Music must be off by 10:30 p.m. at the latest to comply with the sound ordinance, and guests leave the tent within 30 minutes after."
+    },
+    {
+      "label": "Rain plan",
+      "value": "Plan B: wait about 15 minutes and start later. Plan C: move everything into the tent. As of January 2025, 65 of over 1,000 weddings were affected by weather."
+    },
+    {
+      "label": "Setup",
+      "value": "The venue is set up and ready by noon for vendors, and the day-of coordinator arrives at noon."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "River, meadow and tent",
+      "p": [
+        "Hidden River has ceremony sites beside the Swannanoa River, beneath large trees, among flower gardens and in open meadows with long mountain views. Receptions are held in a peaked tent. Onsite housing and nearby vacation rentals can sleep 30 or more people.",
+        "Weddings include a day-of coordinator, and the venue says no other weddings are held on your wedding day."
+      ]
+    },
+    {
+      "h2": "Sound and hosting here",
+      "p": [
+        "Hidden River's rules are clear, which helps me. A DJ is included in its packages, but the FAQ says you can remove the DJ and bring your own. If you do, you still need someone to MC toasts, announcements, last call, cake cutting and the first dance. That is the job I do as your host, so you can bring me for both.",
+        "Music has to be off by 10:30 p.m. under the sound ordinance, and guests leave the tent within 30 minutes after. DJs must follow the ordinance, so I build the night backward from 10:30: grand entrance, toasts, first dance, open floor, last dance. Outdoors, I use close mics at river and meadow ceremonies, where wind and water carry sound away. Inside a tent, I keep the mix clear and the volume honest."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "A peaked tent gives me a ceiling to light. I keep the tent warm white, wash the peak and sidewalls, and add a spotlight for the entrance and first dance.",
+        "Low fog needs its own dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up. Lights and sound run on 20 amp circuits. The FAQ says a fire pit at the tent is lit and tended by staff, but it does not mention sparklers or fog, so I ask for written approval for both. Since vendors can set up from noon, I use that window to run cable and test power."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The rain plan is published: wait about 15 minutes and start later, or move everything into the tent. The venue has tent heaters, patio heaters and sidewalls for cold weather. Its record, as of January 2025, was 65 weather-affected weddings out of more than 1,000.",
+        "Saturday weddings with onsite housing get access Thursday and Friday nights at no extra site fee, and rehearsals on site have no additional charge. About 30 to 35 people can sleep onsite. Alcohol is not included, and hard liquor needs an NC ABC permit and the venue's approval."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I bring my own DJ to Hidden River?",
+      "a": "Yes. The venue includes a DJ in its packages, but the FAQ says you can remove the DJ and bring your own. You still need someone to MC toasts, announcements, last call, cake cutting and the first dance, and I do that as your host."
+    },
+    {
+      "q": "What time does the music stop?",
+      "a": "By 10:30 p.m. at the latest, per the venue's FAQ and the sound ordinance. Guests leave the tent within 30 minutes after the music ends."
+    },
+    {
+      "q": "What if it rains?",
+      "a": "The venue gives a Plan B, wait about 15 minutes and start later, and a Plan C, move everything into the tent. Tent heaters and sidewalls are available for cold weather."
+    },
+    {
+      "q": "Can a band play?",
+      "a": "Some bands are allowed, but large wedding bands generally are not. Amplified bands can play two dance sets that end by 10:30 p.m., per the FAQ."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Hidden River Events: home page",
+      "url": "https://www.hiddenriverevents.com/"
+    },
+    {
+      "label": "Hidden River Events: FAQ",
+      "url": "https://www.hiddenriverevents.com/faq/"
+    },
+    {
+      "label": "Hidden River Events: Elopement packages",
+      "url": "https://www.hiddenriverevents.com/elopement-packages/"
+    },
+    {
+      "label": "Here Comes The Guide: Hidden River Events",
+      "url": "https://www.herecomestheguide.com/wedding-venues/north-carolina/hidden-river-events"
+    }
+  ],
+  "asOf": "October 2026"
+}

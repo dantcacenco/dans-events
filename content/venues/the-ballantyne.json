@@ -1,0 +1,92 @@
+{
+  "slug": "the-ballantyne",
+  "name": "The Ballantyne, a Luxury Collection Hotel",
+  "citySlug": "charlotte",
+  "tier": "guide",
+  "town": "Charlotte",
+  "state": "NC",
+  "address": "10000 Ballantyne Commons Parkway, Charlotte, NC 28277",
+  "title": "The Ballantyne Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at The Ballantyne in Charlotte? How I would plan hosting, DJ sound and warm lighting across its ballroom, Rose Garden and lawns.",
+  "h1": "Hosting, DJ and lighting at The Ballantyne",
+  "lede": "The Ballantyne in south Charlotte has two ballrooms, a Rose Garden, two lawns and a lodge on one property, so the night can move between very different rooms. Here is how I would plan the sound and light for each.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "10000 Ballantyne Commons Parkway, Charlotte, NC 28277"
+    },
+    {
+      "label": "Indoor",
+      "value": "Ballantyne Ballroom (6,230 sq ft, 89 by 70 ft) and Fairway Ballroom (3,510 sq ft, 90 by 39 ft)"
+    },
+    {
+      "label": "Outdoor",
+      "value": "Rose Garden, North Lawn, South Lawn and a Terrace"
+    },
+    {
+      "label": "Lodge",
+      "value": "The Lodge, a 40,000 square foot mountain-style building with 35 guest rooms"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The ballrooms, gardens and lawns",
+      "p": [
+        "The hotel's venue page lists the Ballantyne Ballroom at 6,230 square feet with chandeliers and the Fairway Ballroom at 3,510. Outdoors it lists the Rose Garden, the North Lawn, the South Lawn, which it describes as open-air with a stone wall, and a Terrace. The Lodge, a North Carolina mountain-style hunting lodge, has 35 guest rooms. The hotel's pages show different numbers for some spaces and capacities, so confirm every figure with the events team before you plan a guest list."
+      ]
+    },
+    {
+      "h2": "Sound and hosting across this many rooms",
+      "p": [
+        "A property like this runs on handoffs: ceremony outside, cocktail hour on the terrace or in a smaller room, then the ballroom. I plan those handoffs with your planner and the hotel's wedding team, and I host the night so guests always know where to go next. The ballroom takes a full sound system with speakers aimed at the dance floor; the lawns and the Rose Garden need a small, separate ceremony setup with a microphone for the officiant.",
+        "The hotel's pages publish no music cutoff, so I ask for the amplified sound end time in writing and build the timeline backward from it."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "The hotel lists wall sconces and natural light for the South Lawn and no hang points there, so outdoor lighting means my own stands and power. I ask the hotel where outdoor circuits are and run the lawn, Rose Garden and Terrace off their own lines. In the ballroom, I keep the chandeliers part of the picture and add warm white washes and soft uplight.",
+        "My low-fog machine draws up to 3,000 W during warm-up and needs its own dedicated 30 A circuit. The hotel's pages do not publish a sparkler or fog rule, so I ask for approval in writing for cold sparks and fog."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Start with the hotel's Wedding Proposal Request form or the wedding team at 704-248-4020. Rooms, The Lodge and the walkable Stream Park and The Bowl at Ballantyne make a weekend easy for out-of-town guests. The pages do not list a rain plan, so ask which indoor room holds your ceremony if the lawn is wet."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Does the Ballantyne publish rules for outside vendors?",
+      "a": "The wedding pages I found list none. I ask the events team for the vendor requirements, insurance and load-in details, and I handle the paperwork."
+    },
+    {
+      "q": "Can we use cold sparks or fog at the Ballantyne?",
+      "a": "The hotel publishes no rule on either. Cold sparks have no flame, but they still need permission, so I confirm with the hotel and get it in writing."
+    },
+    {
+      "q": "Which space is best for a ceremony?",
+      "a": "It depends on guest count and season. The Rose Garden and the lawns are the outdoor options, and the ballrooms are the indoor ones; the hotel's pages list different capacities, so confirm with the events team."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Hotel website: Weddings",
+      "url": "https://www.theballantynehotel.com/weddings"
+    },
+    {
+      "label": "Hotel website: Wedding venues",
+      "url": "https://www.theballantynehotel.com/weddings/wedding-venues"
+    },
+    {
+      "label": "Hotel website: South Lawn",
+      "url": "https://www.theballantynehotel.com/weddings/wedding-venues/south-lawn"
+    },
+    {
+      "label": "Hotel website: Ballantyne Ballroom",
+      "url": "https://www.theballantynehotel.com/weddings/wedding-venues/ballantyne-ballroom"
+    }
+  ],
+  "asOf": "October 2026"
+}

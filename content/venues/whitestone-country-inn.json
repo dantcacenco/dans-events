@@ -1,0 +1,96 @@
+{
+  "slug": "whitestone-country-inn",
+  "name": "Whitestone Country Inn",
+  "citySlug": "knoxville",
+  "tier": "guide",
+  "town": "Kingston",
+  "state": "TN",
+  "address": "1200 Paint Rock Rd, Kingston, TN 37763",
+  "title": "Whitestone Country Inn Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Whitestone Country Inn in Kingston, TN? See how I would plan sound, hosting and warm light from chapel to reception.",
+  "h1": "Hosting, DJ and lighting at Whitestone Country Inn",
+  "lede": "Whitestone Country Inn sits on 50 acres along Watts Bar Lake in Kingston, TN, with a chapel, two gazebos and a reception center. Here is how I would plan sound and light for each part of the day.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "1200 Paint Rock Rd, Kingston, TN 37763; 50 acres along Watts Bar Lake"
+    },
+    {
+      "label": "Ceremony sites",
+      "value": "Chapel of the Good Shepherd, Courtyard Gazebo and Farmhouse Gazebo"
+    },
+    {
+      "label": "Reception",
+      "value": "Lion and Lamb Reception Center, for gatherings of up to 150 people"
+    },
+    {
+      "label": "Courtyard",
+      "value": "Heart-shaped stone courtyard with a gas-lit patio; the inn's page lists both 150 and 200 as its capacity"
+    },
+    {
+      "label": "Lodging",
+      "value": "Six lodging options: Entrance Barn, Farmhouse, Lion and the Lamb, Rivendell Cottage, Rose Cottage and School House"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The inn and its ceremony sites",
+      "p": [
+        "The inn's ceremony page lists three ceremony locations. The Chapel of the Good Shepherd is a replica of the Anglican chapel in Rugby, Tennessee, with a steeple and Gothic windows. The Courtyard Gazebo stands on a high knoll with views of Watts Bar Lake and a heart-shaped stone courtyard with a gas-lit patio, near the Lion and Lamb reception area. The Farmhouse Gazebo is a covered gazebo among oaks and maples in a small glen."
+      ]
+    },
+    {
+      "h2": "Sound and hosting from chapel to reception",
+      "p": [
+        "A small chapel and a lakeside knoll need different sound. In the chapel, the Gothic windows are hard surfaces that can make voices lively, so I use one or two small speakers and a microphone for the officiant. On the knoll the wind and the lake can take a quiet voice away, so I place a speaker close to the seats and watch the weather. The covered Farmhouse Gazebo works for a small ceremony with a microphone.",
+        "The Lion and Lamb Reception Center is the inn's largest reception option, up to 150 people. I would plan the walk from the ceremony to the reception with the inn's coordinators, then host the night from introductions to the send-off. The inn does not publish its music cutoff, so I confirm it."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "A gas-lit patio and a lake view at dusk already give a warm look, so I keep fixtures warm white and low and add washes to the reception room rather than competing with the sunset. The Farmhouse Gazebo and the courtyard would need extension power, so I ask where the outdoor circuits are.",
+        "Low fog needs its own dedicated 30 A circuit, and cold sparks need permission even though they have no flame. The inn publishes no rule on either, so I ask in writing, and with a lakeside setting I check the wind before using fog outdoors."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The inn's wedding page says you can move from an outdoor to an indoor venue if the weather turns. It also mentions relationships with recommended vendors, and a guest review on the page mentions an in-house wedding planner. The inn has six lodging options on the property. Capacities and rules are not published, so call 865-376-0113 and get the written details."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is the venue called Whitestone Inn or Whitestone Country Inn?",
+      "a": "The website address is whitestoneinn.com, and its wedding page calls the property Whitestone Country Inn. It is the same place, at 1200 Paint Rock Rd in Kingston."
+    },
+    {
+      "q": "Can we use an outside DJ and host?",
+      "a": "The inn says it has recommended vendors but publishes no rule on outside vendors. I ask in writing and send my timeline and power plan."
+    },
+    {
+      "q": "What happens if it rains?",
+      "a": "The wedding page says you can move from an outdoor to an indoor venue if weather is bad. Ask the inn which indoor space it would use for your guest count."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Weddings",
+      "url": "https://whitestoneinn.com/weddings/"
+    },
+    {
+      "label": "Venue website: Ceremony locations",
+      "url": "https://whitestoneinn.com/weddings/ceremony-locations/"
+    },
+    {
+      "label": "Venue website: Events and retreats",
+      "url": "https://whitestoneinn.com/events-and-retreats"
+    },
+    {
+      "label": "Venue website: Home",
+      "url": "https://www.whitestoneinn.com/"
+    }
+  ],
+  "asOf": "October 2026"
+}

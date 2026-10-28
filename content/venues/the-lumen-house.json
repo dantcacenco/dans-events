@@ -1,0 +1,97 @@
+{
+  "slug": "the-lumen-house",
+  "name": "The Lumen House",
+  "citySlug": "charlotte",
+  "tier": "worked",
+  "town": "Cleveland",
+  "state": "NC",
+  "address": "280 Rowan Road, Cleveland, NC 27013",
+  "title": "The Lumen House Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at The Lumen House in Cleveland, NC? See how I run sound, hosting and warm white lighting in its glass-walled hall and greenhouse.",
+  "h1": "Hosting, DJ and lighting at The Lumen House",
+  "lede": "The Lumen House in Cleveland, NC gives each part of the wedding day its own room: a glass-walled hall, a greenhouse, a veranda and gardens. I hosted a wedding here in May 2026, ran the sound and DJ, tested the lights and low fog before guests arrived, and we finished with cold sparklers for the grand exit.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "280 Rowan Road, Cleveland, NC 27013"
+    },
+    {
+      "label": "Spaces",
+      "value": "Reception Hall, Greenhouse, Veranda, Gardens, Grand Courtyard and Miniature Courtyard"
+    },
+    {
+      "label": "Access",
+      "value": "Exclusive use of the venue from 10 AM to 11 PM, with no overlapping events"
+    },
+    {
+      "label": "Seating included",
+      "value": "300 white oak bentwood chairs (the venue does not publish a maximum guest count)"
+    },
+    {
+      "label": "Lodging",
+      "value": "Two on-site cabins, each sleeping up to 8"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its six spaces",
+      "p": [
+        "The Lumen House's own website names six spaces: a Reception Hall with glass walls, chandeliers and a built-in bar; a Greenhouse with floor-to-ceiling windows, a curved back wall and over 40 hanging points; a covered Veranda; the Gardens, with old oaks, a ceremony altar and an outdoor fireplace; and two courtyards. Couples have the whole property from 10 AM to 11 PM.",
+        "Dezeen's write-up of the architecture describes two gabled buildings joined by a veranda, with concrete floors, white or black walls and large panes of glass. That is a handsome set of surfaces, and a hard one for sound and light, which shapes everything below."
+      ]
+    },
+    {
+      "h2": "Sound and hosting in the hall and gardens",
+      "p": [
+        "I hosted a wedding here in May 2026, ran the sound and DJ, tested the lights and low fog before guests arrived, and we finished with cold sparklers for the grand exit.",
+        "Glass and concrete bounce sound, so in the hall I keep speakers low and aimed at the dance floor and tables, not across the windows. For a ceremony at the garden altar I run a small separate setup with a microphone for the officiant, so the hall system stays quiet until cocktail hour. Since the property is yours alone, I plan the walk from garden to veranda to hall with you and the venue team. The website publishes no music cutoff, so I confirm that time when we build the timeline."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "Glass walls turn into black mirrors after dark, so I place lights where they will not show up as double fixtures in the windows. Warm white washes bring out the chandeliers instead of fighting them. I would ask which of the Greenhouse's 40-plus hanging points can carry fixtures, and what weight they are rated for.",
+        "The low-fog machine draws up to 3,000 W during its roughly five minute warm-up, so it needs its own dedicated 30 A circuit, apart from lights and sound. I send a power plan listing circuits and locations. Cold sparks have no flame but still need permission, and the venue publishes no sparkler or fog rule, so I get the answer from the venue in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The venue lists two private dressing rooms, a one-hour rehearsal the week of the wedding and a catering prep kitchen. Couples choose a planner and caterer from the venue's curated list, and other vendors are welcome. The two cabins are within walking distance. The site states no rain plan, so ask early where the ceremony moves if the garden is wet. Site visits are by appointment."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Does The Lumen House allow an outside DJ and host?",
+      "a": "The venue says couples choose a planner and caterer from its curated list and that other vendors are welcome. I send my power plan and timeline to the venue team ahead of the day so everyone works from the same page."
+    },
+    {
+      "q": "Can we use cold sparklers or low fog at The Lumen House?",
+      "a": "The venue publishes no rule on either. Cold sparks have no flame but still need permission, so I ask the venue and get approval in writing. The fog machine also needs its own 30 A circuit."
+    },
+    {
+      "q": "When does the music have to stop?",
+      "a": "The website lists exclusive use until 11 PM but no separate music cutoff. I confirm the amplified sound end time with the venue while we plan your timeline."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Home (spaces)",
+      "url": "http://thelumenhouseevents.com/"
+    },
+    {
+      "label": "Venue website: Investment (hours, inclusions, vendors)",
+      "url": "http://thelumenhouseevents.com/services"
+    },
+    {
+      "label": "Venue website: Accommodations (cabins)",
+      "url": "http://thelumenhouseevents.com/accommodations"
+    },
+    {
+      "label": "Dezeen: Lumen House architecture",
+      "url": "https://www.dezeen.com/?p=2174984"
+    }
+  ],
+  "asOf": "October 2026"
+}

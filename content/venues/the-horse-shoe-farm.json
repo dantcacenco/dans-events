@@ -1,0 +1,98 @@
+{
+  "slug": "the-horse-shoe-farm",
+  "name": "The Horse Shoe Farm",
+  "citySlug": "hendersonville",
+  "tier": "guide",
+  "town": "Hendersonville",
+  "state": "NC",
+  "address": "155 Horse Shoe Farm Dr, Hendersonville, NC 28791",
+  "title": "Horse Shoe Farm Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at The Horse Shoe Farm in Hendersonville, NC? How a host, DJ and lighting plan fits the Sunset Barn, Sky Barn and covered bridge.",
+  "h1": "Hosting, DJ and lighting at The Horse Shoe Farm",
+  "lede": "The Horse Shoe Farm is an 85-acre riverfront property in Hendersonville with two large barns, a covered bridge and a spa. Here is how I would plan sound and light across all of it.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "155 Horse Shoe Farm Dr, Hendersonville, NC 28791"
+    },
+    {
+      "label": "Property",
+      "value": "85 acres along the French Broad River. It is a boutique resort with lodging, a restaurant and a spa."
+    },
+    {
+      "label": "Sunset Barn",
+      "value": "6,000 sq ft of heated and air-conditioned space in two areas, listed for 75 to 200 guests, on the highest point of the property with sunset views over Mount Pisgah."
+    },
+    {
+      "label": "Sky Barn",
+      "value": "A 6,500 sq ft indoor space with soaring ceilings and year-round climate control, listed for 50 to 300 guests."
+    },
+    {
+      "label": "Ceremony and dining",
+      "value": "The Covered Bridge and Gazebo for ceremonies, and the Silo Cookhouse for 75 guests or fewer."
+    },
+    {
+      "label": "Lodging",
+      "value": "The farm lists lodging that sleeps up to 84 guests."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its spaces",
+      "p": [
+        "The farm lists several settings for a wedding. The Covered Bridge and Gazebo are named as ceremony backdrops, with pond views and a creek running nearby. For a reception you can choose the Sunset Barn, the Sky Barn, the Silo Cookhouse or a large canopy tent in the pastures.",
+        "The Sunset Barn splits into two areas, so cocktail hour and dinner can happen in different rooms. A 500 sq ft room called the Sanctuary is attached as a third space."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at the Horse Shoe Farm",
+      "p": [
+        "With this much ground, the move between spaces is the main thing I plan. I script the walk from the bridge or gazebo to the barn, with a clear cue for cocktail hour and another for the grand entrance, so guests are never left wondering.",
+        "An outdoor ceremony by the creek and pond needs speakers aimed at the seats and a mic that handles wind and running water. Inside a big barn with a tall ceiling, I tune the room at the sound check so toasts are understandable. The farm's FAQ names the area around The Stable Spa a quiet zone for spa guests, so I ask the events team how far the music may carry and plan speaker aim away from it. The page says different terms and conditions apply to weddings, and I did not find a published music cutoff."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "A barn with a high ceiling takes warm white wash and a few beam lights above the dance floor well. I keep the wood and beams visible and avoid heavy color, so the barn still looks like a barn. In a tent I use freestanding fixtures and keep cables tidy.",
+        "Low fog needs a dedicated 30 amp circuit. I send a power plan, and for a pasture tent I ask whether the farm provides power or whether a generator is needed. I did not find a published fog or cold spark rule, so I confirm with the farm and get approval in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The farm's lodging sleeps up to 84 guests, so you can plan a weekend. Use the inquiry form on the weddings page to check dates; the farm directs custom packages to its sales team.",
+        "Ask early about vendor load-in, since the barns sit on a large property, and how rain moves the ceremony indoors."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Which barn should we choose for dancing?",
+      "a": "The Sunset Barn is listed for 75 to 200 guests and the Sky Barn for 50 to 300. Your guest count and whether you want the sunset view decide it, and I plan sound and light for either."
+    },
+    {
+      "q": "Is there a music cutoff?",
+      "a": "I did not find a published cutoff, and the farm says different terms apply to weddings. I ask the sales team and build your timeline around the answer."
+    },
+    {
+      "q": "Can you work in a pasture tent?",
+      "a": "Yes, with a power plan. I ask the farm about power, and I bring a plan for lighting on stands and sound that fits the tent."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Weddings",
+      "url": "https://thehorseshoefarm.com/weddings"
+    },
+    {
+      "label": "Venue website: Venue Spaces",
+      "url": "https://thehorseshoefarm.com/venue-spaces"
+    },
+    {
+      "label": "Venue website: FAQ",
+      "url": "https://thehorseshoefarm.com/faq"
+    }
+  ],
+  "asOf": "October 2026"
+}

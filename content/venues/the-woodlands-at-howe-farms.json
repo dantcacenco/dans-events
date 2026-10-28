@@ -1,0 +1,97 @@
+{
+  "slug": "the-woodlands-at-howe-farms",
+  "name": "The Woodlands at Howe Farms",
+  "citySlug": "knoxville",
+  "tier": "worked",
+  "town": "Georgetown",
+  "state": "TN",
+  "address": "7600 Runyan Road, Georgetown, TN 37336",
+  "title": "Woodlands at Howe Farms Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at The Woodlands at Howe Farms in Georgetown, TN? See how I plan sound, hosting and warm lighting for its white hall and fireside room.",
+  "h1": "Hosting, DJ and lighting at The Woodlands at Howe Farms",
+  "lede": "The Woodlands is the Tuscan-inspired indoor venue at Howe Farms in Georgetown, TN, with a white hall, a fireside room and a garden between them. I hosted a wedding here in September 2026, a night that included cold sparks and low fog.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "7600 Runyan Road, Georgetown, TN 37336 (Howe Farms campus; The Woodlands is listed under Five Gables)"
+    },
+    {
+      "label": "Spaces",
+      "value": "Main reception hall, a fireside room with a fireplace and arched floor-to-ceiling windows, a shaded outdoor ceremony site, a walk-through garden and a bistro-lit patio"
+    },
+    {
+      "label": "Rental hours",
+      "value": "Access from 7 am to 11 pm (the venue's FAQ)"
+    },
+    {
+      "label": "Sparklers",
+      "value": "Sparklers up to 36 inches are permitted; fireworks must come from Howe Farms (the venue's FAQ)"
+    },
+    {
+      "label": "DJs",
+      "value": "The venue requires the DJ to come from its vendor list (the venue's FAQ)"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The Woodlands and its rooms",
+      "p": [
+        "Howe Farms lists The Woodlands as a Tuscan-inspired indoor venue with a white interior and dark detailing, high ceilings and chandeliers, set in a wooded part of Georgetown. It has two main areas: the dining hall and the fireside room, which has arched floor-to-ceiling windows and a fireplace and can host an indoor ceremony, cocktail hour and dancing. A walk-through garden and a bistro-lit patio connect them to a shaded outdoor ceremony site framed by stucco pillars and arches.",
+        "The venue's pages do not publish a capacity for The Woodlands, so ask Howe Farms for the current number for your layout."
+      ]
+    },
+    {
+      "h2": "Sound and hosting in a hall with this much hard surface",
+      "p": [
+        "I hosted a wedding here in September 2026, a night that included cold sparks and low fog. Before the day I mapped the hall for lighting and power from the couple's floor plan, with a 30 by 22 foot dance floor at its center.",
+        "A white room with beams, arched doors and a pitched roof carries sound a long way, so I place speakers to cover the dance floor and tables and keep the level down at the back. Howe Farms requires the DJ to come from its vendor list, so tell your coordinator early if you want me, before you sign anything. I plan the move from patio cocktails to the hall to the dance floor with the coordinator."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects in the hall",
+      "p": [
+        "From the floor plan I mapped a white-walled hall with a gable running its length, dark exposed beams under ivory drape, iron ring chandeliers, arched french doors down both long walls, and a fireplace with an overmantel mirror on the feature wall. White walls take warm light well. I keep the beams and chandeliers as the architecture of the room, light the drape softly, and keep beams off the mirror and the glass doors.",
+        "Low fog needs its own dedicated 30 A circuit, and lights and sound run on 20 A circuits, so the power plan lists circuits by wall. Howe Farms publishes that sparklers up to 36 inches are permitted and fireworks must come from the venue. It does not address cold spark machines or fog, so I get both approved in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Rental includes access from 7 am to 11 pm, and extra days for setup and rehearsal can be purchased. The FAQ prohibits confetti, glitter and sky lanterns. Howe Farms lists eight lodging houses and apartments, each with a two-night minimum, and a 50 percent down payment reserves lodging."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do we have to use a DJ from the Howe Farms vendor list?",
+      "a": "Howe Farms' FAQ says the bartender and DJ must come from its vendor list. If you want me, tell your coordinator early so we can sort it out before you sign."
+    },
+    {
+      "q": "Are sparklers allowed at The Woodlands?",
+      "a": "The FAQ says sparklers up to 36 inches are permitted and that fireworks must be provided by Howe Farms. It does not mention cold spark machines, so I confirm those with the venue in writing."
+    },
+    {
+      "q": "How much power does a fog machine need?",
+      "a": "My low-fog machine draws up to 3,000 W during its roughly five minute warm-up, so it needs its own dedicated 30 A circuit. I send the venue a power plan before the day."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: The Woodlands",
+      "url": "https://howefarmstn.com/indoor-wedding-venue-near-me/"
+    },
+    {
+      "label": "Venue website: Home (venues, address)",
+      "url": "https://howefarmstn.com/"
+    },
+    {
+      "label": "Venue website: FAQs",
+      "url": "https://howefarmstn.com/wedding-venues-near-me-faqs/"
+    },
+    {
+      "label": "Venue website: Lodging",
+      "url": "https://howefarmstn.com/wedding-venues-with-lodging/"
+    }
+  ],
+  "asOf": "October 2026"
+}

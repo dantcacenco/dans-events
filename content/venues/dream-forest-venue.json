@@ -1,0 +1,107 @@
+{
+  "slug": "dream-forest-venue",
+  "name": "Dream Forest Venue",
+  "citySlug": "spartanburg",
+  "tier": "worked",
+  "town": "Pacolet",
+  "state": "SC",
+  "address": "3991 Pacolet Hwy, Pacolet, SC 29372",
+  "title": "Dream Forest Venue Wedding DJ & Host | Dan's Events",
+  "description": "Hosting, DJ, sound and lighting at Dream Forest Venue in Pacolet, SC: the lake and forest ceremony sites, pavilion and barn, and the 10 PM music cutoff.",
+  "h1": "Hosting, DJ and lighting at Dream Forest Venue",
+  "lede": "Dream Forest is a family-run, 10-acre property in Pacolet with a lake, a bridge and two places to hold the ceremony. I have worked here more than once, so I know how the night moves from the water to the dance floor.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "3991 Pacolet Hwy, Pacolet, SC 29372"
+    },
+    {
+      "label": "Property",
+      "value": "A 10-acre family-owned estate with a lake, a bridge and a renovated barn. The venue says it was established in 2020."
+    },
+    {
+      "label": "Spaces",
+      "value": "Two outdoor ceremony sites (a waterfront grove by the lake and a shaded forest clearing) and two reception spaces (a Reception Pavilion and an Event Barn)."
+    },
+    {
+      "label": "Capacity",
+      "value": "Zola lists up to 250 seated guests. The venue's packages are priced for 100 guests or fewer, with a per-guest charge above that."
+    },
+    {
+      "label": "Hours",
+      "value": "Venue access 8 AM to 11 PM on the event day. Music and bar end at 10 PM, and the event ends at 11 PM."
+    },
+    {
+      "label": "Weather",
+      "value": "Large fans and heaters for the reception area, plus an optional tent enclosure."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its spaces",
+      "p": [
+        "Dream Forest sits on 10 acres in Pacolet with a lake, a bridge and rolling grounds that the venue sets up for photos. Couples pick one of two ceremony areas: a waterfront grove beside the lake, or a shaded clearing in the trees.",
+        "For the reception you choose between the Reception Pavilion and the Event Barn, which Zola describes as climate controlled. The venue's package pages say only one event runs per day, and they list a kitchen, free guest parking and bridal and groom suites."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at Dream Forest",
+      "p": [
+        "My team and I have worked four weddings and events here between July and October 2026, including hosting, sound, a DJ night and low fog for a first dance.",
+        "The two ceremony sites need different sound. In the forest clearing the trees soak up voices, so I use more small speakers and a lapel mic on the officiant. At the lake the open water gives you nothing to stop sound from drifting, so I aim the speakers at the chairs and keep the volume honest. Either way, I check the signal path between the ceremony and the reception before guests arrive.",
+        "The venue ends music and bar at 10 PM, and the event at 11 PM. I build the timeline with you backward from that: entrance, dinner, toasts and first dances early enough that the dance floor still gets a real stretch before the cutoff."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "A pavilion with fans and heaters and a barn with climate control light very differently. In the pavilion I work with the open sides and use warm white wash from the edges so the room does not go flat after dark. In the barn I use the structure of the room for uplighting and a few beam lights over the dance floor.",
+        "Low fog for a first dance needs its own dedicated 30 amp circuit, because the machine draws up to 3,000 watts while it warms up. I send a power plan before the wedding and ask where the pavilion and barn circuits are. I did not find a published fog or cold spark rule for Dream Forest, so I confirm with the venue and get approval in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Choose your ceremony site and your reception space early, because they decide where speakers and power go. If you pick the pavilion, ask about the tent enclosure and how the venue decides on a weather call.",
+        "Book a tour through the venue's website and bring your timeline. I plan the timeline with you and the venue coordinator."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "What time does the music have to stop at Dream Forest?",
+      "a": "The venue's package pages say music and bar end at 10 PM and the event ends at 11 PM. I plan your highlights so the last big moment lands before the cutoff."
+    },
+    {
+      "q": "Can you do a first dance with low fog here?",
+      "a": "I have done it here. It needs a dedicated 30 amp circuit and the venue's okay, and I handle the approval and the power plan with the venue."
+    },
+    {
+      "q": "Which ceremony site is better for sound?",
+      "a": "Both work. The forest clearing needs a little more speaker coverage, and the lakeside grove needs careful speaker aim. I walk both with you and decide at the sound check."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Home",
+      "url": "https://www.dreamforestvenue.com/"
+    },
+    {
+      "label": "Venue website: About",
+      "url": "https://www.dreamforestvenue.com/about"
+    },
+    {
+      "label": "Venue website: Pricing and packages",
+      "url": "https://www.dreamforestvenue.com/pricing"
+    },
+    {
+      "label": "Venue website: Silver Package (hours, music cutoff)",
+      "url": "https://www.dreamforestvenue.com/silver-package"
+    },
+    {
+      "label": "Zola listing: Dream Forest Venue",
+      "url": "https://www.zola.com/wedding-vendors/wedding-venues/dream-forest-venue"
+    }
+  ],
+  "asOf": "October 2026"
+}

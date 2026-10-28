@@ -1,0 +1,102 @@
+{
+  "slug": "chetola-resort",
+  "name": "Chetola Resort",
+  "citySlug": "boone",
+  "tier": "guide",
+  "town": "Blowing Rock",
+  "state": "NC",
+  "address": "185 Chetola Lake Drive, Blowing Rock, NC 28605",
+  "title": "Chetola Resort Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Chetola Resort in Blowing Rock? See the lakeside ceremony sites, tent and Evergreen Room, plus my sound and lighting plan.",
+  "h1": "Hosting, DJ and lighting at Chetola Resort",
+  "lede": "Chetola is a lakeside resort in Blowing Rock with outdoor ceremony sites on the water, a large lakeside tent and indoor rooms with fireplaces. It is close to Boone and a good fit for mountain weddings.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "185 Chetola Lake Drive, Blowing Rock, NC 28605, a resort with a lake, within walking distance of the town."
+    },
+    {
+      "label": "Outdoor spaces",
+      "value": "Peninsula Point (lakeside ceremony site, up to 250 guests), the Boathouse (a gazebo with an arbor) and the Lakeside Tent (40 by 120 feet, available May through October, banquet capacity 250)."
+    },
+    {
+      "label": "Indoor spaces",
+      "value": "The Evergreen Room (1,925 square feet, second floor, floor-to-ceiling fireplace, private entrance) and the Silverlake Room with a patio."
+    },
+    {
+      "label": "Lodging",
+      "value": "Chetola Lodge, condominiums and the Bob Timberlake Inn."
+    },
+    {
+      "label": "Setup time",
+      "value": "Weddings include 5 hours of vendor setup and 1.5 hours of cleanup, and a wedding planner is required for 30 or more guests, per a third-party listing."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "Lakeside spaces",
+      "p": [
+        "Chetola lists Peninsula Point as a lakeside ceremony site beside an outcropping of rocks, and the Boathouse as a gazebo with an arbor facing the lake. The Lakeside Tent is 40 by 120 feet and runs May through October. For colder months and smaller groups, the Evergreen Room is on the second floor with a floor-to-ceiling fireplace and a private entrance, and the Silverlake Room has a fireplace and opens onto a patio.",
+        "Guests can stay at Chetola Lodge, in the condominiums or at the Bob Timberlake Inn."
+      ]
+    },
+    {
+      "h2": "Sound and hosting by the lake",
+      "p": [
+        "A lakeside ceremony is an open-air sound job. Wind off open water can swallow a quiet voice, so I use a close mic for the officiant and keep small speakers near the front rows. At Peninsula Point I would test from the back row before guests arrive.",
+        "In the Lakeside Tent, a long, narrow footprint matters: at 40 by 120 feet, one pair of speakers at the end would leave the far side dull, so I place speakers along the length and keep the volume even. I host the move from ceremony to tent with a short announcement. Chetola's pages I could read do not publish a music end time, so I ask the weddings team."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "The tent is a blank ceiling, so I wash it in warm white and add a spotlight for the entrance and first dance. At the Evergreen Room I would light the fireplace and keep the room low and warm. A lake setting at dusk is already beautiful, so on the ceremony side I light faces and leave the water alone.",
+        "Low fog needs its own dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up. Lights and sound use ordinary 20 amp circuits. Chetola does not publish its power layout or any rule on fog, cold sparks or open flame, so I ask for written approval and send a power plan for the tent and the room."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Chetola handles catering and the bar in-house. A third-party listing says a wedding planner is required for 30 or more guests and that weddings include five hours of vendor setup, so ask the resort to confirm both. The Lakeside Tent runs May through October only.",
+        "The resort does not publish a rain plan in the pages I could read, so ask what happens to a Peninsula Point ceremony in rain."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I bring my own DJ and host to Chetola?",
+      "a": "Chetola's pages do not publish a rule for outside entertainers. I would ask the weddings team in writing before you book me."
+    },
+    {
+      "q": "What if it rains at a lakeside ceremony?",
+      "a": "The pages I read do not publish a rain plan. Ask which indoor room or tent would take over and how many guests it holds."
+    },
+    {
+      "q": "Can we use the Lakeside Tent in October?",
+      "a": "The resort says the tent is available May through October. Ask about heating and sides for cool evenings in the mountains."
+    },
+    {
+      "q": "Do you handle power for the tent?",
+      "a": "Yes. I send a plan with a dedicated 30 amp circuit for fog and ordinary 20 amp circuits for lights and sound, and I ask the resort where they can be provided."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Chetola Resort: Event venues",
+      "url": "https://www.chetola.com/north-carolina-event-venues"
+    },
+    {
+      "label": "Chetola Resort: Wedding venues",
+      "url": "https://www.chetola.com/north-carolina-wedding-venues"
+    },
+    {
+      "label": "Chetola Resort: Ceremony locations",
+      "url": "https://chetola.com/weddings/ceremony-locations"
+    },
+    {
+      "label": "Here Comes The Guide: Chetola Resort and Spa",
+      "url": "https://www.herecomestheguide.com/wedding-venues/north-carolina/chetola-resort-and-spa"
+    }
+  ],
+  "asOf": "October 2026"
+}

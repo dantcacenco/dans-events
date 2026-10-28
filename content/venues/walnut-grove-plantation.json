@@ -1,0 +1,102 @@
+{
+  "slug": "walnut-grove-plantation",
+  "name": "Walnut Grove Plantation",
+  "citySlug": "spartanburg",
+  "tier": "guide",
+  "town": "Roebuck",
+  "state": "SC",
+  "address": "1200 Otts Shoals Rd, Roebuck, SC",
+  "title": "Walnut Grove Plantation Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Walnut Grove Plantation in Roebuck, SC? The 10:30 PM music limit, the no-sparkler rule and how a host and DJ plan around them.",
+  "h1": "Hosting, DJ and lighting at Walnut Grove Plantation",
+  "lede": "Walnut Grove is a historic site in Roebuck run by Spartanburg History, and weddings are held in its pavilion. The venue publishes clear rules on music and fire, and they shape the whole plan.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "1200 Otts Shoals Rd, Roebuck, SC"
+    },
+    {
+      "label": "Operator",
+      "value": "Spartanburg County Historical Association, which now goes by Spartanburg History."
+    },
+    {
+      "label": "Spaces",
+      "value": "The Walnut Grove Plantation Pavilion, with a kitchen, a fireplace and wooden picnic tables and benches. The interiors of the historic buildings cannot be used for the event."
+    },
+    {
+      "label": "Music",
+      "value": "Music is allowed until 10:30 PM. Excessively loud music is not permitted, and no noise may be audible from adjacent properties."
+    },
+    {
+      "label": "Fire and sparks",
+      "value": "Fireworks, gun powder, sparklers and any fire or spark producing products are strictly prohibited."
+    },
+    {
+      "label": "Sound system",
+      "value": "A Bluetooth-capable sound system can be used for a fee."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its spaces",
+      "p": [
+        "Walnut Grove was built in 1765 and is on the National Register of Historic Places. Rentals take place in the Pavilion, which has a kitchen and a fireplace and seventeen wooden picnic tables with benches that the renter may move and must return to their default places.",
+        "The rental rules say the interior of the historic buildings cannot be used for the event, except for guided tours that are arranged ahead. All food and drink service is limited to the Pavilion."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at Walnut Grove",
+      "p": [
+        "The venue's rules set a 10:30 PM music cutoff and a county ordinance that nothing be audible from adjacent properties. That means I tune the sound to the Pavilion and favor clarity over volume: speakers aimed into the crowd and bass kept under control so it does not carry past the property line.",
+        "The venue offers a Bluetooth-capable sound system for a fee. For a ceremony or a small gathering that may be enough, and for a full DJ night I bring my own gear and send the venue a plan. I plan your timeline so toasts, first dances and your last big dance finish before 10:30."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "Nothing can be attached to the historic buildings, gates or trees with wire, tape, tacks, nails, zip ties or adhesive, though string, twine, fishing line or ribbon are allowed. So I light the Pavilion with freestanding fixtures on stands and keep the old buildings untouched.",
+        "The rules prohibit fireworks, sparklers and any fire or spark producing products, so I would not plan a cold spark exit here unless the venue approves it in writing. Fog is not mentioned in the published rules, so I ask. I send a power plan listing circuits, and ask where the Pavilion's power is, since low fog needs a dedicated 30 amp circuit."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Tents, tables, seating and accessories beyond the site's picnic tables must come from you. Deliveries and pickups must happen within your rental hours, and the venue asks for the times three days ahead.",
+        "The site is open to the public on set days, so ask how that works with a wedding day rental. Start by sending the venue's rental request form."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "What time does the music stop at Walnut Grove?",
+      "a": "The venue's rules allow music until 10:30 PM and ask that nothing be audible from neighboring properties. I plan your last big moment before then."
+    },
+    {
+      "q": "Can we do a sparkler exit?",
+      "a": "No. The published rules ban sparklers and any fire or spark producing products, and breaking the rule costs the deposit. I would not plan one without the venue's written approval."
+    },
+    {
+      "q": "Can you set up sound and lights without attaching anything?",
+      "a": "Yes. I use stands and freestanding fixtures, and I do not attach anything to buildings, gates or trees."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Spartanburg History: Walnut Grove Plantation",
+      "url": "https://www.spartanburghistory.org/sites/walnut-grove"
+    },
+    {
+      "label": "Wikipedia: Walnut Grove Plantation (history)",
+      "url": "https://en.wikipedia.org/wiki/Walnut_Grove_Plantation"
+    },
+    {
+      "label": "Spartanburg History: Rentals",
+      "url": "https://www.spartanburghistory.org/rentals"
+    },
+    {
+      "label": "Walnut Grove Rental Rates and Policies (PDF)",
+      "url": "https://drive.google.com/file/d/1LluOkR8Fhom4EJZ59xspctP0PKpIYbGw/view"
+    }
+  ],
+  "asOf": "October 2026"
+}

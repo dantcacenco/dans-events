@@ -1,0 +1,95 @@
+{
+  "slug": "lumiere",
+  "name": "Lumière",
+  "citySlug": "spartanburg",
+  "tier": "worked",
+  "town": "Gaffney",
+  "state": "SC",
+  "address": "134 Skull Shoals Rd, Gaffney, SC 29340",
+  "title": "Lumière Venue Wedding DJ & Host | Dan's Events",
+  "description": "Hosting, DJ, sound and lighting at Lumière in Gaffney, SC: the White Garden pond ceremony, the glass Covenant Pavilion and what to ask before you book.",
+  "h1": "Hosting, DJ and lighting at Lumière",
+  "lede": "Lumière is a new 30-acre private estate near Gaffney with a pondside ceremony garden and a climate-controlled glass pavilion. It is a modern room, and glass changes how I set up sound and light.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "134 Skull Shoals Rd, Gaffney, SC 29340. The venue's directions send you down an unpaved road off Skull Shoals Rd."
+    },
+    {
+      "label": "Property",
+      "value": "30 private acres with one wedding hosted per day."
+    },
+    {
+      "label": "Spaces",
+      "value": "The White Garden and pond for ceremonies, and the Covenant Pavilion, a climate-controlled glass building with HVAC, for receptions."
+    },
+    {
+      "label": "Capacity",
+      "value": "Up to 500 seated for an outdoor ceremony, and up to 288 seated across indoor and outdoor space with a custom layout. The pavilion is listed at more than 5,000 sq ft."
+    },
+    {
+      "label": "Hours",
+      "value": "Open on booked days from 9 AM to 9 PM, with extra time available by the hour."
+    },
+    {
+      "label": "Getting ready",
+      "value": "A bridal suite and cottage (up to 10 guests) and a groom room cottage (up to 4 guests), both optional."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its spaces",
+      "p": [
+        "Lumière's main ceremony site is the White Garden by the pond, with chairs facing the water and sunset views. The venue says the ceremony can move indoors or to a covered location if the weather turns, with the venue coordinator helping with the rain plan.",
+        "The Covenant Pavilion is a bright glass building with HVAC, a bar and coffee area, restrooms and parking on site. The venue lists the bridal suite as a three-bedroom cottage and the groom room as a one-bedroom cottage, both available for overnight stays."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at Lumière",
+      "p": [
+        "I hosted a wedding here in October 2026 and ran the sound.",
+        "With a pond ceremony for as many as 500 guests, the key is even coverage: I place several smaller speakers instead of one loud pair, so the back rows hear what the front rows hear. Indoors, glass walls reflect sound, so I keep speakers away from the glass and tune the room at the sound check.",
+        "Booked days run 9 AM to 9 PM unless you add time, so I build your timeline with you and the venue coordinator to fit entrances, dinner, toasts and dancing in that window."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "A glass building looks beautiful at dusk and works against projected light, since the lights reflect off the windows. I use warm white wash from the sides and low angles, and I keep beam lights pointed at the floor and the ceiling, not the glass. The venue offers a professional DJ lighting add-on, so ask how my rig and theirs would work together.",
+        "Low fog needs a dedicated 30 amp circuit, and lights and sound run on regular 20 amp circuits. I send the venue a power plan. I did not find a published fog or sparkler rule for Lumière, so I confirm with the venue and get approval in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The venue's website lists general booking as coming in 2027 and describes the property as new, so confirm availability and what is finished before you plan around a date. Outside vendors may need to carry general liability insurance with the venue named as additional insured, due 15 to 30 days before the event.",
+        "Plan load-in around the unpaved road, and tell your vendors about it. The venue's site shows both 132 and 134 Skull Shoals Rd in different places, so send guests its written directions, not just a map pin."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is Lumière open for weddings now?",
+      "a": "I hosted a wedding here in October 2026, but the website lists general booking as coming in 2027. Ask the venue team for the current status and your dates."
+    },
+    {
+      "q": "Does the glass affect the sound?",
+      "a": "Yes. Glass reflects sound, so I place speakers away from it and tune the room at the sound check."
+    },
+    {
+      "q": "Do I need insurance for my entertainment?",
+      "a": "The venue's policy says vendors may need liability insurance naming the venue as additional insured, delivered 15 to 30 days ahead. Ask the venue what it needs and tell me early so we can sort the paperwork."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Home",
+      "url": "https://lumierevenue.com/"
+    },
+    {
+      "label": "Findglocal listing: Lumière Venue, 134 Skull Shoals Road",
+      "url": "https://www.findglocal.com/US/Gaffney/1092763167253999/Lumi%C3%A8re-Venue"
+    }
+  ],
+  "asOf": "October 2026"
+}

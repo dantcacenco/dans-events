@@ -1,0 +1,114 @@
+{
+  "slug": "biltmore-estate",
+  "name": "Biltmore Estate",
+  "citySlug": "asheville",
+  "tier": "guide",
+  "town": "Asheville",
+  "state": "NC",
+  "address": null,
+  "title": "Biltmore Wedding DJ, Host & Lighting | Dan's Events",
+  "description": "Planning a wedding at Biltmore Estate? A guide to Antler Hill Barn, Lioncrest, Deerpark and Diana, with how sound, hosting and lighting work in each.",
+  "h1": "Hosting, DJ and lighting at Biltmore Estate",
+  "lede": "Biltmore lists several wedding settings, from the small Antler Hill Barn to the hilltop at Diana. Each one asks for a different sound and lighting plan, and here is how I would approach them.",
+  "facts": [
+    {
+      "label": "Settings and guest counts",
+      "value": "Antler Hill Barn 20 to 50, The Inn on Biltmore Estate 45 to 80, Lioncrest 100 to 150, Deerpark 110 to 225, Diana 125 to 225 (outdoor only)."
+    },
+    {
+      "label": "Included stay",
+      "value": "Every wedding venue includes a two-night stay at The Inn on Biltmore Estate."
+    },
+    {
+      "label": "Antler Hill Barn",
+      "value": "Designed in 1900 by Biltmore House architect Richard Morris Hunt, in Antler Hill Village, beneath a forested hillside and overlooking pastures and the French Broad River."
+    },
+    {
+      "label": "Vendors",
+      "value": "Biltmore keeps a highly recommended vendor list, and couples may also hire their own vendors."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "Four settings, four kinds of room",
+      "p": [
+        "Antler Hill Barn is the small one, listed for 20 to 50 guests. It was designed in 1900 by Richard Morris Hunt as the hub of the estate's farming operations, and it sits in Antler Hill Village under a forested hillside, looking over pastures and the French Broad River.",
+        "Lioncrest has a covered, open-air veranda and a Grand Ballroom reached by a spiral staircase, with a vaulted ceiling, exposed beams, wrought iron chandeliers and large etched glass windows. Deerpark is a former calving barn with floor-to-ceiling windows opening to a courtyard. Diana is outdoors only, on a hilltop under hemlocks with views toward Biltmore House. The Inn adds the Vanderbilt Ballroom, the Gallery and the Vista ceremony site."
+      ]
+    },
+    {
+      "h2": "Sound and hosting across the estate",
+      "p": [
+        "Diana is the most open-air job: no walls, hillside breeze, and guests spread across a big lawn, so ceremony sound needs small, well-placed speakers and a mic that survives wind. In the barn, a small guest list in a timber room means I keep the volume low and talk to the room instead of over it.",
+        "In Lioncrest's ballroom the vaulted ceiling and big glass windows can ring, so I point speakers carefully and keep the mix controlled. Deerpark's glass opens onto a courtyard, which makes the move from ceremony to reception easy to host: I can move guests with a short announcement and keep the music running. Biltmore's public pages do not publish a music cutoff or sound rules, so I ask the weddings team and build the timeline from their answer."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "Beams, chandeliers and big windows already give these rooms character, so I use warm white lighting and keep color out unless you ask. In the barn I would light the beams and faces. In the Lioncrest ballroom I would shape the dance floor and leave the chandeliers as the hero. At Diana, which has no building around it, I would ask the weddings team what reception setup sits next to the ceremony and light that space warm and low.",
+        "Low fog needs its own dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up, and Biltmore does not publish a fog or cold spark rule. I would ask in writing about both, and about where the circuits are in each space, and send the weddings team a power plan. Lights and sound only need ordinary 20 amp circuits."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Biltmore's FAQ says you may hire your own vendors, and it also keeps a recommended list. It recommends choosing vendors who know the estate's policies and locations, which is a good reason to bring your DJ and host in early. The FAQ does not cover music, curfew, lighting or load-in, so those come from your wedding specialist.",
+        "Biltmore lists a two-night stay at The Inn with each venue, so your getting-ready day can be on site. Ask about your rain plan for the open-air settings, since the pages I read do not publish one."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I bring my own DJ and host to Biltmore?",
+      "a": "Biltmore's FAQ says couples may hire their own vendors alongside its recommended list. I would confirm with your weddings team that the entertainer you choose is approved for your setting."
+    },
+    {
+      "q": "Which Biltmore venue works best for dancing?",
+      "a": "Lioncrest's Grand Ballroom and the Vanderbilt Ballroom at The Inn both have dedicated dining and dancing space, per Biltmore's pages. The barn is better for a smaller, closer party."
+    },
+    {
+      "q": "Can we use fog or cold sparks at Biltmore?",
+      "a": "Biltmore does not publish a rule on either. I ask for written approval for the specific venue and date, and I plan the effect only after I have it."
+    },
+    {
+      "q": "Do you do sound for outdoor ceremonies at Diana?",
+      "a": "Yes, I provide ceremony sound outdoors. At Diana I would use small speakers near the guests and a wind-ready mic, and I test it before anyone arrives."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Biltmore: Weddings",
+      "url": "https://www.biltmore.com/weddings/"
+    },
+    {
+      "label": "Biltmore: Wedding venues",
+      "url": "https://www.biltmore.com/weddings/venues/"
+    },
+    {
+      "label": "Biltmore: Antler Hill Barn",
+      "url": "https://www.biltmore.com/wedding-venue/antler-hill-barn/"
+    },
+    {
+      "label": "Biltmore: Lioncrest",
+      "url": "https://www.biltmore.com/wedding-venue/lioncrest/"
+    },
+    {
+      "label": "Biltmore: Deerpark",
+      "url": "https://www.biltmore.com/wedding-venue/deerpark/"
+    },
+    {
+      "label": "Biltmore: Diana",
+      "url": "https://www.biltmore.com/wedding-venue/diana/"
+    },
+    {
+      "label": "Biltmore: The Inn on Biltmore Estate",
+      "url": "https://www.biltmore.com/wedding-venue/the-inn-on-biltmore-estate/"
+    },
+    {
+      "label": "Biltmore: Wedding FAQs",
+      "url": "https://www.biltmore.com/weddings/faqs/"
+    }
+  ],
+  "asOf": "October 2026"
+}

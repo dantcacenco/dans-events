@@ -1,0 +1,114 @@
+{
+  "slug": "old-edwards-inn",
+  "name": "Old Edwards Inn",
+  "citySlug": "highlands",
+  "tier": "guide",
+  "town": "Highlands",
+  "state": "NC",
+  "address": "445 Main Street, Highlands, NC 28741",
+  "title": "Old Edwards Inn Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Old Edwards Inn in Highlands, NC? How a host, DJ and lighting plan fits Piermont Cottage, Springhouse and Half-Mile Farm.",
+  "h1": "Hosting, DJ and lighting at Old Edwards Inn",
+  "lede": "Old Edwards Inn in Highlands offers terraces, lawns, a cottage and a farm property. Each setting calls for a different plan for sound and light.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "445 Main Street, Highlands, NC 28741 (the Inn)"
+    },
+    {
+      "label": "Piermont Cottage",
+      "value": "A Grand Lawn of 12,600 sq ft, a 3,000 sq ft ceremony lawn and a 1,350 sq ft stone terrace, listed for up to 220 guests and available May through October."
+    },
+    {
+      "label": "Springhouse",
+      "value": "A main room for up to 120 guests and a bar and terrace area for up to 150."
+    },
+    {
+      "label": "Hutchinson House",
+      "value": "A historic four-bedroom farmhouse with an event pavilion and a fireplace gazebo, listed for about 50 guests."
+    },
+    {
+      "label": "Half-Mile Farm",
+      "value": "14 acres of fields, forest, streams and a lake. It is an adults-only retreat, and its venue page describes a full buyout."
+    },
+    {
+      "label": "Sales office",
+      "value": "828-787-2610"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its spaces",
+      "p": [
+        "Each setting is a different kind of room, so I plan sound and light for one space at a time instead of bringing a single setup to all of them. The resort describes its wedding settings as ranging from ballrooms to terraces and sun-dappled gardens. Piermont Cottage is the largest outdoor option: a grand lawn, a smaller ceremony lawn and a stone terrace with a built-in bar.",
+        "Springhouse works for a reception of up to 120 in the main room, with a bar and terrace for up to 150. Hutchinson House suits a smaller wedding of around 50. Half-Mile Farm is a separate property, with an open-sky ceremony among fields and a lake."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at Old Edwards",
+      "p": [
+        "In a small mountain town like Highlands I plan sound for clarity, not volume. On a lawn I use several small speakers spread around the seating so no one speaker has to be loud, and a wireless mic on the officiant. On a terrace I aim speakers into the guests and away from the building.",
+        "I did not find a published amplified music rule or end time for the resort, and third-party listings disagree about the cottage. So I ask the sales office for the current rule at your chosen venue, and I build your timeline around it with the planner the resort assigns."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "A lawn at dusk wants warm white light from low angles on the guests, plus soft light on the trees. On the stone terrace I use the existing warmth and add beams over the dance area. I keep the palette warm white unless you ask for color.",
+        "Low fog needs its own dedicated 30 amp circuit, and an outdoor lawn rarely has one near the dance floor, so I ask early about power and generators. I did not find a published fog or cold spark rule for Old Edwards, so I confirm with the resort and get approval in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Piermont Cottage is listed as available May through October. Ask about the rain plan for each lawn and where the move indoors happens. Also ask which sound and lighting needs the resort handles itself, and what it expects from outside vendors on load-in and insurance.",
+        "The resort changed ownership in June 2024, and the properties continue to operate. Confirm current venue names and capacities with the sales office, since the listings I found do not always match."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is The Farm at Old Edwards the same as Half-Mile Farm?",
+      "a": "The resort's current pages describe Half-Mile Farm as its farm property with 14 acres and a lake. Confirm with the sales office which name and which spaces apply to your date."
+    },
+    {
+      "q": "Can an outside DJ and host work at Old Edwards?",
+      "a": "I did not find a published outside vendor policy. I ask the sales office and share the answer with you in writing."
+    },
+    {
+      "q": "Can we have low fog or a sparkler exit?",
+      "a": "Only with the resort's written approval. I ask for it early, and I plan the power circuit for the fog machine."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Old Edwards Hospitality: Weddings",
+      "url": "https://www.oldedwardshospitality.com/weddings"
+    },
+    {
+      "label": "Old Edwards Hospitality: Wedding venues",
+      "url": "https://www.oldedwardshospitality.com/old-edwards-inn-spa/weddings/wedding-venues"
+    },
+    {
+      "label": "Old Edwards Hospitality: Venues (meetings and events)",
+      "url": "https://www.oldedwardshospitality.com/old-edwards-inn-spa/meetings/venues"
+    },
+    {
+      "label": "Old Edwards Hospitality: Piermont Cottage",
+      "url": "https://www.oldedwardshospitality.com/old-edwards-inn-spa/meetings/venues/piermont-cottage"
+    },
+    {
+      "label": "Old Edwards Hospitality: Half-Mile Farm weddings",
+      "url": "https://www.oldedwardshospitality.com/half-mile-farm/weddings"
+    },
+    {
+      "label": "Old Edwards Hospitality: About",
+      "url": "https://www.oldedwardshospitality.com/about"
+    },
+    {
+      "label": "Franklin Press: Old Edwards Inn's Highlands properties sold",
+      "url": "https://www.thefranklinpress.com/regional/old-edwards-inns-highlands-properties-sold"
+    }
+  ],
+  "asOf": "October 2026"
+}

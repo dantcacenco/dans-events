@@ -1,0 +1,99 @@
+{
+  "slug": "heyward-manor",
+  "name": "Heyward Manor",
+  "citySlug": "greenville-sc",
+  "tier": "worked",
+  "town": "Iva",
+  "state": "SC",
+  "address": "5827 Highway 81, Iva, SC 29655",
+  "title": "Heyward Manor Wedding DJ & Host | Dan's Events",
+  "description": "Hosting, DJ, sound and lighting at Heyward Manor in Iva, SC: the white barn with cedar beams and glass doors, the lake patio and the meadow.",
+  "h1": "Hosting, DJ and lighting at Heyward Manor",
+  "lede": "Heyward Manor is a whitewashed barn with glass doors and cedar beams, set on a family tree farm in Iva. It looks beautiful and it also behaves in specific ways with sound, which I plan around.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "5827 Highway 81, Iva, SC 29655, on the family's Charlie's Creek Nursery tree farm. The venue says it is less than an hour from Greenville."
+    },
+    {
+      "label": "Property",
+      "value": "Built by brothers Don and Jake Black on a 650-acre family tree farm. The venue says it was established in 2019."
+    },
+    {
+      "label": "Spaces",
+      "value": "A white barn venue with a patio and two covered areas, a lake, a hydrangea garden, a meadow, a second-floor bridal suite and a groom's room."
+    },
+    {
+      "label": "Capacity",
+      "value": "The venue's pricing page lists indoor seating for 350 at dinner and 450 for a ceremony, and outdoor seating up to 800 depending on the area."
+    },
+    {
+      "label": "Built in sound",
+      "value": "A Bluetooth sound system with inside and outside speakers, plus built-in speakers and heating and air."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its spaces",
+      "p": [
+        "The barn has three large windows at the front, glass French doors down both sides and a wall of windows at the back. Inside, the walls are whitewashed and the ceiling is outlined with natural cedar beams, with chandeliers overhead.",
+        "Outside, a stone-gray paver patio looks over the lake, and two covered areas with string lights sit on either side of the barn. A lit path leads to a circular hydrangea garden and a small lakeside meadow, and a larger meadow with a wheat field lies behind the venue."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at Heyward Manor",
+      "p": [
+        "I hosted a wedding here in May 2026 with sound, DJ mixing and cold sparklers for the grand exit.",
+        "All that glass and white wall is lovely, but hard surfaces make a room bright with sound. I keep speakers off the walls, aim them into the crowd and set levels at the sound check with the room empty and again once the guests arrive. For the ceremony I decide with you whether to use the house speakers or my own, depending on where you stand: on the patio by the lake, or inside the barn.",
+        "The covered areas and the patio make cocktail hour easy to run outdoors, then I move guests into the barn with a short announcement and a clear cue for the grand entrance."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "The venue lists down lighting and string lighting in the covered areas and chandeliers inside. I add warm white wash and a few beam lights so the cedar beams show and the dance floor feels like a place, not a hallway. After dark the big windows turn into mirrors, so I keep lights from pointing at the glass.",
+        "Low fog needs its own dedicated 30 amp circuit, and lights and sound run on ordinary 20 amp circuits. I send a power plan listing what I need and where. Cold sparks need venue permission. Heyward Manor does not publish a fog or sparkler rule that I found, so I get approval in writing for each wedding."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The venue lists a catering kitchen, a bridal suite with a balcony and a groom's room. I did not find on-site lodging on the venue's site, so plan where your guests will sleep.",
+        "If you want a lakeside ceremony and a barn reception, tell me early so I can plan one clean move of the sound gear and a backup for rain."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do you use the venue's sound system?",
+      "a": "It depends on the moment. The venue has inside and outside speakers, and I often bring my own for a clean ceremony and a full dance floor. We decide at the planning call."
+    },
+    {
+      "q": "Can we use cold sparklers for our exit?",
+      "a": "I did it here in May 2026. Cold sparklers still need the venue's permission, and I get that approved in writing before the day."
+    },
+    {
+      "q": "Does the glass hurt the sound?",
+      "a": "It makes the room live, so speaker placement matters more than volume. I test it empty and again with guests, then adjust."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Home",
+      "url": "https://heywardmanor.com/"
+    },
+    {
+      "label": "Venue website: Our Story",
+      "url": "https://heywardmanor.com/our-story"
+    },
+    {
+      "label": "Venue website: Investment (capacity and inclusions)",
+      "url": "https://heywardmanor.com/investment"
+    },
+    {
+      "label": "The Knot listing: Heyward Manor",
+      "url": "https://www.theknot.com/marketplace/heyward-manor-iva-sc-2031260"
+    }
+  ],
+  "asOf": "October 2026"
+}

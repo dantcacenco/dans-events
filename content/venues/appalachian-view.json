@@ -1,0 +1,102 @@
+{
+  "slug": "appalachian-view",
+  "name": "Appalachian View",
+  "citySlug": "boone",
+  "tier": "worked",
+  "town": "Newland",
+  "state": "NC",
+  "address": "1117 Sugar Mountain #2 Rd, Newland, NC 28657",
+  "title": "Appalachian View Wedding DJ & Host | Dan's Events",
+  "description": "A wedding at Appalachian View in Newland, NC: ceremony sites, the 3,600 square foot barn, hours, cabins, and how I handle sound and lighting there.",
+  "h1": "Hosting, DJ and lighting at Appalachian View",
+  "lede": "Appalachian View is a barn venue on Sugar Mountain near Boone, with Grandfather Mountain as the ceremony backdrop. I hosted a wedding here in July 2026 and ran the sound, with a spotlight on the couple for the grand entrance.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "1117 Sugar Mountain #2 Rd, Newland, NC. The venue says it sits at 4,200 feet with views of Grandfather Mountain, and markets itself as a mountain wedding venue near Boone."
+    },
+    {
+      "label": "Ceremony sites",
+      "value": "Grandfather View, Wildflower Fields, a covered open-air Indoor Pavilion (1,500 square feet) and a gazebo."
+    },
+    {
+      "label": "Reception building",
+      "value": "A 3,600 square foot modern barn-style building with wood-beamed ceilings, chandeliers, expansive windows, climate control, a built-in bar that serves the back patio, and a caterer's kitchen."
+    },
+    {
+      "label": "Hours",
+      "value": "Single Day package: 9 a.m. to 11 p.m. on Saturdays, 10 a.m. to 10 p.m. on Sundays and weekdays."
+    },
+    {
+      "label": "Lodging",
+      "value": "Three on-site cabins, each sleeping up to 6, included in the Weekend Package."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "A barn on top of Sugar Mountain",
+      "p": [
+        "Appalachian View is in Newland on the south side of Sugar Mountain, at 4,200 feet according to the venue. The ceremony sites are Grandfather View, the wildflower fields, and a covered, open-air pavilion of 1,500 square feet. There is also a gazebo and a back patio with a fire pit.",
+        "The reception happens in a 3,600 square foot barn-style building with wood-beamed ceilings, chandeliers and big windows. A built-in bar serves both the room and the patio, and a full caterer's kitchen backs it up."
+      ]
+    },
+    {
+      "h2": "Sound and hosting on the mountain",
+      "p": [
+        "A high beamed ceiling and a wall of windows mean hard surfaces, so I aim speakers across the room instead of down the length of it and keep the volume honest. The venue page does not describe a house sound system, so I bring a complete one for the ceremony and the reception. For a Grandfather View ceremony, wind on a ridge is the main enemy, so I use a lapel mic for the officiant and stay close to the aisle with the speakers.",
+        "The flow is simple: ceremony outside or in the pavilion, cocktails on the patio, then into the barn for the entrance, toasts and dancing. I run it with your coordinator so the move indoors does not leave guests standing around."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects here",
+      "p": [
+        "The venue lists string lighting on the patios, the gazebo and the fencing, plus chandeliers inside, so the base is already warm. I add a spotlight for the entrance and first dance, warm wash lights on the beams and walls, and low fog for the dance floor.",
+        "Fog needs its own dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up. Lights and sound use regular 20 amp circuits. The venue does not publish its panel layout or a rule on fog, cold sparks or the fire pit, so I walk the barn with your coordinator, send a power plan, and get effects approved in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Packages include up to 200 white padded chairs and parking for up to 100 vehicles. The Weekend Package adds exclusive use of the three cabins plus extra setup and rehearsal time. The venue does not publish a rain plan or a music cutoff, but the pavilion is covered and the barn is climate controlled, so ask which one is your backup and when the music has to stop.",
+        "Each cabin sleeps up to 6, so a wedding party can stay together on site."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Does Appalachian View have its own sound system?",
+      "a": "The venue page does not describe one. I bring a full ceremony and reception system, and I confirm power locations with the venue before the day."
+    },
+    {
+      "q": "How late can we dance on a Saturday?",
+      "a": "The Single Day package lists access until 11 p.m. on Saturdays. The venue does not publish a separate amplified music cutoff, so I ask your coordinator and plan the send-off around it."
+    },
+    {
+      "q": "Can we do a grand exit with cold sparks?",
+      "a": "The venue does not publish a sparkler rule, so it needs the venue's approval first. I request it in writing and plan where guests line up."
+    },
+    {
+      "q": "Where does the wedding party get ready?",
+      "a": "The venue lists bride and groom ready rooms and bridal and groom suites, and the cabins are available on the Weekend Package."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Appalachian View: home page",
+      "url": "https://appalachianview.com/"
+    },
+    {
+      "label": "Appalachian View: Venue and cabins",
+      "url": "https://appalachianview.com/venue-cabins/"
+    },
+    {
+      "label": "Appalachian View: Packages",
+      "url": "https://appalachianview.com/packages/"
+    },
+    {
+      "label": "Avery County directory: Appalachian View",
+      "url": "https://averycounty.com/directory/appalachian-view/"
+    }
+  ],
+  "asOf": "October 2026"
+}

@@ -1,0 +1,94 @@
+{
+  "slug": "omni-grove-park-inn",
+  "name": "The Omni Grove Park Inn",
+  "citySlug": "asheville",
+  "tier": "guide",
+  "town": "Asheville",
+  "state": "NC",
+  "address": "290 Macon Avenue, Asheville, NC 28804",
+  "title": "Omni Grove Park Inn Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at the Omni Grove Park Inn in Asheville? A guide to Seely Pavilion, the Skyline Room and terraces, with sound and lighting notes.",
+  "h1": "Hosting, DJ and lighting at the Omni Grove Park Inn",
+  "lede": "The Omni Grove Park Inn sits on Sunset Mountain with four wedding venues, from an open-air terrace to a pavilion of glass doors and exposed trusses. Each room asks for its own sound and lighting plan.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "290 Macon Avenue, Asheville, NC 28804. Omni describes the resort as perched atop Sunset Mountain on over 160 acres."
+    },
+    {
+      "label": "Wedding venues",
+      "value": "Seely Pavilion (3,200 square feet, up to 150 guests), Mountain View Terrace and Skyline Room (11,611 square feet, up to 200), The Country Club (6,596 square feet, up to 120), Vanderbilt Terrace (4,290 square feet, up to 75, open-air)."
+    },
+    {
+      "label": "Lodging",
+      "value": "513 guest rooms on site."
+    },
+    {
+      "label": "Capacity note",
+      "value": "Omni's older rack card lists slightly different figures (Seely Pavilion up to 160, Vanderbilt Terrace up to 70). Confirm current numbers."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "Four venues on Sunset Mountain",
+      "p": [
+        "Seely Pavilion is an Arts and Crafts style pavilion with exposed trusses, reclaimed wood, a stacked hearth around a large fireplace, polished concrete floors and six pairs of floor-to-ceiling doors and windows. An adjoining lawn lets a wedding run indoors and out.",
+        "The Skyline Room has floor-to-ceiling windows, and large sliding doors open onto Mountain View Terrace, which has a massive rock fireplace. The Country Club has Norman architecture, a scalloped roof and an expansive patio over the golf course. Vanderbilt Terrace is the smallest, open-air, for a ceremony or a reception under the stars."
+      ]
+    },
+    {
+      "h2": "Sound and hosting by room",
+      "p": [
+        "Polished concrete, glass and trusses make Seely Pavilion a lively room for sound. I keep speakers aimed at the guests rather than the walls, and when the big doors are open I turn the system down and let the evening air do some of the work. The adjoining lawn works for the ceremony, and I can announce the move to the pavilion so guests walk in together.",
+        "In the Skyline Room and on Mountain View Terrace, the sliding doors connect an indoor ballroom to an outdoor terrace, so the host has to keep the room and the terrace in sync. On Vanderbilt Terrace there is nothing to bounce sound back, so a tight speaker layout and a short sound check before guests arrive matter. Omni's brochure and rack card do not publish a music end time or sound rules, so I ask the wedding specialist and plan from that."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "Stone, timber and big glass need restraint. In the pavilion I light the trusses and the hearth with warm white and keep the glass free of glare. For the Skyline Room I light the room and let the mountain view show through the windows at dusk. On the terraces, warm pools of light on the fireplace and the dance floor do more than any color.",
+        "Low fog needs a dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up. Lights and sound use regular 20 amp circuits. Omni does not publish a rule on fog, cold sparks or open flame in the materials I found, so I ask the resort in writing, and I send a power plan so the resort team knows where each circuit is needed."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The resort has 513 guest rooms, so your guests can stay where the party is. Omni's brochure describes the venues as indoor and outdoor, and the lawn at Seely lets you move between them. The brochure does not publish a rain plan, so ask what the backup is for a terrace or lawn ceremony.",
+        "Each room has its own guest minimum and maximum in the brochure, so the room you pick usually follows your guest count. I would walk the two or three that fit with your wedding specialist, and plan the sound, hosting and lighting once the room is chosen."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Which Omni Grove Park Inn venue is best for dancing?",
+      "a": "That depends mostly on your guest count. Seely Pavilion is the standalone pavilion with a hearth, trusses and an adjoining lawn, and the Skyline Room with Mountain View Terrace holds up to 200 guests. I would help you pick after you tour them."
+    },
+    {
+      "q": "Can I bring my own DJ and host?",
+      "a": "Omni's brochure does not publish a vendor rule for entertainers. I would ask your wedding specialist to confirm in writing whether outside DJs and hosts are allowed for your room."
+    },
+    {
+      "q": "Do you need a power plan at the Omni?",
+      "a": "Yes. I send a plan listing a dedicated 30 amp circuit for fog and ordinary 20 amp circuits for lights and sound, so the resort team can confirm placements."
+    },
+    {
+      "q": "Can we use cold sparks for a grand exit?",
+      "a": "Omni does not publish a rule in the materials I found. I ask for written approval for your venue and date before anything is planned."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Omni Grove Park Inn: Wedding brochure (PDF)",
+      "url": "https://omnihotels.com/-/media/images/hotels/gpirst/weddings/menus/gpirst-wedding-brochure.pdf"
+    },
+    {
+      "label": "Omni Grove Park Inn: Wedding rack card (PDF)",
+      "url": "https://www.omnihotels.com/-/media/images/hotels/gpirst/weddings/menus/gpirst-omni-grove-park-inn-weddings-rack-card-no-crop.pdf"
+    },
+    {
+      "label": "Here Comes The Guide: The Omni Grove Park Inn",
+      "url": "https://www.herecomestheguide.com/wedding-venues/north-carolina/the-omni-grove-park-inn"
+    }
+  ],
+  "asOf": "October 2026"
+}

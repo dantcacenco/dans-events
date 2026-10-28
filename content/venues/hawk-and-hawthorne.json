@@ -1,0 +1,102 @@
+{
+  "slug": "hawk-and-hawthorne",
+  "name": "Hawk & Hawthorne",
+  "citySlug": "asheville",
+  "tier": "guide",
+  "town": "Barnardsville",
+  "state": "NC",
+  "address": null,
+  "title": "Hawk & Hawthorne Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Hawk & Hawthorne in Barnardsville, NC? See Ritual Hill, the Heritage Barn and the Heart Spring, plus my sound and lighting plan.",
+  "h1": "Hosting, DJ and lighting at Hawk & Hawthorne",
+  "lede": "Hawk & Hawthorne is fifty acres at the edge of Pisgah National Forest in Barnardsville, with a standing-stone ceremony hill, a tobacco barn and a heart-shaped spring. It is a working land sanctuary, and the sound and power need planning.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "Barnardsville, NC, near Asheville, on 50 acres at the edge of Pisgah National Forest. No street address is published; visits are by appointment, registration or ticketed event only."
+    },
+    {
+      "label": "Spaces",
+      "value": "Ritual Hill (outdoor ceremony), the Heritage Barn (a renovated tobacco barn used for dinner, dancing and as a rainy-day backup) and the Heart Spring."
+    },
+    {
+      "label": "Time on site",
+      "value": "Five hours of prep the day before, then full-day access from 9 a.m. to midnight on the wedding day."
+    },
+    {
+      "label": "Sound and music",
+      "value": "The venue says concert-grade sound equipment is provided, and lists live musicians, DJs and dance bands through its network."
+    },
+    {
+      "label": "Scale",
+      "value": "The venue says it hosts only 10 to 15 weddings a year."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "Fifty acres and three places to gather",
+      "p": [
+        "Ritual Hill is an open sanctuary framed by standing stones and mountain views, used for ceremonies. The Heritage Barn is a renovated tobacco barn above a flower farm, used for dinner, the dance floor and as the rainy-day backup. The Heart Spring is a heart-shaped spring beside a hawthorn tree, suggested for performances and small gatherings that bring water into the celebration.",
+        "The home page also mentions a tobacco barn turned into a listening room and a cedar stage on Ritual Hill, which tells me the place is built for performance."
+      ]
+    },
+    {
+      "h2": "Sound and hosting on the land",
+      "p": [
+        "The venue says it provides concert-grade sound equipment and connects couples with live musicians, DJs and high-energy dance bands. That means my first question is how outside entertainers fit, because I may be working with the venue's sound, not instead of it. If you want me hosting and running music, I would ask what is included in the venue's sound set and plan around it.",
+        "Open hillside ceremonies are an outdoor sound job with wind and no walls, so I use a close mic for the officiant and put the speakers near the front rows. Moving guests from Ritual Hill to the barn is a walk, so I host that transition with a short announcement and music. With access from 9 a.m. to midnight, there is room for a long, unhurried timeline."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "Dusk is the point of this place: the valley, the barn lights and the ridge. I keep lighting warm and low, with wash lights on the barn beams and a spotlight for the entrance and first dance. On Ritual Hill I light the couple and the stones and leave the sky alone.",
+        "Low fog needs its own dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up. Lights and sound run on 20 amp circuits. On a farm site with a barn and a hill, cable runs can be long, so I ask where the power is and send a plan. The venue mentions fire-circle gatherings but does not publish a sparkler, fog or open flame rule, so I get cold sparks and fog approved in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Visits are by appointment, registration or ticketed event only, so book a tour rather than driving up. Weekday, off-season and micro weddings are priced differently from peak weekends, and the venue says it hosts micro weddings and elopements.",
+        "The venue lists five hours of prep the day before, which is a good time for a sound check. It says housing for the family and five-star accommodations are available on the land. It does not publish a capacity or a music cutoff, so ask both."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is Hawk & Hawthorne in Asheville?",
+      "a": "It is in Barnardsville, NC, north of Asheville at the edge of Pisgah National Forest. The venue describes itself as near Asheville and does not publish a street address."
+    },
+    {
+      "q": "Can I bring my own DJ and host?",
+      "a": "The venue provides concert-grade sound equipment and connects couples with its own musicians. I would ask whether an outside DJ and host can work with that setup before you sign."
+    },
+    {
+      "q": "Is there a music cutoff?",
+      "a": "The venue does not publish one. Full-day access ends at midnight, so ask your coordinator what the music limit is on your date."
+    },
+    {
+      "q": "Can we use cold sparks or fog?",
+      "a": "The venue does not publish a rule on either. I ask for written approval for your date before planning the effect."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Hawk & Hawthorne: home page",
+      "url": "https://www.hawkandhawthorne.com"
+    },
+    {
+      "label": "Hawk & Hawthorne: Weddings and celebrations",
+      "url": "https://www.hawkandhawthorne.com/weddings-celebrations"
+    },
+    {
+      "label": "Hawk & Hawthorne: Our spaces",
+      "url": "https://www.hawkandhawthorne.com/our-spaces"
+    },
+    {
+      "label": "Hawk & Hawthorne: What we offer",
+      "url": "https://www.hawkandhawthorne.com/what-we-offer"
+    }
+  ],
+  "asOf": "October 2026"
+}

@@ -1,0 +1,96 @@
+{
+  "slug": "burntshirt-vineyards",
+  "name": "Burntshirt Vineyards",
+  "citySlug": "hendersonville",
+  "tier": "guide",
+  "town": "Hendersonville",
+  "state": "NC",
+  "address": "2695 Sugarloaf Road, Hendersonville, NC 28792",
+  "title": "Burntshirt Vineyards Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Burntshirt Vineyards in Hendersonville, NC? See how I would plan hosting, DJ sound and warm lighting for the Summit Event Center.",
+  "h1": "Hosting, DJ and lighting at Burntshirt Vineyards",
+  "lede": "Burntshirt Vineyards in Hendersonville has the Summit Event Center above 21.5 acres of grapevines with Blue Ridge views. Here is how I would plan the sound and light for a vineyard wedding there.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "2695 Sugarloaf Road, Hendersonville, NC 28792, about 2.5 miles off Interstate 26"
+    },
+    {
+      "label": "Main space",
+      "value": "Summit Event Center, set among gardens overlooking 21.5 acres of grapevines"
+    },
+    {
+      "label": "Capacity",
+      "value": "Up to 200 guests across multiple seating locations"
+    },
+    {
+      "label": "Outdoors",
+      "value": "Several outdoor ceremony sites and a panoramic patio that can be tented"
+    },
+    {
+      "label": "Lodging",
+      "value": "Vintner's Cottage (two bedrooms) and Maxwell House (four suites), booked through Vacasa"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The Summit Event Center and the vineyard",
+      "p": [
+        "The winery's wedding page describes the Summit Event Center among landscaped gardens overlooking 21.5 acres of grapevines, with Blue Ridge Mountain views. It lists multiple locations for seating up to 200 guests, numerous outdoor ceremony venues, a panoramic patio that can be tented, and portrait sites in the vineyard and gardens at no charge. A caterer's kitchen and an approved list of caterers are provided. The page gives no square footage for the Summit. The winery sits about 2.5 miles off Interstate 26, so guests do not have a long drive from the highway."
+      ]
+    },
+    {
+      "h2": "Sound and hosting in the vineyard",
+      "p": [
+        "A ceremony among grapevines is an open-air room, so I place a small speaker near the seats and give the officiant a clip-on microphone. Open air carries sound farther than people expect, so I ask the winery for its amplified music cutoff and any neighbor limits, which the pages do not publish.",
+        "The wedding page does not mention a dance floor, so I ask early where it goes, indoors in the Summit or on the patio. The flow from vineyard ceremony to patio cocktail hour to the Summit gives me natural moments to host: a welcome at the patio, toasts at dinner and a clear call to the dance floor."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "At dusk the vineyard and the Blue Ridge fade quickly, which makes warm white lighting on the patio and the Summit the focus. A tented patio can carry soft washes overhead, and I plan stands outside the tent edges so the view stays clear.",
+        "Fog needs its own dedicated 30 A circuit, and wind on a hill takes outdoor fog away fast, so I use it indoors or under the tent. The winery publishes no sparkler or fog rule. Cold sparks have no flame but still need permission, so I ask in writing, and I ask where the patio's power is."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The patio can be tented but the page gives no tent terms or rain plan, so ask what the winery does in wet weather. Lodging at the Vintner's Cottage and the Maxwell House is booked through Vacasa. Ask the winery for its written rules on vendors, music and load-in."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "How many guests can Burntshirt Vineyards hold?",
+      "a": "The winery's wedding page says up to 200 guests across multiple seating locations. Confirm the number for a seated dinner with the events team."
+    },
+    {
+      "q": "Does Burntshirt allow outside DJs?",
+      "a": "The wedding page lists an approved list of caterers and no rule on DJs. I ask the winery in writing and send my timeline and power plan."
+    },
+    {
+      "q": "Can guests stay overnight?",
+      "a": "The winery lists the Vintner's Cottage, a 1939 stone cottage with two bedrooms, and the Maxwell House, a Victorian home with four suites about 2.5 miles away. Both are booked through Vacasa."
+    },
+    {
+      "q": "Where would the dance floor go?",
+      "a": "The wedding page does not mention a dance floor. Ask the winery whether the Summit or the tented patio is the intended dance space, and whether a floor is provided."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Weddings and events",
+      "url": "https://www.burntshirtvineyards.com/all-events/weddings-events/"
+    },
+    {
+      "label": "Venue website: Accommodations",
+      "url": "https://www.burntshirtvineyards.com/3400-club/accommodations/"
+    },
+    {
+      "label": "Asheville Chamber: address confirmation",
+      "url": "https://ashevillechamber.org/news-events/a-touch-of-tuscany-in-the-nc-mountains-sept-20th"
+    }
+  ],
+  "asOf": "October 2026"
+}

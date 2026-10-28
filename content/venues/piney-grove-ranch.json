@@ -1,0 +1,103 @@
+{
+  "slug": "piney-grove-ranch",
+  "name": "Piney Grove Ranch",
+  "citySlug": "greenville-sc",
+  "tier": "worked",
+  "town": "Gray Court",
+  "state": "SC",
+  "address": "641 Piney Grove School Rd, Gray Court, SC 29645",
+  "title": "Piney Grove Ranch Wedding DJ & Host | Dan's Events",
+  "description": "Hosting, DJ, sound and lighting at Piney Grove Ranch in Gray Court, SC: the Lakeside Dock, Overlook Chapel, indoor reception space and house rules.",
+  "h1": "Hosting, DJ and lighting at Piney Grove Ranch",
+  "lede": "Piney Grove Ranch is a family farm in Gray Court with a pond, two ceremony spots and an indoor reception space. I have hosted here, and the venue's team is hands-on, which makes the day easier to run.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "641 Piney Grove School Rd, Gray Court, SC 29645, just south of Greenville."
+    },
+    {
+      "label": "Spaces",
+      "value": "Two ceremony locations (the Lakeside Dock and the Overlook Chapel), an indoor reception space, a pond with a fountain and a bridge, and a bridal suite and groom's suite."
+    },
+    {
+      "label": "Capacity",
+      "value": "Up to 150 guests indoors. With the buffet and dance floor indoors, the venue recommends 75 or fewer."
+    },
+    {
+      "label": "Rental time",
+      "value": "Packages include a full day from 8 AM to 11 PM."
+    },
+    {
+      "label": "Included",
+      "value": "A sound system, a backup standby generator, a golf cart for guests and equipment, and an indoor and outdoor fireplace."
+    },
+    {
+      "label": "Lodging",
+      "value": "A farmhouse that sleeps up to 10."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its spaces",
+      "p": [
+        "The owners' family has lived on this farm for 16 years. After two of their daughters married there in 2021, friends suggested making it a venue, and they built a retaining wall around the pond and cleared space for the reception building.",
+        "Couples choose between the Lakeside Dock and the Overlook Chapel for the ceremony, then move to the indoor reception space. The pond has a lit fountain and a bridge over a water garden, which makes a natural spot for portraits. The venue also lists a bridal suite with a private restroom and a groom's suite, so the wedding party has a quiet place to get ready."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at Piney Grove Ranch",
+      "p": [
+        "I hosted a wedding here in August 2026, in English and Russian, and ran the sound.",
+        "A pond ceremony needs speakers aimed at the chairs and a mic for the officiant that handles wind. If you choose the Lakeside Dock, the venue uses a golf cart to move guests who need it. I time my announcements so the move to the reception is smooth.",
+        "The venue limits the day to 8 AM through 11 PM, and it requires its own list of coordinators and bartenders. I work with the coordinator on a timeline that hits toasts and dances comfortably before the end."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "Inside, I use warm white wash and a few beam lights over the dance floor, and keep the room soft for dinner. Outside, the fountain and string lights do much of the work, so I add light only where it helps faces and the aisle.",
+        "Lights and sound run on regular 20 amp circuits. Low fog needs its own dedicated 30 amp circuit, so I ask where the panel is. The venue includes a standby generator for outages. Piney Grove allows candles only when floating or in an approved container, and I did not find a published fog or sparkler rule, so I confirm with the venue and get approval in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The venue requires a one-day liability policy and, if alcohol is served, an off-duty police officer. It allows beer, wine, champagne and two signature drinks.",
+        "The farmhouse can host your wedding party overnight. Book it through the venue after you sign. If your guests are coming from out of town, that is the easiest way to keep the family together the night before and the morning after, and I can help you plan the timeline around that."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can you host in English and Russian here?",
+      "a": "Yes. I did exactly that here in August 2026. I run the night in both languages and keep the translation quick so no one waits."
+    },
+    {
+      "q": "Is there a sound system already?",
+      "a": "The venue includes one. I decide with you whether it is enough for your guest count, or whether to bring my full rig."
+    },
+    {
+      "q": "Do I have to use the venue's vendor list?",
+      "a": "The venue keeps a preferred list and requires its coordinators and bartenders. Ask the venue about entertainment when you tour."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Home",
+      "url": "https://www.pineygroveranch.com/"
+    },
+    {
+      "label": "Venue website: Investment (inclusions)",
+      "url": "https://www.pineygroveranch.com/investment"
+    },
+    {
+      "label": "Venue website: FAQs",
+      "url": "https://www.pineygroveranch.com/faqs"
+    },
+    {
+      "label": "Venue website: About",
+      "url": "https://www.pineygroveranch.com/about"
+    }
+  ],
+  "asOf": "October 2026"
+}

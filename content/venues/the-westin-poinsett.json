@@ -1,0 +1,91 @@
+{
+  "slug": "the-westin-poinsett",
+  "name": "The Westin Poinsett",
+  "citySlug": "greenville-sc",
+  "tier": "guide",
+  "town": "Greenville",
+  "state": "SC",
+  "address": "120 South Main Street, Greenville, SC 29601",
+  "title": "Westin Poinsett Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at The Westin Poinsett in Greenville, SC? How a host, DJ and lighting plan fits the two 24-foot-ceiling ballrooms and the rooftop.",
+  "h1": "Hosting, DJ and lighting at The Westin Poinsett",
+  "lede": "The Westin Poinsett is a downtown Greenville hotel with two large ballrooms, each with a 24-foot ceiling. Here is how a host, DJ and lighting plan would fit those rooms.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "120 South Main Street, Greenville, SC 29601"
+    },
+    {
+      "label": "Event space",
+      "value": "Nine event rooms with 10,749 sq ft in total, including two ballrooms and the Spoonbread restaurant."
+    },
+    {
+      "label": "Poinsett Ballroom",
+      "value": "78 by 42 feet with a 24-foot ceiling, 3,276 sq ft. Listed for 400 reception style or 250 banquet style."
+    },
+    {
+      "label": "Gold Ballroom",
+      "value": "75 by 43 feet with a 24-foot ceiling, 3,225 sq ft. Listed for 300 reception style or 250 banquet style."
+    },
+    {
+      "label": "Capacity",
+      "value": "The hotel lists weddings for up to 400 guests."
+    },
+    {
+      "label": "In-house equipment",
+      "value": "The hotel lists a PA system with microphones, event lighting and spotlights, and an AV technician."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its spaces",
+      "p": [
+        "The Westin Poinsett lists nine event rooms. The two ballrooms do the heavy lifting for a wedding: the Poinsett Ballroom at 78 by 42 feet and the Gold Ballroom at 75 by 43 feet, each with a 24-foot ceiling. Marriott's capacity chart lists the Poinsett Ballroom for 250 at banquet rounds and the Gold Ballroom for 250 as well.",
+        "The hotel also lists the Spoonbread restaurant for intimate wedding events and the Poinsett Hotel Rooftop for newlywed portraits during the reception. Wedding guests can book a room block."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at the Westin Poinsett",
+      "p": [
+        "Ballrooms are where a host earns their keep. With 250 seated guests, a 24-foot ceiling and a rectangular room, I set speakers on stands at the front and add delay speakers partway back if the room is long, so the toasts are clear without being loud.",
+        "The hotel's equipment list includes a PA system and microphones. Hotels often have their own AV rules, so I ask early whether an outside DJ and host can bring a full rig and how the hotel handles load-in. I did not find a published outside-vendor policy, so I confirm it with the events team.",
+        "I plan the flow with you and the hotel's planner: ceremony, cocktail hour, grand entrance, dinner, toasts and dancing, with clear cues to the staff."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "A 24-foot ceiling gives room for beam lights above the dance floor and warm white wash on the walls. I keep the palette warm white and white unless you ask for color, and I use small fixtures rather than big trusses so the ballroom still feels like a ballroom.",
+        "I ask where the ballroom's floor and wall circuits are. I send a power plan listing my lights and sound on ordinary 20 amp circuits, and low fog on its own dedicated 30 amp circuit. Hotels often restrict fog, haze and sparkler effects because of fire alarms, and the Westin Poinsett does not publish a rule that I found, so I confirm with the venue and get approval in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Ask the hotel about load-in times and elevator access, since downtown hotels often have tight windows. Ask too about outside vendor fees, and the plan for moving from ceremony to reception.",
+        "The hotel is in downtown Greenville, so your guests can walk to restaurants. Book your room block early."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can an outside DJ and host work at the Westin Poinsett?",
+      "a": "The hotel's page does not publish an outside vendor policy. I ask the events team in writing and share the answer with you before you sign anything."
+    },
+    {
+      "q": "Which ballroom is better for dancing?",
+      "a": "Both have 24-foot ceilings and similar footprints. Your layout decides: where the dance floor goes relative to dinner tables, and where the head table sits."
+    },
+    {
+      "q": "Can we use low fog or cold sparks in a hotel ballroom?",
+      "a": "Maybe, but hotels often have fire alarm rules. I ask the hotel in writing and only plan it with their approval."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Marriott: The Westin Poinsett, Greenville events and weddings",
+      "url": "https://www.marriott.com/en-us/hotels/gspwi-the-westin-poinsett-greenville/events/"
+    }
+  ],
+  "asOf": "October 2026"
+}

@@ -1,0 +1,104 @@
+{
+  "slug": "the-carnegie-hotel",
+  "name": "The Carnegie Hotel",
+  "citySlug": "johnson-city",
+  "tier": "guide",
+  "town": "Johnson City",
+  "state": "TN",
+  "address": "1216 W State of Franklin Rd, Johnson City, TN 37604",
+  "title": "The Carnegie Hotel Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at The Carnegie Hotel in Johnson City, TN? See how I would plan hosting, DJ sound and warm lighting in the Grand Soldiers Ballroom.",
+  "h1": "Hosting, DJ and lighting at The Carnegie Hotel",
+  "lede": "The Carnegie Hotel in Johnson City is a re-creation of an 1891 travelers' hotel, with a ballroom that hosts weddings of up to 200 guests. It is a hotel ballroom, so the plan is about making a big room feel warm and personal.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "1216 W State of Franklin Rd, Johnson City, TN 37604 (address from Afar; the hotel's own pages say it is in the heart of Johnson City)"
+    },
+    {
+      "label": "Weddings",
+      "value": "The ballroom hosts weddings of up to 200 guests, with customized catering menus"
+    },
+    {
+      "label": "Event spaces",
+      "value": "Grand Soldiers Ballroom, Grand Balcony, Wilder Dining Room, Roosevelt Library, Taylor Salons and Reeves Room"
+    },
+    {
+      "label": "Space total",
+      "value": "10,000 square feet of event space, for groups of up to 250"
+    },
+    {
+      "label": "Hotel",
+      "value": "Presidential Suite, Executive Suite and King Deluxe rooms; Austin Springs Spa and Wellington's Restaurant on site"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The hotel and its event spaces",
+      "p": [
+        "The hotel's own page says its original building was described in 1891 as having no equal in East Tennessee and was lost to a fire; Afar describes the current hotel as a re-creation of that travelers' hotel. Its event spaces include the Grand Soldiers Ballroom, a Grand Balcony, the Wilder Dining Room, the Roosevelt Library, the Taylor Salons and the Reeves Room, with 10,000 square feet in all. The hotel lists the ballroom for weddings of up to 200 guests, and no individual room sizes. On site there is also Wellington's Restaurant and Austin Springs Spa, which makes a getting-ready morning easier for the wedding party."
+      ]
+    },
+    {
+      "h2": "Sound and hosting in the ballroom",
+      "p": [
+        "The hotel's wedding quote form lists music and audio-visual services among what it can arrange, so the first question is whether I can bring my own sound and DJ setup or work with the hotel's. The pages publish no vendor rule or music cutoff, so I ask in writing.",
+        "In a hotel ballroom I place speakers to cover the dance floor and keep the level lower toward the tables so people can talk. The salons, library and balcony give cocktail hour somewhere to happen, so as host I plan the order of the evening so guests always know what is next. With a mix of rooms, I walk the route with the banquet manager before the doors open."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "A hotel ballroom usually has strong overhead lighting, so I ask what is on dimmers and whether my own warm white washes and uplights can take over for dancing.",
+        "Low fog needs its own dedicated 30 A circuit, and hotel sprinkler and smoke detection can be sensitive, so I raise that first. The hotel publishes no rule on sparklers or fog, so I ask for cold sparks and fog to be approved in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Request a quote through the hotel's wedding quote form, or contact one of its sales associates. The form covers a rehearsal dinner, reception, bridal shower, guest rooms and a post-wedding brunch. The hotel is near Interstates 26 and 81 and Tri-Cities Regional Airport, so out-of-town guests have easy access. Room counts differ by source, so confirm how many rooms the hotel can block."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "How many guests can the Carnegie Hotel's ballroom hold for a wedding?",
+      "a": "The hotel's homepage says the ballroom hosts weddings of up to 200 guests. Confirm the seated and standing numbers for your layout with the sales team."
+    },
+    {
+      "q": "Can I bring my own DJ to the Carnegie Hotel?",
+      "a": "The hotel lists music among the services it can arrange, but I found no published rule about outside DJs. Ask the sales team, and I will send my timeline and power plan."
+    },
+    {
+      "q": "Can we use sparklers or fog?",
+      "a": "The hotel publishes no rule on either. Cold sparks have no flame but still need permission, so I get it approved in writing."
+    },
+    {
+      "q": "What rooms does the hotel offer for the wedding party?",
+      "a": "The hotel's own site lists a Presidential Suite of 1,000 square feet, an Executive Suite of about 800 square feet and King Deluxe rooms of 400 square feet. Ask the sales team how many rooms it can block for your date."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Hotel website: Home",
+      "url": "https://www.carnegiehotel.com/"
+    },
+    {
+      "label": "Hotel website: Weddings",
+      "url": "https://www.carnegiehotel.com/weddings"
+    },
+    {
+      "label": "Hotel website: Meetings and event spaces",
+      "url": "https://www.carnegiehotel.com/meetings"
+    },
+    {
+      "label": "Hotel website: Wedding quote form",
+      "url": "https://www.carnegiehotel.com/weddings/get-a-wedding-quote"
+    },
+    {
+      "label": "Afar: Carnegie Hotel",
+      "url": "https://www.afar.com/places/carnegie-hotel"
+    }
+  ],
+  "asOf": "October 2026"
+}

@@ -1,0 +1,98 @@
+{
+  "slug": "honeysuckle-hill-events",
+  "name": "Honeysuckle Hill Events (The Barn at Honeysuckle Hill)",
+  "citySlug": "asheville",
+  "tier": "guide",
+  "town": "Asheville",
+  "state": "NC",
+  "address": "2 Country Spring Drive, Asheville, NC 28804",
+  "title": "Honeysuckle Hill Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Honeysuckle Hill Events in Asheville? See the hayloft chapel, barn, music cutoff and sparkler rules, plus my sound and lighting plan.",
+  "h1": "Hosting, DJ and lighting at Honeysuckle Hill",
+  "lede": "Honeysuckle Hill is a barn venue in Asheville with a hayloft chapel, a gazebo over a lily pad pond and a reception barn hung with large chandeliers. It publishes more rules than most venues, which makes it easy to plan for.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "2 Country Spring Drive, Asheville, NC 28804."
+    },
+    {
+      "label": "Spaces",
+      "value": "A hayloft chapel with 22 church pews and 3 chandeliers, a gazebo and a pond-side ceremony spot, and a reception barn with 4 chandeliers, each 8 feet across."
+    },
+    {
+      "label": "Music cutoff",
+      "value": "Music must stop by 10:00 p.m. on Fridays and Saturdays, tied to local noise regulations. Time past 10 p.m. is available for an hourly fee."
+    },
+    {
+      "label": "Sparklers",
+      "value": "Allowed for special moments such as an exit or first dance. Confetti is not allowed, and nothing may be tacked or nailed to walls."
+    },
+    {
+      "label": "Outside entertainers",
+      "value": "DJs and bands must sign the venue's Outside Vendor Agreement, due 30 days before the event."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "A hayloft chapel and a century-old barn",
+      "p": [
+        "The barn at Honeysuckle Hill is an old restored barn with sliding doors and four chandeliers, each 8 feet across. The ceremony can happen in the hayloft chapel, which has antique pews and original timber beams, or outside at the gazebo or by the pond. The gazebo is lit by chandelier and sits over a lily pad pond.",
+        "The venue says the barn doubles as the indoor backup for outdoor ceremonies, and that access on the wedding day runs ten hours."
+      ]
+    },
+    {
+      "h2": "Sound and hosting around the barn",
+      "p": [
+        "This is where Honeysuckle Hill helps a host most: the rules are written down. Music has to stop by 10:00 p.m. on Fridays and Saturdays, so I plan the dance floor, last dance and send-off to finish before then, not after. Extra time past 10 p.m. is sold by the hour, and I would only recommend it if you really want the party to go on.",
+        "DJs and bands sign an Outside Vendor Agreement due 30 days before the date, so I get that done early. In the barn, wood, chandeliers and open sliding doors mean sound escapes, so I keep the speakers pointed in and the volume inside the rules. For the ceremony, the chapel is an intimate, wood-lined room, and the gazebo and pond call for small speakers and a mic for the officiant. I host the move from chapel to barn."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "Four 8 foot chandeliers do a lot of the work, so I keep my lights warm white and low: wash lights on the beams and walls, a spotlight for the entrance and first dance, and no color unless you ask. Low fog needs its own dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up. Lights and sound run on ordinary 20 amp circuits. Honeysuckle Hill does not publish its circuit layout, so I ask for a walk-through and send a power plan.",
+        "The FAQ says sparklers are allowed for moments like an exit or first dance, so cold sparks can fit a send-off here. The page does not mention fog, so I get that approved in writing too. Confetti is not allowed, and nothing can be tacked or nailed to the walls, so I use no wall mounts and keep lights on stands or truss."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Packages include all-inclusive, venue-only and micro-wedding options, and the venue accepts outside vendors. Entertainers, caterers and bartenders sign the Outside Vendor Agreement, due 30 days before.",
+        "For weather, the barn serves as the indoor plan. The FAQ I read does not detail a rain plan beyond that, so ask whether the chapel can stand in for the gazebo ceremony."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I bring my own DJ and host to Honeysuckle Hill?",
+      "a": "Yes. The venue accepts outside vendors, and DJs and bands sign its Outside Vendor Agreement 30 days before the event. I handle that paperwork as soon as you book me."
+    },
+    {
+      "q": "What time does the music have to stop?",
+      "a": "On Fridays and Saturdays, music must stop by 10:00 p.m., per the venue's FAQ. Time past 10 p.m. is available for an hourly fee."
+    },
+    {
+      "q": "Can we use cold sparklers for the exit?",
+      "a": "The venue's FAQ says sparklers are allowed for special moments like an exit or first dance. I still confirm the details with your coordinator, and I get fog approved in writing separately."
+    },
+    {
+      "q": "Is there anything I can't bring?",
+      "a": "The FAQ bans confetti and says nothing may be tacked or nailed to the walls. I plan my lighting around those rules."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Honeysuckle Hill: FAQs",
+      "url": "https://honeysucklehillevents.com/faq/"
+    },
+    {
+      "label": "Honeysuckle Hill: home page",
+      "url": "https://honeysucklehillevents.com/"
+    },
+    {
+      "label": "Explore Asheville: The Barn at Honeysuckle Hill",
+      "url": "https://www.exploreasheville.com/weddings/asheville/listing/ceremony-and-reception-locations/barn-honeysuckle-hill"
+    }
+  ],
+  "asOf": "October 2026"
+}

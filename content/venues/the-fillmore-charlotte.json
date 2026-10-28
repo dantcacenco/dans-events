@@ -1,0 +1,92 @@
+{
+  "slug": "the-fillmore-charlotte",
+  "name": "The Fillmore Charlotte",
+  "citySlug": "charlotte",
+  "tier": "guide",
+  "town": "Charlotte",
+  "state": "NC",
+  "address": "820 Hamilton Street, Charlotte, NC 28206",
+  "title": "Fillmore Charlotte Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at The Fillmore Charlotte? What the venue publishes and how I would plan hosting, DJ sound and warm lighting in a converted mill.",
+  "h1": "Hosting, DJ and lighting at The Fillmore Charlotte",
+  "lede": "The Fillmore Charlotte is a 100-year-old fiber mill turned music hall in Uptown, and its own site lists weddings among the events it hosts. It is a big room with its own house production, so the planning starts with who runs what.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "820 Hamilton Street, Charlotte, NC 28206 (Fourth Ward, Uptown)"
+    },
+    {
+      "label": "Building",
+      "value": "A 100-year-old fiber mill, described as Charlotte's largest music venue"
+    },
+    {
+      "label": "Capacity",
+      "value": "Up to 1,700 guests per the venue; third-party listings give other numbers"
+    },
+    {
+      "label": "Rooms",
+      "value": "The Fillmore (main room) and The Underground"
+    },
+    {
+      "label": "Events",
+      "value": "The private events page lists weddings and receptions"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The building and its rooms",
+      "p": [
+        "The Fillmore's private events page describes a 100-year-old fiber mill in Charlotte's Fourth Ward and says the venue accommodates up to 1,700 guests. It names two rooms, The Fillmore, the main room, and The Underground. A Charlotte meetings listing describes the main room as a tiered layout in a roughly 25,000 square foot building with full-service event production, state-of-the-art lighting and sound, and custom menus. Capacity figures differ between listings, so confirm the number for a seated dinner. The Underground is the second room, and the venue does not describe how it is used for weddings."
+      ]
+    },
+    {
+      "h2": "Sound and hosting in a concert room",
+      "p": [
+        "A room built for live bands is loud-ready, but a wedding is a different night: toasts that need to be heard, a first dance that needs a quiet room, and a dance floor that fills. I would sit down with the venue's event team early to learn whether outside DJs are allowed, and which parts of the house sound system I can use. The venue's pages publish none of that.",
+        "Because the room is tiered, I would plan where the host stands for introductions so every level can see, and keep speech and music levels tuned to a much bigger room than most weddings use."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "The Fillmore is described as having state-of-the-art lighting and sound, so my first question is what the house rig already does and who may operate it. If my warm white fixtures add something, I plan them on separate circuits from the house systems. Low fog needs its own dedicated 30 A circuit; a concert venue may already run fog, but I would not assume it is available for a wedding.",
+        "The venue publishes no sparkler or fog rule, so I ask for approval of cold sparks and fog in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Contact the sales team through the private events page, which lists floorplans, a one-sheet and a virtual tour. Ask about load-in, minimum spend, bar and catering, and which vendors are required, since the page does not publish them. Parking in Uptown deserves a plan of its own."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Does The Fillmore Charlotte really host weddings?",
+      "a": "Yes. Its private events page lists weddings and receptions, and the inquiry form has Wedding as an event type."
+    },
+    {
+      "q": "Can an outside DJ play at The Fillmore?",
+      "a": "The venue does not publish a rule. I would ask the events team in writing and plan around the house sound and lights."
+    },
+    {
+      "q": "Who do we contact about a wedding at The Fillmore?",
+      "a": "The private events page lists a sales team at 980-266-6454 and an inquiry form with Wedding as an event type. Ask them for the floorplans, the one-sheet and the production and vendor rules."
+    },
+    {
+      "q": "How big is the room for a wedding?",
+      "a": "The venue says up to 1,700 guests, while third-party listings give a range of numbers. Confirm the seated and standing counts for your layout with the venue."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Private events",
+      "url": "https://www.fillmorenc.com/private-events"
+    },
+    {
+      "label": "Charlotte Meetings listing: The Fillmore",
+      "url": "https://www.charlottemeetings.com/the-fillmore"
+    }
+  ],
+  "asOf": "October 2026"
+}

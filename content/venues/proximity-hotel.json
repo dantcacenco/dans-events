@@ -1,0 +1,96 @@
+{
+  "slug": "proximity-hotel",
+  "name": "Proximity Hotel",
+  "citySlug": "greensboro",
+  "tier": "guide",
+  "town": "Greensboro",
+  "state": "NC",
+  "address": "704 Green Valley Road, Greensboro, NC 27408",
+  "title": "Proximity Hotel Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Proximity Hotel in Greensboro? See how I would plan hosting, DJ sound and warm lighting in the Weaver Room and White Oak Room.",
+  "h1": "Hosting, DJ and lighting at Proximity Hotel",
+  "lede": "Proximity Hotel in Greensboro hosts weddings of 20 to 200 guests, with a Weaver Room that opens to a terrace and a garden. It is a good size for a night where I can host and DJ without a huge room to fight.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "704 Green Valley Road, Greensboro, NC 27408"
+    },
+    {
+      "label": "Guest count",
+      "value": "20 to 200 guests (the hotel's wedding page)"
+    },
+    {
+      "label": "Weaver Room",
+      "value": "3,003 sq ft (77 by 39 ft), 12-foot ceilings, floor-to-ceiling operable windows, private terrace; seats 156 for dinner"
+    },
+    {
+      "label": "White Oak Room",
+      "value": "1,821 sq ft, opens onto the 22-foot-high Social Lobby, with a movable glass wall and automatic drapes"
+    },
+    {
+      "label": "Included",
+      "value": "Tables, chairs, linens, dance floor, setup, breakdown and event staff are in the hotel's pricing"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The rooms and the garden",
+      "p": [
+        "The hotel's wedding page lists weddings for 20 to 200 guests, with banquet halls, a garden and a social lobby. Its largest room, the Weaver Room, is 3,003 square feet with 12-foot ceilings and floor-to-ceiling windows that open to a terrace and a view of the Bluebell Garden. The room divides in two, and the hotel's pages list different reception counts for it, 180 in one place and 200 in another, so confirm the number for your layout. The White Oak Room is smaller, 1,821 square feet, and opens onto the 22-foot-high Social Lobby through a movable glass wall with automatic drapes, which gives a ceremony or a cocktail hour a different look from the Weaver Room. Print Works Bistro, next door, creates seasonal wedding menus."
+      ]
+    },
+    {
+      "h2": "Sound and hosting in the Weaver Room",
+      "p": [
+        "Twelve-foot ceilings and a lot of glass make the Weaver Room bright and a little live, so I aim speakers at the dance floor and keep the level in check near the windows. The hotel lists integrated sound and a built-in projector, and I would ask what I can plug into and what I should bring on my own. When the operable windows are open for an evening breeze, sound goes out to the terrace and garden, so I ask about neighbors and the amplified music cutoff, which the hotel does not publish.",
+        "The room divides, which helps: a smaller cocktail setup first, then the full room for dinner and dancing. As host I use that flow to keep the night moving."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "The hotel lists custom uplighting in the Weaver Room. I would ask what is installed and what I can control. Floor-to-ceiling windows mean daylight early and black glass later, so I place lights to avoid reflections in the panes and keep warm white on the dance floor.",
+        "Low fog needs its own dedicated 30 A circuit and cannot share with lights or sound. The hotel publishes no sparkler or fog rule, so I get approval in writing for cold sparks and fog. Fog also needs a conversation about smoke detection."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The hotel can host ceremony, reception and next-morning breakfast, and its wedding specialists are reachable at 336-478-9111. Group room blocks of 10 or more are available. Ask the hotel for its floor plans PDF and for written vendor, music and load-in rules, since the wedding page does not publish them."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "How many guests fit in the Weaver Room?",
+      "a": "The hotel's own pages list 156 seated for dinner and 180 or 200 for a reception, depending on the page. Confirm the number with the events team for your layout."
+    },
+    {
+      "q": "Where does the ceremony happen at Proximity Hotel?",
+      "a": "The wedding page lists banquet halls, a garden and a social lobby. Ask the hotel which space it holds for ceremonies on your date and what the weather plan is."
+    },
+    {
+      "q": "Does the hotel include a dance floor?",
+      "a": "Its wedding page says pricing includes a dance floor, along with tables, chairs, linens, setup, breakdown and event staff."
+    },
+    {
+      "q": "Can we use cold sparks or fog?",
+      "a": "The hotel publishes no rule on either. I confirm with the events team and get approval in writing."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Hotel website: Weddings",
+      "url": "https://www.proximityhotel.com/weddings"
+    },
+    {
+      "label": "Hotel website: Event spaces",
+      "url": "https://www.proximityhotel.com/event-spaces/"
+    },
+    {
+      "label": "Hotel website: Weaver Room",
+      "url": "https://www.proximityhotel.com/weaver-room/"
+    }
+  ],
+  "asOf": "October 2026"
+}

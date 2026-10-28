@@ -1,0 +1,101 @@
+{
+  "slug": "the-estate-at-sweetwater-creek",
+  "name": "The Estate at Sweetwater Creek",
+  "citySlug": "gatlinburg",
+  "tier": "worked",
+  "town": "Newport",
+  "state": "TN",
+  "address": "875 Edwina Bridgeport Rd, Newport, TN 37821",
+  "title": "Sweetwater Creek Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at The Estate at Sweetwater Creek in Newport, TN? See how I run bilingual hosting, DJ sound and warm lighting in the Grand Hall.",
+  "h1": "Hosting, DJ and lighting at The Estate at Sweetwater Creek",
+  "lede": "The Estate at Sweetwater Creek is a 70-acre family estate in the Smoky Mountain foothills that hosts one wedding a day. I hosted a wedding here in May 2026, in English and Romanian, with the DJ and lights.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "875 Edwina Bridgeport Rd, Newport, TN 37821"
+    },
+    {
+      "label": "Spaces",
+      "value": "Four outdoor ceremony sites, the Grand Hall, bridal suites and a groom's quarters"
+    },
+    {
+      "label": "Capacity",
+      "value": "Grand Hall up to 250 seated; ceremonies up to 250 across the four sites and the hall"
+    },
+    {
+      "label": "Booking",
+      "value": "One wedding per day, with no overlap and no shared parking"
+    },
+    {
+      "label": "Lodging",
+      "value": "Sleeps 22 on site"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The estate and the Grand Hall",
+      "p": [
+        "The estate's website describes 70 acres of foothills with four outdoor ceremony sites, each framing a different view of the Smoky Mountains. Receptions happen in the Grand Hall, which the site describes with soaring ceilings, chandeliers and walls of glass that open to terraces, seating up to 250.",
+        "The estate books one wedding per day, with no shared parking and no rigid teardown window, so the night can wind down on the porch or around a firepit."
+      ]
+    },
+    {
+      "h2": "Sound and hosting across the grounds",
+      "p": [
+        "I hosted a wedding here in May 2026, in English and Romanian, with the DJ and lights.",
+        "Each outdoor ceremony site is an open-air room, so I place speakers close to the seats and give the officiant a clip-on microphone. The estate calls the Grand Hall a full ceremony space and not a fallback tent, so a rain move does not need a different plan for sound. With a high ceiling and tall glass, I aim the speakers at the dance floor and keep the level where people on the terraces can still talk. The estate says it gives the dance floor its own space away from bar traffic, and music is finalized with your consultant about a month out. I build my hosting timeline around that date."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "Chandeliers and glass set the lighting plan. After dark the glass walls reflect the room, so I keep fixtures out of the sightlines and let warm white do the work: soft washes on the walls, a tight beam on the couple at the first dance, and a question to the estate about whether the chandeliers are on dimmers.",
+        "The estate's site publishes no rule on sparklers or fog. Cold sparks have no flame but need permission, so I ask in writing. Low fog needs its own 30 A circuit, lights and sound run on 20 A circuits, and I send the estate a power plan. With terrace doors open the fog drifts out, so I plan it for a closed-door moment like the first dance."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The estate says Knoxville, Asheville and the Tri-Cities are each about an hour away. Lodging sleeps 22, and the Legacy and Timeless experiences include it. Every outdoor site has a backup plan that your consultant reviews weeks before, and the site notes the area gets about 50 inches of rain a year with fast summer storms. Outside vendors are allowed, but alcohol must come from the estate's licensed bar."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can we bring our own DJ and host?",
+      "a": "The estate says couples can use its own team or bring their own vendors, excluding alcohol. I send my timeline and power plan to your consultant ahead of the day."
+    },
+    {
+      "q": "Can you host in two languages?",
+      "a": "Yes. I hosted a wedding here in May 2026 in English and Romanian. I plan the order and length of toasts and games with you so neither half of the room waits."
+    },
+    {
+      "q": "How late can we dance?",
+      "a": "The estate gives no fixed end time and says there is no rigid teardown window, and overnight guests do not need to drive home. Ask your consultant for the exact amplified-music cutoff in writing."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Home",
+      "url": "https://www.sweetwatercreek.net/"
+    },
+    {
+      "label": "Venue website: The Estate",
+      "url": "https://www.sweetwatercreek.net/the-estate"
+    },
+    {
+      "label": "Venue website: Wedding ceremonies",
+      "url": "https://www.sweetwatercreek.net/experience/wedding-ceremonies"
+    },
+    {
+      "label": "Venue website: Wedding receptions",
+      "url": "https://www.sweetwatercreek.net/experience/wedding-receptions"
+    },
+    {
+      "label": "Venue website: Stay and explore",
+      "url": "https://www.sweetwatercreek.net/stay-explore"
+    }
+  ],
+  "asOf": "October 2026"
+}

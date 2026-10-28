@@ -1,0 +1,98 @@
+{
+  "slug": "chestnut-ridge",
+  "name": "Chestnut Ridge",
+  "citySlug": "asheville",
+  "tier": "guide",
+  "town": "Canton",
+  "state": "NC",
+  "address": null,
+  "title": "Chestnut Ridge Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Chestnut Ridge in Canton, NC? Learn about the weatherproof chapel, reception hall and vendor rules, plus my sound and lighting plan.",
+  "h1": "Hosting, DJ and lighting at Chestnut Ridge",
+  "lede": "Chestnut Ridge is a 150-acre mountain estate in Canton with a weatherproof mountain-view chapel and a bright reception hall. The vendor package you pick decides whether I can be your DJ and host.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "Canton, NC, on 150 private acres. The venue's FAQ puts it about fifteen miles from Asheville."
+    },
+    {
+      "label": "Chapel",
+      "value": "A covered mountain-view chapel with retractable windows, radiant heaters and a built-in arbor, seating up to 200 guests."
+    },
+    {
+      "label": "Reception hall",
+      "value": "A bright, modern hall that fits up to about 200 guests seated, with room for dancing and a band or DJ."
+    },
+    {
+      "label": "Getting ready",
+      "value": "Two private suites: a lofted bridal space and a groom's den."
+    },
+    {
+      "label": "Vendor rules",
+      "value": "Event Management and Venue + Planning couples may bring their own vendors or ask for recommendations. All-Inclusive weddings use a core vendor team that includes DJ entertainment."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "A chapel built for weather",
+      "p": [
+        "The chapel is covered and faces the mountains. The venue says it has retractable windows, radiant heaters and a built-in arbor, so the weather plan is part of the room. The reception hall is a separate room, described as bright and modern, and as fitting about 200 seated guests with space for dancing and a band or DJ.",
+        "The venue also describes full-day exclusive access, an in-house planning team and two private getting-ready suites, so the day moves in order with few other people on site."
+      ]
+    },
+    {
+      "h2": "Sound and hosting, and the vendor question",
+      "p": [
+        "The most useful fact here is the vendor structure. Event Management and Venue + Planning couples can bring their own vendors, which means I can be your DJ and host. All-Inclusive weddings use the venue's curated team, which includes DJ entertainment. If you want me, choose the first two, or ask the venue in writing whether your package allows an outside host.",
+        "With windows that retract, the chapel can be an open-air room or a closed one, so I check the sound both ways. Retracted windows mean less reflected sound and more wind noise, and closed windows mean the opposite. In the hall, I aim speakers into the room and keep the dance floor within reach of the DJ table."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "The hall is described as bright and modern, so I use warm white and spotlights to give it an evening mood. A lit chapel arbor, warm wash on the aisle and a spotlight for the entrance and first dance are my starting point.",
+        "Low fog needs its own dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up, while lights and sound run on ordinary 20 amp circuits. Chestnut Ridge does not publish its circuit layout or a rule on fog, cold sparks or a music cutoff in the pages I could read, so I ask for a walk-through, a power plan and written approval."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The venue lists a Micro-Weddings package for smaller groups and hosts up to about 200 guests. The venue says it offers a décor boutique, professional bartenders and a planning team that manages vendors and timelines.",
+        "The venue is about fifteen miles from Asheville, so it works for a ceremony and reception on one property. The street address varies between listings, so confirm it with the venue before sharing directions with guests."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I bring my own DJ and host to Chestnut Ridge?",
+      "a": "It depends on the package. Event Management and Venue + Planning couples may bring their own vendors. All-Inclusive weddings use the venue's team, which includes DJ entertainment, so ask for a written answer first."
+    },
+    {
+      "q": "Is the chapel really weatherproof?",
+      "a": "The venue describes it as covered, with retractable windows and radiant heaters, and says it is designed so weather does not need a backup plan. I confirm the setup for your month on the tour."
+    },
+    {
+      "q": "Where do we dance?",
+      "a": "The venue describes the reception hall as a bright, modern room with space for dancing and a band or DJ. I place the DJ table on the long side of the floor."
+    },
+    {
+      "q": "Can we have fog or cold sparks?",
+      "a": "The pages I read do not publish a rule on either. I ask for written approval for your venue and date."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Chestnut Ridge: home page",
+      "url": "https://chestnutridge.events/"
+    },
+    {
+      "label": "Chestnut Ridge: FAQs",
+      "url": "https://chestnutridge.events/faqs/"
+    },
+    {
+      "label": "Chestnut Ridge: Blog",
+      "url": "https://chestnutridge.events/blog/"
+    }
+  ],
+  "asOf": "October 2026"
+}

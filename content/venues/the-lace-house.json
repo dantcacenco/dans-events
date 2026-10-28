@@ -1,0 +1,100 @@
+{
+  "slug": "the-lace-house",
+  "name": "The Lace House",
+  "citySlug": "columbia-sc",
+  "tier": "guide",
+  "town": "Columbia",
+  "state": "SC",
+  "address": "800 Richland Street, Columbia, SC 29201",
+  "title": "The Lace House Wedding DJ & Host | Dan's Events",
+  "description": "Getting married at The Lace House in Columbia, SC? What the venue publishes about the 10 pm music cutoff and 85 decibel limit, and how I plan the night.",
+  "h1": "Hosting, DJ and lighting at The Lace House",
+  "lede": "The Lace House is a historic house at Arsenal Hill in Columbia with porches, a patio and gardens beside the Governor's Mansion. Its published rules, music over by 10 pm and a sound limit, decide almost everything about the sound plan.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "800 Richland Street, Columbia, SC 29201 (Venues at Arsenal Hill)"
+    },
+    {
+      "label": "Building",
+      "value": "Built in 1855; three stories with over 10,000 square feet of event space and covered porches"
+    },
+    {
+      "label": "Capacity",
+      "value": "150 cocktail-style, 80 seated indoors, 100 for a patio ceremony, up to 300 with Governor's Green"
+    },
+    {
+      "label": "Hours",
+      "value": "Full-day rental from 10 am to 11 pm"
+    },
+    {
+      "label": "Music",
+      "value": "All music must conclude and bars close by 10 pm, and sound must not exceed 85 decibels at the source"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The house, patio and gardens",
+      "p": [
+        "The venue's page says the Lace House was built in 1855 on the grounds of the South Carolina Governor's Mansion, with ironwork, ornamental cornices, parquet floors, figured glass doors and brass chandeliers. Weddings require a full-day rental with 13 hours of access, two private suites for getting ready and a patio for intimate ceremonies, with tent anchors. Capacity is 150 cocktail-style, 80 for a seated dinner indoors and 100 for a patio ceremony, up to 300 when Governor's Green is added."
+      ]
+    },
+    {
+      "h2": "Sound and hosting with a 10 pm music cutoff",
+      "p": [
+        "The FAQ says bands and DJs may set up inside the venues or in the gardens and Governor's Green, music must end by 10 pm and it must not exceed 85 decibels at the sound source. The rental runs to 11 pm, so the last hour is for goodbyes and packing, not dancing. I build the whole timeline so that the grand entrance, toasts, first dance and open dancing all finish before 10, and I keep my sound level at the source under 85.",
+        "That cap is lower than many dance floors expect, so I put speakers closer to guests on stands instead of turning them up, and check the level at the source during the sound check."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "Open-flame candles are restricted at the Lace House and must be fully contained in glass, and fireworks are prohibited. The FAQ does not address sparklers or fog, so I ask the venue for a written answer before suggesting cold sparks or fog. Fog should not be offered unless the house and its smoke detection allow it.",
+        "Lights and sound run on ordinary 20 A circuits, and fog needs its own 30 A circuit. In an older house I ask where the circuits are and plan power by room. Warm white fits the brass chandeliers and the parquet floors, and I would keep any beam heads from washing out the figured glass doors."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The venue requires a licensed, insured planner who is not a guest, hired within 90 days of the event. Vendors may only access the venue during rental hours, and setup the day before needs a two-day package. The rain plan, a move indoors or a rented tent, is due 10 days before the event. A uniformed officer is on site. The venue's site lists no closure, but a WeddingWire listing says portions of the campus are under renovation, so ask what is open on your date."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "What time does music have to stop at the Lace House?",
+      "a": "The venue's FAQ says all music must conclude and bars close by 10 pm, even though full-day rentals run until 11 pm. Music also must not exceed 85 decibels at the sound source."
+    },
+    {
+      "q": "Can we use sparklers at the Lace House?",
+      "a": "The FAQ does not address sparklers, and it prohibits fireworks and restricts open-flame candles. I ask the venue for a written answer first."
+    },
+    {
+      "q": "Is the Lace House open for weddings now?",
+      "a": "The venue's website promotes weddings and tours, while a WeddingWire listing says some portions are under renovation. Call 803-737-2225 to confirm what is available on your date."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Lace House",
+      "url": "https://venuesatarsenalhill.com/venues/lace-house"
+    },
+    {
+      "label": "Venue website: FAQs",
+      "url": "https://venuesatarsenalhill.com/plan-your-day/faqs"
+    },
+    {
+      "label": "Venue website: Pricing and rental information",
+      "url": "https://venuesatarsenalhill.com/plan-your-day/pricing-and-rental-information"
+    },
+    {
+      "label": "Venue website: Home",
+      "url": "https://venuesatarsenalhill.com/"
+    },
+    {
+      "label": "WeddingWire listing: South Carolina Lace House",
+      "url": "https://www.weddingwire.com/biz/south-carolina-lace-house-columbia/d95f4710fd887388.html"
+    }
+  ],
+  "asOf": "October 2026"
+}

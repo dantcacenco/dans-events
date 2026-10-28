@@ -1,0 +1,92 @@
+{
+  "slug": "the-duke-mansion",
+  "name": "The Duke Mansion",
+  "citySlug": "charlotte",
+  "tier": "guide",
+  "town": "Charlotte",
+  "state": "NC",
+  "address": "400 Hermitage Road, Charlotte, NC 28207",
+  "title": "Duke Mansion Wedding DJ & Host | Dan's Events",
+  "description": "Getting married at the Duke Mansion in Charlotte? What the venue publishes on music, sparklers and the 11 pm end, and how I would plan sound and light.",
+  "h1": "Hosting, DJ and lighting at The Duke Mansion",
+  "lede": "The Duke Mansion is a 1915 house in Myers Park with a lawn ceremony, a terrace dinner and dancing indoors. Its published rules on amplified sound, sparklers and the 11 pm end shape how a night here has to be run.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "400 Hermitage Road, Charlotte, NC 28207"
+    },
+    {
+      "label": "Spaces",
+      "value": "McGuire Lawn (ceremony), Barnhardt Terrace (dinner, can be tented), Levine Living Room and Duke Endowment Solarium (dancing)"
+    },
+    {
+      "label": "End time",
+      "value": "All events must conclude by 11:00 pm, with no extensions"
+    },
+    {
+      "label": "Sound rule",
+      "value": "Amplified music is permitted inside the mansion; outside on the grounds only unamplified or acoustic music"
+    },
+    {
+      "label": "Lodging",
+      "value": "20 guest rooms"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The house and its spaces",
+      "p": [
+        "The Duke Mansion's history page says the house was built in 1915 by Zeb Taylor and bought by James B. Duke in 1919. Its wedding page describes the ceremony on McGuire Lawn, dinner outdoors on Barnhardt Terrace, which can be tented, and dancing in the Levine Living Room with the Duke Endowment Solarium. Couples have exclusive use of the mansion on the evening of the wedding and all 20 overnight rooms. The mansion hosts at most 25 weddings a year."
+      ]
+    },
+    {
+      "h2": "Sound and hosting under the venue's rules",
+      "p": [
+        "The FAQ is clear: amplified music is permitted inside the mansion's walls, and outdoors only unamplified or acoustic music is allowed. That means the lawn ceremony and the terrace dinner run without a PA unless the venue approves otherwise, so I ask early whether a small microphone for vows or toasts is acceptable. Dancing in the Living Room and Solarium is where the full sound system belongs.",
+        "Events must conclude by 11:00 pm and no extensions are granted. I build the timeline backward from that: toasts and dinner outside, then a clean move indoors, with the dance floor open long enough to matter."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "In a historic house I use free-standing fixtures on stands, keep everything off the walls and woodwork, and light the rooms warm white so the architecture reads. I ask the mansion where I can put the lights and sound on separate 20 A circuits.",
+        "The FAQ says open flames, including sparklers, may not be used on the property, and it prohibits thrown items such as petals and confetti and noisy departures. A cold spark machine has no flame, but I treat the rule as strict and ask in writing before offering it. Fog is not mentioned, and fog can trigger smoke detectors, so I ask about that too. My fog machine needs its own dedicated 30 A circuit."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The mansion requires a licensed professional wedding planner. Vendors not on the preferred list need advance approval from the Catering Manager, a Certificate of Liability 72 hours before the event and a signed Vendor Agreement. I ask for those forms early. A tent must be booked as the rain plan for the terrace. Overnight guests book by phone for the Friday and Saturday of the wedding weekend."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can we use sparklers at the Duke Mansion?",
+      "a": "No. The venue's FAQ says open flames, including sparklers, may not be used on the property. Any other send-off, including a cold spark machine, needs written approval, and departure plans are pre-approved."
+    },
+    {
+      "q": "Can we have a DJ at the ceremony on the lawn?",
+      "a": "The FAQ allows only unamplified or acoustic music on the outside grounds. Ask the mansion early whether a small microphone is acceptable for the officiant."
+    },
+    {
+      "q": "Do you need to be on the preferred vendor list?",
+      "a": "Vendors outside the preferred list need the Catering Manager's approval in advance, plus a Certificate of Liability 72 hours before the event and a signed Vendor Agreement. I ask the venue for those requirements early, so nothing is left to the last week."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Weddings",
+      "url": "https://www.dukemansion.org/weddings/"
+    },
+    {
+      "label": "Venue website: Wedding FAQs",
+      "url": "https://www.dukemansion.org/weddings/faqs/"
+    },
+    {
+      "label": "Venue website: Our story",
+      "url": "https://www.dukemansion.org/about/our-story/"
+    }
+  ],
+  "asOf": "October 2026"
+}

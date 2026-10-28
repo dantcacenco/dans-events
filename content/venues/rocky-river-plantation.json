@@ -1,0 +1,96 @@
+{
+  "slug": "rocky-river-plantation",
+  "name": "Rocky River Plantation",
+  "citySlug": "greenville-sc",
+  "tier": "worked",
+  "town": "Anderson",
+  "state": "SC",
+  "address": "2000 E River St, Anderson, SC 29621",
+  "title": "Rocky River Plantation Wedding DJ & Host | Dan's Events",
+  "description": "Hosting, DJ, sound and lighting at Rocky River Plantation in Anderson, SC: the Estate, Bootlegger Barn and Taylor Garden, and the venue's rules.",
+  "h1": "Hosting, DJ and lighting at Rocky River Plantation",
+  "lede": "Rocky River is a 62-acre historic property in Anderson with a colonial-style house, a converted horse stable and an oak-shaded garden. Three very different rooms means the sound and lighting plan changes with each one.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "2000 East River St, Anderson, SC 29621. The venue is managed by True Southern Events and its site calls it Rocky River."
+    },
+    {
+      "label": "Property",
+      "value": "More than 62 acres of land with three event locations."
+    },
+    {
+      "label": "Spaces",
+      "value": "The Estate (a colonial-style home, up to 129 guests), the Bootlegger Barn (up to 250 guests) and Taylor Garden (250 or more guests)."
+    },
+    {
+      "label": "Access",
+      "value": "Standard rental packages include 12 hours of access to the venue."
+    },
+    {
+      "label": "Catering and bar",
+      "value": "No on-site catering. Outside caterers need pre-approval, and alcohol must be opened and served by a pre-approved caterer or insured bar service."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its spaces",
+      "p": [
+        "The Estate sits on a hill under tall oaks. The house has ten rooms, crystal chandeliers, pine floors, two-story columns, a Juliet balcony and a wraparound porch.",
+        "The Bootlegger Barn was a horse stable in the 1800s and is now an open-concept space with charred whiskey barrels as decor. Taylor Garden is a clearing with shade from old oaks and azaleas leading to it. The venue lists 250 or more guests there, which makes it the largest of the three.",
+        "Because the property is spread across a hill, a barn and a garden, guests do a lot of walking. I plan announcements and cues so the move from one space to the next feels organized, not lost."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at Rocky River",
+      "p": [
+        "I hosted a wedding here in October 2026 and ran the sound.",
+        "A garden ceremony needs speakers aimed at the seats and a wireless mic that survives wind and oak branches. A barn reception needs the opposite: control, because wood and an open plan can turn a loud room into a tiring one. I set the speakers to cover the dance floor and keep the dinner areas conversational.",
+        "Rocky River requires a day-of coordinator for weddings. I work with that person on the timeline so the move from garden to barn, the entrance and the toasts all happen on cue."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "The barn is the natural place for dancing. I use warm white wash and a few beam lights, and I keep the whiskey barrels and the old structure visible. In Taylor Garden I light the oaks from below with warm white and keep the guests' faces soft.",
+        "Low fog needs a dedicated 30 amp circuit, and lights and sound run on regular 20 amp circuits, so I ask early where the barn and garden power comes from. The venue's decoration rules ban unprotected candles, glitter and confetti. It does not publish a fog or sparkler rule that I found, so I confirm with the venue and get approval in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Tours run Monday to Friday, and the venue offers a virtual tour on its site. If you tour, bring your guest count and a rough timeline, and ask the team which spaces they would use for each part of the day. The Estate, the barn and the garden can be mixed, so decide early which one is your ceremony and which is your party.",
+        "Send me your layout and I will send the venue a power plan listing the circuits I need."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do we need a coordinator at Rocky River?",
+      "a": "The venue requires a day-of coordinator for weddings. I work with yours on the timeline, and I can host the night while they run the logistics."
+    },
+    {
+      "q": "Can you play in the Bootlegger Barn?",
+      "a": "Yes. I plan the speaker layout around the open floor, and I send the venue a power plan in advance."
+    },
+    {
+      "q": "Are candles or sparklers allowed?",
+      "a": "The venue allows candles only in glass containers with space above the flame, and bans unprotected candles. I did not find a published sparkler rule, so I ask for approval in writing."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Home",
+      "url": "https://www.rockyriverplantation.com/"
+    },
+    {
+      "label": "Venue website: The Estate, Taylor Garden, Bootlegger Barn",
+      "url": "https://www.rockyriverplantation.com/rocky-river"
+    },
+    {
+      "label": "Venue website: FAQ",
+      "url": "https://www.rockyriverplantation.com/faq"
+    }
+  ],
+  "asOf": "October 2026"
+}

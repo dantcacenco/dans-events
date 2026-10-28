@@ -1,0 +1,106 @@
+{
+  "slug": "the-crest-center",
+  "name": "The Crest Center & Pavilion",
+  "citySlug": "asheville",
+  "tier": "guide",
+  "town": "Asheville",
+  "state": "NC",
+  "address": "22 Celebration Place, Asheville, NC 28806",
+  "title": "Crest Center & Pavilion Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at The Crest Center & Pavilion in West Asheville? Spaces, hours, vendor rules and how I run sound and lighting in both rooms.",
+  "h1": "Hosting, DJ and lighting at The Crest Center & Pavilion",
+  "lede": "Two buildings on a ridge in West Asheville: a lodge with west-facing windows and a glass-enclosed pavilion under a 30 foot ceiling. Both are well suited to a night I can host and light.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "22 Celebration Place, Asheville, NC 28806. West Asheville, about four miles from downtown."
+    },
+    {
+      "label": "The Crest Center",
+      "value": "4,500 square feet of indoor, air-conditioned space with exposed wood, Edison chandeliers, a house sound system and floor-to-ceiling west-facing windows. Ceremony site: the Overlook Deck."
+    },
+    {
+      "label": "The Crest Pavilion",
+      "value": "7,000 square feet, open-air, with sliding glass windows, a 30 foot ceiling of iron and wooden beams with twinkle lights, and a built-in stage. Ceremony site: Pavilion Lawn."
+    },
+    {
+      "label": "Wedding hours",
+      "value": "The Center is reserved 5:00 to 10:00 p.m., the Pavilion 6:00 to 11:00 p.m. Morning weddings run 9:00 a.m. to 2:00 p.m. All events must end by 11:00 p.m."
+    },
+    {
+      "label": "Outside vendors",
+      "value": "Outside vendors need sales approval first, and any vendor needing electricity is billed a $375 electrical fee."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "A lodge and a glass pavilion",
+      "p": [
+        "The Crest Center is the lodge: a Main Hall with exposed wooden architecture and Edison chandeliers, a lounge with a stone fireplace, a custom copper bar, a mezzanine and an Overlook Deck. Its floor-to-ceiling windows face west toward the Blue Ridge skyline.",
+        "The Crest Pavilion is a 7,000 square foot open-air building enclosed by sliding glass windows, with a 30 foot ceiling supported by iron and wooden beams strung with twinkle lights. It has a built-in stage, a stone terrace with a fireplace, and the Pavilion Lawn for ceremonies. You can hold the ceremony in one building and the reception in the other."
+      ]
+    },
+    {
+      "h2": "Sound and hosting in each building",
+      "p": [
+        "The Center comes with a house sound system, which I would test and work with rather than replace. With wood, glass and a bar that fills the room with talk, the dinner hour is where a host matters: I keep announcements short and speak into the room from where guests can see me.",
+        "The Pavilion is a big volume with a stage, so I set up on or beside the stage and aim speakers at the floor, not the glass. The Crest's ceremony plan is two hours of setup, one hour of ceremony and one hour for photos and breakdown, and guests move straight to the reception, so I host that transition and keep it moving. Events must end by 11:00 p.m., and I plan the final dance and send-off around the building and parking being cleared by midnight."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "West-facing glass means the Center fills with low sun in the evening, then goes dark fast. I plan warm white lights that come up as the sun goes down, with a spotlight on the couple for the entrance. The Pavilion's twinkle lights and beams already give it a glow, so I add wash lights on the ceiling beams and a spotlight, and keep the rest quiet.",
+        "Fog needs a dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up. Lights and sound need ordinary 20 amp circuits. The Crest's policies bill $375 for any vendor needing electricity, so I raise that early. For exits, the policy asks couples to use bubbles, glow sticks or similar, and anything messy brings a clean-up fee. That means cold sparks need written approval first. I have not seen a published fog rule."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Catering is in-house, through M7 Event Solutions, and outside vendors must be approved by a sales representative and provide details like arrival time. Decorators and vendors arrive no earlier than two hours before event start. Extra prep hours can be bought in advance.",
+        "A tent rental is required in the Pavilion for plated meals and for events from October through April, per the venue's policies, so ask which building suits your month. Both buildings sit about four miles from downtown Asheville."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I bring an outside DJ and host to The Crest?",
+      "a": "Yes, with approval. The policies welcome musicians and other entertainers, but any outside vendor must first be approved by a sales representative and provide contact and arrival details."
+    },
+    {
+      "q": "What is the electrical fee?",
+      "a": "The venue's general policies bill $375 for any vendor that needs electricity. I ask whether it applies to my setup and plan for it."
+    },
+    {
+      "q": "Can we do a sparkler exit?",
+      "a": "The policy asks couples to use bubbles, glow sticks or similar for departures and warns about a clean-up fee for messy materials. I would ask the sales team in writing about cold sparks before planning one."
+    },
+    {
+      "q": "How late can the party go?",
+      "a": "All events must end by 11:00 p.m., with the building and parking cleared by midnight unless a sales manager agrees otherwise."
+    }
+  ],
+  "sources": [
+    {
+      "label": "The Crest Center: home page",
+      "url": "https://thecrestcenter.com/"
+    },
+    {
+      "label": "The Crest Center: Plan your events",
+      "url": "https://thecrestcenter.com/plan-your-events/"
+    },
+    {
+      "label": "The Crest Center: 2026 Venues (PDF)",
+      "url": "https://thecrestcenter.com/wp-content/uploads/2026/04/2026-Venues.pdf"
+    },
+    {
+      "label": "The Crest Center: 2026 General Policies (PDF)",
+      "url": "https://thecrestcenter.com/wp-content/uploads/2026/04/2026-General-Policies-Private.pdf"
+    },
+    {
+      "label": "Crest Weddings",
+      "url": "https://www.crestweddingsnc.com/"
+    }
+  ],
+  "asOf": "October 2026"
+}

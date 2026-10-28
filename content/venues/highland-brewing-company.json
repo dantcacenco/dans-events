@@ -1,0 +1,102 @@
+{
+  "slug": "highland-brewing-company",
+  "name": "Highland Brewing Company",
+  "citySlug": "asheville",
+  "tier": "guide",
+  "town": "Asheville",
+  "state": "NC",
+  "address": "12 Old Charlotte Highway, Asheville, NC 28803",
+  "title": "Highland Brewing Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Highland Brewing in Asheville? See the Event Center, rooftop and Barrel Room, and how I run sound, hosting and lighting there.",
+  "h1": "Hosting, DJ and lighting at Highland Brewing",
+  "lede": "Highland Brewing's Event Center is a three-level industrial space with a stage and a rooftop above it. It is a room that already looks good and needs the sound and lighting planned with care.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "12 Old Charlotte Highway, Asheville, NC 28803."
+    },
+    {
+      "label": "Event Center",
+      "value": "Tri-level layout with soaring ceilings, expansive windows, live-edge wood bar tops, an elevator, and a stage with professional audio-visual capabilities. Listed for 70 to 250 guests, with a seated reception of 200."
+    },
+    {
+      "label": "Rooftop",
+      "value": "Open-air, with Blue Ridge views, suited to spring, summer and fall ceremonies and cocktail hours. Winter ceremonies move to the Event Center's first level, in front of a mountain mural."
+    },
+    {
+      "label": "Barrel Room",
+      "value": "Barrel racks, skylights, hanging planters and a private patio, for smaller weddings and rehearsal dinners."
+    },
+    {
+      "label": "Catering",
+      "value": "Highland does not cater or offer food service, so you hire your own caterer."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "Event Center, rooftop and Barrel Room",
+      "p": [
+        "The Event Center is the main wedding space: three levels, high ceilings, expansive windows, live-edge wood bar tops and an elevator. It includes a stage with professional audio-visual capabilities, a catering prep kitchen and a wedding suite furnished by West Elm Asheville.",
+        "The rooftop sits above it with views of the Blue Ridge, used for ceremonies, cocktail hours and welcome parties in the warmer months. The Barrel Room is smaller, with racks of aging barrels, skylights a private patio, and a bar overlooking the sour and barrel-aged beer production area."
+      ]
+    },
+    {
+      "h2": "Sound and hosting in a brewery",
+      "p": [
+        "Highland's wedding page does not publish a house sound plan, a rooftop sound rule or an end time, so I would ask the events team (events@highlandbrewing.com is the contact on the FAQ page) before I plan anything. The FAQ does say that any gathering with music or announcements has to rent a private event venue, so the question is how loud and how late your venue rental allows.",
+        "A tri-level room with a stage and tall windows gives me a clear host position on the stage and a lot of glass to manage. I aim speakers across the dance floor, not at the windows, and I test from the upper levels. A rooftop ceremony is open-air, so I use a mic that handles wind. After the vows I announce the move down to the Event Center for dinner, toasts and dancing, and the elevator makes that easy for older guests."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "The industrial look is already warm: wood, metal and big windows. I light the room with warm white washes on the walls and a few spotlights for the entrance and first dance, and I keep the stage clean so the host and the couple stand in light.",
+        "Low fog needs a dedicated 30 amp circuit because it draws up to 3,000 watts for about five minutes at warm-up. Lights and sound run on 20 amp circuits. Highland does not publish a rule on fog, cold sparks or other effects, so I ask the events team to approve them in writing, and I send a power plan that lists where each circuit needs to be, for the Event Center and the rooftop."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "Outside food and catering are not allowed at the brewery, so you hire a caterer who works with Highland. The venue says the Event Center suits weddings of 70 to 250 guests, and the Barrel Room can be booked on its own or together with the Event Center.",
+        "The rooftop is meant for spring, summer and fall ceremonies, and winter ceremonies are held indoors. Highland does not publish a rain plan for the rooftop, so ask what the backup is on a wet spring or summer date."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I bring my own DJ and host to Highland Brewing?",
+      "a": "Highland's pages do not publish a vendor rule for entertainers. I would confirm with the events team that outside DJs and hosts are allowed for your rental."
+    },
+    {
+      "q": "Can the rooftop have music?",
+      "a": "Highland says music at a private gathering needs a private venue rental, and the rooftop is mostly used for private events. It does not publish a rooftop sound limit or end time, so I ask for the exact cutoff."
+    },
+    {
+      "q": "Is there a stage?",
+      "a": "Yes. The Event Center has a stage with professional audio-visual capabilities, per Highland's wedding page. I plan where my mixer and speakers sit relative to it."
+    },
+    {
+      "q": "What about power for lighting and fog?",
+      "a": "I send a power plan before the wedding with a dedicated 30 amp circuit for fog and ordinary 20 amp circuits for lights and sound."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Highland Brewing: Weddings",
+      "url": "https://highlandbrewing.com/weddings/"
+    },
+    {
+      "label": "Highland Brewing: FAQ",
+      "url": "https://highlandbrewing.com/faq/"
+    },
+    {
+      "label": "Highland Brewing: Private events",
+      "url": "https://highlandbrewing.com/private-events/"
+    },
+    {
+      "label": "Explore Asheville: Highland Brewing Company",
+      "url": "https://www.exploreasheville.com/weddings/asheville/listing/ceremony-and-reception-locations/highland-brewing-company"
+    }
+  ],
+  "asOf": "October 2026"
+}

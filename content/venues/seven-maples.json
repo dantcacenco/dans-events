@@ -1,0 +1,111 @@
+{
+  "slug": "seven-maples",
+  "name": "Seven Maples",
+  "citySlug": "brevard",
+  "tier": "guide",
+  "town": "Brevard",
+  "state": "NC",
+  "address": "215 Old County Home Rd, Brevard, NC 28712",
+  "title": "Seven Maples Wedding DJ & Host | Dan's Events",
+  "description": "Planning a wedding at Seven Maples in Brevard, NC? A host, DJ and lighting plan for the barn, the pond and the 10 PM music cutoff.",
+  "h1": "Hosting, DJ and lighting at Seven Maples",
+  "lede": "Seven Maples is a family-owned barn venue on seven acres outside Brevard, with a creek, a pond and a rolling pasture. The rules are simple and published, which makes the plan easy.",
+  "facts": [
+    {
+      "label": "Location",
+      "value": "215 Old County Home Rd, Brevard, NC 28712"
+    },
+    {
+      "label": "Property",
+      "value": "A seven-acre property with a stream, a tree-lined pond and a rolling pasture. The owners' family has lived there since 1993."
+    },
+    {
+      "label": "Barn",
+      "value": "Built in the style of Western North Carolina horse barns on a knoll with river and valley views. The venue says the barn and ceremony site comfortably hold 125 occupants."
+    },
+    {
+      "label": "Hours",
+      "value": "The package includes 9 AM to 6 PM the day before and 9 AM to 11 PM on the event day."
+    },
+    {
+      "label": "Music",
+      "value": "Music must be kept to a reasonable volume and be off by 10 PM, with no exceptions."
+    },
+    {
+      "label": "Included",
+      "value": "Tables, chairs, electricity and water."
+    }
+  ],
+  "sections": [
+    {
+      "h2": "The property and its spaces",
+      "p": [
+        "The barn is the center of the property, set on a knoll where the venue says you get river and valley views. A stream, a tree-lined pond and a gentle pasture surround it, and the Barton House, a restored historic farmhouse, is where the wedding party gets ready.",
+        "The venue is the Rogers family's home. Their policies say noise, trash, alcohol and use of the property are all subject to restrictions that they discuss when you reserve."
+      ]
+    },
+    {
+      "h2": "Sound and hosting at Seven Maples",
+      "p": [
+        "The rule that matters most is simple: music is off by 10 PM, and the venue sets the volume level. I design your timeline backward from 10: grand entrance, dinner, toasts and first dances early, then a strong dance block that ends on a high note rather than a cutoff.",
+        "The family has neighbors, so I aim speakers into the barn and the crowd instead of out across the pasture, and I keep bass under control. For the ceremony I use a mic for the officiant and a pair of small speakers, whether you marry in the barn or on the grounds.",
+        "Because the venue lists the day before from 9 AM to 6 PM, there is room for a calm setup and a proper sound check on the day before or the morning of."
+      ]
+    },
+    {
+      "h2": "Lighting, power and effects",
+      "p": [
+        "A horse barn takes warm white light well. I wash the wood and beams softly from the sides and use a few beam lights over the dance floor. The venue's package includes electricity, so I ask where the barn's circuits are and send a power plan.",
+        "Low fog needs its own dedicated 30 amp circuit, which I confirm during the walkthrough. Seven Maples does not publish a fog or sparkler rule that I found, so I confirm with the family and get approval in writing."
+      ]
+    },
+    {
+      "h2": "Planning notes for couples",
+      "p": [
+        "The venue says the property is five minutes from downtown Brevard and 45 minutes from Asheville. The venue's flat package lists tables, chairs, electricity and water, so ask what else you will rent.",
+        "Alcohol and use of the grounds are subject to the family's restrictions, so ask about them when you tour."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "What time does the music end at Seven Maples?",
+      "a": "The venue's policies say music must be off by 10 PM, no exceptions, and the event day ends at 11 PM. I plan the night to finish well inside that."
+    },
+    {
+      "q": "How many guests fit in the barn?",
+      "a": "The venue says the barn and ceremony site comfortably hold 125 occupants. Other listings say 150, so confirm with the venue before you finalize your guest count."
+    },
+    {
+      "q": "Can you do a dance floor and lights in a barn this size?",
+      "a": "Yes. I plan a compact setup of speakers, a few beam lights and warm wash, and I confirm the circuits before the day."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Venue website: Home",
+      "url": "https://www.seven-maples.com/"
+    },
+    {
+      "label": "Venue website: Amenities",
+      "url": "https://www.seven-maples.com/amenities"
+    },
+    {
+      "label": "Venue website: Packages",
+      "url": "https://www.seven-maples.com/packages"
+    },
+    {
+      "label": "Venue website: Policies",
+      "url": "https://www.seven-maples.com/policies"
+    },
+    {
+      "label": "Venue website: Our History",
+      "url": "https://www.seven-maples.com/our-history-1"
+    },
+    {
+      "label": "Eventective listing: Seven Maples Event Center",
+      "url": "https://www.eventective.com/brevard-nc/seven-maples-event-center-700556.html"
+    }
+  ],
+  "asOf": "October 2026"
+}
