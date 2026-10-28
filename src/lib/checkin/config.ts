@@ -5,9 +5,9 @@ export const EVENT = {
   name: { en: "Youth Camp", ru: "Молодёжный лагерь" },
   theme: { en: "Together in Christ", ru: "Вместе во Христе" },
   tagline: { en: "One Generation · One Faith · One Mission", ru: "Одно поколение · Одна вера · Одно служение" },
-  // TODO(Dan): the real dates. ISO yyyy-mm-dd; the staff page and CSV show them once set.
-  fridayDate: "",
-  saturdayDate: "",
+  // Friday Oct 30 and Saturday Oct 31, 2026 (ISO yyyy-mm-dd; the staff page and CSV show them).
+  fridayDate: "2026-10-30",
+  saturdayDate: "2026-10-31",
 } as const;
 
 export type Lang = "en" | "ru";
