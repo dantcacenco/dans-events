@@ -10,7 +10,7 @@ const DESCRIPTION =
   "Wedding hosting and MC (English and Russian) $2,000. DJ with ceremony sound $1,500. Lighting from $1,500. Clear prices from Dan's Events in Asheville, NC.";
 
 export const metadata: Metadata = {
-  title: "Pricing: Wedding MC, DJ & Lighting | Dan's Events, Asheville NC",
+  title: "Pricing: Wedding MC, DJ & Lighting | Dan's Events",
   description: DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
@@ -56,7 +56,7 @@ export default function PricingPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <SiteNav current="/pricing" />
+      <SiteNav current="/pricing" ctaHref="#check-date" />
 
       <main>
         {/* HEADER */}

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Johnson City & the Tri-Cities, TN — Dan's Events",
+  title: "Wedding Entertainment in Johnson City, TN | Dan's Events",
   description:
     "Dan's Events brings Asheville's premier wedding DJ and MC experience to Johnson City, Kingsport, Bristol, and the entire Tri-Cities region of Northeast Tennessee. 40+ five-star reviews.",
   keywords: [
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/johnson-city",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Johnson City & the Tri-Cities, TN — Dan's Events",
+    title: "Wedding Entertainment in Johnson City, TN | Dan's Events",
     description:
       "Dan's Events brings Asheville's premier wedding DJ and MC experience to Johnson City, Kingsport, Bristol, and the entire Tri-Cities region of Northeast Tennessee. 40+ five-star reviews.",
     url: "https://dans-events.com/johnson-city",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Johnson City & the Tri-Cities, TN — Dan's Events",
+    title: "Wedding Entertainment in Johnson City, TN | Dan's Events",
     description:
       "Dan's Events brings Asheville's premier wedding DJ and MC experience to Johnson City, Kingsport, Bristol, and the entire Tri-Cities region of Northeast Tennessee. 40+ five-star reviews.",
     images: ["/opengraph-image"],

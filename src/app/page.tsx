@@ -4,6 +4,14 @@ import ContactForm from "@/components/contact-form";
 import ScrollReveal from "@/components/scroll-reveal";
 import MobileNav from "@/components/mobile-nav";
 import { BUNDLE, usd } from "@/lib/pricing";
+import { SiteFooter } from "@/components/site-chrome";
+import ReviewsBlock from "@/components/seo/reviews-block";
+import FaqSection from "@/components/seo/faq-section";
+import { HOME_FAQ } from "@/lib/faq";
+import { GOOGLE_REVIEWS, REVIEW_COUNT, REVIEW_RATING, REVIEWS_AS_OF, FIVE_STAR_COUNT } from "@/lib/reviews";
+import { CITIES, FACTS, REGIONS, cityLabel } from "@/lib/site";
+
+const HERO_REVIEW = GOOGLE_REVIEWS.find((r) => r.name === "Katherine F.")!;
 
 export default function Home() {
   return (
@@ -20,12 +28,15 @@ export default function Home() {
             priority
           />
         </a>
-        <ul className="hidden md:flex gap-8 list-none">
+        <ul className="hidden lg:flex gap-7 list-none">
           {[
             ["#craft", "The Craft"],
-            ["/dj", "DJ"],
             ["/mc", "MC & Host"],
+            ["/dj", "DJ"],
             ["/lighting", "Lighting"],
+            ["/special-effects", "Effects"],
+            ["/venues", "Venues"],
+            ["/reviews", "Reviews"],
             ["/pricing", "Pricing"],
             ["#check-date", "Check Your Date"],
           ].map(([href, label]) => (
@@ -39,7 +50,7 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <MobileNav />
+        <MobileNav breakpoint="lg" />
       </nav>
 
       {/* HERO — drop hero.jpg into public/photos/ to activate photo background */}
@@ -59,7 +70,7 @@ export default function Home() {
           <span className="block">Rules</span>
         </h1>
         <div className="hero-location relative z-10 text-xs font-normal tracking-[6px] uppercase text-white/60">
-          Wedding DJ &amp; MC — <Link href="/asheville" className="hover:text-white/90 transition-colors">Asheville, NC</Link>
+          Wedding host, DJ &amp; lighting <span className="text-red">/</span> <Link href="/asheville" className="hover:text-white/90 transition-colors">Asheville, NC</Link>
         </div>
         <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 w-px h-[60px] bg-white/30 z-10" />
       </section>
@@ -185,6 +196,25 @@ export default function Home() {
               </>
             ),
           },
+          {
+            title: "Fog &\nSparks",
+            titleHref: "/special-effects",
+            number: "04",
+            bg: "bg-black",
+            descNode: (
+              <>
+                The moments people talk about on the way home.{" "}
+                <Link href="/low-fog" className="underline underline-offset-[3px] decoration-white/30 hover:decoration-white transition-colors">
+                  Low fog
+                </Link>{" "}
+                so your first dance happens on a cloud.{" "}
+                <Link href="/cold-sparklers" className="underline underline-offset-[3px] decoration-white/30 hover:decoration-white transition-colors">
+                  Cold sparklers
+                </Link>{" "}
+                for the entrance or the send-off. Run by the same team that holds the mic, so every effect lands on the exact beat it was planned for.
+              </>
+            ),
+          },
         ].map((service) => (
           <ScrollReveal
             key={service.number}
@@ -258,6 +288,9 @@ export default function Home() {
           <div className="text-[clamp(120px,30vw,400px)] font-black leading-[0.85] text-white tracking-[-10px]">40+</div>
           <div className="text-[clamp(14px,2vw,20px)] font-normal uppercase tracking-[8px] text-white/70 mt-5">Five-Star Google Reviews</div>
           <div className="text-[clamp(12px,1.2vw,14px)] font-light text-white/45 mt-3 tracking-[2px]">From couples who trusted me with their most important night</div>
+          <Link href="/reviews" className="inline-block mt-6 text-[12px] font-medium tracking-[2px] text-white/80 underline underline-offset-[4px] decoration-white/40 hover:decoration-white">
+            Rated {REVIEW_RATING} from {REVIEW_COUNT} Google reviews ({FIVE_STAR_COUNT} five-star), {REVIEWS_AS_OF}
+          </Link>
         </ScrollReveal>
       </section>
 
@@ -337,14 +370,85 @@ export default function Home() {
         <span className="absolute bottom-[60px] left-1/2 -translate-x-1/2 w-[60px] h-0.5 bg-red z-10" />
         <ScrollReveal className="relative z-10">
           <span className="text-[clamp(80px,12vw,160px)] font-black text-red leading-[0.5] mb-10 block">&ldquo;</span>
-          <p className="text-[clamp(20px,3vw,40px)] font-light leading-[1.5] text-white max-w-[900px] mx-auto mb-10 italic">
-            We&apos;ve been to a lot of weddings. Nothing came close to this. The lighting transformed the room before the first song played. The sound was full and immersive — present without ever being intrusive. And Dan as a host is something else entirely: he guided the entire evening with such ease that we never once felt the hand. Our guests weren&apos;t just entertained. They were inside something.
-          </p>
+          <blockquote className="text-[clamp(18px,2.4vw,32px)] font-light leading-[1.5] text-white max-w-[900px] mx-auto mb-10 italic whitespace-pre-line">
+            {HERO_REVIEW.text}
+          </blockquote>
           <div className="text-xs font-bold uppercase tracking-[4px] text-white/40">
-            Laura <span className="text-red">/</span> The Lumen House, 2025
+            {HERO_REVIEW.name} <span className="text-red">/</span> Google review, {HERO_REVIEW.when}
           </div>
         </ScrollReveal>
       </section>
+
+      <ReviewsBlock limit={6} />
+
+      {/* WHY DAN'S EVENTS: plain facts people (and AI assistants) can quote */}
+      <section className="bg-black py-[clamp(72px,10vw,140px)] px-6" id="why">
+        <ScrollReveal className="max-w-[1100px] mx-auto">
+          <h2 className="text-[clamp(28px,5vw,56px)] font-black uppercase text-white leading-[1.1] mb-6">
+            Why <em className="not-italic text-red">Dan&apos;s Events</em>
+          </h2>
+          <p className="text-[clamp(16px,1.8vw,21px)] font-light text-white/70 leading-[1.75] max-w-[760px] mb-12">
+            Dan&apos;s Events is a wedding entertainment team from {FACTS.base}. {FACTS.owner} hosts in English and Russian, and the
+            same team brings the DJ, ceremony sound, lighting, low fog and cold sparklers, so your night runs on one plan.
+          </p>
+          <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.08] mb-14">
+            {[
+              [`${REVIEW_RATING} ★`, `${REVIEW_COUNT} Google reviews, ${REVIEWS_AS_OF}`],
+              [String(FACTS.season2026Events), `weddings and events in the 2026 season`],
+              ["2", "languages on the mic: English and Russian"],
+              ["1", "team for host, DJ, lighting and effects"],
+            ].map(([big, small]) => (
+              <div key={small} className="bg-black p-8">
+                <dt className="text-[clamp(40px,5vw,64px)] font-black text-white leading-none mb-3">{big}</dt>
+                <dd className="text-[13px] font-light text-white/55 leading-[1.6]">{small}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div>
+              <h3 className="text-[10px] font-bold uppercase tracking-[4px] text-white/35 mb-5">Where we work</h3>
+              <ul className="list-none space-y-4">
+                {REGIONS.map((r) => (
+                  <li key={r.id} className="text-[14px] font-light text-white/60 leading-[1.8]">
+                    <span className="block text-white font-semibold">{r.name}</span>
+                    {CITIES.filter((c) => c.region === r.id).map((c, i) => (
+                      <span key={c.slug}>
+                        {i > 0 && <span className="text-red mx-2">/</span>}
+                        <Link href={`/${c.slug}`} className="hover:text-white">{cityLabel(c)}</Link>
+                      </span>
+                    ))}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-[13px]">
+                <Link href="/areas" className="text-white/70 underline underline-offset-[4px] decoration-red hover:text-white">All areas</Link>
+                <span className="text-red mx-3">/</span>
+                <Link href="/venues" className="text-white/70 underline underline-offset-[4px] decoration-red hover:text-white">Venue guides</Link>
+              </p>
+            </div>
+            <div>
+              <h3 className="text-[10px] font-bold uppercase tracking-[4px] text-white/35 mb-5">Learn more</h3>
+              <ul className="list-none space-y-3">
+                {[
+                  ["/about", "About Dan's Events"],
+                  ["/mc", "Wedding MC & host"],
+                  ["/dj", "Wedding DJ"],
+                  ["/wedding-uplighting", "Uplighting & dance floor lighting"],
+                  ["/low-fog", "Low fog: dancing on a cloud"],
+                  ["/cold-sparklers", "Cold sparklers"],
+                  ["/faq", "Questions couples ask"],
+                ].map(([href, label]) => (
+                  <li key={href}>
+                    <Link href={href} className="text-[15px] font-light text-white/70 hover:text-red transition-colors">{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      <FaqSection items={HOME_FAQ} title="Quick answers" />
 
       {/* CHECK YOUR DATE */}
       <section className="bg-red min-h-screen flex flex-col items-center justify-center px-6 py-20" id="check-date">
@@ -366,47 +470,7 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-black py-20 px-6 text-center border-t border-white/[0.06]">
-        <ScrollReveal className="mb-4">
-          <Image
-            src="/logos/logo-white-transparent.png"
-            alt="Dan's Events"
-            width={200}
-            height={23}
-            className="h-[clamp(32px,4vw,48px)] w-auto mx-auto"
-          />
-        </ScrollReveal>
-        <ScrollReveal>
-          <div className="text-[11px] font-normal uppercase tracking-[6px] text-white/30 mb-12">
-            Wedding DJ &amp; MC — Asheville, NC
-          </div>
-        </ScrollReveal>
-        <ScrollReveal>
-          <ul className="flex justify-center gap-10 list-none mb-12 flex-wrap">
-            {[
-              ["/dj", "DJ"],
-              ["/mc", "MC & Host"],
-              ["/lighting", "Lighting"],
-              ["/pricing", "Pricing"],
-              ["/2027", "2027 Package"],
-              ["/#proof", "Reviews"],
-              ["/#check-date", "Book"],
-            ].map(([href, label]) => (
-              <li key={href}>
-                <Link href={href} className="text-[11px] font-medium uppercase tracking-[2px] text-white/35 hover:text-red transition-colors">
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </ScrollReveal>
-        <ScrollReveal>
-          <div className="text-[10px] text-white/15 tracking-[2px] uppercase">
-            &copy; 2026 Dan&apos;s Events. Asheville, NC. All rights reserved.
-          </div>
-        </ScrollReveal>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

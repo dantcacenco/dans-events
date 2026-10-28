@@ -14,8 +14,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = lightingLocations[city];
   if (!data) return {};
 
-  const title = `Wedding Lighting in ${data.city}, ${data.stateAbbr} — Dan's Events`;
-  const description = `Atmospheric wedding lighting for ${data.city} venues. Warm-white palette, restrained and elegant. Transforms the room — and every photograph. Dan's Events Lighting.`;
+  const title = `Wedding Lighting in ${data.city}, ${data.stateAbbr} | Dan's Events`;
+  const description = `Atmospheric wedding lighting for ${data.city} venues. Warm-white palette, restrained and elegant. Shapes the room and every photograph. Dan's Events Lighting.`;
 
   return {
     title,
@@ -27,9 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `wedding lighting designer ${data.city}`,
       `${data.state} wedding lighting`,
     ],
-    alternates: {
-      canonical: `https://dans-events.com/lighting/${city}`,
-    },
+    alternates: { canonical: `https://dans-events.com/lighting/${city}`, languages: { "en-US": `https://dans-events.com/lighting/${city}`, "ru-RU": `https://dans-events.com/ru/lighting/${city}` } },
     openGraph: {
       title,
       description,

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { SiteNav, SiteFooter } from "@/components/site-chrome";
 import ScrollReveal from "@/components/scroll-reveal";
 
 export const metadata: Metadata = {
@@ -21,14 +22,7 @@ export default function TheDJPage() {
   return (
     <>
       {/* NAV */}
-      <nav className="fixed top-0 left-0 w-full z-[1000] bg-black border-b border-white/[0.08] px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="block">
-          <Image src="/logos/logo-white-transparent.png" alt="Dan's Events" width={200} height={23} className="h-7 w-auto" priority />
-        </Link>
-        <Link href="/#check-date" className="text-[11px] font-bold uppercase tracking-[3px] text-red hover:text-white transition-colors">
-          Check Your Date
-        </Link>
-      </nav>
+      <SiteNav current="/the-dj" />
 
       {/* HERO */}
       <section className="min-h-screen bg-black flex flex-col justify-center px-6 pt-24 pb-20 relative overflow-hidden">
@@ -204,13 +198,7 @@ export default function TheDJPage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-black py-16 px-6 text-center border-t border-white/[0.06]">
-        <Link href="/" className="inline-block mb-4">
-          <Image src="/logos/logo-white-transparent.png" alt="Dan's Events" width={200} height={23} className="h-8 w-auto mx-auto" />
-        </Link>
-        <div className="text-[11px] uppercase tracking-[6px] text-white/30 mb-4">Wedding DJ &amp; MC — Asheville, NC</div>
-        <div className="text-[10px] text-white/15 tracking-[2px] uppercase">&copy; 2026 Dan&apos;s Events. All rights reserved.</div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

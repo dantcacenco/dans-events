@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import VenueName from "@/components/seo/venue-name";
+import { BreadcrumbBar } from "@/components/seo/breadcrumbs";
+import CityLinks from "@/components/seo/city-links";
 import ScrollReveal from "./scroll-reveal";
 import type { DJLocationData } from "./dj-location-page";
 
@@ -38,6 +41,8 @@ export default function RuDJLocationPage({ data }: { data: DJLocationData }) {
           </div>
         </div>
       </section>
+
+      <BreadcrumbBar items={[{ name: "Города", href: "/areas" }, { name: data.city, href: `/${data.slug}` }, { name: "Диджей", href: `/ru/dj/${data.slug}` }]} homeLabel="Главная" />
 
       {/* INTRO */}
       <section className="bg-black py-[clamp(80px,10vw,140px)] px-6 border-t border-white/[0.06]">
@@ -90,7 +95,7 @@ export default function RuDJLocationPage({ data }: { data: DJLocationData }) {
             {data.venues.map((venue, i) => (
               <ScrollReveal key={venue.name} className={`p-8 border border-white/[0.06] ${i % 2 === 0 ? "bg-white/[0.02]" : "bg-transparent"}`}>
                 <span className="text-[10px] font-bold uppercase tracking-[3px] text-red block mb-3">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="text-lg font-bold text-white mb-1">{venue.name}</h3>
+                <h3 className="text-lg font-bold text-white mb-1"><VenueName name={venue.name} /></h3>
                 <p className="text-xs font-medium uppercase tracking-[2px] text-white/30 mb-3">{venue.location}</p>
                 <p className="text-sm font-light text-white/55 leading-relaxed">{venue.description}</p>
               </ScrollReveal>
@@ -140,6 +145,8 @@ export default function RuDJLocationPage({ data }: { data: DJLocationData }) {
           </ScrollReveal>
         </section>
       )}
+
+      <CityLinks citySlug={data.slug} current="dj" lang="ru" />
 
       {/* FOOTER */}
       <footer className="bg-black py-16 px-6 text-center border-t border-white/[0.06]">

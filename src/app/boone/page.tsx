@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Boone & the NC High Country — Dan's Events",
+  title: "Wedding Entertainment in Boone, NC | Dan's Events",
   description:
     "Boone's premier wedding DJ and MC. Serving Blowing Rock, Banner Elk, Valle Crucis, and all of NC's High Country. Unforgettable mountain weddings ~95 miles from Asheville.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/boone",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Boone & the NC High Country — Dan's Events",
+    title: "Wedding Entertainment in Boone, NC | Dan's Events",
     description:
       "Boone's premier wedding DJ and MC. Serving Blowing Rock, Banner Elk, Valle Crucis, and all of NC's High Country. Unforgettable mountain weddings ~95 miles from Asheville.",
     url: "https://dans-events.com/boone",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Boone & the NC High Country — Dan's Events",
+    title: "Wedding Entertainment in Boone, NC | Dan's Events",
     description:
       "Boone's premier wedding DJ and MC. Serving Blowing Rock, Banner Elk, Valle Crucis, and all of NC's High Country. Unforgettable mountain weddings ~95 miles from Asheville.",
     images: ["/opengraph-image"],

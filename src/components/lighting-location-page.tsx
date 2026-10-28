@@ -1,5 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import VenueName from "@/components/seo/venue-name";
+import { BreadcrumbBar } from "@/components/seo/breadcrumbs";
+import CityLinks from "@/components/seo/city-links";
+import { SiteNav, SiteFooter } from "@/components/site-chrome";
 import ScrollReveal from "./scroll-reveal";
 
 export type LightingLocationData = {
@@ -20,18 +24,7 @@ export default function LightingLocationPage({ data }: { data: LightingLocationD
     <div style={{ background: "#0C0B0D", color: "#fff", fontFamily: "inherit", WebkitFontSmoothing: "antialiased" }}>
 
       {/* NAV */}
-      <nav className="fixed top-0 left-0 w-full z-[1000] px-6 h-16 flex items-center justify-between" style={{ background: "rgba(12,11,13,0.92)", borderBottom: "1px solid rgba(255,255,255,0.07)", backdropFilter: "blur(12px)" }}>
-        <Link href="/lighting" className="flex items-center gap-0 text-white no-underline">
-          <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-white/50">Dan&apos;s Events</span>
-          <span className="mx-2.5 text-[11px] font-light" style={{ color: "#BC3021" }}>/</span>
-          <span className="text-[11px] font-bold uppercase tracking-[0.32em] text-white">Lighting</span>
-        </Link>
-        <div className="hidden md:flex gap-8 items-center">
-          <Link href="/lighting#collections" className="text-[11px] font-medium uppercase tracking-[0.24em] text-white/45 hover:text-white transition-colors no-underline">Collections</Link>
-          <Link href="/lighting#process" className="text-[11px] font-medium uppercase tracking-[0.24em] text-white/45 hover:text-white transition-colors no-underline">Process</Link>
-          <Link href="/lighting#inquire" className="text-[11px] font-medium uppercase tracking-[0.24em] no-underline" style={{ color: "#BC3021" }}>Inquire</Link>
-        </div>
-      </nav>
+      <SiteNav current="" />
 
       {/* HERO */}
       <section className="relative min-h-[80vh] flex flex-col justify-center items-center text-center px-6 pt-28 pb-20 overflow-hidden">
@@ -66,6 +59,8 @@ export default function LightingLocationPage({ data }: { data: LightingLocationD
           </div>
         </div>
       </section>
+
+      <BreadcrumbBar items={[{ name: "Areas", href: "/areas" }, { name: `${data.city}, ${data.stateAbbr}`, href: `/${data.slug}` }, { name: "Lighting", href: `/lighting/${data.slug}` }]} />
 
       {/* INTRO */}
       <section className="py-[clamp(80px,10vw,140px)] px-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
@@ -142,7 +137,7 @@ export default function LightingLocationPage({ data }: { data: LightingLocationD
                 <span className="text-[10px] font-bold uppercase tracking-[0.3em] block mb-3" style={{ color: "#BC3021" }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="text-base font-bold text-black mb-1">{venue.name}</h3>
+                <h3 className="text-base font-bold text-black mb-1"><VenueName name={venue.name} /></h3>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-black/30 mb-3">{venue.location}</p>
                 <p className="text-sm font-light text-black/60 leading-relaxed">{venue.description}</p>
               </ScrollReveal>
@@ -241,20 +236,9 @@ export default function LightingLocationPage({ data }: { data: LightingLocationD
       )}
 
       {/* FOOTER */}
-      <footer className="py-16 px-6 text-center" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-        <Link href="/lighting" className="inline-block mb-4 text-[11px] font-bold uppercase tracking-[0.4em] text-white no-underline">
-          Dan&apos;s Events / Lighting
-        </Link>
-        <div className="text-[11px] font-normal uppercase tracking-[0.5em] text-white/30 mb-6">
-          Atmospheric Wedding Lighting &middot; {data.city}, {data.stateAbbr} &amp; beyond
-        </div>
-        <Link href="/" className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/25 no-underline hover:text-white/50 transition-colors">
-          &larr; Back to Dan&apos;s Events
-        </Link>
-        <div className="mt-8 text-[10px] text-white/15 tracking-[0.2em] uppercase">
-          &copy; 2026 Dan&apos;s Events. All rights reserved.
-        </div>
-      </footer>
+      <CityLinks citySlug={data.slug} current="lighting" />
+
+      <SiteFooter />
     </div>
   );
 }

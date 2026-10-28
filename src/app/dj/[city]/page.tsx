@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = djLocations[city];
   if (!data) return {};
 
-  const title = `Wedding DJ in ${data.city}, ${data.stateAbbr} — Dan's Events`;
+  const title = `Wedding DJ in ${data.city}, ${data.stateAbbr} | Dan's Events`;
   const description = `Asheville-based wedding DJ serving ${data.city}. Curated music, intentional transitions, 40+ five-star reviews. Dan's Events.`;
 
   return {
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `${data.city} wedding music`,
       `${data.state} wedding DJ`,
     ],
-    alternates: { canonical: `https://dans-events.com/dj/${city}` },
+    alternates: { canonical: `https://dans-events.com/dj/${city}`, languages: { "en-US": `https://dans-events.com/dj/${city}`, "ru-RU": `https://dans-events.com/ru/dj/${city}` } },
     openGraph: {
       title,
       description,

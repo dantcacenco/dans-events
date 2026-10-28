@@ -4,6 +4,9 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import s from "./lighting.module.css";
+import { SiteFooter } from "@/components/site-chrome";
+import { LIGHTING_PAGE_REVIEW as LIGHTING_REVIEW } from "@/lib/review-quotes";
+// No Google review mentions the lighting yet, so the quote is a real review about the whole night.
 
 // Scroll-reveal hook — uses literal "in" class so :global(.in) CSS matches
 function useReveal() {
@@ -59,6 +62,8 @@ export default function LightingPage() {
           <div className={s.navLinks}>
             <a href="#difference" className={s.navLink}>The Difference</a>
             <a href="#process" className={s.navLink}>Process</a>
+            <Link href="/wedding-uplighting" className={s.navLink}>Guide</Link>
+            <Link href="/special-effects" className={s.navLink}>Effects</Link>
             <a href="#inquire" className={`${s.navLink} ${s.navCta}`}>Inquire</a>
           </div>
         </div>
@@ -287,9 +292,9 @@ export default function LightingPage() {
           <div className={`${s.quote} ${s.reveal}`}>
             <span className={s.qMark}>&ldquo;</span>
             <blockquote className={s.qBlockquote}>
-              Our guests still talk about the room. The photos look like a magazine.
+              {LIGHTING_REVIEW.text}
             </blockquote>
-            <div className={s.qBy}>— Laura &middot; The Lumen House, 2025</div>
+            <div className={s.qBy}>{LIGHTING_REVIEW.name} &middot; Google review, {LIGHTING_REVIEW.when}</div>
           </div>
         </div>
       </section>
@@ -325,6 +330,7 @@ export default function LightingPage() {
           </div>
         </div>
       </footer>
+      <SiteFooter />
     </div>
   );
 }

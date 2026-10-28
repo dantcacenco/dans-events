@@ -14,11 +14,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = ruHostingLocations[city];
   if (!data) return {};
   return {
-    title: `Ведущий на свадьбу ${data.city}, ${data.stateAbbr} — Dan's Events`,
+    title: `Ведущий на свадьбу ${data.city}, ${data.stateAbbr} | Dan's Events`,
     description: `Свадебный ведущий и тамада в ${data.city}, ${data.state}. ${data.heroTagline}`,
-    alternates: { canonical: `https://dans-events.com/ru/hosting/${data.slug}` },
+    alternates: { canonical: `https://dans-events.com/ru/hosting/${data.slug}`, languages: { "en-US": `https://dans-events.com/hosting/${data.slug}`, "ru-RU": `https://dans-events.com/ru/hosting/${data.slug}` } },
     openGraph: {
-      title: `Ведущий на свадьбу ${data.city} — Dan's Events`,
+      title: `Ведущий на свадьбу ${data.city} | Dan's Events`,
       description: data.introParagraph.slice(0, 160),
       url: `https://dans-events.com/ru/hosting/${data.slug}`,
       siteName: "Dan's Events",

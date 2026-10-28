@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Waynesville, NC — Dan's Events",
+  title: "Wedding Entertainment in Waynesville, NC | Dan's Events",
   description:
     "Waynesville's premier wedding DJ and MC. Serving Maggie Valley, Canton, Clyde, Sylva, and all of Haywood County. Unforgettable Smoky Mountain weddings ~31 miles from Asheville.",
   keywords: [
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/waynesville",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Waynesville, NC — Dan's Events",
+    title: "Wedding Entertainment in Waynesville, NC | Dan's Events",
     description:
       "Waynesville's premier wedding DJ and MC. Serving Maggie Valley, Canton, Clyde, Sylva, and all of Haywood County. Unforgettable Smoky Mountain weddings ~31 miles from Asheville.",
     url: "https://dans-events.com/waynesville",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Waynesville, NC — Dan's Events",
+    title: "Wedding Entertainment in Waynesville, NC | Dan's Events",
     description:
       "Waynesville's premier wedding DJ and MC. Serving Maggie Valley, Canton, Clyde, Sylva, and all of Haywood County. Unforgettable Smoky Mountain weddings ~31 miles from Asheville.",
     images: ["/opengraph-image"],

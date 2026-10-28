@@ -8,141 +8,124 @@ const montserrat = Montserrat({
   style: ["normal", "italic"],
 });
 
+import { BASE_URL, CITIES, FACTS } from "@/lib/site";
+import { REVIEW_COUNT, REVIEW_RATING } from "@/lib/reviews";
+import { BUNDLE, SERVICE_PRICES } from "@/lib/pricing";
+
+const SITE_TITLE = "Dan's Events: Wedding MC, DJ & Lighting, Asheville NC";
+const SITE_DESCRIPTION = `Wedding host (MC) in English and Russian, DJ, warm lighting, low fog and cold sparks from one Asheville team. Rated ${REVIEW_RATING} from ${REVIEW_COUNT} Google reviews.`;
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://dans-events.com"),
-  title: "Dan's Events — Wedding DJ & MC | Asheville, NC",
-  description:
-    "Wedding DJ, MC & luxury lighting serving Asheville NC, Greenville SC, Spartanburg SC, Charlotte NC and beyond. 40+ five-star reviews. Custom-mixed music, concert-grade lighting.",
-  keywords: [
-    "wedding DJ Asheville NC",
-    "wedding DJ Greenville SC",
-    "wedding DJ Spartanburg SC",
-    "wedding DJ Charlotte NC",
-    "wedding MC Asheville",
-    "wedding host tamada",
-    "wedding lighting Asheville",
-    "wedding DJ near me",
-    "Dan's Events",
-    "luxury wedding entertainment",
-  ],
+  metadataBase: new URL(BASE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
   alternates: {
-    canonical: "https://dans-events.com",
+    canonical: BASE_URL,
+    languages: { "en-US": BASE_URL, "ru-RU": `${BASE_URL}/ru` },
   },
   openGraph: {
-    title: "Dan's Events — Wedding DJ & MC | Asheville, NC",
-    description:
-      "Wedding DJ, MC & luxury lighting. 40+ five-star reviews. Serving Asheville NC, Greenville SC, Charlotte NC and beyond.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     type: "website",
     locale: "en_US",
-    url: "https://dans-events.com",
+    url: BASE_URL,
     siteName: "Dan's Events",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events — Wedding DJ & MC" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dan's Events: wedding MC, DJ and lighting" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dan's Events — Wedding DJ & MC | Asheville, NC",
-    description:
-      "Wedding DJ, MC & luxury lighting. 40+ five-star reviews. Serving Asheville NC, Greenville SC, Charlotte NC and beyond.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     images: ["/opengraph-image"],
   },
 };
 
-// LocalBusiness + EntertainmentBusiness structured data for Google
+// Site-wide structured data: the business, its owner and the website.
+// No aggregateRating or Review markup on purpose: Google treats self-serving review markup on a
+// LocalBusiness as ineligible (and possibly spam). The real Google rating is shown as visible text instead.
+const servicePrice = (href: string) => SERVICE_PRICES.find((s) => s.href === href)!;
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": ["LocalBusiness", "EntertainmentBusiness"],
-  name: "Dan's Events",
-  description:
-    "Wedding DJ, MC & luxury lighting serving Asheville NC, Greenville SC, Spartanburg SC, Charlotte NC and beyond. 40+ five-star Google reviews. Custom-mixed music and concert-grade lighting.",
-  url: "https://dans-events.com",
-  image: "https://dans-events.com/opengraph-image",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Asheville",
-    addressRegion: "NC",
-    addressCountry: "US",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: "35.5951",
-    longitude: "-82.5515",
-  },
-  areaServed: [
-    { "@type": "City", name: "Asheville", containedInPlace: { "@type": "State", name: "North Carolina" } },
-    { "@type": "City", name: "Greenville", containedInPlace: { "@type": "State", name: "South Carolina" } },
-    { "@type": "City", name: "Spartanburg", containedInPlace: { "@type": "State", name: "South Carolina" } },
-    { "@type": "City", name: "Columbia", containedInPlace: { "@type": "State", name: "South Carolina" } },
-    { "@type": "City", name: "Charlotte", containedInPlace: { "@type": "State", name: "North Carolina" } },
-    { "@type": "City", name: "Hendersonville", containedInPlace: { "@type": "State", name: "North Carolina" } },
-    { "@type": "City", name: "Brevard", containedInPlace: { "@type": "State", name: "North Carolina" } },
-    { "@type": "City", name: "Boone", containedInPlace: { "@type": "State", name: "North Carolina" } },
-    { "@type": "City", name: "Waynesville", containedInPlace: { "@type": "State", name: "North Carolina" } },
-    { "@type": "City", name: "Highlands", containedInPlace: { "@type": "State", name: "North Carolina" } },
-    { "@type": "City", name: "Lake Lure", containedInPlace: { "@type": "State", name: "North Carolina" } },
-    { "@type": "City", name: "Winston-Salem", containedInPlace: { "@type": "State", name: "North Carolina" } },
-    { "@type": "City", name: "Knoxville", containedInPlace: { "@type": "State", name: "Tennessee" } },
-    { "@type": "City", name: "Gatlinburg", containedInPlace: { "@type": "State", name: "Tennessee" } },
-    { "@type": "City", name: "Johnson City", containedInPlace: { "@type": "State", name: "Tennessee" } },
+  "@graph": [
+    {
+      "@type": ["LocalBusiness", "EntertainmentBusiness"],
+      "@id": `${BASE_URL}/#business`,
+      name: "Dan's Events",
+      description:
+        "Wedding entertainment from Asheville, NC: a wedding host (MC, tamada) in English and Russian, DJ and ceremony sound, warm-white wedding lighting, low fog and cold spark effects, planned and run by one team.",
+      url: BASE_URL,
+      image: `${BASE_URL}/opengraph-image`,
+      logo: `${BASE_URL}/logos/logo-black-transparent.png`,
+      founder: { "@id": `${BASE_URL}/#dan` },
+      employee: { "@id": `${BASE_URL}/#dan` },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Asheville",
+        addressRegion: "NC",
+        addressCountry: "US",
+      },
+      geo: { "@type": "GeoCoordinates", latitude: "35.5951", longitude: "-82.5515" },
+      areaServed: CITIES.map((c) => ({
+        "@type": "City",
+        name: c.name,
+        containedInPlace: { "@type": "State", name: c.state },
+      })),
+      knowsLanguage: FACTS.languages,
+      sameAs: [FACTS.googleProfileUrl],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Wedding entertainment services",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            price: String(servicePrice("/mc").price),
+            priceCurrency: "USD",
+            itemOffered: { "@type": "Service", name: "Wedding MC & host (English and Russian)", url: `${BASE_URL}/mc` },
+          },
+          {
+            "@type": "Offer",
+            price: String(servicePrice("/dj").price),
+            priceCurrency: "USD",
+            itemOffered: { "@type": "Service", name: "Wedding DJ & ceremony sound", url: `${BASE_URL}/dj` },
+          },
+          {
+            "@type": "Offer",
+            priceSpecification: { "@type": "PriceSpecification", minPrice: String(servicePrice("/lighting").price), priceCurrency: "USD" },
+            itemOffered: { "@type": "Service", name: "Wedding lighting", url: `${BASE_URL}/lighting` },
+          },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Low fog (dancing on a cloud)", url: `${BASE_URL}/low-fog` } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Cold spark machines", url: `${BASE_URL}/cold-sparklers` } },
+          {
+            "@type": "Offer",
+            name: BUNDLE.name,
+            url: `${BASE_URL}${BUNDLE.path}`,
+            price: String(BUNDLE.price),
+            priceCurrency: "USD",
+            availability: "https://schema.org/LimitedAvailability",
+            itemOffered: { "@type": "Service", name: "Wedding hosting, DJ & lighting package", url: `${BASE_URL}${BUNDLE.path}` },
+          },
+        ],
+      },
+      priceRange: "$$",
+    },
+    {
+      "@type": "Person",
+      "@id": `${BASE_URL}/#dan`,
+      name: FACTS.owner,
+      jobTitle: "Wedding host (MC) and DJ",
+      worksFor: { "@id": `${BASE_URL}/#business` },
+      knowsLanguage: FACTS.languages,
+      url: `${BASE_URL}/about`,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      url: BASE_URL,
+      name: "Dan's Events",
+      publisher: { "@id": `${BASE_URL}/#business` },
+      inLanguage: ["en-US", "ru-RU"],
+    },
   ],
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Wedding Entertainment Services",
-    itemListElement: [
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Wedding DJ",
-          description: "Custom-mixed wedding DJ services. Musician since age 4, professional music producer. Every set is built for your crowd.",
-          url: "https://dans-events.com/the-dj",
-        },
-        price: "1500",
-        priceCurrency: "USD",
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Wedding MC & Host",
-          description: "Tamada-style wedding hosting. Not announcements — emotional anchoring. The art of making 150 strangers feel like family.",
-          url: "https://dans-events.com/the-host",
-        },
-        price: "2000",
-        priceCurrency: "USD",
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Luxury Wedding Lighting",
-          description: "Concert-grade wedding lighting. $20K+ rig, warm white palette, architectural uplighting, cold sparks. In collaboration with 1919 Lighting.",
-          url: "https://dans-events.com/lighting",
-        },
-        priceSpecification: { "@type": "PriceSpecification", minPrice: "1500", priceCurrency: "USD" },
-      },
-      {
-        "@type": "Offer",
-        name: "The 2027 Full Experience",
-        url: "https://dans-events.com/2027",
-        price: "3900",
-        priceCurrency: "USD",
-        availability: "https://schema.org/LimitedAvailability",
-        itemOffered: {
-          "@type": "Service",
-          name: "Wedding Hosting, DJ & Lighting Package",
-          description: "Hosting in English and Russian, DJ with ceremony sound, two wash lights, two spotlights and low fog. For the first 10 couples with 2027 weddings.",
-          url: "https://dans-events.com/2027",
-        },
-      },
-    ],
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5",
-    bestRating: "5",
-    reviewCount: "40",
-  },
-  priceRange: "$$",
 };
 
 export default function RootLayout({

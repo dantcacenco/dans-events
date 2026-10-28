@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Columbia, SC — Dan's Events",
+  title: "Wedding Entertainment in Columbia, SC | Dan's Events",
   description:
     "Premier wedding DJ and MC serving Columbia, SC and the Midlands. 40+ five-star reviews. Based ~140 miles from Asheville, serving all Columbia-area venues.",
   keywords: [
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/columbia-sc",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Columbia, SC — Dan's Events",
+    title: "Wedding Entertainment in Columbia, SC | Dan's Events",
     description:
       "Premier wedding DJ and MC serving Columbia, SC and the Midlands. 40+ five-star reviews. Based ~140 miles from Asheville, serving all Columbia-area venues.",
     url: "https://dans-events.com/columbia-sc",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Columbia, SC — Dan's Events",
+    title: "Wedding Entertainment in Columbia, SC | Dan's Events",
     description:
       "Premier wedding DJ and MC serving Columbia, SC and the Midlands. 40+ five-star reviews. Based ~140 miles from Asheville, serving all Columbia-area venues.",
     images: ["/opengraph-image"],

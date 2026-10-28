@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Spartanburg, SC — Dan's Events",
+  title: "Wedding Entertainment in Spartanburg, SC | Dan's Events",
   description:
     "Premier wedding DJ and MC serving Spartanburg, SC and the greater Upstate. 40+ five-star reviews. Based ~70 miles from Asheville, serving all Spartanburg-area venues.",
   keywords: [
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/spartanburg",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Spartanburg, SC — Dan's Events",
+    title: "Wedding Entertainment in Spartanburg, SC | Dan's Events",
     description:
       "Premier wedding DJ and MC serving Spartanburg, SC and the greater Upstate. 40+ five-star reviews. Based ~70 miles from Asheville, serving all Spartanburg-area venues.",
     url: "https://dans-events.com/spartanburg",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Spartanburg, SC — Dan's Events",
+    title: "Wedding Entertainment in Spartanburg, SC | Dan's Events",
     description:
       "Premier wedding DJ and MC serving Spartanburg, SC and the greater Upstate. 40+ five-star reviews. Based ~70 miles from Asheville, serving all Spartanburg-area venues.",
     images: ["/opengraph-image"],

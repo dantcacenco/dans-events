@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Luxury Wedding Lighting — Dan's Events | Asheville, NC",
+  title: "Luxury Wedding Lighting in Asheville, NC | Dan's Events",
   description:
-    "Concert-grade wedding lighting serving Asheville NC, Greenville SC, Charlotte NC and beyond. $20K+ rig, warm white palette, architectural uplighting. Most DJs bring a $200 par kit — we don't.",
+    "Concert-grade wedding lighting serving Asheville NC, Greenville SC, Charlotte NC and beyond. $20K+ rig, warm white palette, architectural uplighting. Most DJs bring a $200 par kit; we don't.",
   keywords: [
     "wedding lighting Asheville NC",
     "wedding uplighting Greenville SC",
@@ -12,9 +12,12 @@ export const metadata: Metadata = {
     "cold sparks wedding",
     "wedding lighting Asheville",
   ],
-  alternates: { canonical: "https://dans-events.com/lighting" },
+  alternates: {
+    canonical: "https://dans-events.com/lighting",
+    languages: { "en-US": "https://dans-events.com/lighting", "ru-RU": "https://dans-events.com/ru/lighting" },
+  },
   openGraph: {
-    title: "Luxury Wedding Lighting — Dan's Events",
+    title: "Luxury Wedding Lighting in Asheville, NC | Dan's Events",
     description:
       "Concert-grade wedding lighting. Warm white palette, $20K+ rig, architectural uplighting. Asheville NC, Greenville SC, Charlotte NC.",
     url: "https://dans-events.com/lighting",
@@ -23,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Luxury Wedding Lighting — Dan's Events",
+    title: "Luxury Wedding Lighting in Asheville, NC | Dan's Events",
     description: "Concert-grade wedding lighting. Warm white palette, $20K+ rig. Asheville NC, Greenville SC, Charlotte NC.",
     images: ["/opengraph-image"],
   },

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Greenville, SC — Dan's Events",
+  title: "Wedding Entertainment in Greenville, SC | Dan's Events",
   description:
     "Premier wedding DJ and MC serving Greenville, SC and the Upstate. 40+ five-star reviews. Based ~65 miles from Asheville, serving all Greenville-area venues.",
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/greenville-sc",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Greenville, SC — Dan's Events",
+    title: "Wedding Entertainment in Greenville, SC | Dan's Events",
     description:
       "Premier wedding DJ and MC serving Greenville, SC and the Upstate. 40+ five-star reviews. Based ~65 miles from Asheville, serving all Greenville-area venues.",
     url: "https://dans-events.com/greenville-sc",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Greenville, SC — Dan's Events",
+    title: "Wedding Entertainment in Greenville, SC | Dan's Events",
     description:
       "Premier wedding DJ and MC serving Greenville, SC and the Upstate. 40+ five-star reviews. Based ~65 miles from Asheville, serving all Greenville-area venues.",
     images: ["/opengraph-image"],

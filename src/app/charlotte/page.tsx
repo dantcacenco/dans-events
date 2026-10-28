@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Charlotte, NC — Dan's Events",
+  title: "Wedding Entertainment in Charlotte, NC | Dan's Events",
   description:
     "Charlotte's premier wedding DJ and MC from Asheville. Serving the Duke Mansion, The Ballantyne Hotel, Pleasant Grove Farm, The Fillmore, and venues across the Queen City.",
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/charlotte",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Charlotte, NC — Dan's Events",
+    title: "Wedding Entertainment in Charlotte, NC | Dan's Events",
     description:
       "Charlotte's premier wedding DJ and MC from Asheville. Serving the Duke Mansion, The Ballantyne Hotel, Pleasant Grove Farm, The Fillmore, and venues across the Queen City.",
     url: "https://dans-events.com/charlotte",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Charlotte, NC — Dan's Events",
+    title: "Wedding Entertainment in Charlotte, NC | Dan's Events",
     description:
       "Charlotte's premier wedding DJ and MC from Asheville. Serving the Duke Mansion, The Ballantyne Hotel, Pleasant Grove Farm, The Fillmore, and venues across the Queen City.",
     images: ["/opengraph-image"],

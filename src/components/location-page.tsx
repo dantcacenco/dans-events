@@ -1,5 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
+import VenueName from "@/components/seo/venue-name";
+import { BreadcrumbBar } from "@/components/seo/breadcrumbs";
+import CityLinks from "@/components/seo/city-links";
+import { SiteNav, SiteFooter } from "@/components/site-chrome";
 import ScrollReveal from "./scroll-reveal";
 
 export type Venue = {
@@ -25,30 +28,13 @@ export default function LocationPage({ data }: { data: LocationData }) {
   return (
     <>
       {/* NAV */}
-      <nav className="fixed top-0 left-0 w-full z-[1000] bg-black border-b border-white/[0.08] px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="block">
-          <Image
-            src="/logos/logo-white-transparent.png"
-            alt="Dan's Events"
-            width={200}
-            height={23}
-            className="h-7 w-auto"
-            priority
-          />
-        </Link>
-        <ul className="hidden md:flex gap-8 list-none">
-          <li><Link href="/#craft" className="text-[11px] font-medium uppercase tracking-[2px] text-white/50 hover:text-white transition-colors">The Craft</Link></li>
-          <li><Link href="/#services" className="text-[11px] font-medium uppercase tracking-[2px] text-white/50 hover:text-white transition-colors">Services</Link></li>
-          <li><Link href="/#proof" className="text-[11px] font-medium uppercase tracking-[2px] text-white/50 hover:text-white transition-colors">Proof</Link></li>
-          <li><Link href="/#check-date" className="text-[11px] font-medium uppercase tracking-[2px] text-white/50 hover:text-white transition-colors">Check Your Date</Link></li>
-        </ul>
-      </nav>
+      <SiteNav current="" />
 
       {/* HERO */}
       <section className="min-h-[70vh] bg-red flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 relative overflow-hidden">
         <div className="hero-headline">
           <p className="text-[11px] font-medium uppercase tracking-[6px] text-white/60 mb-6">
-            Wedding DJ &amp; MC
+            Wedding host, DJ &amp; lighting
           </p>
           <h1 className="text-[clamp(36px,10vw,120px)] font-black leading-[0.9] text-white uppercase tracking-[-2px] mb-8">
             {data.city},<br />{data.stateAbbr}
@@ -66,6 +52,8 @@ export default function LocationPage({ data }: { data: LocationData }) {
           </Link>
         </div>
       </section>
+
+      <BreadcrumbBar items={[{ name: "Areas", href: "/areas" }, { name: `${data.city}, ${data.stateAbbr}`, href: `/${data.slug}` }]} />
 
       {/* INTRO */}
       <section className="bg-black py-[clamp(80px,10vw,140px)] px-6">
@@ -90,7 +78,7 @@ export default function LocationPage({ data }: { data: LocationData }) {
               Favorite <em className="not-italic text-red">{data.city}</em> Venues
             </h2>
             <p className="text-[clamp(14px,1.4vw,18px)] font-light text-black/50 leading-[1.7] max-w-[600px] mx-auto">
-              I&apos;ve performed at venues across {data.city} and the surrounding {data.stateAbbr} region. Here are some of the area&apos;s finest.
+              Some of the best-known wedding venues around {data.city}, and what each room asks of the music, the hosting and the light.
             </p>
           </div>
 
@@ -103,7 +91,7 @@ export default function LocationPage({ data }: { data: LocationData }) {
                 <span className="text-[10px] font-bold uppercase tracking-[3px] text-red block mb-3">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="text-lg font-bold text-black mb-1">{venue.name}</h3>
+                <h3 className="text-lg font-bold text-black mb-1"><VenueName name={venue.name} /></h3>
                 <p className="text-xs font-medium uppercase tracking-[2px] text-black/30 mb-3">{venue.location}</p>
                 <p className="text-sm font-light text-black/60 leading-relaxed">{venue.description}</p>
               </ScrollReveal>
@@ -183,23 +171,9 @@ export default function LocationPage({ data }: { data: LocationData }) {
       )}
 
       {/* FOOTER */}
-      <footer className="bg-black py-16 px-6 text-center border-t border-white/[0.06]">
-        <Link href="/" className="inline-block mb-4">
-          <Image
-            src="/logos/logo-white-transparent.png"
-            alt="Dan's Events"
-            width={200}
-            height={23}
-            className="h-8 w-auto mx-auto"
-          />
-        </Link>
-        <div className="text-[11px] font-normal uppercase tracking-[6px] text-white/30 mb-8">
-          Wedding DJ &amp; MC — Asheville, NC
-        </div>
-        <div className="text-[10px] text-white/15 tracking-[2px] uppercase">
-          &copy; 2026 Dan&apos;s Events. All rights reserved.
-        </div>
-      </footer>
+      <CityLinks citySlug={data.slug} current="hub" />
+
+      <SiteFooter />
     </>
   );
 }

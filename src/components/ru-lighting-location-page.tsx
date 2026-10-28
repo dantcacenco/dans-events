@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import VenueName from "@/components/seo/venue-name";
+import { BreadcrumbBar } from "@/components/seo/breadcrumbs";
+import CityLinks from "@/components/seo/city-links";
 import ScrollReveal from "./scroll-reveal";
 import type { LightingLocationData } from "./lighting-location-page";
 
@@ -54,6 +57,8 @@ export default function RuLightingLocationPage({ data }: { data: LightingLocatio
           </div>
         </div>
       </section>
+
+      <BreadcrumbBar items={[{ name: "Города", href: "/areas" }, { name: data.city, href: `/${data.slug}` }, { name: "Освещение", href: `/ru/lighting/${data.slug}` }]} homeLabel="Главная" />
 
       {/* INTRO */}
       <section className="py-[clamp(80px,10vw,140px)] px-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
@@ -130,7 +135,7 @@ export default function RuLightingLocationPage({ data }: { data: LightingLocatio
                 <span className="text-[10px] font-bold uppercase tracking-[0.3em] block mb-3" style={{ color: "#BC3021" }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="text-base font-bold text-black mb-1">{venue.name}</h3>
+                <h3 className="text-base font-bold text-black mb-1"><VenueName name={venue.name} /></h3>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-black/30 mb-3">{venue.location}</p>
                 <p className="text-sm font-light text-black/60 leading-relaxed">{venue.description}</p>
               </ScrollReveal>
@@ -227,6 +232,8 @@ export default function RuLightingLocationPage({ data }: { data: LightingLocatio
           </ScrollReveal>
         </section>
       )}
+
+      <CityLinks citySlug={data.slug} current="lighting" lang="ru" />
 
       {/* FOOTER */}
       <footer className="py-16 px-6 text-center" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>

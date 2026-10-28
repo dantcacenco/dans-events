@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Gatlinburg & the Smoky Mountains — Dan's Events",
+  title: "Wedding Entertainment in Gatlinburg, TN | Dan's Events",
   description:
     "Asheville-based wedding DJ and MC serving Gatlinburg, Pigeon Forge, and Sevierville. Smoky Mountain destination weddings done right — only ~90 miles from home base.",
   keywords: [
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/gatlinburg",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Gatlinburg & the Smoky Mountains — Dan's Events",
+    title: "Wedding Entertainment in Gatlinburg, TN | Dan's Events",
     description:
       "Asheville-based wedding DJ and MC serving Gatlinburg, Pigeon Forge, and Sevierville. Smoky Mountain destination weddings done right — only ~90 miles from home base.",
     url: "https://dans-events.com/gatlinburg",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Gatlinburg & the Smoky Mountains — Dan's Events",
+    title: "Wedding Entertainment in Gatlinburg, TN | Dan's Events",
     description:
       "Asheville-based wedding DJ and MC serving Gatlinburg, Pigeon Forge, and Sevierville. Smoky Mountain destination weddings done right — only ~90 miles from home base.",
     images: ["/opengraph-image"],

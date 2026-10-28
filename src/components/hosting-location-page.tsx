@@ -1,5 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
+import VenueName from "@/components/seo/venue-name";
+import { BreadcrumbBar } from "@/components/seo/breadcrumbs";
+import CityLinks from "@/components/seo/city-links";
+import { SiteNav, SiteFooter } from "@/components/site-chrome";
 import ScrollReveal from "./scroll-reveal";
 
 export type HostingLocationData = {
@@ -19,17 +22,7 @@ export default function HostingLocationPage({ data }: { data: HostingLocationDat
   return (
     <>
       {/* NAV */}
-      <nav className="fixed top-0 left-0 w-full z-[1000] bg-black border-b border-white/[0.08] px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="block">
-          <Image src="/logos/logo-white-transparent.png" alt="Dan's Events" width={200} height={23} className="h-7 w-auto" priority />
-        </Link>
-        <ul className="hidden md:flex gap-8 list-none">
-          <li><Link href="/#craft" className="text-[11px] font-medium uppercase tracking-[2px] text-white/50 hover:text-white transition-colors">The Craft</Link></li>
-          <li><Link href="/#services" className="text-[11px] font-medium uppercase tracking-[2px] text-white/50 hover:text-white transition-colors">Services</Link></li>
-          <li><Link href="/#proof" className="text-[11px] font-medium uppercase tracking-[2px] text-white/50 hover:text-white transition-colors">Reviews</Link></li>
-          <li><Link href="/#check-date" className="text-[11px] font-medium uppercase tracking-[2px] text-white/50 hover:text-white transition-colors">Check Your Date</Link></li>
-        </ul>
-      </nav>
+      <SiteNav current="" />
 
       {/* HERO */}
       <section className="min-h-[70vh] bg-red flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 relative overflow-hidden">
@@ -50,6 +43,8 @@ export default function HostingLocationPage({ data }: { data: HostingLocationDat
           </div>
         </div>
       </section>
+
+      <BreadcrumbBar items={[{ name: "Areas", href: "/areas" }, { name: `${data.city}, ${data.stateAbbr}`, href: `/${data.slug}` }, { name: "MC & host", href: `/hosting/${data.slug}` }]} />
 
       {/* INTRO */}
       <section className="bg-black py-[clamp(80px,10vw,140px)] px-6 border-t border-white/[0.06]">
@@ -132,7 +127,7 @@ export default function HostingLocationPage({ data }: { data: HostingLocationDat
             {data.venues.map((venue, i) => (
               <ScrollReveal key={venue.name} className={`p-8 border border-white/[0.06] ${i % 2 === 0 ? "bg-white/[0.02]" : "bg-transparent"}`}>
                 <span className="text-[10px] font-bold uppercase tracking-[3px] text-red block mb-3">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="text-lg font-bold text-white mb-1">{venue.name}</h3>
+                <h3 className="text-lg font-bold text-white mb-1"><VenueName name={venue.name} /></h3>
                 <p className="text-xs font-medium uppercase tracking-[2px] text-white/30 mb-3">{venue.location}</p>
                 <p className="text-sm font-light text-white/55 leading-relaxed">{venue.description}</p>
               </ScrollReveal>
@@ -184,17 +179,9 @@ export default function HostingLocationPage({ data }: { data: HostingLocationDat
       )}
 
       {/* FOOTER */}
-      <footer className="bg-black py-16 px-6 text-center border-t border-white/[0.06]">
-        <Link href="/" className="inline-block mb-4">
-          <Image src="/logos/logo-white-transparent.png" alt="Dan's Events" width={200} height={23} className="h-8 w-auto mx-auto" />
-        </Link>
-        <div className="text-[11px] font-normal uppercase tracking-[6px] text-white/30 mb-8">
-          Wedding DJ &amp; MC — Asheville, NC
-        </div>
-        <div className="text-[10px] text-white/15 tracking-[2px] uppercase">
-          &copy; 2026 Dan&apos;s Events. All rights reserved.
-        </div>
-      </footer>
+      <CityLinks citySlug={data.slug} current="hosting" />
+
+      <SiteFooter />
     </>
   );
 }

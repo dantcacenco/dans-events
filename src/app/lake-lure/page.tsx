@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Lake Lure & Chimney Rock, NC — Dan's Events",
+  title: "Wedding Entertainment in Lake Lure, NC | Dan's Events",
   description:
     "Lake Lure and Chimney Rock's premier wedding DJ and MC. Serving Rumbling Bald, Lake Lure Inn, The Farm at Lake Lure, and all Hickory Nut Gorge venues. ~30 miles from Asheville.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/lake-lure",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Lake Lure & Chimney Rock, NC — Dan's Events",
+    title: "Wedding Entertainment in Lake Lure, NC | Dan's Events",
     description:
       "Lake Lure and Chimney Rock's premier wedding DJ and MC. Serving Rumbling Bald, Lake Lure Inn, The Farm at Lake Lure, and all Hickory Nut Gorge venues. ~30 miles from Asheville.",
     url: "https://dans-events.com/lake-lure",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Lake Lure & Chimney Rock, NC — Dan's Events",
+    title: "Wedding Entertainment in Lake Lure, NC | Dan's Events",
     description:
       "Lake Lure and Chimney Rock's premier wedding DJ and MC. Serving Rumbling Bald, Lake Lure Inn, The Farm at Lake Lure, and all Hickory Nut Gorge venues. ~30 miles from Asheville.",
     images: ["/opengraph-image"],

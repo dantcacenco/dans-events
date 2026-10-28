@@ -3,14 +3,29 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export default function MobileNav() {
+const HOME_LINKS: [string, string][] = [
+  ["#craft", "The Craft"],
+  ["/mc", "MC & Host"],
+  ["/dj", "DJ"],
+  ["/lighting", "Lighting"],
+  ["/special-effects", "Effects"],
+  ["/venues", "Venues"],
+  ["/areas", "Areas"],
+  ["/reviews", "Reviews"],
+  ["/pricing", "Pricing"],
+  ["/2027", "2027 Package"],
+  ["#check-date", "Check Your Date"],
+];
+
+export default function MobileNav({ links = HOME_LINKS, breakpoint = "md" }: { links?: [string, string][]; breakpoint?: "md" | "lg" }) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <button
-        className="flex md:hidden flex-col gap-[5px] cursor-pointer bg-transparent border-none p-2"
+        className={`flex ${breakpoint === "lg" ? "lg:hidden" : "md:hidden"} flex-col gap-[5px] cursor-pointer bg-transparent border-none p-2`}
         aria-label="Menu"
+        aria-expanded={open}
         onClick={() => setOpen(!open)}
       >
         <span className="block w-6 h-0.5 bg-white transition-all" />
@@ -19,17 +34,8 @@ export default function MobileNav() {
       </button>
 
       {open && (
-        <div className="fixed top-16 left-0 w-full bg-red z-[999] px-6 py-10 border-b-[3px] border-red-dark">
-          {[
-            ["#craft", "The Craft"],
-            ["/dj", "DJ"],
-            ["/mc", "MC & Host"],
-            ["/lighting", "Lighting"],
-            ["/pricing", "Pricing"],
-            ["/2027", "2027 Package"],
-            ["#proof", "Proof"],
-            ["#check-date", "Check Your Date"],
-          ].map(([href, label]) => (
+        <div className="fixed top-16 left-0 w-full max-h-[calc(100svh-4rem)] overflow-y-auto bg-red z-[999] px-6 py-6 border-b-[3px] border-red-dark">
+          {links.map(([href, label]) => (
             <Link
               key={href}
               href={href}

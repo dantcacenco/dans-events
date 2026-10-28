@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { SiteNav, SiteFooter } from "@/components/site-chrome";
+import ReviewsBlock from "@/components/seo/reviews-block";
+import JsonLd from "@/components/seo/json-ld";
+import { serviceLd } from "@/lib/seo";
+import { GOOGLE_REVIEWS } from "@/lib/reviews";
+
+const DJ_REVIEW = GOOGLE_REVIEWS.find((r) => r.name === "Vladislava S.")!;
 import ScrollReveal from "@/components/scroll-reveal";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ — Dan's Events | Asheville, NC",
+  title: "Wedding DJ in Asheville, NC | Dan's Events",
   description:
     "Dan's Events — luxury wedding DJ in Asheville, NC. Not a playlist. A performance. Every transition intentional, every moment earned. 40+ five-star reviews.",
   alternates: { canonical: "https://dans-events.com/dj" },
   openGraph: {
-    title: "Wedding DJ — Dan's Events | Asheville, NC",
+    title: "Wedding DJ in Asheville, NC | Dan's Events",
     description:
       "Not a playlist. A performance. Every transition intentional, every moment earned.",
     url: "https://dans-events.com/dj",
@@ -45,42 +52,7 @@ export default function DJPage() {
   return (
     <>
       {/* NAV */}
-      <nav className="fixed top-0 left-0 w-full z-[1000] bg-black px-6 h-16 flex items-center justify-between border-b border-white/[0.06]">
-        <Link href="/" className="block">
-          <Image
-            src="/logos/logo-white-transparent.png"
-            alt="Dan's Events"
-            width={200}
-            height={23}
-            className="h-7 w-auto"
-            priority
-          />
-        </Link>
-        <ul className="hidden md:flex gap-8 list-none">
-          {[
-            ["/", "Home"],
-            ["/mc", "MC & Host"],
-            ["/lighting", "Lighting"],
-            ["/pricing", "Pricing"],
-            ["/#check-date", "Check Your Date"],
-          ].map(([href, label]) => (
-            <li key={href}>
-              <Link
-                href={href}
-                className="text-[11px] font-medium uppercase tracking-[2px] text-white/60 hover:text-white transition-colors"
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <Link
-          href="/#check-date"
-          className="md:hidden text-[11px] font-semibold uppercase tracking-[2px] text-white bg-red px-4 py-2"
-        >
-          Book
-        </Link>
-      </nav>
+      <SiteNav current="/dj" />
 
       {/* HERO */}
       <section className="min-h-svh flex flex-col justify-center items-center text-center px-6 pt-20 pb-16 relative overflow-hidden bg-black">
@@ -217,10 +189,10 @@ export default function DJPage() {
         <ScrollReveal className="relative z-10">
           <span className="text-[clamp(80px,12vw,160px)] font-black text-red leading-[0.5] mb-10 block">&ldquo;</span>
           <p className="text-[clamp(18px,2.8vw,36px)] font-light leading-[1.5] text-white max-w-[860px] mx-auto mb-10 italic">
-            The sound was full and immersive — present without ever being intrusive. The dance floor never emptied. People were still out there at midnight who swore they weren&apos;t going to dance.
+            {DJ_REVIEW.text}
           </p>
           <div className="text-xs font-bold uppercase tracking-[4px] text-white/40">
-            Laura <span className="text-red">/</span> The Lumen House, 2025
+            {DJ_REVIEW.name} <span className="text-red">/</span> Google review, {DJ_REVIEW.when}
           </div>
         </ScrollReveal>
       </section>
@@ -285,39 +257,10 @@ export default function DJPage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-black py-16 px-6 text-center border-t border-white/[0.06]">
-        <Link href="/" className="inline-block mb-4">
-          <Image
-            src="/logos/logo-white-transparent.png"
-            alt="Dan's Events"
-            width={200}
-            height={23}
-            className="h-8 w-auto mx-auto opacity-80"
-          />
-        </Link>
-        <div className="text-[11px] font-normal uppercase tracking-[6px] text-white/30 mb-10">
-          Wedding DJ &amp; MC — Asheville, NC
-        </div>
-        <ul className="flex justify-center gap-10 list-none mb-10 flex-wrap">
-          {[
-            ["/", "Home"],
-            ["/mc", "MC & Host"],
-            ["/lighting", "Lighting"],
-            ["/pricing", "Pricing"],
-            ["/#proof", "Reviews"],
-            ["/#check-date", "Book"],
-          ].map(([href, label]) => (
-            <li key={href}>
-              <Link href={href} className="text-[11px] font-medium uppercase tracking-[2px] text-white/35 hover:text-red transition-colors">
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <div className="text-[10px] text-white/15 tracking-[2px] uppercase">
-          &copy; 2026 Dan&apos;s Events. Asheville, NC. All rights reserved.
-        </div>
-      </footer>
+      <ReviewsBlock limit={3} />
+      <JsonLd data={serviceLd({ name: "Wedding DJ & ceremony sound", path: "/dj", serviceType: "Wedding DJ", description: "Ceremony sound and a reception DJ set built around your crowd and mixed live, planned with the host so every moment lands on cue." })} />
+
+      <SiteFooter />
     </>
   );
 }

@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { SiteNav, SiteFooter } from "@/components/site-chrome";
+import ReviewsBlock from "@/components/seo/reviews-block";
+import JsonLd from "@/components/seo/json-ld";
+import { serviceLd } from "@/lib/seo";
 import ScrollReveal from "@/components/scroll-reveal";
 
 export const metadata: Metadata = {
-  title: "Wedding MC & Host — Dan's Events | Asheville, NC",
+  title: "Wedding MC & Host in Asheville, NC | Dan's Events",
   description:
     "Dan's Events — luxury wedding MC and host in Asheville, NC. Rooted in the tamada tradition. I don't announce moments. I create them. 40+ five-star reviews.",
   alternates: { canonical: "https://dans-events.com/mc" },
   openGraph: {
-    title: "Wedding MC & Host — Dan's Events | Asheville, NC",
+    title: "Wedding MC & Host in Asheville, NC | Dan's Events",
     description:
       "I don't announce moments. I create them. Rooted in the tamada tradition of the Caucasus.",
     url: "https://dans-events.com/mc",
@@ -66,42 +70,7 @@ export default function MCPage() {
   return (
     <>
       {/* NAV */}
-      <nav className="fixed top-0 left-0 w-full z-[1000] bg-black px-6 h-16 flex items-center justify-between border-b border-white/[0.06]">
-        <Link href="/" className="block">
-          <Image
-            src="/logos/logo-white-transparent.png"
-            alt="Dan's Events"
-            width={200}
-            height={23}
-            className="h-7 w-auto"
-            priority
-          />
-        </Link>
-        <ul className="hidden md:flex gap-8 list-none">
-          {[
-            ["/", "Home"],
-            ["/dj", "DJ"],
-            ["/lighting", "Lighting"],
-            ["/pricing", "Pricing"],
-            ["/#check-date", "Check Your Date"],
-          ].map(([href, label]) => (
-            <li key={href}>
-              <Link
-                href={href}
-                className="text-[11px] font-medium uppercase tracking-[2px] text-white/60 hover:text-white transition-colors"
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <Link
-          href="/#check-date"
-          className="md:hidden text-[11px] font-semibold uppercase tracking-[2px] text-white bg-red px-4 py-2"
-        >
-          Book
-        </Link>
-      </nav>
+      <SiteNav current="/mc" />
 
       {/* HERO */}
       <section className="min-h-svh flex flex-col justify-center items-center text-center px-6 pt-20 pb-16 relative overflow-hidden bg-black">
@@ -307,39 +276,10 @@ export default function MCPage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-black py-16 px-6 text-center border-t border-white/[0.06]">
-        <Link href="/" className="inline-block mb-4">
-          <Image
-            src="/logos/logo-white-transparent.png"
-            alt="Dan's Events"
-            width={200}
-            height={23}
-            className="h-8 w-auto mx-auto opacity-80"
-          />
-        </Link>
-        <div className="text-[11px] font-normal uppercase tracking-[6px] text-white/30 mb-10">
-          Wedding DJ &amp; MC — Asheville, NC
-        </div>
-        <ul className="flex justify-center gap-10 list-none mb-10 flex-wrap">
-          {[
-            ["/", "Home"],
-            ["/dj", "DJ"],
-            ["/lighting", "Lighting"],
-            ["/pricing", "Pricing"],
-            ["/#proof", "Reviews"],
-            ["/#check-date", "Book"],
-          ].map(([href, label]) => (
-            <li key={href}>
-              <Link href={href} className="text-[11px] font-medium uppercase tracking-[2px] text-white/35 hover:text-red transition-colors">
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <div className="text-[10px] text-white/15 tracking-[2px] uppercase">
-          &copy; 2026 Dan&apos;s Events. Asheville, NC. All rights reserved.
-        </div>
-      </footer>
+      <ReviewsBlock limit={3} />
+      <JsonLd data={serviceLd({ name: "Wedding MC & host (English and Russian)", path: "/mc", serviceType: "Wedding MC", description: "Wedding host and MC in the tamada tradition, in English and Russian: introductions, toasts, games and the flow of the night, from the grand entrance to the send-off." })} />
+
+      <SiteFooter />
     </>
   );
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Highlands & Cashiers, NC — Dan's Events",
+  title: "Wedding Entertainment in Highlands, NC | Dan's Events",
   description:
     "Highlands and Cashiers NC's premier wedding DJ and MC. Serving Old Edwards Inn, High Hampton, Chimney Pond Farm, and all of the Plateau's upscale mountain venues. Unforgettable destination weddings ~55 miles from Asheville.",
   keywords: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/highlands",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Highlands & Cashiers, NC — Dan's Events",
+    title: "Wedding Entertainment in Highlands, NC | Dan's Events",
     description:
       "Highlands and Cashiers NC's premier wedding DJ and MC. Serving Old Edwards Inn, High Hampton, Chimney Pond Farm, and all of the Plateau's upscale mountain venues. Unforgettable destination weddings ~55 miles from Asheville.",
     url: "https://dans-events.com/highlands",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Highlands & Cashiers, NC — Dan's Events",
+    title: "Wedding Entertainment in Highlands, NC | Dan's Events",
     description:
       "Highlands and Cashiers NC's premier wedding DJ and MC. Serving Old Edwards Inn, High Hampton, Chimney Pond Farm, and all of the Plateau's upscale mountain venues. Unforgettable destination weddings ~55 miles from Asheville.",
     images: ["/opengraph-image"],

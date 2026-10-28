@@ -7,7 +7,7 @@ import { SiteNav, SiteFooter } from "@/components/site-chrome";
 import { BUNDLE, SERVICE_PRICES, usd } from "@/lib/pricing";
 
 const PAGE_URL = "https://dans-events.com/2027";
-const TITLE = "The 2027 Full Experience: Host, DJ & Lighting | Dan's Events";
+const TITLE = "2027 Wedding Package: Host, DJ & Lighting | Dan's Events";
 const SAVINGS = BUNDLE.separately - BUNDLE.price;
 const DESCRIPTION = `Hosting (English and Russian), DJ with ceremony sound, two wash lights, two spotlights and low fog from one team for ${usd(BUNDLE.price)} instead of ${usd(BUNDLE.separately)} booked separately. For our first ${BUNDLE.spots} couples with 2027 weddings. Asheville, NC and beyond.`;
 const SHORT_DESCRIPTION = `Hosting, music and lights from one team: ${usd(BUNDLE.price)} instead of ${usd(BUNDLE.separately)}. For our first ${BUNDLE.spots} couples of 2027.`;
@@ -107,7 +107,7 @@ export default function FullExperience2027Page() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <SiteNav current="/2027" />
+      <SiteNav current="/2027" ctaHref="#check-date" />
 
       <main>
         {/* HERO */}

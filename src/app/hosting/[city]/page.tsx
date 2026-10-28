@@ -14,8 +14,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = hostingLocations[city];
   if (!data) return {};
 
-  const title = `Wedding MC & Host in ${data.city}, ${data.stateAbbr} — Dan's Events`;
-  const description = `Wedding MC and host serving ${data.city}. The tamada tradition — emotional anchor of your celebration, not someone who reads off a card. Dan's Events.`;
+  const title = `Wedding MC & Host in ${data.city}, ${data.stateAbbr} | Dan's Events`;
+  const description = `Wedding MC and host serving ${data.city}. The tamada tradition: the emotional anchor of your celebration, not someone who reads off a card. Dan's Events.`;
 
   return {
     title,
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `${data.city} wedding MC`,
       `ведущий свадьба ${data.city}`,
     ],
-    alternates: { canonical: `https://dans-events.com/hosting/${city}` },
+    alternates: { canonical: `https://dans-events.com/hosting/${city}`, languages: { "en-US": `https://dans-events.com/hosting/${city}`, "ru-RU": `https://dans-events.com/ru/hosting/${city}` } },
     openGraph: {
       title,
       description,

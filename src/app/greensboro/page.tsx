@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Greensboro, NC — Dan's Events",
+  title: "Wedding Entertainment in Greensboro, NC | Dan's Events",
   description:
     "Greensboro's premier wedding DJ and MC traveling from Asheville. 40+ five-star reviews. Serving Revolution Mill, Grandover Resort, Starmount Forest Country Club, and all Piedmont Triad venues.",
   keywords: [
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/greensboro",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Greensboro, NC — Dan's Events",
+    title: "Wedding Entertainment in Greensboro, NC | Dan's Events",
     description:
       "Greensboro's premier wedding DJ and MC traveling from Asheville. 40+ five-star reviews. Serving Revolution Mill, Grandover Resort, Starmount Forest Country Club, and all Piedmont Triad venues.",
     url: "https://dans-events.com/greensboro",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Greensboro, NC — Dan's Events",
+    title: "Wedding Entertainment in Greensboro, NC | Dan's Events",
     description:
       "Greensboro's premier wedding DJ and MC traveling from Asheville. 40+ five-star reviews. Serving Revolution Mill, Grandover Resort, Starmount Forest Country Club, and all Piedmont Triad venues.",
     images: ["/opengraph-image"],

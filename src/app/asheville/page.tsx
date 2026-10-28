@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocationPage, { type LocationData } from "@/components/location-page";
 
 export const metadata: Metadata = {
-  title: "Wedding DJ & MC in Asheville, NC — Dan's Events",
+  title: "Wedding Entertainment in Asheville, NC | Dan's Events",
   description:
     "Asheville's premier wedding DJ and MC. 40+ five-star reviews. Serving the Blue Ridge Mountains, Biltmore Estate, Omni Grove Park Inn, and all WNC venues.",
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     canonical: "https://dans-events.com/asheville",
   },
   openGraph: {
-    title: "Wedding DJ & MC in Asheville, NC — Dan's Events",
+    title: "Wedding Entertainment in Asheville, NC | Dan's Events",
     description:
       "Asheville's premier wedding DJ and MC. 40+ five-star reviews. Serving the Blue Ridge Mountains, Biltmore Estate, Omni Grove Park Inn, and all WNC venues.",
     url: "https://dans-events.com/asheville",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wedding DJ & MC in Asheville, NC — Dan's Events",
+    title: "Wedding Entertainment in Asheville, NC | Dan's Events",
     description:
       "Asheville's premier wedding DJ and MC. 40+ five-star reviews. Serving the Blue Ridge Mountains, Biltmore Estate, Omni Grove Park Inn, and all WNC venues.",
     images: ["/opengraph-image"],
