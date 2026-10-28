@@ -17,6 +17,7 @@ export type GuideSection = {
   photo?: Photo;
   caption?: string;
   links?: [string, string][];
+  note?: React.ReactNode;
 };
 
 export type GuideProps = {
@@ -137,6 +138,7 @@ export default function GuidePage(props: GuideProps) {
                   ))}
                 </p>
               )}
+              {s.note && <p className="text-[14px] font-light text-white/60 leading-[1.8] mb-6">{s.note}</p>}
               {s.photo && (
                 <figure className="mt-8">
                   <Image

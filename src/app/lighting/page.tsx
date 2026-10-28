@@ -140,7 +140,7 @@ export default function LightingPage() {
             </p>
             <div className={s.partnerBadge}>
               <span className={s.partnerLabel}>In collaboration with</span>
-              <span className={s.partnerName}>1919 Lighting</span>
+              <a href="https://www.1919.lighting/" className={`${s.partnerName} underline underline-offset-[4px] decoration-white/30 hover:decoration-white`}>1919 Lighting</a>
               <span className={s.partnerTagline}>The Bentley of wedding illumination.</span>
             </div>
           </div>

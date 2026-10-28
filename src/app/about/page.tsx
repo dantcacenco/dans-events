@@ -12,6 +12,45 @@ const DESCRIPTION = `Who we are and what we do: Dan Tcacenco hosts weddings in E
 
 export const metadata = pageMeta({ path: "/about", title: TITLE, description: DESCRIPTION, image: PHOTOS.danFloor.src });
 
+const LINK = "underline underline-offset-[4px] decoration-red/60 hover:text-white";
+
+// Entities that live on other sites. @id values match the ones those sites publish, so the graphs join up.
+const RELATED_ENTITIES_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://storiesbyesi.com/#esi",
+      name: "Esther Tcacenco",
+      jobTitle: "Photographer",
+      worksFor: { "@id": "https://storiesbyesi.com/#business" },
+      url: "https://storiesbyesi.com/",
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://storiesbyesi.com/#business",
+      name: "Stories by Esi",
+      url: "https://storiesbyesi.com/",
+      founder: { "@id": "https://storiesbyesi.com/#esi" },
+      sameAs: ["https://www.instagram.com/storiesbyesi"],
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.1919.lighting/#business",
+      name: "1919 Lighting",
+      url: "https://www.1919.lighting/",
+      parentOrganization: { "@id": "https://dans-events.com/#business" },
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://dans-music.studio/#business",
+      name: "Dan's Music",
+      url: "https://dans-music.studio/",
+      founder: { "@id": "https://dans-events.com/#dan" },
+    },
+  ],
+};
+
 const price = (href: string) => usd(SERVICE_PRICES.find((s) => s.href === href)!.price);
 
 export default function AboutPage() {
@@ -60,6 +99,26 @@ export default function AboutPage() {
           ],
         },
         {
+          h2: "Credits",
+          note: (
+            <>
+              Photos by{" "}
+              <a href="https://storiesbyesi.com/" className={LINK}>
+                Stories by Esi
+              </a>
+              , the studio of photographer Esther Tcacenco, who photographs our weddings. Our lighting work lives at{" "}
+              <a href="https://www.1919.lighting/" className={LINK}>
+                1919 Lighting
+              </a>
+              , part of Dan&apos;s Events. Dan also runs{" "}
+              <a href="https://www.dans-music.studio/" className={LINK}>
+                Dan&apos;s Music
+              </a>
+              .
+            </>
+          ),
+        },
+        {
           h2: "What couples say",
           p: [
             `Dan's Events is rated ${REVIEW_RATING} from ${REVIEW_COUNT} Google reviews as of ${REVIEWS_AS_OF}; ${FIVE_STAR_COUNT} of them are five stars. The themes that come up again and again are energy, organization and making every guest feel included. Every review is on the reviews page, copied word for word.`,
@@ -74,7 +133,7 @@ export default function AboutPage() {
         ["/2027", "2027 package"],
         ["/reviews", "Reviews"],
       ]}
-      jsonLd={[webPageLd({ path: "/about", name: TITLE, description: DESCRIPTION, type: "AboutPage", about: { "@id": "https://dans-events.com/#business" } })]}
+      jsonLd={[webPageLd({ path: "/about", name: TITLE, description: DESCRIPTION, type: "AboutPage", about: { "@id": "https://dans-events.com/#business" } }), RELATED_ENTITIES_LD]}
     >
       <ReviewsBlock limit={3} />
     </GuidePage>
