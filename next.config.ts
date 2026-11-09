@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
       // Youth Camp check-in kiosk, staff screen and its API: private, never indexed, never cached.
       { source: "/checkin", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
       { source: "/checkin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
+      // Christmas check-in, its admin and its API: private, never indexed, never cached.
+      { source: "/christmas-checkin", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
+      { source: "/christmas-checkin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
+      { source: "/api/christmas-checkin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }, { key: "Cache-Control", value: "no-store" }] },
       { source: "/api/checkin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }, { key: "Cache-Control", value: "no-store" }] },
       { source: "/admin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }, { key: "Cache-Control", value: "no-store" }] },
       // Preview clips: cache for a week (a clip may be swapped for Dan's own MP3 under the same name).
