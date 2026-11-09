@@ -1,7 +1,7 @@
 import "server-only";
 import { kvDel, kvGet, kvGetOrThrow, kvKeys, kvMany, kvSet } from "@/lib/teo/kv";
 import { EVENT_ID, EMPTY_DETAILS, cleanDetails, type EventDetails } from "./config";
-import { cleanInput, detectDuplicate, phoneIndexKey, recordKey, type XmasInput, type XmasRecord } from "./logic";
+import { cleanInput, detectDuplicate, phoneIndexKey, recordKey, withSantaDefaults, type XmasInput, type XmasRecord } from "./logic";
 
 // Storage: the same KV store the rest of the site uses (Vercel KV; a JSON file under .data/ when run locally).
 // One key per record (two phones never overwrite each other), one phone-index key per record (duplicate check).
@@ -21,7 +21,10 @@ export async function setDetails(raw: unknown): Promise<EventDetails> {
 export async function listRecords(): Promise<XmasRecord[]> {
   const keys = await kvKeys(`${PREFIX}rec:`);
   const rows = await kvMany<XmasRecord>(keys);
-  return rows.filter((r): r is XmasRecord => !!r && typeof r === "object").sort((a, b) => b.at - a.at);
+  return rows
+    .filter((r): r is XmasRecord => !!r && typeof r === "object")
+    .map(withSantaDefaults)
+    .sort((a, b) => b.at - a.at);
 }
 
 export const getRecord = (id: string) => kvGetOrThrow<XmasRecord>(recordKey(id));
@@ -54,7 +57,9 @@ export async function submit(id: string, input: XmasInput, update: boolean, now 
 export async function adminEdit(id: string, raw: unknown, now = Date.now()): Promise<{ ok: true; record: XmasRecord } | { ok: false; error: string }> {
   const cur = await getRecord(id);
   if (!cur) return { ok: false, error: "missing" };
-  const parsed = cleanInput(raw);
+  // The admin screen only edits name, phone, party and the Santa switch: keep the likes and gift ideas the guest gave.
+  const body = (raw ?? {}) as Record<string, unknown>;
+  const parsed = cleanInput({ ...body, likes: body.likes ?? cur.likes, gifts: body.gifts ?? cur.gifts }, false);
   if (!parsed.ok) return { ok: false, error: parsed.error };
   if (parsed.value.phone !== cur.phone) {
     const other = await byPhone(parsed.value.phone);
@@ -85,7 +90,7 @@ export async function deleteRecord(id: string) {
 
 // Undo of an admin delete: put the exact record back (unless that phone has since registered again).
 export async function restoreRecord(rec: XmasRecord): Promise<boolean> {
-  const check = cleanInput(rec);
+  const check = cleanInput(rec, false);
   if (!check.ok || !rec.id || typeof rec.id !== "string") return false;
   const clash = await byPhone(check.value.phone);
   if (clash && clash.id !== rec.id) return false;

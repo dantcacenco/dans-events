@@ -5,9 +5,12 @@ import { LANGS, LANG_LABEL, PARTY_MAX, PARTY_MIN, isLang, titleFor, type EventDe
 import { UI, type L } from "@/lib/christmas/i18n";
 import { cleanInput, clampParty, displayPhone, formatPhone, formatWhen, normalizePhone, type XmasInput } from "@/lib/christmas/logic";
 import { enqueue, flush, newId, readQueue, send } from "@/lib/christmas/queue";
+import { GIFT_MAX, GIFT_MIN, GIFT_PRICE_MAX, GIFT_TEXT_MAX, QUESTIONS, parsePrice } from "@/lib/christmas/santa";
 import { Lights, Snow } from "./decor";
 
-type Screen = "form" | "done" | "already";
+type Screen = "form" | "quiz" | "gifts" | "done" | "already";
+type Row = { text: string; price: string };
+const blankRows = (): Row[] => Array.from({ length: GIFT_MIN }, () => ({ text: "", price: "" }));
 export const LANG_KEY = "xm_lang";
 
 // ?lang=ru in a shared link wins, then the saved choice, then the phone's language, then English.
@@ -54,6 +57,9 @@ export default function Guest({ details }: { details: EventDetails }) {
   const [phone, setPhone] = useState("");
   const [party, setParty] = useState(1);
   const [santa, setSanta] = useState(false);
+  const [likes, setLikes] = useState<string[]>([]);
+  const [qi, setQi] = useState(0);
+  const [rows, setRows] = useState<Row[]>(blankRows);
   const [formId, setFormId] = useState(() => newId());
   const [busy, setBusy] = useState(false);
   const [tried, setTried] = useState(false);
@@ -111,6 +117,9 @@ export default function Guest({ details }: { details: EventDetails }) {
     setPhone("");
     setParty(1);
     setSanta(false);
+    setLikes([]);
+    setQi(0);
+    setRows(blankRows());
     setTried(false);
     setExisting(null);
     setUpdating(false);
@@ -125,11 +134,33 @@ export default function Guest({ details }: { details: EventDetails }) {
   const canSubmit = nameOk && digitsOk;
   const missing = !nameOk ? tr(UI.missingName) : !digitsOk ? tr(UI.missingPhone) : "";
 
+  const giftsFilled = rows.filter((r) => r.text.trim().length >= 2);
+  const priceBad = rows.some((r) => {
+    const p = parsePrice(r.price);
+    return p !== null && (Number.isNaN(p) || p > GIFT_PRICE_MAX);
+  });
+  const giftsOk = giftsFilled.length >= GIFT_MIN && !priceBad;
+  const giftsMissing = priceBad ? tr(UI.priceOver) : giftsFilled.length < GIFT_MIN ? tr(UI.needGifts) : "";
+
+  // Step one: name and phone. With Secret Santa on, go on to the questions; otherwise register right away.
+  function onForm() {
+    setTried(true);
+    setFailed(false);
+    if (!canSubmit || busy) return;
+    if (santa) {
+      setQi(0);
+      setTried(false);
+      return setScreen("quiz");
+    }
+    return onSubmit();
+  }
+
   async function onSubmit() {
     setTried(true);
     setFailed(false);
     if (!canSubmit || busy) return;
-    const parsed = cleanInput({ name, party, phone, santa });
+    if (santa && !giftsOk) return;
+    const parsed = cleanInput({ name, party, phone, santa, likes, gifts: rows.map((r) => ({ text: r.text, price: parsePrice(r.price) })) });
     if (!parsed.ok) return;
     setBusy(true);
     const item = { ...parsed.value, id: formId, update: updating };
@@ -152,7 +183,11 @@ export default function Guest({ details }: { details: EventDetails }) {
 
   const when = formatWhen(details.date, details.time, lang);
   const sub = [when, details.place].filter(Boolean).join(" · ");
-  const hero = screen === "done" ? (summary?.santa ? "🎅" : "🎁") : screen === "already" ? "🔔" : "🎄";
+  const hero = screen === "done" ? (summary?.santa ? "🎅" : "🎁") : screen === "already" ? "🔔" : screen === "quiz" ? QUESTIONS[qi].hero : screen === "gifts" ? "🎁" : "🎄";
+  const steps = QUESTIONS.length + 1;
+  const stepNow = screen === "quiz" ? qi + 1 : screen === "gifts" ? steps : 0;
+  const toggleLike = (id: string) => setLikes((l) => (l.includes(id) ? l.filter((x) => x !== id) : [...l, id]));
+  const setRow = (i: number, patch: Partial<Row>) => setRows((rs) => rs.map((r, j) => (j === i ? { ...r, ...patch } : r)));
 
   return (
     <main className="xm-app" data-screen={screen} style={{ visibility: ready ? "visible" : "hidden" }}>
@@ -217,8 +252,71 @@ export default function Guest({ details }: { details: EventDetails }) {
           <p className="xm-hint" role="status">
             {failed ? tr(UI.error) : tried && missing ? missing : ""}
           </p>
-          <button type="button" className="xm-go" onClick={onSubmit} disabled={busy} data-ready={canSubmit}>
+          <button type="button" className="xm-go" onClick={onForm} disabled={busy} data-ready={canSubmit}>
+            {busy ? tr(UI.sending) : santa ? tr(UI.next) : updating ? tr(UI.updateBtn) : tr(UI.register)}
+          </button>
+        </section>
+      )}
+
+      {screen === "quiz" && (
+        <section className="xm-card xm-center" key={`quiz${qi}`}>
+          <Dots now={stepNow} total={steps} label={`${stepNow} ${tr(UI.stepOf)} ${steps}`} />
+          <h2 className="xm-big">{tr(QUESTIONS[qi].title)}</h2>
+          <p className="xm-sub">{tr(UI.pickAny)}</p>
+          <div className="xm-chips">
+            {QUESTIONS[qi].options.map((o) => (
+              <button key={o.id} type="button" className={`xm-chip ${likes.includes(o.id) ? "on" : ""}`} aria-pressed={likes.includes(o.id)} onClick={() => toggleLike(o.id)}>
+                <span aria-hidden>{o.emoji}</span>
+                {tr(o.label)}
+              </button>
+            ))}
+          </div>
+          <button type="button" className="xm-go" onClick={() => (qi + 1 < QUESTIONS.length ? setQi(qi + 1) : setScreen("gifts"))}>
+            {tr(UI.next)}
+          </button>
+          <button type="button" className="xm-ghost" onClick={() => (qi === 0 ? setScreen("form") : setQi(qi - 1))}>
+            {tr(UI.back)}
+          </button>
+        </section>
+      )}
+
+      {screen === "gifts" && (
+        <section className="xm-card xm-center" key="gifts">
+          <Dots now={stepNow} total={steps} label={`${stepNow} ${tr(UI.stepOf)} ${steps}`} />
+          <h2 className="xm-big">{tr(UI.giftsTitle)}</h2>
+          <p className="xm-sub">
+            {tr(UI.giftsSub)} · <b className="xm-max">{tr(UI.max20)}</b>
+          </p>
+          <div className="xm-gifts">
+            {rows.map((r, i) => {
+              const p = parsePrice(r.price);
+              const over = p !== null && (Number.isNaN(p) || p > GIFT_PRICE_MAX);
+              return (
+                <div className="xm-gift" key={i}>
+                  <input className={`xm-input ${tried && i < GIFT_MIN && r.text.trim().length < 2 ? "bad" : ""}`} value={r.text} onChange={(e) => setRow(i, { text: e.target.value })} placeholder={i === 0 ? tr(UI.giftPh) : ""} maxLength={GIFT_TEXT_MAX} aria-label={`${tr(UI.giftsTitle)} ${i + 1}`} enterKeyHint="next" />
+                  <input className={`xm-input xm-price ${over ? "bad" : ""}`} value={r.price} onChange={(e) => setRow(i, { price: e.target.value.replace(/[^\d.,$]/g, "").slice(0, 6) })} placeholder={tr(UI.pricePh)} inputMode="decimal" aria-label={tr(UI.max20)} />
+                  {i >= GIFT_MIN && (
+                    <button type="button" className="xm-x" aria-label={tr(UI.removeIdea)} onClick={() => setRows((rs) => rs.filter((_, j) => j !== i))}>
+                      ×
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          {rows.length < GIFT_MAX && (
+            <button type="button" className="xm-ghost xm-add" onClick={() => setRows((rs) => [...rs, { text: "", price: "" }])}>
+              + {tr(UI.addIdea)}
+            </button>
+          )}
+          <p className="xm-hint" role="status">
+            {failed ? tr(UI.error) : tried && giftsMissing ? giftsMissing : ""}
+          </p>
+          <button type="button" className="xm-go" onClick={onSubmit} disabled={busy} data-ready={giftsOk}>
             {busy ? tr(UI.sending) : updating ? tr(UI.updateBtn) : tr(UI.register)}
+          </button>
+          <button type="button" className="xm-ghost" onClick={() => { setQi(QUESTIONS.length - 1); setScreen("quiz"); }}>
+            {tr(UI.back)}
           </button>
         </section>
       )}
@@ -236,7 +334,7 @@ export default function Guest({ details }: { details: EventDetails }) {
             </li>
             <li>
               <span>
-                {summary.santa ? "🎅" : "·"} {summary.santa ? tr(UI.santaYes) : tr(UI.santaNo)}
+                {summary.santa ? "🎅" : "·"} {summary.santa ? `${tr(UI.santaYes)} · ${summary.gifts.length} ${tr(UI.ideas)}` : tr(UI.santaNo)}
               </span>
             </li>
           </ul>
@@ -287,5 +385,15 @@ export default function Guest({ details }: { details: EventDetails }) {
         </section>
       )}
     </main>
+  );
+}
+
+function Dots({ now, total, label }: { now: number; total: number; label: string }) {
+  return (
+    <div className="xm-dots" role="img" aria-label={label}>
+      {Array.from({ length: total }, (_, i) => (
+        <i key={i} className={i + 1 === now ? "now" : i + 1 < now ? "past" : ""} />
+      ))}
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import { EVENT_ID, PARTY_MAX, PARTY_MIN } from "./config";
+import { cleanGifts, cleanLikes, optionFor, type Gift, type SantaError } from "./santa";
 // Phone and party rules are the same as the Youth Camp check-in: reuse them, do not copy them.
 import { clampParty, displayPhone, formatPhone, normalizePhone, validParty } from "../checkin/logic";
 
@@ -12,23 +13,34 @@ export type XmasRecord = {
   party: number; // people in the group, including the guest
   phone: string; // 10 digits, no formatting
   santa: boolean; // wants to take part in Secret Santa (the guest named above)
+  likes: string[]; // Secret Santa only: ids of what they like (see santa.ts)
+  gifts: Gift[]; // Secret Santa only: 3 to 5 gift ideas, $20 max each
   arrived: boolean; // admin marked them as here
   at: number; // first registration
   updatedAt: number;
 };
 
-export type XmasInput = Pick<XmasRecord, "name" | "party" | "phone" | "santa">;
+export type XmasInput = Pick<XmasRecord, "name" | "party" | "phone" | "santa" | "likes" | "gifts">;
 
-export type ValidationError = "name" | "party" | "phone";
+export type ValidationError = "name" | "party" | "phone" | SantaError;
 
-export function cleanInput(raw: unknown): { ok: true; value: XmasInput } | { ok: false; error: ValidationError } {
+// Records saved before the Secret Santa questions existed have no likes or gifts: give them empty lists.
+export const withSantaDefaults = (r: Omit<XmasRecord, "likes" | "gifts"> & Partial<Pick<XmasRecord, "likes" | "gifts">>): XmasRecord => ({ ...r, likes: Array.isArray(r.likes) ? r.likes : [], gifts: Array.isArray(r.gifts) ? r.gifts : [] });
+
+// strictSanta (guests): someone in Secret Santa must give 3 to 5 gift ideas, $20 max each.
+// Lenient (admin edit, undo): keep whatever is valid, so the admin can fix a name without retyping gifts.
+export function cleanInput(raw: unknown, strictSanta = true): { ok: true; value: XmasInput } | { ok: false; error: ValidationError } {
   const b = (raw ?? {}) as Record<string, unknown>;
   const name = typeof b.name === "string" ? b.name.replace(/\s+/g, " ").trim().slice(0, 80) : "";
   if (name.length < 2) return { ok: false, error: "name" };
   if (!validParty(b.party)) return { ok: false, error: "party" };
   const phone = normalizePhone(b.phone);
   if (!phone) return { ok: false, error: "phone" };
-  return { ok: true, value: { name, party: b.party, phone, santa: b.santa === true } };
+  const santa = b.santa === true;
+  if (!santa) return { ok: true, value: { name, party: b.party, phone, santa, likes: [], gifts: [] } };
+  const gifts = cleanGifts(b.gifts, strictSanta);
+  if (!gifts.ok) return gifts;
+  return { ok: true, value: { name, party: b.party, phone, santa, likes: cleanLikes(b.likes), gifts: gifts.value } };
 }
 
 // One record per phone for the event.
@@ -71,7 +83,7 @@ export function searchRecords(records: XmasRecord[], q: string, filter: Filter =
     if (filter === "arrived" && !r.arrived) return false;
     if (filter === "waiting" && r.arrived) return false;
     if (!text) return true;
-    return r.name.toLowerCase().includes(text) || (digits.length >= 3 && r.phone.includes(digits));
+    return r.name.toLowerCase().includes(text) || (digits.length >= 3 && r.phone.includes(digits)) || r.gifts.some((g) => g.text.toLowerCase().includes(text));
   });
 }
 
@@ -81,10 +93,13 @@ const csvCell = (v: string | number) => {
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 };
 
+const priceText = (g: Gift) => (g.price === null ? g.text : `${g.text} ($${g.price})`);
+const likeLabels = (ids: string[]) => ids.map((id) => optionFor(id)?.label.en ?? id).join("; ");
+
 export function recordsToCsv(records: XmasRecord[]): string {
-  const head = ["Name", "People", "Phone", "Secret Santa", "Arrived", "Registered", "Updated"];
-  const rows = records.map((r) => [r.name, r.party, displayPhone(r.phone), r.santa ? "yes" : "", r.arrived ? "yes" : "", new Date(r.at).toISOString(), new Date(r.updatedAt).toISOString()]);
-  return "﻿" + [head, ...rows].map((row) => row.map(csvCell).join(",")).join("\r\n") + "\r\n";
+  const head = ["Name", "People", "Phone", "Secret Santa", "Likes", "Gift 1", "Gift 2", "Gift 3", "Gift 4", "Gift 5", "Arrived", "Registered", "Updated"];
+  const rows = records.map((r) => [r.name, r.party, displayPhone(r.phone), r.santa ? "yes" : "", likeLabels(r.likes), ...Array.from({ length: 5 }, (_, i) => (r.gifts[i] ? priceText(r.gifts[i]) : "")), r.arrived ? "yes" : "", new Date(r.at).toISOString(), new Date(r.updatedAt).toISOString()]);
+  return "\uFEFF" + [head, ...rows].map((row) => row.map(csvCell).join(",")).join("\r\n") + "\r\n";
 }
 
 // Plain list of Secret Santa names, one per line, for pasting into a draw tool.

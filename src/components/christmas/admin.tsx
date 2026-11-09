@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PARTY_MAX, PARTY_MIN, EMPTY_DETAILS, LANGS, LANG_LABEL, type EventDetails, type Lang } from "@/lib/christmas/config";
 import { ADMIN, type L } from "@/lib/christmas/i18n";
 import { clampParty, displayPhone, formatPhone, phonesForTexting, santaNames, searchRecords, type Filter, type Stats, type XmasRecord } from "@/lib/christmas/logic";
+import { optionFor } from "@/lib/christmas/santa";
 import { LangSwitch, detectLang, rememberLang } from "./guest";
 
 type Tr = (l: L) => string;
@@ -220,6 +221,42 @@ function Dashboard({ tr, lang, onOut }: { tr: Tr; lang: Lang; onOut: () => void 
                 {tr(ADMIN.at)} {when(r.at)}
                 {r.arrived ? " · ✓" : ""}
               </div>
+              {r.santa && (
+                <div className="ad-santa">
+                  {r.likes.length === 0 && r.gifts.length === 0 ? (
+                    <span className="ad-sub">{tr(ADMIN.noSantaData)}</span>
+                  ) : (
+                    <>
+                      {r.likes.length > 0 && (
+                        <p className="ad-likes">
+                          <span className="ad-lbl">{tr(ADMIN.likes)}</span>
+                          {r.likes.map((id) => {
+                            const o = optionFor(id);
+                            return (
+                              <span key={id} className="ad-tag">
+                                {o ? `${o.emoji} ${o.label[lang]}` : id}
+                              </span>
+                            );
+                          })}
+                        </p>
+                      )}
+                      {r.gifts.length > 0 && (
+                        <div>
+                          <span className="ad-lbl">{tr(ADMIN.gifts)}</span>
+                          <ul className="ad-gifts">
+                            {r.gifts.map((g, i) => (
+                              <li key={i}>
+                                {g.text}
+                                {g.price !== null && <b> ${g.price}</b>}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
               <div className="ad-row-btns">
                 <button type="button" className={r.arrived ? "" : "primary"} onClick={() => toggleArrived(r)}>
                   {r.arrived ? tr(ADMIN.unmark) : tr(ADMIN.markArrived)}
