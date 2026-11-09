@@ -82,19 +82,12 @@ html:has(.xm), body:has(.xm) { background: var(--night); }
 .xm-field { display: block; }
 .xm-label { display: block; margin: 0 0 6px 2px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mute); }
 .xm-label i { font-style: normal; font-weight: 500; text-transform: none; letter-spacing: 0; opacity: 0.85; }
-.xm-label-flat { margin: 0; line-height: 1.35; }
 
 .xm-input { width: 100%; height: 54px; border-radius: 14px; border: 2px solid var(--line); background: #fff; padding: 0 16px; font-size: 18px; font-weight: 600; color: var(--ink); outline: none; }
 .xm-input::placeholder { color: #bbb0a3; font-weight: 500; }
 .xm-input:focus { border-color: var(--pine-2); box-shadow: 0 0 0 4px rgba(29, 90, 65, 0.16); }
 .xm-input.bad { border-color: var(--bad); }
 
-.xm-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.xm-stepper { display: flex; align-items: center; gap: 4px; flex: none; background: #fff; border: 2px solid var(--line); border-radius: 16px; padding: 4px; }
-.xm-stepper button { width: 44px; height: 44px; border-radius: 12px; background: var(--pine); color: #fff; font-size: 24px; font-weight: 700; line-height: 1; }
-.xm-stepper button:disabled { opacity: 0.3; }
-.xm-stepper button:active:not(:disabled) { background: var(--pine-2); transform: scale(0.96); }
-.xm-stepper output { min-width: 40px; text-align: center; font-size: 22px; font-weight: 800; }
 
 /* Secret Santa: a card that is also a switch */
 .xm-santa { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 12px 14px; border-radius: 18px; border: 2px dashed #d8c590; background: #fff7df; transition: background 0.2s, border-color 0.2s, transform 0.1s; }
@@ -118,7 +111,7 @@ html:has(.xm), body:has(.xm) { background: var(--night); }
 .xm-go:disabled { opacity: 0.6; }
 .xm-ghost { width: 100%; min-height: 48px; border-radius: 16px; color: var(--pine); font-size: 15px; font-weight: 700; }
 .xm-ghost:active { background: rgba(20, 65, 47, 0.08); }
-.xm-input:focus-visible, .xm-go:focus-visible, .xm-ghost:focus-visible, .xm-santa:focus-visible, .xm-stepper button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.xm-input:focus-visible, .xm-go:focus-visible, .xm-ghost:focus-visible, .xm-santa:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 
 /* Secret Santa questions: one question per screen, big tappable chips */
 .xm-dots { display: flex; justify-content: center; gap: 8px; margin: 0 0 2px; }
@@ -170,7 +163,7 @@ html:has(.xm), body:has(.xm) { background: var(--night); }
 .ad-stat.big { grid-column: 1 / -1; background: var(--red); border-color: transparent; }
 .ad-stat.big b { font-size: 52px; }
 .ad-stat.big span { color: #ffe9c4; }
-@media (min-width: 600px) { .ad-stats { grid-template-columns: 2fr 1fr 1fr 1fr; } .ad-stat.big { grid-column: auto; } }
+@media (min-width: 600px) { .ad-stats { grid-template-columns: 2fr 1fr 1fr; } .ad-stat.big { grid-column: auto; } }
 .ad-filters { display: flex; flex-wrap: wrap; gap: 6px; }
 .ad-filters button { padding: 8px 14px; border-radius: 999px; background: #efe6d3; font-size: 13px; font-weight: 700; color: var(--ink); }
 .ad-filters button.on { background: var(--pine); color: #fff; }
@@ -189,7 +182,6 @@ html:has(.xm), body:has(.xm) { background: var(--night); }
 .ad-main { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .ad-main b { font-size: 16px; }
 .ad-main a { color: var(--pine); font-weight: 600; text-decoration: none; margin-left: auto; }
-.ad-n { min-width: 24px; text-align: center; padding: 1px 8px; border-radius: 999px; background: var(--pine); color: #fff; font-size: 12px; font-weight: 800; }
 .ad-sub { font-size: 12px; color: var(--mute); }
 .ad-santa { margin-top: 4px; padding: 10px 12px; border-radius: 14px; background: #fff7df; border: 1px dashed #d8c590; display: flex; flex-direction: column; gap: 8px; }
 .ad-likes { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
@@ -209,4 +201,3 @@ html:has(.xm), body:has(.xm) { background: var(--night); }
 .ad-danger { background: rgba(255, 250, 240, 0.92); }
 .ad-sheet { position: fixed; inset: 0; z-index: 60; background: rgba(5, 21, 16, 0.7); display: flex; align-items: center; justify-content: center; padding: 16px; }
 .ad-modal { width: 100%; max-width: 420px; background: var(--snow); color: var(--ink); border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 12px; max-height: 92dvh; overflow: auto; }
-.ad-modal .xm-stepper { align-self: flex-start; }

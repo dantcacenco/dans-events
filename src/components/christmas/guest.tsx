@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { LANGS, LANG_LABEL, PARTY_MAX, PARTY_MIN, isLang, titleFor, type EventDetails, type Lang } from "@/lib/christmas/config";
+import { LANGS, LANG_LABEL, isLang, titleFor, type EventDetails, type Lang } from "@/lib/christmas/config";
 import { UI, type L } from "@/lib/christmas/i18n";
-import { cleanInput, clampParty, displayPhone, formatPhone, formatWhen, normalizePhone, type XmasInput } from "@/lib/christmas/logic";
+import { cleanInput, displayPhone, formatPhone, formatWhen, normalizePhone, type XmasInput } from "@/lib/christmas/logic";
 import { enqueue, flush, newId, readQueue, send } from "@/lib/christmas/queue";
 import { GIFT_MAX, GIFT_MIN, GIFT_PRICE_MAX, GIFT_TEXT_MAX, QUESTIONS, parsePrice } from "@/lib/christmas/santa";
 import { Lights, Snow } from "./decor";
@@ -55,7 +55,6 @@ export default function Guest({ details }: { details: EventDetails }) {
   const [screen, setScreen] = useState<Screen>("form");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [party, setParty] = useState(1);
   const [santa, setSanta] = useState(false);
   const [likes, setLikes] = useState<string[]>([]);
   const [qi, setQi] = useState(0);
@@ -63,7 +62,7 @@ export default function Guest({ details }: { details: EventDetails }) {
   const [formId, setFormId] = useState(() => newId());
   const [busy, setBusy] = useState(false);
   const [tried, setTried] = useState(false);
-  const [existing, setExisting] = useState<{ first: string; party: number; santa: boolean } | null>(null);
+  const [existing, setExisting] = useState<{ first: string; santa: boolean } | null>(null);
   const [updating, setUpdating] = useState(false);
   const [queuedNote, setQueuedNote] = useState(false);
   const [online, setOnline] = useState(true);
@@ -115,7 +114,6 @@ export default function Guest({ details }: { details: EventDetails }) {
     setScreen("form");
     setName("");
     setPhone("");
-    setParty(1);
     setSanta(false);
     setLikes([]);
     setQi(0);
@@ -160,7 +158,7 @@ export default function Guest({ details }: { details: EventDetails }) {
     setFailed(false);
     if (!canSubmit || busy) return;
     if (santa && !giftsOk) return;
-    const parsed = cleanInput({ name, party, phone, santa, likes, gifts: rows.map((r) => ({ text: r.text, price: parsePrice(r.price) })) });
+    const parsed = cleanInput({ name, phone, santa, likes, gifts: rows.map((r) => ({ text: r.text, price: parsePrice(r.price) })) });
     if (!parsed.ok) return;
     setBusy(true);
     const item = { ...parsed.value, id: formId, update: updating };
@@ -220,21 +218,6 @@ export default function Guest({ details }: { details: EventDetails }) {
             <span className="xm-label">{tr(UI.phone)}</span>
             <input className={`xm-input ${tried && !digitsOk ? "bad" : ""}`} value={phone} onChange={(e) => setPhone(formatPhone(e.target.value))} placeholder={tr(UI.phonePh)} inputMode="tel" type="tel" autoComplete="tel-national" enterKeyHint="done" maxLength={16} />
           </label>
-
-          <div className="xm-row">
-            <span className="xm-label xm-label-flat">
-              {tr(UI.party)} <i>{tr(UI.partyHint)}</i>
-            </span>
-            <div className="xm-stepper">
-              <button type="button" onClick={() => setParty((p) => clampParty(p - 1))} disabled={party <= PARTY_MIN} aria-label="−">
-                −
-              </button>
-              <output aria-live="polite">{party}</output>
-              <button type="button" onClick={() => setParty((p) => clampParty(p + 1))} disabled={party >= PARTY_MAX} aria-label="+">
-                +
-              </button>
-            </div>
-          </div>
 
           <button type="button" className={`xm-santa ${santa ? "on" : ""}`} aria-pressed={santa} onClick={() => setSanta((s) => !s)}>
             <span className="xm-santa-ico" aria-hidden>
@@ -329,7 +312,7 @@ export default function Guest({ details }: { details: EventDetails }) {
             <li>
               <b>{summary.name}</b>
               <span>
-                {summary.party} {tr(UI.people)} · {displayPhone(summary.phone)}
+                {displayPhone(summary.phone)}
               </span>
             </li>
             <li>
@@ -363,7 +346,7 @@ export default function Guest({ details }: { details: EventDetails }) {
         <section className="xm-card xm-center" key="already">
           <h2 className="xm-big">{tr(UI.already)}</h2>
           <p className="xm-sub">
-            {existing.first} · {existing.party} {tr(UI.people)}
+            {existing.first}
             {existing.santa ? " · 🎅" : ""}
           </p>
           <p className="xm-sub">{tr(UI.alreadySub)}</p>

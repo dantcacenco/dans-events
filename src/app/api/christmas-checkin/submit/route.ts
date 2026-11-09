@@ -27,8 +27,8 @@ export async function POST(req: Request) {
   try {
     const r = await submit(id, parsed.value, body.update === true);
     if (r.status === "duplicate") {
-      // Only what the "already registered" screen needs: first name, party size, Santa choice. Never the phone.
-      return NextResponse.json({ ok: true, status: "duplicate", existing: { first: r.existing.name.split(" ")[0], party: r.existing.party, santa: r.existing.santa } }, { headers: noStore });
+      // Only what the "already registered" screen needs: first name and Santa choice. Never the phone.
+      return NextResponse.json({ ok: true, status: "duplicate", existing: { first: r.existing.name.split(" ")[0], santa: r.existing.santa } }, { headers: noStore });
     }
     return NextResponse.json({ ok: true, status: r.status }, { headers: noStore });
   } catch {

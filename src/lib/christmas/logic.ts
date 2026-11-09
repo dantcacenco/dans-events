@@ -1,16 +1,15 @@
-import { EVENT_ID, PARTY_MAX, PARTY_MIN } from "./config";
+import { EVENT_ID } from "./config";
 import { cleanGifts, cleanLikes, optionFor, type Gift, type SantaError } from "./santa";
-// Phone and party rules are the same as the Youth Camp check-in: reuse them, do not copy them.
-import { clampParty, displayPhone, formatPhone, normalizePhone, validParty } from "../checkin/logic";
+// Phone rules are the same as the Youth Camp check-in: reuse them, do not copy them.
+import { displayPhone, formatPhone, normalizePhone } from "../checkin/logic";
 
-export { clampParty, displayPhone, formatPhone, normalizePhone, validParty, PARTY_MAX, PARTY_MIN };
+export { displayPhone, formatPhone, normalizePhone };
 
 export const phonesForTexting = (records: { phone: string }[]) => records.map((r) => `+1${r.phone}`).join(", ");
 
 export type XmasRecord = {
   id: string; // made on the guest's phone, so a retry never creates a second record
   name: string;
-  party: number; // people in the group, including the guest
   phone: string; // 10 digits, no formatting
   santa: boolean; // wants to take part in Secret Santa (the guest named above)
   likes: string[]; // Secret Santa only: ids of what they like (see santa.ts)
@@ -20,12 +19,17 @@ export type XmasRecord = {
   updatedAt: number;
 };
 
-export type XmasInput = Pick<XmasRecord, "name" | "party" | "phone" | "santa" | "likes" | "gifts">;
+export type XmasInput = Pick<XmasRecord, "name" | "phone" | "santa" | "likes" | "gifts">;
 
-export type ValidationError = "name" | "party" | "phone" | SantaError;
+export type ValidationError = "name" | "phone" | SantaError;
 
 // Records saved before the Secret Santa questions existed have no likes or gifts: give them empty lists.
-export const withSantaDefaults = (r: Omit<XmasRecord, "likes" | "gifts"> & Partial<Pick<XmasRecord, "likes" | "gifts">>): XmasRecord => ({ ...r, likes: Array.isArray(r.likes) ? r.likes : [], gifts: Array.isArray(r.gifts) ? r.gifts : [] });
+// Records saved when the form still asked "how many people" carry a `party` number: drop it, it is no longer used anywhere.
+export const withSantaDefaults = (r: Omit<XmasRecord, "likes" | "gifts"> & Partial<Pick<XmasRecord, "likes" | "gifts">> & { party?: unknown }): XmasRecord => {
+  const rest: Record<string, unknown> = { ...r };
+  delete rest.party;
+  return { ...(rest as Omit<XmasRecord, "likes" | "gifts">), likes: Array.isArray(r.likes) ? r.likes : [], gifts: Array.isArray(r.gifts) ? r.gifts : [] };
+};
 
 // strictSanta (guests): someone in Secret Santa must give 3 to 5 gift ideas, $20 max each.
 // Lenient (admin edit, undo): keep whatever is valid, so the admin can fix a name without retyping gifts.
@@ -33,14 +37,13 @@ export function cleanInput(raw: unknown, strictSanta = true): { ok: true; value:
   const b = (raw ?? {}) as Record<string, unknown>;
   const name = typeof b.name === "string" ? b.name.replace(/\s+/g, " ").trim().slice(0, 80) : "";
   if (name.length < 2) return { ok: false, error: "name" };
-  if (!validParty(b.party)) return { ok: false, error: "party" };
   const phone = normalizePhone(b.phone);
   if (!phone) return { ok: false, error: "phone" };
   const santa = b.santa === true;
-  if (!santa) return { ok: true, value: { name, party: b.party, phone, santa, likes: [], gifts: [] } };
+  if (!santa) return { ok: true, value: { name, phone, santa, likes: [], gifts: [] } };
   const gifts = cleanGifts(b.gifts, strictSanta);
   if (!gifts.ok) return gifts;
-  return { ok: true, value: { name, party: b.party, phone, santa, likes: cleanLikes(b.likes), gifts: gifts.value } };
+  return { ok: true, value: { name, phone, santa, likes: cleanLikes(b.likes), gifts: gifts.value } };
 }
 
 // One record per phone for the event.
@@ -55,22 +58,11 @@ export function detectDuplicate(records: XmasRecord[], phone: string, id: string
   return { duplicate: true, existing: hit, sameSubmission: hit.id === id };
 }
 
-export type Stats = { parties: number; people: number; santa: number; arrivedPeople: number; arrivedParties: number };
+// One registration = one person.
+export type Stats = { registered: number; santa: number; arrived: number };
 
 export function headcounts(records: XmasRecord[]): Stats {
-  let people = 0;
-  let santa = 0;
-  let arrivedPeople = 0;
-  let arrivedParties = 0;
-  for (const r of records) {
-    people += r.party;
-    if (r.santa) santa += 1;
-    if (r.arrived) {
-      arrivedPeople += r.party;
-      arrivedParties += 1;
-    }
-  }
-  return { parties: records.length, people, santa, arrivedPeople, arrivedParties };
+  return { registered: records.length, santa: records.filter((r) => r.santa).length, arrived: records.filter((r) => r.arrived).length };
 }
 
 export type Filter = "all" | "santa" | "arrived" | "waiting";
@@ -97,8 +89,8 @@ const priceText = (g: Gift) => (g.price === null ? g.text : `${g.text} ($${g.pri
 const likeLabels = (ids: string[]) => ids.map((id) => optionFor(id)?.label.en ?? id).join("; ");
 
 export function recordsToCsv(records: XmasRecord[]): string {
-  const head = ["Name", "People", "Phone", "Secret Santa", "Likes", "Gift 1", "Gift 2", "Gift 3", "Gift 4", "Gift 5", "Arrived", "Registered", "Updated"];
-  const rows = records.map((r) => [r.name, r.party, displayPhone(r.phone), r.santa ? "yes" : "", likeLabels(r.likes), ...Array.from({ length: 5 }, (_, i) => (r.gifts[i] ? priceText(r.gifts[i]) : "")), r.arrived ? "yes" : "", new Date(r.at).toISOString(), new Date(r.updatedAt).toISOString()]);
+  const head = ["Name", "Phone", "Secret Santa", "Likes", "Gift 1", "Gift 2", "Gift 3", "Gift 4", "Gift 5", "Arrived", "Registered", "Updated"];
+  const rows = records.map((r) => [r.name, displayPhone(r.phone), r.santa ? "yes" : "", likeLabels(r.likes), ...Array.from({ length: 5 }, (_, i) => (r.gifts[i] ? priceText(r.gifts[i]) : "")), r.arrived ? "yes" : "", new Date(r.at).toISOString(), new Date(r.updatedAt).toISOString()]);
   return "\uFEFF" + [head, ...rows].map((row) => row.map(csvCell).join(",")).join("\r\n") + "\r\n";
 }
 

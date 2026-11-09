@@ -57,7 +57,7 @@ export async function submit(id: string, input: XmasInput, update: boolean, now 
 export async function adminEdit(id: string, raw: unknown, now = Date.now()): Promise<{ ok: true; record: XmasRecord } | { ok: false; error: string }> {
   const cur = await getRecord(id);
   if (!cur) return { ok: false, error: "missing" };
-  // The admin screen only edits name, phone, party and the Santa switch: keep the likes and gift ideas the guest gave.
+  // The admin screen only edits name, phone and the Santa switch: keep the likes and gift ideas the guest gave.
   const body = (raw ?? {}) as Record<string, unknown>;
   const parsed = cleanInput({ ...body, likes: body.likes ?? cur.likes, gifts: body.gifts ?? cur.gifts }, false);
   if (!parsed.ok) return { ok: false, error: parsed.error };

@@ -8,9 +8,6 @@ export type Lang = (typeof LANGS)[number];
 export const isLang = (v: unknown): v is Lang => typeof v === "string" && (LANGS as readonly string[]).includes(v);
 export const LANG_LABEL: Record<Lang, string> = { en: "EN", ru: "RU", uk: "UK" };
 
-export const PARTY_MIN = 1;
-export const PARTY_MAX = 20;
-
 // What the admin can edit. Empty title = the translated default below.
 export type EventDetails = {
   title: Record<Lang, string>;

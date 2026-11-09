@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { PARTY_MAX, PARTY_MIN, EMPTY_DETAILS, LANGS, LANG_LABEL, type EventDetails, type Lang } from "@/lib/christmas/config";
+import { EMPTY_DETAILS, LANGS, LANG_LABEL, type EventDetails, type Lang } from "@/lib/christmas/config";
 import { ADMIN, type L } from "@/lib/christmas/i18n";
-import { clampParty, displayPhone, formatPhone, phonesForTexting, santaNames, searchRecords, type Filter, type Stats, type XmasRecord } from "@/lib/christmas/logic";
+import { displayPhone, formatPhone, phonesForTexting, santaNames, searchRecords, type Filter, type Stats, type XmasRecord } from "@/lib/christmas/logic";
 import { optionFor } from "@/lib/christmas/santa";
 import { LangSwitch, detectLang, rememberLang } from "./guest";
 
@@ -159,10 +159,9 @@ function Dashboard({ tr, lang, onOut }: { tr: Tr; lang: Lang; onOut: () => void 
   return (
     <>
       <section className="ad-stats">
-        <Stat label={tr(ADMIN.people)} value={stats?.people ?? 0} big />
-        <Stat label={tr(ADMIN.parties)} value={stats?.parties ?? 0} />
+        <Stat label={tr(ADMIN.registered)} value={stats?.registered ?? 0} big />
         <Stat label={`🎅 ${tr(ADMIN.santa)}`} value={stats?.santa ?? 0} />
-        <Stat label={tr(ADMIN.arrived)} value={stats?.arrivedPeople ?? 0} />
+        <Stat label={tr(ADMIN.arrived)} value={stats?.arrived ?? 0} />
       </section>
 
       <section className="ad-box">
@@ -214,7 +213,6 @@ function Dashboard({ tr, lang, onOut }: { tr: Tr; lang: Lang; onOut: () => void 
                   {r.name}
                   {r.santa ? " 🎅" : ""}
                 </b>
-                <span className="ad-n">{r.party}</span>
                 <a href={`tel:+1${r.phone}`}>{displayPhone(r.phone)}</a>
               </div>
               <div className="ad-sub">
@@ -383,15 +381,6 @@ function Editor({ tr, rec, onSave, onClose }: { tr: Tr; rec: XmasRecord; onSave:
           <span className="xm-label">{tr(ADMIN.phoneLbl)}</span>
           <input className="xm-input" inputMode="tel" value={displayPhone(r.phone)} onChange={(e) => setR({ ...r, phone: formatPhone(e.target.value).replace(/\D/g, "") })} />
         </label>
-        <div className="xm-stepper">
-          <button type="button" onClick={() => setR({ ...r, party: clampParty(r.party - 1) })} disabled={r.party <= PARTY_MIN}>
-            −
-          </button>
-          <output>{r.party}</output>
-          <button type="button" onClick={() => setR({ ...r, party: clampParty(r.party + 1) })} disabled={r.party >= PARTY_MAX}>
-            +
-          </button>
-        </div>
         <button type="button" className={`xm-santa ${r.santa ? "on" : ""}`} aria-pressed={r.santa} onClick={() => setR({ ...r, santa: !r.santa })}>
           <span className="xm-santa-ico" aria-hidden>
             🎅

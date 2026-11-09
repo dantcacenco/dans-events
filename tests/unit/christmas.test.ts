@@ -7,13 +7,13 @@ import { QUESTIONS, optionFor, parsePrice } from "@/lib/christmas/santa";
 import { cleanInput, detectDuplicate, formatWhen, headcounts, recordsToCsv, santaNames, searchRecords, type XmasRecord } from "@/lib/christmas/logic";
 import { ADMIN, UI } from "@/lib/christmas/i18n";
 
-const rec = (over: Partial<XmasRecord>): XmasRecord => ({ id: "a", name: "Ana", party: 1, phone: "8285550101", santa: false, likes: [], gifts: [], arrived: false, at: 1, updatedAt: 1, ...over });
+const rec = (over: Partial<XmasRecord>): XmasRecord => ({ id: "a", name: "Ana", phone: "8285550101", santa: false, likes: [], gifts: [], arrived: false, at: 1, updatedAt: 1, ...over });
 const gifts3 = [{ text: "Warm socks", price: 12 }, { text: "Hot chocolate", price: null }, { text: "A good book", price: 20 }];
 
 describe("cleanInput", () => {
-  const base = { name: "  Ana   Petrova ", party: 3, phone: "828-555-0123", santa: true, likes: ["music", "bogus", "music", "tea"], gifts: [{ text: " Warm  socks ", price: "12,50" }, { text: "Hot chocolate", price: "" }, { text: "Book", price: 20 }, { text: "", price: "7" }] };
+  const base = { name: "  Ana   Petrova ", phone: "828-555-0123", santa: true, likes: ["music", "bogus", "music", "tea"], gifts: [{ text: " Warm  socks ", price: "12,50" }, { text: "Hot chocolate", price: "" }, { text: "Book", price: 20 }, { text: "", price: "7" }] };
   it("normalises name and phone, keeps known likes once and clean gift ideas", () => {
-    expect(cleanInput(base)).toEqual({ ok: true, value: { name: "Ana Petrova", party: 3, phone: "8285550123", santa: true, likes: ["music", "tea"], gifts: [{ text: "Warm socks", price: 12.5 }, { text: "Hot chocolate", price: null }, { text: "Book", price: 20 }] } });
+    expect(cleanInput(base)).toEqual({ ok: true, value: { name: "Ana Petrova", phone: "8285550123", santa: true, likes: ["music", "tea"], gifts: [{ text: "Warm socks", price: 12.5 }, { text: "Hot chocolate", price: null }, { text: "Book", price: 20 }] } });
   });
   it("Santa is off unless it is exactly true, and then likes and gifts are dropped", () => {
     for (const santa of [undefined, "true", 1, null]) {
@@ -43,10 +43,14 @@ describe("cleanInput", () => {
     expect(r).toMatchObject({ ok: true, value: { gifts: [{ text: "Phone", price: null }] } });
     expect(cleanInput({ ...base, gifts: undefined }, false)).toMatchObject({ ok: true, value: { gifts: [] } });
   });
-  it("rejects a short name, a bad party and a bad phone", () => {
+  it("has no party size: an old client that still sends one is ignored, nothing is stored", () => {
+    for (const party of [undefined, 0, 3, 21, "x"]) {
+      const r = cleanInput({ ...base, party });
+      expect(r.ok && Object.keys(r.value)).toEqual(["name", "phone", "santa", "likes", "gifts"]);
+    }
+  });
+  it("rejects a short name and a bad phone", () => {
     expect(cleanInput({ ...base, name: "A" })).toEqual({ ok: false, error: "name" });
-    expect(cleanInput({ ...base, party: 0 })).toEqual({ ok: false, error: "party" });
-    expect(cleanInput({ ...base, party: 21 })).toEqual({ ok: false, error: "party" });
     expect(cleanInput({ ...base, phone: "555" })).toEqual({ ok: false, error: "phone" });
     expect(cleanInput(null)).toEqual({ ok: false, error: "name" });
   });
@@ -87,10 +91,10 @@ describe("duplicates", () => {
 });
 
 describe("counts, filters, export", () => {
-  const rows = [rec({ id: "1", name: "Ana", party: 2, santa: true, arrived: true, likes: ["music", "tea"], gifts: gifts3 }), rec({ id: "2", name: "Boris", party: 1, phone: "8285550202" }), rec({ id: "3", name: "Vera", party: 3, phone: "8285550303", santa: true })];
-  it("counts people, groups, Santa opt-ins and arrivals", () => {
-    expect(headcounts(rows)).toEqual({ parties: 3, people: 6, santa: 2, arrivedPeople: 2, arrivedParties: 1 });
-    expect(headcounts([])).toEqual({ parties: 0, people: 0, santa: 0, arrivedPeople: 0, arrivedParties: 0 });
+  const rows = [rec({ id: "1", name: "Ana", santa: true, arrived: true, likes: ["music", "tea"], gifts: gifts3 }), rec({ id: "2", name: "Boris", phone: "8285550202" }), rec({ id: "3", name: "Vera", phone: "8285550303", santa: true })];
+  it("counts registrations (one person each), Santa opt-ins and arrivals", () => {
+    expect(headcounts(rows)).toEqual({ registered: 3, santa: 2, arrived: 1 });
+    expect(headcounts([])).toEqual({ registered: 0, santa: 0, arrived: 0 });
   });
   it("filters by Santa, arrived and waiting, and searches name or phone", () => {
     expect(searchRecords(rows, "", "santa").map((r) => r.id)).toEqual(["1", "3"]);
@@ -108,6 +112,7 @@ describe("counts, filters, export", () => {
   it("CSV has a header, Santa column and guards spreadsheet formulas", () => {
     const csv = recordsToCsv([rec({ name: "=HYPERLINK(1)", santa: true, likes: ["music", "tea"], gifts: gifts3 })]);
     expect(csv.split("\r\n")[0]).toContain("Secret Santa");
+    expect(csv.split("\r\n")[0]).not.toContain("People");
     expect(csv).toContain("'=HYPERLINK(1)");
     expect(csv).toContain(",yes,");
     expect(csv.split("\r\n")[0]).toContain("Likes");
@@ -199,30 +204,30 @@ describe("store (local file KV, isolated in a temp folder)", () => {
   afterAll(() => {
     process.chdir(cwd);
   });
-  const input = { name: "Ana Petrova", party: 2, phone: "8285550123", santa: true, likes: ["music"], gifts: gifts3 };
+  const input = { name: "Ana Petrova", phone: "8285550123", santa: true, likes: ["music"], gifts: gifts3 };
 
   it("creates, recognises a retry and a duplicate, and updates on request", async () => {
     const a = await store.submit("id-aaaaaaaa", input, false, 100);
     expect(a.status).toBe("created");
     expect((await store.submit("id-aaaaaaaa", input, false, 200)).status).toBe("retry");
     expect((await store.submit("id-bbbbbbbb", input, false, 300)).status).toBe("duplicate");
-    const u = await store.submit("id-bbbbbbbb", { ...input, party: 4, santa: false, likes: [], gifts: [] }, true, 400);
+    const u = await store.submit("id-bbbbbbbb", { ...input, santa: false, likes: [], gifts: [] }, true, 400);
     expect(u.status).toBe("updated");
     const all = await store.listRecords();
     expect(all).toHaveLength(1);
-    expect(all[0]).toMatchObject({ id: "id-aaaaaaaa", party: 4, santa: false, at: 100, updatedAt: 400, arrived: false });
+    expect(all[0]).toMatchObject({ id: "id-aaaaaaaa", santa: false, at: 100, updatedAt: 400, arrived: false });
   });
   it("marks arrived, edits (phone clash refused), deletes and restores", async () => {
-    await store.submit("id-cccccccc", { name: "Boris", party: 1, phone: "8285550202", santa: true, likes: ["tea"], gifts: gifts3 }, false, 500);
+    await store.submit("id-cccccccc", { name: "Boris", phone: "8285550202", santa: true, likes: ["tea"], gifts: gifts3 }, false, 500);
     expect((await store.setArrived("id-cccccccc", true))?.arrived).toBe(true);
-    expect(await store.adminEdit("id-cccccccc", { name: "Boris K", party: 1, phone: "8285550123", santa: true })).toEqual({ ok: false, error: "phone-taken" });
+    expect(await store.adminEdit("id-cccccccc", { name: "Boris K", phone: "8285550123", santa: true })).toEqual({ ok: false, error: "phone-taken" });
     const ed = await store.adminEdit("id-cccccccc", { name: "Boris K", party: 2, phone: "8285550909", santa: false });
     expect(ed.ok && ed.record).toMatchObject({ name: "Boris K", phone: "8285550909", arrived: true, santa: false, likes: [], gifts: [] });
     // editing a Santa guest without sending gifts keeps the ideas they gave
-    const keep = await store.adminEdit("id-cccccccc", { name: "Boris K", party: 2, phone: "8285550909", santa: true });
+    const keep = await store.adminEdit("id-cccccccc", { name: "Boris K", phone: "8285550909", santa: true });
     expect(keep.ok && keep.record).toMatchObject({ santa: true });
-    await store.submit("id-ffffffff", { name: "Gala", party: 1, phone: "8285550777", santa: true, likes: ["tea"], gifts: gifts3 }, false, 600);
-    const kept = await store.adminEdit("id-ffffffff", { name: "Gala P", party: 1, phone: "8285550777", santa: true });
+    await store.submit("id-ffffffff", { name: "Gala", phone: "8285550777", santa: true, likes: ["tea"], gifts: gifts3 }, false, 600);
+    const kept = await store.adminEdit("id-ffffffff", { name: "Gala P", phone: "8285550777", santa: true });
     expect(kept.ok && kept.record).toMatchObject({ name: "Gala P", likes: ["tea"], gifts: gifts3 });
     await store.deleteRecord("id-ffffffff");
     const before = (await store.listRecords()).find((r) => r.id === "id-cccccccc")!;
@@ -231,7 +236,16 @@ describe("store (local file KV, isolated in a temp folder)", () => {
     expect(await store.restoreRecord(before)).toBe(true);
     expect((await store.listRecords()).map((r) => r.id).sort()).toEqual(["id-aaaaaaaa", "id-cccccccc"]);
     // the phone index came back too: the same phone is a duplicate again
-    expect((await store.submit("id-dddddddd", { name: "Boris K", party: 1, phone: "8285550909", santa: false, likes: [], gifts: [] }, false)).status).toBe("duplicate");
+    expect((await store.submit("id-dddddddd", { name: "Boris K", phone: "8285550909", santa: false, likes: [], gifts: [] }, false)).status).toBe("duplicate");
+  });
+  it("an old record that still has a party size lists fine and the number is dropped", async () => {
+    const { kvSet } = await import("@/lib/teo/kv");
+    await kvSet("xmas:xmas-2026:rec:id-legacy01", { id: "id-legacy01", name: "Old Guest", party: 4, phone: "8285550606", santa: false, arrived: false, at: 1, updatedAt: 1 });
+    const old = (await store.listRecords()).find((r) => r.id === "id-legacy01")!;
+    expect(old.name).toBe("Old Guest");
+    expect("party" in old).toBe(false);
+    expect(headcounts(await store.listRecords()).registered).toBe(3);
+    await store.deleteRecord("id-legacy01");
   });
   it("event details persist and survive a wipe; wipe removes every registration", async () => {
     expect(await store.getDetails()).toEqual(EMPTY_DETAILS);

@@ -26,7 +26,7 @@ export function dequeue(id: string) {
 }
 
 export type SendOutcome = "ok" | "duplicate" | "retry" | "drop";
-export type SendResult = { outcome: SendOutcome; existing?: { first: string; party: number; santa: boolean }; status?: string };
+export type SendResult = { outcome: SendOutcome; existing?: { first: string; santa: boolean }; status?: string };
 
 export async function send(item: Omit<QueueItem, "queuedAt">, timeoutMs = 8000): Promise<SendResult> {
   const ctl = new AbortController();
