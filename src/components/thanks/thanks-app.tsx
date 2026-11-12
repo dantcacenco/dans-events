@@ -9,6 +9,7 @@ import {
   messageForVenue,
   prettyPhone,
   shortDate,
+  whenDate,
   yearsOf,
   type Couple,
   type Person,
@@ -220,7 +221,7 @@ export function ThanksApp() {
           <ul className="th-list">
             {key === "couples" &&
               shown.couples.map((c) => (
-                <Row key={c.id} id={c.id} checked={!!state[c.id]} flash={flash === c.id} onToggle={toggle} title={coupleLabel(c.couple)} sub={[shortDate(c.date), c.venue, c.town].filter(Boolean).join(" · ")}>
+                <Row key={c.id} id={c.id} checked={!!state[c.id]} flash={flash === c.id} onToggle={toggle} title={coupleLabel(c.couple)} sub={[whenDate(c.date), c.venue, c.town].filter(Boolean).join(" · ")}>
                   {c.reviewed && <p className="th-badge">★ {c.reviewed}</p>}
                   <PersonLine label="Bride" p={c.bride} msg={() => messageForCouple(c, templates, review)} onCopy={copyIt} />
                   <PersonLine label="Groom" p={c.groom} msg={() => messageForCouple(c, templates, review)} onCopy={copyIt} />
@@ -235,7 +236,7 @@ export function ThanksApp() {
             {key === "vendors" &&
               shown.vendors.map((v) => (
                 <Row key={v.id} id={v.id} checked={!!state[v.id]} flash={flash === v.id} onToggle={toggle} title={v.name ?? v.company ?? "Unknown"} sub={[v.kind, v.company && v.company !== v.name ? v.company : null].filter(Boolean).join(" · ")}>
-                  <p className="th-tiny">{v.weddings.map((w) => `${coupleLabel(w.couple)}, ${shortDate(w.date)}`).join(" · ")}</p>
+                  <p className="th-tiny">{[...v.weddings].sort((a, b) => b.date.localeCompare(a.date)).map((w) => `${coupleLabel(w.couple)}, ${whenDate(w.date)}`).join(" · ")}</p>
                   <Contact phone={v.phone} email={v.email} instagram={v.instagram} website={v.website} msg={() => messageForVendor(v, templates, review, venueOf)} onCopy={copyIt} />
                   <Actions onMessage={() => copyIt(messageForVendor(v, templates, review, venueOf), "Message")} />
                   <More notes={[...(v.role ? [v.role] : []), ...(v.notes ?? []), ...(v.src?.length ? [`Found in: ${v.src.join(", ")}`] : [])]} />
@@ -244,7 +245,7 @@ export function ThanksApp() {
             {key === "venues" &&
               shown.venues.map((v) => (
                 <Row key={v.id} id={v.id} checked={!!state[v.id]} flash={flash === v.id} onToggle={toggle} title={v.name} sub={[v.town, `${v.weddings.length} wedding${v.weddings.length > 1 ? "s" : ""}`].filter(Boolean).join(" · ")}>
-                  <p className="th-tiny">{v.weddings.map((w) => `${coupleLabel(w.couple)}, ${shortDate(w.date)}`).join(" · ")}</p>
+                  <p className="th-tiny">{[...v.weddings].sort((a, b) => b.date.localeCompare(a.date)).map((w) => `${coupleLabel(w.couple)}, ${whenDate(w.date)}`).join(" · ")}</p>
                   <Contact phone={v.phone} email={v.email} instagram={v.instagram} website={v.website} facebook={v.facebook} unverified={v.unverified} msg={() => messageForVenue(v, templates, review)} onCopy={copyIt} />
                   <Actions onMessage={() => copyIt(messageForVenue(v, templates, review), "Message")} />
                   <More notes={[...(v.address ? [v.address] : []), ...(v.notes ? [v.notes] : []), ...Object.entries(v.sources ?? {}).map(([k, u]) => `${k}: ${u}`)]} />

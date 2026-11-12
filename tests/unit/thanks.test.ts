@@ -12,6 +12,7 @@ import {
   pickVariant,
   prettyPhone,
   shortDate,
+  whenDate,
   yearsOf,
   type Couple,
   type ThanksData,
@@ -27,6 +28,11 @@ const vendor: Vendor = { id: "v-kate-2605", name: "Kate", company: "Example Wedd
 const venue: Venue = { id: "ve-dream-forest-venue", year: 2026, name: "Dream Forest Venue", town: "Pacolet, SC", weddings: [{ date: "2026-04-12", couple: "Couple A" }, { date: "2026-07-24", couple: "Couple B" }] };
 
 describe("thank-you messages", () => {
+  it("adds the year to older dates only", () => {
+    expect(whenDate("2026-05-21", 2026)).toBe("May 21");
+    expect(whenDate("2023-10-28", 2026)).toBe("Oct 28, 2023");
+  });
+
   it("formats dates and phones", () => {
     expect(shortDate("2026-05-21")).toBe("May 21");
     expect(prettyPhone("+18645551234")).toBe("(864) 555-1234");
@@ -51,7 +57,7 @@ describe("thank-you messages", () => {
     expect(v).toContain("Hi Kate!");
     expect(v).toContain("Ben & Anna's wedding on May 21");
     const ve = messageForVenue(venue, DEFAULT_TEMPLATES, GOOGLE_REVIEW_URL, 0);
-    expect(ve).toContain("Dream Forest Venue this year (Apr 12, Jul 24)");
+    expect(ve).toContain(`Dream Forest Venue (Apr 12, Jul 24${new Date().getFullYear() === 2026 ? "" : ", 2026"})`);
   });
 
   it("drops the phrase when a piece is missing", () => {

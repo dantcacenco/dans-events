@@ -82,7 +82,7 @@ export const DEFAULT_TEMPLATES: Templates = {
     "Hi {first}! It was a pleasure sharing {couple}'s day with you at {venue}.\nIf you have a minute, a short review would mean a lot: {review}",
   ],
   venue: [
-    "Hi! Thank you for having me at {venue} this year ({weddings}). Your team made every event easy.\nA quick Google review would mean a lot: {review}\nHappy to leave one for you too!",
+    "Hi! Thank you for having me at {venue} ({weddings}). Your team made every event easy.\nA quick Google review would mean a lot: {review}\nHappy to leave one for you too!",
     "Hello {venue} team! Thanks for a great season. I loved working {couple}'s wedding with you.\nIf you have a minute, a short review would help me a lot: {review}",
   ],
 };
@@ -93,6 +93,12 @@ export function shortDate(iso: string): string {
   const [y, m, d] = iso.split("-").map(Number);
   if (!y || !m || !d) return iso;
   return `${MONTHS[m - 1]} ${d}`;
+}
+
+/** "May 21" for this season, "May 21, 2024" for older ones, so messages and lists never read ambiguous. */
+export function whenDate(iso: string, season = new Date().getFullYear()): string {
+  const y = Number(iso.slice(0, 4));
+  return y && y !== season ? `${shortDate(iso)}, ${y}` : shortDate(iso);
 }
 
 /** "Joe & Vanessa (lighting)" -> "Joe & Vanessa"; "Tobias (lighting)" -> "Tobias". */
@@ -152,7 +158,7 @@ export function vendorKind(v: Vendor): TemplateKind {
 export function messageForCouple(c: Couple, t: Templates, review: string, variant?: number, kind: "couple" | "reviewed" = "couple"): string {
   const list = t[kind]?.length ? t[kind] : DEFAULT_TEMPLATES[kind];
   const tpl = list[(variant ?? pickVariant(c.id, list.length)) % list.length];
-  return fillTemplate(tpl, { first: coupleGreeting(c), couple: coupleLabel(c.couple), date: shortDate(c.date), venue: c.venue, review });
+  return fillTemplate(tpl, { first: coupleGreeting(c), couple: coupleLabel(c.couple), date: whenDate(c.date), venue: c.venue, review });
 }
 
 export function messageForVendor(v: Vendor, t: Templates, review: string, venueOf: (date: string) => string | null, variant?: number): string {
@@ -160,15 +166,17 @@ export function messageForVendor(v: Vendor, t: Templates, review: string, venueO
   const list = t[kind].length ? t[kind] : DEFAULT_TEMPLATES[kind];
   const tpl = list[(variant ?? pickVariant(v.id, list.length)) % list.length];
   const w = v.weddings[v.weddings.length - 1];
-  return fillTemplate(tpl, { first: firstName(v.name), couple: w ? coupleLabel(w.couple) : "", date: w ? shortDate(w.date) : "", venue: w ? venueOf(w.date) : null, review });
+  return fillTemplate(tpl, { first: firstName(v.name), couple: w ? coupleLabel(w.couple) : "", date: w ? whenDate(w.date) : "", venue: w ? venueOf(w.date) : null, review });
 }
 
 export function messageForVenue(v: Venue, t: Templates, review: string, variant?: number): string {
   const list = t.venue.length ? t.venue : DEFAULT_TEMPLATES.venue;
   const tpl = list[(variant ?? pickVariant(v.id, list.length)) % list.length];
-  const w = v.weddings[v.weddings.length - 1];
-  const weddings = v.weddings.map((x) => shortDate(x.date)).join(", ");
-  return fillTemplate(tpl, { first: "", couple: w ? coupleLabel(w.couple) : "", date: w ? shortDate(w.date) : "", venue: v.name, weddings, review });
+  const sorted = [...v.weddings].sort((a, b) => a.date.localeCompare(b.date));
+  const w = sorted[sorted.length - 1];
+  const latest = w ? w.date.slice(0, 4) : "";
+  const weddings = sorted.filter((x) => x.date.startsWith(latest)).map((x) => shortDate(x.date)).join(", ") + (latest && Number(latest) !== new Date().getFullYear() ? `, ${latest}` : "");
+  return fillTemplate(tpl, { first: "", couple: w ? coupleLabel(w.couple) : "", date: w ? whenDate(w.date) : "", venue: v.name, weddings, review });
 }
 
 /** tel/sms friendly "+18645551234" -> "(864) 555-1234". */
