@@ -10,7 +10,7 @@ const MESSAGES: Record<string, string> = {
   network: "Could not reach the server.",
 };
 
-export function AdminLogin() {
+export function AdminLogin({ title = "Set lists" }: { title?: string } = {}) {
   const router = useRouter();
   const [pw, setPw] = useState("");
   const [err, setErr] = useState("");
@@ -39,7 +39,7 @@ export function AdminLogin() {
   return (
     <div className="sl ad">
       <main className="ad-login">
-        <h1 className="ad-login-h">Set lists</h1>
+        <h1 className="ad-login-h">{title}</h1>
         <form onSubmit={submit} className="ad-login-form">
           <label className="ad-label" htmlFor="ad-pw">
             Password
