@@ -105,9 +105,9 @@ export async function kvDel(key: string): Promise<void> {
     }
     return;
   }
-  const data = await readFile();
-  delete data[key];
-  await writeFile(data);
+  await mutateFile((data) => {
+    delete data[key];
+  });
 }
 
 /** Every key that starts with `prefix` (used to delete everything a record owns). */
@@ -138,4 +138,86 @@ export async function kvMany<T>(keys: string[]): Promise<(T | null)[]> {
   }
   const data = await readFile();
   return keys.map((key) => (data[key] as T) ?? null);
+}
+
+// ---- Atomic counters and expiring keys (login attempt limiting). Locally these use the same .data file. ----
+type Expiring<T> = { v: T; exp: number };
+
+// Local file fallback only: run read-modify-write steps one at a time so parallel requests don't overwrite each other.
+let fileQueue: Promise<unknown> = Promise.resolve();
+function mutateFile<R>(fn: (data: Record<string, unknown>) => R): Promise<R> {
+  const run = fileQueue.then(async () => {
+    const data = await readFile();
+    const out = fn(data);
+    await writeFile(data);
+    return out;
+  });
+  fileQueue = run.catch(() => undefined);
+  return run;
+}
+
+/** Atomic add of 1 (Upstash INCR). The key expires `ttlSeconds` after it was created. Returns the new count. Throws if the store is unreachable. */
+export async function kvIncr(key: string, ttlSeconds: number): Promise<number> {
+  if (usingKv) {
+    try {
+      const c = await client();
+      const n = await c.incr(key);
+      if (n === 1) await c.expire(key, ttlSeconds);
+      return n;
+    } catch (error) {
+      throw new StoreUnavailableError(error);
+    }
+  }
+  return mutateFile((data) => {
+    const cur = data[key] as Expiring<number> | undefined;
+    const live = cur && cur.exp > Date.now() ? cur : { v: 0, exp: Date.now() + ttlSeconds * 1000 };
+    const next = { v: live.v + 1, exp: live.exp };
+    data[key] = next;
+    return next.v;
+  });
+}
+
+/** Subtract 1 from a counter (never below 0). */
+export async function kvDecr(key: string): Promise<void> {
+  if (usingKv) {
+    try {
+      const c = await client();
+      if ((await c.decr(key)) < 0) await c.del(key);
+    } catch (error) {
+      throw new StoreUnavailableError(error);
+    }
+    return;
+  }
+  await mutateFile((data) => {
+    const cur = data[key] as Expiring<number> | undefined;
+    if (cur && cur.exp > Date.now()) data[key] = { v: Math.max(0, cur.v - 1), exp: cur.exp };
+  });
+}
+
+/** Set a value that disappears by itself after `ttlSeconds`. */
+export async function kvSetEx<T>(key: string, value: T, ttlSeconds: number): Promise<void> {
+  if (usingKv) {
+    try {
+      await (await client()).set(key, value, { ex: ttlSeconds });
+    } catch (error) {
+      throw new StoreUnavailableError(error);
+    }
+    return;
+  }
+  await mutateFile((data) => {
+    data[key] = { v: value, exp: Date.now() + ttlSeconds * 1000 } satisfies Expiring<T>;
+  });
+}
+
+/** Read a key written by kvSetEx. Strict: throws if the store is unreachable (callers fail closed). */
+export async function kvGetEx<T>(key: string): Promise<T | null> {
+  if (usingKv) {
+    try {
+      return await (await client()).get<T>(key);
+    } catch (error) {
+      throw new StoreUnavailableError(error);
+    }
+  }
+  const cur = (await readFile())[key] as Expiring<T> | undefined;
+  return cur && cur.exp > Date.now() ? cur.v : null;
 }

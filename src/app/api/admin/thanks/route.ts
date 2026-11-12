@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { isAdmin } from "@/lib/setlist/admin/auth";
+import { isThanksAdmin as isAdmin } from "@/lib/thanks/auth";
 import type { TemplateKind, Templates, ThanksData } from "@/lib/thanks/messages";
 import { getData, getState, getTemplates, importData, setContacted, setTemplates } from "@/lib/thanks/store";
 
-// Private thank-you tracker API. Every method needs Dan's admin session (same login as /admin/songs);
+// Private thank-you tracker API. Every method needs Dan's admin session (6-digit PIN login);
 // without it the answer is a bare 401 with no data.
 export const dynamic = "force-dynamic";
 
